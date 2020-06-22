@@ -1,5 +1,5 @@
 # Tank Trouble
-This is a action Arcade Game , you can learn it
+This is an action Arcade Game , you can learn it
 [here](https://tanktrouble.com/) .  
   
 hope to Enjoy :) .
