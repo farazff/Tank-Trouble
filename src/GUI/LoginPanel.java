@@ -191,13 +191,7 @@ public class LoginPanel extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == signUp)
             {
-                if (!usernameTyped || !passwordTyped)
-                {
-                    turnErrorOn ();
-                    return;
-                }
-                else
-                    turnErrorOff ();
+
                 // sign up
                 System.out.println ("sign up");
             }
