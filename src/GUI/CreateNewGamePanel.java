@@ -9,21 +9,27 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-
+/**
+ * this class represents a new game panel in network game
+ *
+ * @author Amir Naziri
+ */
 public class CreateNewGamePanel extends JPanel
 {
-    private JTextArea gameNameTextField;
+    private JTextArea gameNameTextField; // name of game
     private JRadioButton singlePlayer;
     private JRadioButton teamPlayer;
     private JRadioButton deathMatch;
     private JRadioButton leagueMatch;
-    private JSpinner numOfPlayers;
+    private JSpinner numOfPlayers; // number of players
     private JSlider tanksStamina;
     private JSlider canonPower;
     private JSlider wallsStamina;
     private JButton create;
 
-
+    /**
+     * create a new game panel
+     */
     public CreateNewGamePanel ()
     {
         super();
@@ -32,6 +38,9 @@ public class CreateNewGamePanel extends JPanel
         createBasePanel ();
     }
 
+    /**
+     * create base panel
+     */
     private void createBasePanel ()
     {
         ChangeHandler changeHandler = new ChangeHandler ();
@@ -196,6 +205,9 @@ public class CreateNewGamePanel extends JPanel
         add(basePanel);
     }
 
+    /**
+     * this class handles changes in Sliders and some buttons
+     */
     private class ChangeHandler implements ChangeListener , ItemListener
     {
 

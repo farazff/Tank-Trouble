@@ -1,5 +1,6 @@
 import GUI.CreateNewGamePanel;
 import GUI.LoginPanel;
+import GUI.SignUpPanel;
 
 import javax.swing.*;
 
@@ -16,6 +17,7 @@ public class TestMain
         }
         JFrame frame = new JFrame ();
         LoginPanel loginPanel = new LoginPanel ();
+        SignUpPanel signUpPanel = new SignUpPanel ();
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
         frame.setContentPane (newGamePanel);
