@@ -6,6 +6,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -16,7 +18,7 @@ import java.awt.event.ItemListener;
  */
 public class CreateNewGamePanel extends JPanel
 {
-    private JTextArea gameNameTextField; // name of game
+    private JTextField gameNameTextField; // name of game
     private JRadioButton singlePlayer;
     private JRadioButton teamPlayer;
     private JRadioButton deathMatch;
@@ -60,13 +62,13 @@ public class CreateNewGamePanel extends JPanel
         header.setHorizontalTextPosition (SwingConstants.CENTER);
         header.setFont (new Font ("arial",Font.BOLD,16));
 
-        JLabel gameName = new JLabel ("Game's  Name ");
+        JLabel gameName = new JLabel ("Game's  Name*: ");
         gameName.setFont (new Font ("arial",Font.PLAIN,13));
-        gameNameTextField = new JTextArea ();
+        gameNameTextField = new JTextField ();
         gameNameTextField.setFont (new Font ("arial",Font.PLAIN,14));
         gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
                         LineBorder (Color.LIGHT_GRAY,3,true),
-                new EmptyBorder (7,5,0,5)));
+                new EmptyBorder (5,5,3,5)));
         ButtonGroup gamePlayerType = new ButtonGroup ();
 
         JLabel playersType = new JLabel ("Type  Of  Playing");
@@ -137,11 +139,11 @@ public class CreateNewGamePanel extends JPanel
         wallsStamina.addChangeListener (changeHandler);
 
         create = new JButton ("Create!");
-
+        create.addActionListener (new ActionHandler ());
         constraints.fill = GridBagConstraints.BOTH;
         constraints.ipadx = 70;
         constraints.ipady = 20;
-        constraints.weightx = 0.5f;
+
 
         constraints.insets = new Insets (0,0,17,0);
         GridBagSetter.addComponent (header,0,0,20,3,layout,constraints,basePanel);
@@ -149,10 +151,10 @@ public class CreateNewGamePanel extends JPanel
         constraints.ipady = 7;
         constraints.insets = new Insets (0,5,12,5);
         GridBagSetter
-                .addComponent (gameName,3,0,1,1,layout,constraints,basePanel);
+                .addComponent (gameName,3,0,5,1,layout,constraints,basePanel);
 
         GridBagSetter
-                .addComponent (gameNameTextField,3,1,10,1,
+                .addComponent (gameNameTextField,3,5,15,1,
                         layout,constraints,basePanel);
         GridBagSetter
                 .addComponent (playersType,4,0,20,1,layout,constraints,basePanel);
@@ -258,6 +260,45 @@ public class CreateNewGamePanel extends JPanel
                 }
             }
 
+        }
+    }
+
+    /**
+     * check if the given data for creating new game is ok or nor
+     * @return result
+     */
+    public boolean checkData ()
+    {
+        if (gameNameTextField.getText ().length () == 0)
+        {
+            gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.RED,3,true),
+                    new EmptyBorder (5,5,3,5)));;
+            return false;
+        }
+        else
+        {
+            gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.LIGHT_GRAY,3,true),
+                    new EmptyBorder (5,5,3,5)));;
+            return true;
+        }
+    }
+
+    /**
+     * handles Action events
+     */
+    private class ActionHandler implements ActionListener
+    {
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            if (e.getSource () == create)
+            {
+                if (!checkData ())
+                    return;
+                System.out.println ("created");
+
+            }
         }
     }
 

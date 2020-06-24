@@ -138,31 +138,33 @@ public class LoginPanel extends JPanel
     }
 
     /**
-     * shows error message
+     * check if the given data for signing in is ok or nor
+     * @return result
      */
-    private void turnErrorOn ()
+    private boolean checkData ()
     {
-        errorMessage.setForeground (Color.RED);
-        username.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.RED,2,true),
-                new EmptyBorder (3,5,5,5)));
-        password.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.RED,2,true),
-                new EmptyBorder (8,5,5,5)));
-    }
-
-    /**
-     * hide error message
-     */
-    private void turnErrorOff ()
-    {
-        errorMessage.setForeground (Color.WHITE);
-        username.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.LIGHT_GRAY,2,true),
-                new EmptyBorder (3,5,5,5)));
-        password.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.LIGHT_GRAY,2,true),
-                new EmptyBorder (8,5,5,5)));
+        if (!usernameTyped || !passwordTyped)
+        {
+            errorMessage.setForeground (Color.RED);
+            username.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.RED,2,true),
+                    new EmptyBorder (3,5,5,5)));
+            password.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.RED,2,true),
+                    new EmptyBorder (8,5,5,5)));
+            return false;
+        }
+        else
+        {
+            errorMessage.setForeground (Color.WHITE);
+            username.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.LIGHT_GRAY,2,true),
+                    new EmptyBorder (3,5,5,5)));
+            password.setBorder (BorderFactory.createCompoundBorder (new
+                            LineBorder (Color.LIGHT_GRAY,2,true),
+                    new EmptyBorder (8,5,5,5)));
+            return true;
+        }
     }
 
 
@@ -208,13 +210,6 @@ public class LoginPanel extends JPanel
             if ((e.getSource () == username || e.getSource () == password ) &&
                     (e.getKeyCode () == KeyEvent.VK_ENTER))
             {
-                if (!usernameTyped || !passwordTyped)
-                {
-                    turnErrorOn ();
-                    return;
-                }
-                else
-                    turnErrorOff ();
                 // sign in
                 System.out.println ("sign in");
             }
@@ -237,14 +232,9 @@ public class LoginPanel extends JPanel
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource () == signIn) {
-                // sign in
-                if (!usernameTyped || !passwordTyped)
-                {
-                    turnErrorOn ();
+                if (!checkData ())
                     return;
-                }
-                else
-                    turnErrorOff ();
+                // sign in
                 System.out.println ("sign in");
             }
         }
