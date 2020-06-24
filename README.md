@@ -6,5 +6,5 @@ hope to Enjoy :) .
 #
 
 #### Developers
-Faraz  Farangizade   
+Faraz  Farangizadeh   
 Amirreza Naziri
