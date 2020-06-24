@@ -3,7 +3,12 @@ package GUI;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 
 public class CreateNewGamePanel extends JPanel
 {
@@ -29,6 +34,7 @@ public class CreateNewGamePanel extends JPanel
 
     private void createBasePanel ()
     {
+        ChangeHandler changeHandler = new ChangeHandler ();
         JPanel basePanel = new JPanel ();
         basePanel.setBackground (Color.WHITE);
         basePanel.setBorder (new LineBorder (Color.GRAY,6,true));
@@ -48,7 +54,10 @@ public class CreateNewGamePanel extends JPanel
         JLabel gameName = new JLabel ("Game's  Name ");
         gameName.setFont (new Font ("arial",Font.PLAIN,13));
         gameNameTextField = new JTextArea ();
-
+        gameNameTextField.setFont (new Font ("arial",Font.PLAIN,14));
+        gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
+                        LineBorder (Color.LIGHT_GRAY,3,true),
+                new EmptyBorder (7,5,0,5)));
         ButtonGroup gamePlayerType = new ButtonGroup ();
 
         JLabel playersType = new JLabel ("Type  Of  Playing");
@@ -59,6 +68,8 @@ public class CreateNewGamePanel extends JPanel
         teamPlayer = new JRadioButton ("Team game");
         gamePlayerType.add (singlePlayer);
         gamePlayerType.add (teamPlayer);
+        teamPlayer.addItemListener (changeHandler);
+        singlePlayer.addItemListener (changeHandler);
 
         ButtonGroup gameEndType = new ButtonGroup ();
 
@@ -74,27 +85,47 @@ public class CreateNewGamePanel extends JPanel
 
         JLabel numberOfPlayers = new JLabel ("Number Of Players");
         numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,13));
-        SpinnerModel spinnerModel = new SpinnerNumberModel (1,1,100,1);
-        numOfPlayers = new JSpinner (spinnerModel);
+        SpinnerModel spinnerModel;
+        if (teamPlayer.isSelected ())
+        {
+            spinnerModel = new SpinnerNumberModel (2,1,100,2);
+        }
+        else
+        {
+            spinnerModel = new SpinnerNumberModel (1,1,100,1);
+        }
+
+        numOfPlayers = new JSpinner ();
+        numOfPlayers.setModel (spinnerModel);
+        ((JSpinner.DefaultEditor)numOfPlayers.getEditor ()).getTextField ().setEditable (false);
+        ((JSpinner.DefaultEditor)numOfPlayers.getEditor ()).getTextField ().setFocusable (false);
+
+
 
         JLabel tanksStaminaLabel = new JLabel ("Tank Stamina");
         tanksStaminaLabel.setFont (new Font ("arial",Font.PLAIN,13));
-        tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,100);
+        tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         tanksStamina.setSnapToTicks (true);
         tanksStamina.setMinorTickSpacing (10);
+        tanksStamina.setToolTipText (tanksStamina.getValue () + " %");
+        tanksStamina.addChangeListener (changeHandler);
 
         JLabel canonPowerLabel = new JLabel ("Canon Power");
         canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,13));
-        canonPower = new JSlider (SwingConstants.HORIZONTAL,50,300,100);
-        canonPower.setMinorTickSpacing (50);
+        canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
+        canonPower.setMinorTickSpacing (10);
         canonPower.setSnapToTicks (true);
+        canonPower.setToolTipText (canonPower.getValue () + " %");
+        canonPower.addChangeListener (changeHandler);
 
         JLabel wallsStaminaLabel = new JLabel ("Destroyable Walls Stamina");
         wallsStaminaLabel.setFont (new Font ("arial",Font.PLAIN,13));
-        wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,100);
+        wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         wallsStamina.setSnapToTicks (true);
         wallsStamina.setMinorTickSpacing (10);
         wallsStamina.setValueIsAdjusting (true);
+        wallsStamina.setToolTipText (wallsStamina.getValue () + " %");
+        wallsStamina.addChangeListener (changeHandler);
 
         create = new JButton ("Create!");
 
@@ -140,23 +171,82 @@ public class CreateNewGamePanel extends JPanel
                 .addComponent (new JSeparator (SwingConstants.HORIZONTAL),9,0,20,1,
                         layout,constraints,basePanel);
         GridBagSetter
-                .addComponent (tanksStaminaLabel,10,0,20,1,layout,constraints,basePanel);
+                .addComponent (tanksStaminaLabel,10,0,20,1,
+                        layout,constraints,basePanel);
         constraints.insets = new Insets (0,5,12,5);
         GridBagSetter
-                .addComponent (tanksStamina,11,5,15,1,layout,constraints,basePanel);
+                .addComponent (tanksStamina,11,5,15,1,layout,
+                        constraints,basePanel);
 
         GridBagSetter
-                .addComponent (canonPowerLabel,12,0,20,1,layout,constraints,basePanel);
+                .addComponent (canonPowerLabel,12,0,20,1,layout,
+                        constraints,basePanel);
         GridBagSetter
-                .addComponent (canonPower,13,5,10,1,layout,constraints,basePanel);
+                .addComponent (canonPower,13,5,10,1,layout,constraints,
+                        basePanel);
         GridBagSetter
-                .addComponent (wallsStaminaLabel,14,0,20,1,layout,constraints,basePanel);
+                .addComponent (wallsStaminaLabel,14,0,20,1,layout,constraints,
+                        basePanel);
         GridBagSetter
-                .addComponent (wallsStamina,15,5,10,1,layout,constraints,basePanel);
+                .addComponent (wallsStamina,15,5,10,1,layout,
+                        constraints,basePanel);
         GridBagSetter
                 .addComponent (create,16,0,20,5,layout,constraints,basePanel);
 
         add(basePanel);
+    }
+
+    private class ChangeHandler implements ChangeListener , ItemListener
+    {
+
+        @Override
+        public void stateChanged (ChangeEvent e) {
+            if (e.getSource () == tanksStamina)
+            {
+                tanksStamina.setToolTipText (tanksStamina.getValue () +" %");
+            } else if (e.getSource () == wallsStamina)
+            {
+                wallsStamina.setToolTipText (wallsStamina.getValue () + " %");
+            } else if (e.getSource () == canonPower)
+            {
+                canonPower.setToolTipText (canonPower.getValue () + " %");
+            }
+        }
+
+        @Override
+        public void itemStateChanged (ItemEvent e) {
+            if (e.getStateChange () == ItemEvent.SELECTED)
+            {
+                if (e.getSource () == teamPlayer)
+                {
+                    if (teamPlayer.isSelected ())
+                    {
+                        if ((int)(numOfPlayers.getValue ()) % 2 == 1)
+                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
+
+                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+                                ,1,100,2));
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setEditable (false);
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setFocusable (false);
+                    }
+                } else if (e.getSource () == singlePlayer)
+                {
+                    if (singlePlayer.isSelected ())
+                    {
+                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+                                ,1,100,1));
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setEditable (false);
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setFocusable (false);
+                    }
+
+                }
+            }
+
+        }
     }
 
 }

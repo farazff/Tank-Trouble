@@ -73,7 +73,7 @@ public class LoginPanel extends JPanel
 
         username = new JTextField ("username");
         username.setBorder (BorderFactory.createCompoundBorder (new
-                LineBorder (Color.DARK_GRAY,1,true),
+                LineBorder (Color.LIGHT_GRAY,2,true),
                 new EmptyBorder (3,5,5,5)));
         username.setForeground (Color.GRAY);
         username.addActionListener (actionHandler);
@@ -82,7 +82,7 @@ public class LoginPanel extends JPanel
 
         password = new JPasswordField ("password");
         password.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.DARK_GRAY,1,true),
+                        LineBorder (Color.LIGHT_GRAY,2,true),
                 new EmptyBorder (8,5,5,5)));
         password.addActionListener (actionHandler);
         password.addFocusListener (focusHandler);
@@ -158,10 +158,10 @@ public class LoginPanel extends JPanel
     {
         errorMessage.setForeground (Color.WHITE);
         username.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.DARK_GRAY,1,true),
+                        LineBorder (Color.LIGHT_GRAY,2,true),
                 new EmptyBorder (3,5,5,5)));
         password.setBorder (BorderFactory.createCompoundBorder (new
-                        LineBorder (Color.DARK_GRAY,1,true),
+                        LineBorder (Color.LIGHT_GRAY,2,true),
                 new EmptyBorder (8,5,5,5)));
     }
 
