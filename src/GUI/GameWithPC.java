@@ -31,7 +31,10 @@ public class GameWithPC extends JPanel
 
         add(titleMode);
 
-        Selecting selectMode = new Selecting();
+        ArrayList<String> data = new ArrayList<>();
+        data.add("Death Match");
+        data.add("League Match");
+        Selecting selectMode = new Selecting(data);
         add(selectMode);
     }
 

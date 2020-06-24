@@ -12,17 +12,16 @@ public class Selecting extends JPanel
     private RoundJLabel down;
     private RoundJLabel mode;
     private RoundJLabel up;
-    private ArrayList<String> gameMods;
-    private int gameModesCounter;
+
+    private ArrayList<String> data;
+    private int dataCounter;
 
 
-    public Selecting()
+    public Selecting(ArrayList<String> data)
     {
 
-        gameMods = new ArrayList<>();
-        gameMods.add("Death Match");
-        gameMods.add("League");
-        gameModesCounter=1;
+        this.data = data;
+        dataCounter = 1;
 
         MouseHandler mouseHandler = new MouseHandler();
 
@@ -40,7 +39,7 @@ public class Selecting extends JPanel
         down.addMouseListener(mouseHandler);
 
 
-        mode = new RoundJLabel(gameMods.get(0),Color.pink);
+        mode = new RoundJLabel(data.get(0),Color.pink);
         mode.setFont(new Font("Arial",Font.BOLD,20));
         mode.setForeground(Color.WHITE);
         mode.setBackground(Color.PINK);
@@ -81,27 +80,27 @@ public class Selecting extends JPanel
         {
             if(e.getSource().equals(up))
             {
-                if(gameModesCounter==gameMods.size()-1)
+                if(dataCounter==data.size()-1)
                 {
-                    gameModesCounter=0;
+                    dataCounter=0;
                 }
                 else
                 {
-                    gameModesCounter++;
+                    dataCounter++;
                 }
-                mode.setText(gameMods.get(gameModesCounter));
+                mode.setText(data.get(dataCounter));
             }
             if(e.getSource().equals(down))
             {
-                if(gameModesCounter==0)
+                if(dataCounter==0)
                 {
-                    gameModesCounter=gameMods.size()-1;
+                   dataCounter=data.size()-1;
                 }
                 else
                 {
-                    gameModesCounter--;
+                    dataCounter--;
                 }
-                mode.setText(gameMods.get(gameModesCounter));
+                mode.setText(data.get(dataCounter));
             }
         }
 
