@@ -7,16 +7,27 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+
+/**
+ * create's JPanel with 2 bottoms and a JTextfield for choosing the game options
+ *
+ *
+ * @author Faraz Farangizadeh
+ */
 public class Selecting extends JPanel
 {
-    private RoundJLabel down;
-    private RoundJLabel mode;
-    private RoundJLabel up;
+    private RoundJLabel down; // left button
+    private RoundJLabel mode; // mode
+    private RoundJLabel up; // right button
 
-    private ArrayList<String> data;
+    private ArrayList<String> data; // the choices that we can select
     private int dataCounter;
 
 
+    /**
+     * constructor of the class
+     * @param data the array list containing the choices of that data
+     */
     public Selecting(ArrayList<String> data)
     {
 
@@ -62,6 +73,9 @@ public class Selecting extends JPanel
         add(up);
     }
 
+    /**
+     * handles mouse events
+     */
     private class MouseHandler implements MouseMotionListener, MouseListener
     {
 
