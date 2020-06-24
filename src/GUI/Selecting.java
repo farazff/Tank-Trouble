@@ -21,19 +21,17 @@ public class Selecting extends JPanel
     private RoundJLabel up; // right button
 
     private ArrayList<String> data; // the choices that we can select
-    private int dataCounter;
+    private int dataCounter; // the number of the data that is on the screen
 
 
     /**
      * constructor of the class
      * @param data the array list containing the choices of that data
      */
-    public Selecting(ArrayList<String> data)
+    public Selecting(ArrayList<String> data , int dataCounter)
     {
-
         this.data = data;
-        dataCounter = 1;
-
+        this.dataCounter = dataCounter;
         MouseHandler mouseHandler = new MouseHandler();
 
         setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
@@ -50,7 +48,7 @@ public class Selecting extends JPanel
         down.addMouseListener(mouseHandler);
 
 
-        mode = new RoundJLabel(data.get(0),Color.pink);
+        mode = new RoundJLabel(data.get(dataCounter),Color.pink);
         mode.setFont(new Font("Arial",Font.BOLD,20));
         mode.setForeground(Color.WHITE);
         mode.setBackground(Color.PINK);
