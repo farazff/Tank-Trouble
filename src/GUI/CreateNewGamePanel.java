@@ -28,6 +28,8 @@ public class CreateNewGamePanel extends JPanel
     private JSlider canonPower;
     private JSlider wallsStamina;
     private JButton create;
+    private JLabel cancel;
+
 
     /**
      * create a new game panel
@@ -147,12 +149,16 @@ public class CreateNewGamePanel extends JPanel
         create = new JButton ("Create!");
         create.addActionListener (new ActionHandler ());
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.ipadx = 70;
-        constraints.ipady = 20;
 
 
         constraints.insets = new Insets (0,0,17,0);
-        GridBagSetter.addComponent (header,0,0,20,3,layout,constraints,basePanel);
+
+        constraints.ipady = -20;
+        constraints.ipadx = 0;
+        GridBagSetter.addComponent (cancel,0,0,1,3,layout,constraints,basePanel);
+        constraints.ipadx = 70;
+        constraints.ipady = 20;
+        GridBagSetter.addComponent (header,0,1,19,3,layout,constraints,basePanel);
 
         constraints.ipady = 7;
         constraints.insets = new Insets (0,5,12,5);
@@ -209,6 +215,7 @@ public class CreateNewGamePanel extends JPanel
                         constraints,basePanel);
         GridBagSetter
                 .addComponent (create,16,0,20,5,layout,constraints,basePanel);
+
 
         add(basePanel);
     }

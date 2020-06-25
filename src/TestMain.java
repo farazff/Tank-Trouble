@@ -23,7 +23,7 @@ public class TestMain
         GameWithPC gameWithPC = new GameWithPC();
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
-        frame.setContentPane (gameWithPC);
+        frame.setContentPane (newGamePanel);
         frame.setLocation (0,0);
 
         frame.setSize (16 * 720 / 9,700);
