@@ -219,8 +219,8 @@ public class SignUpPanel extends JPanel
         public void keyPressed (KeyEvent e)
         {
             if(e.getKeyCode() == KeyEvent.VK_ENTER)
-            if(e.getSource().equals(username) || e.getSource().equals(password1) || e.getSource().equals(password2))
-                checkData();
+                if(e.getSource().equals(username) || e.getSource().equals(password1) || e.getSource().equals(password2))
+                    checkData();
         }
     }
 

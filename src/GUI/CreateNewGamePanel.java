@@ -153,9 +153,7 @@ public class CreateNewGamePanel extends JPanel
 
         constraints.insets = new Insets (0,0,17,0);
 
-        constraints.ipady = -20;
-        constraints.ipadx = 0;
-        GridBagSetter.addComponent (cancel,0,0,1,3,layout,constraints,basePanel);
+
         constraints.ipadx = 70;
         constraints.ipady = 20;
         GridBagSetter.addComponent (header,0,1,19,3,layout,constraints,basePanel);

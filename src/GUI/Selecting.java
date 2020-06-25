@@ -108,7 +108,7 @@ public class Selecting extends JPanel
             {
                 if(dataCounter==0)
                 {
-                   dataCounter=data.size()-1;
+                    dataCounter=data.size()-1;
                 }
                 else
                 {
