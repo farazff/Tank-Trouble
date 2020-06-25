@@ -26,8 +26,7 @@ public class TestMain
         frame.setContentPane (gameWithPC);
         frame.setLocation (0,0);
 
-        frame.setSize (16 * 720 / 9,700);
-
+        frame.setSize (750,680);
 
 
         frame.setVisible (true);
