@@ -1,10 +1,13 @@
 package GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -16,13 +19,12 @@ import java.util.ArrayList;
  */
 public class Selecting extends JPanel
 {
-    private RoundJLabel down; // left button
-    private RoundJLabel mode; // mode
-    private RoundJLabel up; // right button
+    private JLabel down; // left button
+    private JLabel mode; // mode
+    private JLabel up; // right button
 
     private ArrayList<String> data; // the choices that we can select
     private int dataCounter; // the number of the data that is on the screen
-
 
     /**
      * constructor of the class
@@ -35,34 +37,34 @@ public class Selecting extends JPanel
         MouseHandler mouseHandler = new MouseHandler();
 
         setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
-        setBackground(Color.WHITE);
+        setBackground(new Color(0.0f, 0.0f, 0.0f, 0.5f));
         setOpaque(true);
 
-        down = new RoundJLabel("<",Color.GREEN);
+        down = new JLabel("<");
         down.setFont(new Font("Arial",Font.BOLD,20));
         down.setForeground(Color.WHITE);
-        down.setBackground(Color.GREEN);
+        down.setBackground(new Color(85,131,32));
         down.setOpaque(true);
-        down.setPreferredSize(new Dimension(80,50));
+        down.setPreferredSize(new Dimension(80,40));
         down.setHorizontalAlignment(JLabel.CENTER);
         down.addMouseListener(mouseHandler);
 
 
-        mode = new RoundJLabel(data.get(dataCounter),Color.pink);
+        mode = new JLabel(data.get(dataCounter));
         mode.setFont(new Font("Arial",Font.BOLD,20));
         mode.setForeground(Color.WHITE);
-        mode.setBackground(Color.PINK);
+        mode.setBackground(new Color(201,133,41));
         mode.setOpaque(true);
-        mode.setPreferredSize(new Dimension(200,50));
+        mode.setPreferredSize(new Dimension(200,40));
         mode.setHorizontalAlignment(JLabel.CENTER);
 
 
-        up = new RoundJLabel(">",Color.GREEN);
+        up = new JLabel(">");
         up.setFont(new Font("Arial",Font.BOLD,20));
         up.setForeground(Color.WHITE);
-        up.setBackground(Color.GREEN);
+        up.setBackground(new Color(85,131,32));
         up.setOpaque(true);
-        up.setPreferredSize(new Dimension(80,50));
+        up.setPreferredSize(new Dimension(80,40));
         up.setHorizontalAlignment(JLabel.CENTER);
         up.addMouseListener(mouseHandler);
 
