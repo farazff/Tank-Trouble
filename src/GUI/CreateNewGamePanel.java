@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * this class represents a new game panel in network game
@@ -19,16 +20,14 @@ import java.io.IOException;
 public class CreateNewGamePanel extends JPanel
 {
     private JTextField gameNameTextField; // name of game
-    private JRadioButton singlePlayer;
-    private JRadioButton teamPlayer;
-    private JRadioButton deathMatch;
-    private JRadioButton leagueMatch;
     private JSpinner numOfPlayers; // number of players
     private JSlider tanksStamina;
+    private Selecting typeOfPlaying;
+    private Selecting endTypeOfPlaying;
     private JSlider canonPower;
     private JSlider wallsStamina;
     private JButton create;
-    private JLabel cancel;
+    private JLabel back;
 
 
     /**
@@ -38,7 +37,7 @@ public class CreateNewGamePanel extends JPanel
     {
         super();
         setBorder (new EmptyBorder (10,10,10,10));
-        setLayout (new FlowLayout (FlowLayout.CENTER));
+        setLayout (new FlowLayout ());
         createBasePanel ();
         addComponentListener (new ComponentAdapter () {
             @Override
@@ -54,66 +53,94 @@ public class CreateNewGamePanel extends JPanel
     private void createBasePanel ()
     {
         ChangeHandler changeHandler = new ChangeHandler ();
-        JPanel basePanel = new JPanel ();
+        JPanel basePanel = new JPanel (new BorderLayout ());
+        JPanel leftPanel = new JPanel ();
+        JPanel rightPanel = new JPanel ();
+
         basePanel.setBackground (Color.WHITE);
         basePanel.setBorder (new LineBorder (Color.GRAY,6,true));
 
-        GridBagLayout layout = new GridBagLayout ();
-        GridBagConstraints constraints = new GridBagConstraints ();
-        basePanel.setLayout (layout);
+        rightPanel.setBackground (Color.WHITE);
+        leftPanel.setBackground (Color.WHITE);
+
+
+        GridBagLayout layoutL = new GridBagLayout ();
+        GridBagConstraints constraintsL = new GridBagConstraints ();
+        leftPanel.setLayout (layoutL);
+
+        GridBagLayout layoutR = new GridBagLayout ();
+        GridBagConstraints constraintsR = new GridBagConstraints ();
+        rightPanel.setLayout (layoutR);
 
         JLabel header = new JLabel ("New Game");
+        JPanel headerPanel = new JPanel ();
+
+
+        headerPanel.setLayout (new GridLayout (1,3));
+        headerPanel.setBackground (Color.GRAY);
+
+        back = new JLabel (new ImageIcon ("./Images/back1.png"));
+        back.addMouseListener (new MouseHandler ());
+
+
+
+        headerPanel.add (back);
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (header);
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+
+
+        header.setPreferredSize (new Dimension (100,60));
         header.setForeground (Color.WHITE);
         header.setOpaque (true);
         header.setBackground (Color.GRAY);
         header.setHorizontalAlignment (SwingConstants.CENTER);
         header.setHorizontalTextPosition (SwingConstants.CENTER);
-        header.setFont (new Font ("arial",Font.BOLD,16));
+        header.setFont (new Font ("arial",Font.BOLD,18));
 
         JLabel gameName = new JLabel ("Game's  Name*: ");
-        gameName.setFont (new Font ("arial",Font.PLAIN,13));
+        gameName.setFont (new Font ("arial",Font.PLAIN,15));
         gameNameTextField = new JTextField ();
         gameNameTextField.setFont (new Font ("arial",Font.PLAIN,14));
         gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
                         LineBorder (Color.LIGHT_GRAY,3,true),
                 new EmptyBorder (5,5,3,5)));
-        ButtonGroup gamePlayerType = new ButtonGroup ();
+
 
         JLabel playersType = new JLabel ("Type  Of  Playing");
         playersType.setHorizontalAlignment (SwingConstants.CENTER);
         playersType.setHorizontalTextPosition (SwingConstants.CENTER);
-        playersType.setFont (new Font ("arial",Font.PLAIN,13));
-        singlePlayer = new JRadioButton ("Single Player game");
-        teamPlayer = new JRadioButton ("Team game");
-        gamePlayerType.add (singlePlayer);
-        gamePlayerType.add (teamPlayer);
-        teamPlayer.addItemListener (changeHandler);
-        singlePlayer.addItemListener (changeHandler);
+        playersType.setFont (new Font ("arial",Font.PLAIN,15));
 
-        ButtonGroup gameEndType = new ButtonGroup ();
+
+
 
         JLabel endType = new JLabel ("End Type of game");
         endType.setHorizontalAlignment (SwingConstants.CENTER);
         endType.setHorizontalTextPosition (SwingConstants.CENTER);
-        endType.setFont (new Font ("arial",Font.PLAIN,13));
+        endType.setFont (new Font ("arial",Font.PLAIN,15));
 
-        deathMatch = new JRadioButton ("Death Match");
-        leagueMatch = new JRadioButton ("League Match");
-        gameEndType.add (deathMatch);
-        gameEndType.add (leagueMatch);
+        ArrayList<String> dataMode = new ArrayList<>();
+        dataMode.add("Death Match");
+        dataMode.add("League Match");
+        endTypeOfPlaying = new Selecting(dataMode,0);
 
-        JLabel numberOfPlayers = new JLabel ("Number Of Players");
-        numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,13));
+
+        ArrayList<String> dataMode1 = new ArrayList<>();
+        dataMode1.add("Single Player");
+        dataMode1.add("Team Player");
+        typeOfPlaying = new Selecting(dataMode1,0);
+
+        JLabel numberOfPlayers = new JLabel ("Number Of Players:");
+        numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,15));
         SpinnerModel spinnerModel;
-        if (teamPlayer.isSelected ())
-        {
-            spinnerModel = new SpinnerNumberModel (2,1,100,2);
-        }
-        else
-        {
-            spinnerModel = new SpinnerNumberModel (1,1,100,1);
-        }
 
+        spinnerModel = new SpinnerNumberModel (1,1,100,1);
         numOfPlayers = new JSpinner ();
         numOfPlayers.setModel (spinnerModel);
         ((JSpinner.DefaultEditor)numOfPlayers.getEditor ()).getTextField ().setEditable (false);
@@ -122,100 +149,130 @@ public class CreateNewGamePanel extends JPanel
 
 
         JLabel tanksStaminaLabel = new JLabel ("Tank Stamina");
-        tanksStaminaLabel.setFont (new Font ("arial",Font.PLAIN,13));
+        tanksStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
         tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
-        tanksStamina.setSnapToTicks (true);
-        tanksStamina.setMinorTickSpacing (10);
-        tanksStamina.setToolTipText (tanksStamina.getValue () + " %");
+        editSlider (tanksStamina);
         tanksStamina.addChangeListener (changeHandler);
 
         JLabel canonPowerLabel = new JLabel ("Canon Power");
-        canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,13));
+        canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,15));
         canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
-        canonPower.setMinorTickSpacing (10);
-        canonPower.setSnapToTicks (true);
-        canonPower.setToolTipText (canonPower.getValue () + " %");
+        editSlider (canonPower);
         canonPower.addChangeListener (changeHandler);
 
         JLabel wallsStaminaLabel = new JLabel ("Destroyable Walls Stamina");
-        wallsStaminaLabel.setFont (new Font ("arial",Font.PLAIN,13));
+        wallsStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
         wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
-        wallsStamina.setSnapToTicks (true);
-        wallsStamina.setMinorTickSpacing (10);
-        wallsStamina.setValueIsAdjusting (true);
-        wallsStamina.setToolTipText (wallsStamina.getValue () + " %");
+        editSlider (wallsStamina);
         wallsStamina.addChangeListener (changeHandler);
 
+
+
         create = new JButton ("Create!");
+        create.setFont (new Font ("arial",Font.PLAIN,18));
         create.addActionListener (new ActionHandler ());
-        constraints.fill = GridBagConstraints.BOTH;
+        create.setPreferredSize (new Dimension (100,50));
+        constraintsL.fill = GridBagConstraints.BOTH;
+
+        constraintsL.ipadx = 200;
+        constraintsL.ipady = 7;
+        constraintsL.insets = new Insets (10,5,12,5);
+        GridBagSetter
+                .addComponent (gameName,0,0,5,1,layoutL,constraintsL,leftPanel);
 
 
-        constraints.insets = new Insets (0,0,17,0);
-
-
-        constraints.ipadx = 70;
-        constraints.ipady = 20;
-        GridBagSetter.addComponent (header,0,1,19,3,layout,constraints,basePanel);
-
-        constraints.ipady = 7;
-        constraints.insets = new Insets (0,5,12,5);
         GridBagSetter
-                .addComponent (gameName,3,0,5,1,layout,constraints,basePanel);
+                .addComponent (gameNameTextField,0,5,15,1,
+                        layoutL,constraintsL,leftPanel);
 
         GridBagSetter
-                .addComponent (gameNameTextField,3,5,15,1,
-                        layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (playersType,4,0,20,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,95,12,35);
-        GridBagSetter
-                .addComponent (singlePlayer,5,0,5,1,layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (teamPlayer,5,5,5,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,5,12,5);
-        GridBagSetter
-                .addComponent (endType,6,0,20,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,95,12,35);
-        GridBagSetter
-                .addComponent (deathMatch,7,0,5,1,layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (leagueMatch,7,5,5,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,5,12,5);
-        GridBagSetter
-                .addComponent (numberOfPlayers,8,0,8,
-                        1,layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (numOfPlayers,8,8,10,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (12,5,12,5);
-        GridBagSetter
-                .addComponent (new JSeparator (SwingConstants.HORIZONTAL),9,0,20,1,
-                        layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (tanksStaminaLabel,10,0,20,1,
-                        layout,constraints,basePanel);
-        constraints.insets = new Insets (0,5,12,5);
-        GridBagSetter
-                .addComponent (tanksStamina,11,5,15,1,layout,
-                        constraints,basePanel);
+                .addComponent (playersType,1,0,20,1,layoutL,constraintsL,leftPanel);
+
+        constraintsL.insets = new Insets (0,15,15,15);
+        constraintsL.ipadx = 0;
+        constraintsL.ipady = 0;
 
         GridBagSetter
-                .addComponent (canonPowerLabel,12,0,20,1,layout,
-                        constraints,basePanel);
+                .addComponent (typeOfPlaying,2,0,20,1,layoutL,constraintsL,leftPanel);
+        constraintsL.ipady = 7;
+        constraintsL.ipadx = 200;
+        constraintsL.insets = new Insets (0,5,12,5);
+
         GridBagSetter
-                .addComponent (canonPower,13,5,10,1,layout,constraints,
-                        basePanel);
+                .addComponent (endType,3,0,20,1,layoutL,constraintsL,leftPanel);
+        constraintsL.insets = new Insets (0,15,15,15);
+        constraintsL.ipadx = 0;
+        constraintsL.ipady = 0;
         GridBagSetter
-                .addComponent (wallsStaminaLabel,14,0,20,1,layout,constraints,
-                        basePanel);
+                .addComponent (endTypeOfPlaying,4,0,20,1,
+                        layoutL,constraintsL,leftPanel);
+        constraintsL.ipady = 7;
+        constraintsL.insets = new Insets (20,5,12,5);
         GridBagSetter
-                .addComponent (wallsStamina,15,5,10,1,layout,
-                        constraints,basePanel);
+                .addComponent (numberOfPlayers,5,0,8,
+                        1,layoutL,constraintsL,leftPanel);
+        constraintsL.ipadx = 0;
+        constraintsL.insets = new Insets (20,135,12,5);
         GridBagSetter
-                .addComponent (create,16,0,20,5,layout,constraints,basePanel);
+                .addComponent (numOfPlayers,5,8,10,1,layoutL,constraintsL,leftPanel);
 
 
-        add(basePanel);
+
+        constraintsR.fill = GridBagConstraints.BOTH;
+        constraintsR.ipady = 7;
+        constraintsR.ipadx = 150;
+        constraintsR.insets = new Insets (10,5,18,5);
+
+        GridBagSetter
+                .addComponent (tanksStaminaLabel,0,0,20,1,
+                        layoutR,constraintsR,rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+
+        GridBagSetter
+                .addComponent (tanksStamina,1,5,20,1,layoutR,
+                        constraintsR,rightPanel);
+
+        constraintsR.insets = new Insets (30,5,18,5);
+        GridBagSetter
+                .addComponent (canonPowerLabel,2,0,20,1,layoutR,
+                        constraintsR,rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+        GridBagSetter
+                .addComponent (canonPower,3,5,20,1,layoutR,constraintsR,
+                        rightPanel);
+
+        constraintsR.insets = new Insets (30,5,18,5);
+        GridBagSetter
+                .addComponent (wallsStaminaLabel,4,0,20,1,layoutR,constraintsR,
+                        rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+        GridBagSetter
+                .addComponent (wallsStamina,5,5,20,1,layoutR,
+                        constraintsR,rightPanel);
+
+
+
+        basePanel.add(headerPanel,BorderLayout.NORTH);
+        basePanel.add (leftPanel,BorderLayout.WEST);
+        basePanel.add (new JSeparator (SwingConstants.VERTICAL),BorderLayout.CENTER);
+        basePanel.add (rightPanel,BorderLayout.EAST);
+        basePanel.add (create,BorderLayout.SOUTH);
+
+        add (basePanel);
+
+    }
+
+
+    /**
+     * editing Slider
+     * @param slider slider
+     */
+    private void editSlider (JSlider slider)
+    {
+        slider.setMinorTickSpacing (10);
+        slider.setSnapToTicks (true);
+        slider.setToolTipText (slider.getValue () + " %");
+        slider.setPaintTicks (true);
     }
 
     /**
@@ -242,33 +299,33 @@ public class CreateNewGamePanel extends JPanel
         public void itemStateChanged (ItemEvent e) {
             if (e.getStateChange () == ItemEvent.SELECTED)
             {
-                if (e.getSource () == teamPlayer)
-                {
-                    if (teamPlayer.isSelected ())
-                    {
-                        if ((int)(numOfPlayers.getValue ()) % 2 == 1)
-                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
-
-                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-                                ,1,100,2));
-                        ((JSpinner.DefaultEditor)numOfPlayers.
-                                getEditor ()).getTextField ().setEditable (false);
-                        ((JSpinner.DefaultEditor)numOfPlayers.
-                                getEditor ()).getTextField ().setFocusable (false);
-                    }
-                } else if (e.getSource () == singlePlayer)
-                {
-                    if (singlePlayer.isSelected ())
-                    {
-                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-                                ,1,100,1));
-                        ((JSpinner.DefaultEditor)numOfPlayers.
-                                getEditor ()).getTextField ().setEditable (false);
-                        ((JSpinner.DefaultEditor)numOfPlayers.
-                                getEditor ()).getTextField ().setFocusable (false);
-                    }
-
-                }
+//                if (e.getSource () == teamPlayer)
+//                {
+//                    if (teamPlayer.isSelected ())
+//                    {
+//                        if ((int)(numOfPlayers.getValue ()) % 2 == 1)
+//                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
+//
+//                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+//                                ,1,100,2));
+//                        ((JSpinner.DefaultEditor)numOfPlayers.
+//                                getEditor ()).getTextField ().setEditable (false);
+//                        ((JSpinner.DefaultEditor)numOfPlayers.
+//                                getEditor ()).getTextField ().setFocusable (false);
+//                    }
+//                } else if (e.getSource () == singlePlayer)
+//                {
+//                    if (singlePlayer.isSelected ())
+//                    {
+//                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+//                                ,1,100,1));
+//                        ((JSpinner.DefaultEditor)numOfPlayers.
+//                                getEditor ()).getTextField ().setEditable (false);
+//                        ((JSpinner.DefaultEditor)numOfPlayers.
+//                                getEditor ()).getTextField ().setFocusable (false);
+//                    }
+//
+//                }
             }
 
         }
@@ -308,7 +365,29 @@ public class CreateNewGamePanel extends JPanel
                 if (!checkData ())
                     return;
                 System.out.println ("created");
+            }
+        }
+    }
 
+    private class MouseHandler extends MouseAdapter
+    {
+        @Override
+        public void mouseEntered (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back2.png"));
+        }
+
+        @Override
+        public void mouseExited (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back1.png"));
+        }
+
+        @Override
+        public void mouseReleased (MouseEvent e) {
+            if (e.getSource () == back)
+            {
+                System.out.println ("back");
             }
         }
     }
