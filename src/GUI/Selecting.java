@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 public class Selecting extends JPanel
 {
+    JLabel temp;
     private JLabel down; // left button
     private JLabel mode; // mode
     private JLabel up; // right button
@@ -44,7 +45,6 @@ public class Selecting extends JPanel
         MouseHandler mouseHandler = new MouseHandler();
 
         setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
-        //setBackground(new Color(0.0f, 0.0f, 0.0f, 0.5f));
         setBackground(backGround);
         setOpaque(true);
 
@@ -53,7 +53,7 @@ public class Selecting extends JPanel
         down.setForeground(Color.WHITE);
         down.setBackground(new Color(85,131,32));
         down.setOpaque(true);
-        down.setPreferredSize(new Dimension(80,40));
+        down.setPreferredSize(new Dimension(78,40));
         down.setHorizontalAlignment(JLabel.CENTER);
         down.addMouseListener(mouseHandler);
 
@@ -72,7 +72,7 @@ public class Selecting extends JPanel
         up.setForeground(Color.WHITE);
         up.setBackground(new Color(85,131,32));
         up.setOpaque(true);
-        up.setPreferredSize(new Dimension(80,40));
+        up.setPreferredSize(new Dimension(78,40));
         up.setHorizontalAlignment(JLabel.CENTER);
         up.addMouseListener(mouseHandler);
 
@@ -127,13 +127,91 @@ public class Selecting extends JPanel
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
+        public void mouseEntered(MouseEvent e)
+        {
+            if(e.getSource().equals(down) || e.getSource().equals(up))
+            {
+                if(e.getSource().equals(down))
+                    temp = down;
+                if(e.getSource().equals(up))
+                    temp = up;
+                Thread a = new Thread(new Runnable()
+               {
+                   @Override
+                   public void run()
+                   {
+                       for(int i=0;i<4;i++)
+                       {
 
+                           switch (i)
+                           {
+                               case 0 : temp.setBackground(new Color(71,112,27));
+                                break;
+                               case 1 : temp.setBackground(new Color(55,85,21));
+                                   break;
+                               case 2 : temp.setBackground(new Color(39,62,15));
+                                   break;
+                               case 3 : temp.setBackground(new Color(30,46,12));
+                                   break;
+                           }
+                           try
+                           {
+                               Thread.sleep(50);
+                           }
+                           catch (InterruptedException ex)
+                           {
+                               ex.printStackTrace();
+                           }
+                       }
+                   }
+               });
+               a.start();
+            }
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(MouseEvent e)
+        {
+            if(e.getSource().equals(down) || e.getSource().equals(up))
+            {
+                if(e.getSource().equals(down))
+                    temp = down;
+                if(e.getSource().equals(up))
+                    temp = up;
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for(int i=0;i<=4;i++)
+                        {
 
+                            switch (i)
+                            {
+                                case 0 : temp.setBackground(new Color(30,46,12));
+                                    break;
+                                case 1 : temp.setBackground(new Color(39,62,15));
+                                    break;
+                                case 2 : temp.setBackground(new Color(55,85,21));
+                                    break;
+                                case 3 : temp.setBackground(new Color(71,112,27));
+                                    break;
+                                case 4 : temp.setBackground(new Color(85,131,32));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
         }
 
         @Override
