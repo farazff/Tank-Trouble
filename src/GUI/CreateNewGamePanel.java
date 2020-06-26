@@ -27,7 +27,7 @@ public class CreateNewGamePanel extends JPanel
     private JSlider canonPower;
     private JSlider wallsStamina;
     private JButton create;
-    private JLabel cancel;
+    private JLabel back;
 
 
     /**
@@ -37,7 +37,7 @@ public class CreateNewGamePanel extends JPanel
     {
         super();
         setBorder (new EmptyBorder (10,10,10,10));
-        setLayout (new FlowLayout (FlowLayout.CENTER));
+        setLayout (new FlowLayout ());
         createBasePanel ();
         addComponentListener (new ComponentAdapter () {
             @Override
@@ -53,16 +53,49 @@ public class CreateNewGamePanel extends JPanel
     private void createBasePanel ()
     {
         ChangeHandler changeHandler = new ChangeHandler ();
-        JPanel basePanel = new JPanel ();
+        JPanel basePanel = new JPanel (new BorderLayout ());
+        JPanel leftPanel = new JPanel ();
+        JPanel rightPanel = new JPanel ();
 
         basePanel.setBackground (Color.WHITE);
         basePanel.setBorder (new LineBorder (Color.GRAY,6,true));
 
-        GridBagLayout layout = new GridBagLayout ();
-        GridBagConstraints constraints = new GridBagConstraints ();
-        basePanel.setLayout (layout);
+        rightPanel.setBackground (Color.WHITE);
+        leftPanel.setBackground (Color.WHITE);
+
+
+        GridBagLayout layoutL = new GridBagLayout ();
+        GridBagConstraints constraintsL = new GridBagConstraints ();
+        leftPanel.setLayout (layoutL);
+
+        GridBagLayout layoutR = new GridBagLayout ();
+        GridBagConstraints constraintsR = new GridBagConstraints ();
+        rightPanel.setLayout (layoutR);
 
         JLabel header = new JLabel ("New Game");
+        JPanel headerPanel = new JPanel ();
+
+
+        headerPanel.setLayout (new GridLayout (1,3));
+        headerPanel.setBackground (Color.GRAY);
+
+        back = new JLabel (new ImageIcon ("./Images/back1.png"));
+        back.addMouseListener (new MouseHandler ());
+
+
+
+        headerPanel.add (back);
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (header);
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel (" "));
+
+
+        header.setPreferredSize (new Dimension (100,60));
         header.setForeground (Color.WHITE);
         header.setOpaque (true);
         header.setBackground (Color.GRAY);
@@ -138,86 +171,95 @@ public class CreateNewGamePanel extends JPanel
         create = new JButton ("Create!");
         create.setFont (new Font ("arial",Font.PLAIN,18));
         create.addActionListener (new ActionHandler ());
-        constraints.fill = GridBagConstraints.BOTH;
+        create.setPreferredSize (new Dimension (100,50));
+        constraintsL.fill = GridBagConstraints.BOTH;
+
+        constraintsL.ipadx = 200;
+        constraintsL.ipady = 7;
+        constraintsL.insets = new Insets (10,5,12,5);
+        GridBagSetter
+                .addComponent (gameName,0,0,5,1,layoutL,constraintsL,leftPanel);
 
 
-        constraints.insets = new Insets (0,0,17,0);
-
-
-        constraints.ipadx = 70;
-        constraints.ipady = 20;
-        GridBagSetter.addComponent (header,0,1,19,3,layout,constraints,basePanel);
-
-        constraints.ipady = 7;
-        constraints.insets = new Insets (0,5,12,5);
         GridBagSetter
-                .addComponent (gameName,3,0,5,1,layout,constraints,basePanel);
+                .addComponent (gameNameTextField,0,5,15,1,
+                        layoutL,constraintsL,leftPanel);
 
         GridBagSetter
-                .addComponent (gameNameTextField,3,5,15,1,
-                        layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (playersType,4,0,20,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,95,12,35);
-        constraints.insets = new Insets (0,15,15,15);
-        constraints.ipadx = 0;
-        constraints.ipady = 0;
+                .addComponent (playersType,1,0,20,1,layoutL,constraintsL,leftPanel);
+
+        constraintsL.insets = new Insets (0,15,15,15);
+        constraintsL.ipadx = 0;
+        constraintsL.ipady = 0;
 
         GridBagSetter
-                .addComponent (typeOfPlaying,5,0,20,1,layout,constraints,basePanel);
-        constraints.ipady = 7;
-        constraints.ipadx = 70;
-        constraints.insets = new Insets (0,5,12,5);
+                .addComponent (typeOfPlaying,2,0,20,1,layoutL,constraintsL,leftPanel);
+        constraintsL.ipady = 7;
+        constraintsL.ipadx = 200;
+        constraintsL.insets = new Insets (0,5,12,5);
 
         GridBagSetter
-                .addComponent (endType,6,0,20,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (0,15,15,15);
-        constraints.ipadx = 0;
-        constraints.ipady = 0;
+                .addComponent (endType,3,0,20,1,layoutL,constraintsL,leftPanel);
+        constraintsL.insets = new Insets (0,15,15,15);
+        constraintsL.ipadx = 0;
+        constraintsL.ipady = 0;
         GridBagSetter
-                .addComponent (endTypeOfPlaying,7,0,20,1,
-                        layout,constraints,basePanel);
-        constraints.ipady = 7;
-        constraints.insets = new Insets (0,5,12,5);
+                .addComponent (endTypeOfPlaying,4,0,20,1,
+                        layoutL,constraintsL,leftPanel);
+        constraintsL.ipady = 7;
+        constraintsL.insets = new Insets (20,5,12,5);
         GridBagSetter
-                .addComponent (numberOfPlayers,8,0,8,
-                        1,layout,constraints,basePanel);
-        constraints.ipadx = 0;
-        constraints.insets = new Insets (0,135,12,5);
+                .addComponent (numberOfPlayers,5,0,8,
+                        1,layoutL,constraintsL,leftPanel);
+        constraintsL.ipadx = 0;
+        constraintsL.insets = new Insets (20,135,12,5);
         GridBagSetter
-                .addComponent (numOfPlayers,8,8,10,1,layout,constraints,basePanel);
-        constraints.insets = new Insets (12,5,12,5);
-        constraints.ipady = 7;
-        constraints.ipadx = 70;
-        constraints.insets = new Insets (0,5,12,5);
-        GridBagSetter
-                .addComponent (new JSeparator (SwingConstants.HORIZONTAL),9,0,20,1,
-                        layout,constraints,basePanel);
-        GridBagSetter
-                .addComponent (tanksStaminaLabel,10,0,20,1,
-                        layout,constraints,basePanel);
-        constraints.insets = new Insets (0,5,12,5);
-        GridBagSetter
-                .addComponent (tanksStamina,11,5,15,1,layout,
-                        constraints,basePanel);
-
-        GridBagSetter
-                .addComponent (canonPowerLabel,12,0,20,1,layout,
-                        constraints,basePanel);
-        GridBagSetter
-                .addComponent (canonPower,13,5,15,1,layout,constraints,
-                        basePanel);
-        GridBagSetter
-                .addComponent (wallsStaminaLabel,14,0,20,1,layout,constraints,
-                        basePanel);
-        GridBagSetter
-                .addComponent (wallsStamina,15,5,15,1,layout,
-                        constraints,basePanel);
-        GridBagSetter
-                .addComponent (create,16,0,20,5,layout,constraints,basePanel);
+                .addComponent (numOfPlayers,5,8,10,1,layoutL,constraintsL,leftPanel);
 
 
-        add(new JScrollPane (basePanel));
+
+        constraintsR.fill = GridBagConstraints.BOTH;
+        constraintsR.ipady = 7;
+        constraintsR.ipadx = 150;
+        constraintsR.insets = new Insets (10,5,18,5);
+
+        GridBagSetter
+                .addComponent (tanksStaminaLabel,0,0,20,1,
+                        layoutR,constraintsR,rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+
+        GridBagSetter
+                .addComponent (tanksStamina,1,5,20,1,layoutR,
+                        constraintsR,rightPanel);
+
+        constraintsR.insets = new Insets (30,5,18,5);
+        GridBagSetter
+                .addComponent (canonPowerLabel,2,0,20,1,layoutR,
+                        constraintsR,rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+        GridBagSetter
+                .addComponent (canonPower,3,5,20,1,layoutR,constraintsR,
+                        rightPanel);
+
+        constraintsR.insets = new Insets (30,5,18,5);
+        GridBagSetter
+                .addComponent (wallsStaminaLabel,4,0,20,1,layoutR,constraintsR,
+                        rightPanel);
+        constraintsR.insets = new Insets (0,5,18,5);
+        GridBagSetter
+                .addComponent (wallsStamina,5,5,20,1,layoutR,
+                        constraintsR,rightPanel);
+
+
+
+        basePanel.add(headerPanel,BorderLayout.NORTH);
+        basePanel.add (leftPanel,BorderLayout.WEST);
+        basePanel.add (new JSeparator (SwingConstants.VERTICAL),BorderLayout.CENTER);
+        basePanel.add (rightPanel,BorderLayout.EAST);
+        basePanel.add (create,BorderLayout.SOUTH);
+
+        add (basePanel);
+
     }
 
 
@@ -323,7 +365,29 @@ public class CreateNewGamePanel extends JPanel
                 if (!checkData ())
                     return;
                 System.out.println ("created");
+            }
+        }
+    }
 
+    private class MouseHandler extends MouseAdapter
+    {
+        @Override
+        public void mouseEntered (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back2.png"));
+        }
+
+        @Override
+        public void mouseExited (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back1.png"));
+        }
+
+        @Override
+        public void mouseReleased (MouseEvent e) {
+            if (e.getSource () == back)
+            {
+                System.out.println ("back");
             }
         }
     }
