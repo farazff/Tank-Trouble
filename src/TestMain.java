@@ -23,7 +23,7 @@ public class TestMain
         GameWithPC gameWithPC = new GameWithPC();
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
-        frame.setContentPane (signUpPanel);
+        frame.setContentPane (newGamePanel);
         frame.setLocation (0,0);
 
         frame.setSize (750,680);
