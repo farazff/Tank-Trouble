@@ -25,7 +25,7 @@ public class TestMain
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
 
-        frame.setContentPane (newGamePanel);
+        frame.setContentPane (gameWithPC);
 
         frame.setLocation (0,0);
 

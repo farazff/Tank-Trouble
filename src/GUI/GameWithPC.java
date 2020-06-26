@@ -43,9 +43,12 @@ public class GameWithPC extends JPanel
         ArrayList<String> dataMode = new ArrayList<>();
         dataMode.add("Death Match");
         dataMode.add("League Match");
-        Selecting selectMode = new Selecting(dataMode,0);
+        Selecting selectMode =
+                new Selecting(dataMode,0,new Color(0.0f, 0.0f, 0.0f, 0.5f),
+                        new Color(201,133,41),new Font("Arial",Font.BOLD,20));
         add(selectMode);
 
+        /*
         JLabel titleTank = new JLabel(" Tank Stamina: ");
         titleTank.setForeground(Color.WHITE);
         titleTank.setFont (new Font ("Arial",Font.BOLD,25));
@@ -101,6 +104,8 @@ public class GameWithPC extends JPanel
         start.setPreferredSize(new Dimension(200,50));
         startButton.add(start);
         add(startButton);
+
+         */
 
     }
     @Override
