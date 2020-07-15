@@ -1,4 +1,7 @@
-import GUI.*;
+import GUI.CreateNewGamePanel;
+import GUI.GameWithPC;
+import GUI.LoginPanel;
+import GUI.SignUpPanel;
 
 import javax.swing.*;
 
@@ -19,12 +22,10 @@ public class TestMain
         LoginPanel loginPanel = new LoginPanel ();
         SignUpPanel signUpPanel = new SignUpPanel ();
         GameWithPC gameWithPC = new GameWithPC();
-        ServerPanel serverPanel = new ServerPanel
-                ("url","Crename",23,12);
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
 
-        frame.setContentPane (serverPanel);
+        frame.setContentPane (newGamePanel);
 
         frame.setLocation (0,0);
 

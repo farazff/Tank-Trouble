@@ -19,9 +19,14 @@ import java.util.ArrayList;
  */
 public class Selecting extends JPanel
 {
+    JLabel temp;
     private JLabel down; // left button
     private JLabel mode; // mode
     private JLabel up; // right button
+    private Color backGround; // color of the background of JPanel
+    private Color middlePart; // color of the JLabel where the text is
+    private Font font; // the font of the panel
+
 
     private ArrayList<String> data; // the choices that we can select
     private int dataCounter; // the number of the data that is on the screen
@@ -30,41 +35,44 @@ public class Selecting extends JPanel
      * constructor of the class
      * @param data the array list containing the choices of that data
      */
-    public Selecting(ArrayList<String> data , int dataCounter)
+    public Selecting(ArrayList<String> data , int dataCounter , Color backGround , Color middlePart , Font font)
     {
         this.data = data;
         this.dataCounter = dataCounter;
+        this.backGround = backGround;
+        this.middlePart = middlePart;
+        this.font = font;
         MouseHandler mouseHandler = new MouseHandler();
 
         setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
-        setBackground(new Color(0.0f, 0.0f, 0.0f, 0.5f));
+        setBackground(backGround);
         setOpaque(true);
 
         down = new JLabel("<");
-        down.setFont(new Font("Arial",Font.BOLD,20));
+        down.setFont(font);
         down.setForeground(Color.WHITE);
         down.setBackground(new Color(85,131,32));
         down.setOpaque(true);
-        down.setPreferredSize(new Dimension(80,40));
+        down.setPreferredSize(new Dimension(78,40));
         down.setHorizontalAlignment(JLabel.CENTER);
         down.addMouseListener(mouseHandler);
 
 
         mode = new JLabel(data.get(dataCounter));
-        mode.setFont(new Font("Arial",Font.BOLD,20));
+        mode.setFont(font);
         mode.setForeground(Color.WHITE);
-        mode.setBackground(new Color(201,133,41));
+        mode.setBackground(middlePart);
         mode.setOpaque(true);
         mode.setPreferredSize(new Dimension(200,40));
         mode.setHorizontalAlignment(JLabel.CENTER);
 
 
         up = new JLabel(">");
-        up.setFont(new Font("Arial",Font.BOLD,20));
+        up.setFont(font);
         up.setForeground(Color.WHITE);
         up.setBackground(new Color(85,131,32));
         up.setOpaque(true);
-        up.setPreferredSize(new Dimension(80,40));
+        up.setPreferredSize(new Dimension(78,40));
         up.setHorizontalAlignment(JLabel.CENTER);
         up.addMouseListener(mouseHandler);
 
@@ -119,13 +127,91 @@ public class Selecting extends JPanel
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
+        public void mouseEntered(MouseEvent e)
+        {
+            if(e.getSource().equals(down) || e.getSource().equals(up))
+            {
+                if(e.getSource().equals(down))
+                    temp = down;
+                if(e.getSource().equals(up))
+                    temp = up;
+                Thread a = new Thread(new Runnable()
+               {
+                   @Override
+                   public void run()
+                   {
+                       for(int i=0;i<4;i++)
+                       {
 
+                           switch (i)
+                           {
+                               case 0 : temp.setBackground(new Color(71,112,27));
+                                break;
+                               case 1 : temp.setBackground(new Color(55,85,21));
+                                   break;
+                               case 2 : temp.setBackground(new Color(39,62,15));
+                                   break;
+                               case 3 : temp.setBackground(new Color(30,46,12));
+                                   break;
+                           }
+                           try
+                           {
+                               Thread.sleep(50);
+                           }
+                           catch (InterruptedException ex)
+                           {
+                               ex.printStackTrace();
+                           }
+                       }
+                   }
+               });
+               a.start();
+            }
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(MouseEvent e)
+        {
+            if(e.getSource().equals(down) || e.getSource().equals(up))
+            {
+                if(e.getSource().equals(down))
+                    temp = down;
+                if(e.getSource().equals(up))
+                    temp = up;
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for(int i=0;i<=4;i++)
+                        {
 
+                            switch (i)
+                            {
+                                case 0 : temp.setBackground(new Color(30,46,12));
+                                    break;
+                                case 1 : temp.setBackground(new Color(39,62,15));
+                                    break;
+                                case 2 : temp.setBackground(new Color(55,85,21));
+                                    break;
+                                case 3 : temp.setBackground(new Color(71,112,27));
+                                    break;
+                                case 4 : temp.setBackground(new Color(85,131,32));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
         }
 
         @Override

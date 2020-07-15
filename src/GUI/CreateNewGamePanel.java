@@ -128,13 +128,15 @@ public class CreateNewGamePanel extends JPanel
         ArrayList<String> dataMode = new ArrayList<>();
         dataMode.add("Death Match");
         dataMode.add("League Match");
-        endTypeOfPlaying = new Selecting(dataMode,0);
+        endTypeOfPlaying = new Selecting(dataMode,0,new Color(0.0f, 0.0f, 0.0f, 0.5f),
+                new Color(201,133,41),new Font("Arial",Font.BOLD,20));
 
 
         ArrayList<String> dataMode1 = new ArrayList<>();
         dataMode1.add("Single Player");
         dataMode1.add("Team Player");
-        typeOfPlaying = new Selecting(dataMode1,0);
+        typeOfPlaying = new Selecting(dataMode1,0,new Color(0.0f, 0.0f, 0.0f, 0.5f),
+                new Color(201,133,41),new Font("Arial",Font.BOLD,20));
 
         JLabel numberOfPlayers = new JLabel ("Number Of Players:");
         numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,15));
