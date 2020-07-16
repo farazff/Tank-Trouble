@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Amir Naziri
  */
-public class CreateNewGamePanel extends JPanel
+public class CreateNewMultiGame extends JPanel
 {
     private JTextField gameNameTextField; // name of game
     private JSpinner numOfPlayers; // number of players
@@ -33,7 +33,7 @@ public class CreateNewGamePanel extends JPanel
     /**
      * create a new game panel
      */
-    public CreateNewGamePanel ()
+    public CreateNewMultiGame ()
     {
         super();
         setBorder (new EmptyBorder (10,10,10,10));
@@ -72,11 +72,11 @@ public class CreateNewGamePanel extends JPanel
         GridBagConstraints constraintsR = new GridBagConstraints ();
         rightPanel.setLayout (layoutR);
 
-        JLabel header = new JLabel ("New Game");
+        JLabel header = new JLabel ("Create New MultiPlayer Game");
         JPanel headerPanel = new JPanel ();
 
 
-        headerPanel.setLayout (new GridLayout (1,3));
+        headerPanel.setLayout (new FlowLayout (FlowLayout.LEFT));
         headerPanel.setBackground (Color.GRAY);
 
         back = new JLabel (new ImageIcon ("./Images/back1.png"));
@@ -85,17 +85,15 @@ public class CreateNewGamePanel extends JPanel
 
 
         headerPanel.add (back);
-        headerPanel.add (new JLabel (" "));
-        headerPanel.add (new JLabel (" "));
-        headerPanel.add (new JLabel (" "));
+        headerPanel.add (new JLabel ("                              "));
+        headerPanel.add (new JLabel ("                              "));
+        headerPanel.add (new JLabel ("                              "));
         headerPanel.add (header);
-        headerPanel.add (new JLabel (" "));
-        headerPanel.add (new JLabel (" "));
-        headerPanel.add (new JLabel (" "));
-        headerPanel.add (new JLabel (" "));
 
 
-        header.setPreferredSize (new Dimension (100,60));
+
+
+        header.setPreferredSize (new Dimension (300,60));
         header.setForeground (Color.WHITE);
         header.setOpaque (true);
         header.setBackground (Color.GRAY);
@@ -110,6 +108,7 @@ public class CreateNewGamePanel extends JPanel
         gameNameTextField.setBorder (BorderFactory.createCompoundBorder (new
                         LineBorder (Color.LIGHT_GRAY,3,true),
                 new EmptyBorder (5,5,3,5)));
+        gameNameTextField.setPreferredSize (new Dimension (10,35));
 
 
         JLabel playersType = new JLabel ("Type  Of  Playing");
@@ -128,15 +127,15 @@ public class CreateNewGamePanel extends JPanel
         ArrayList<String> dataMode = new ArrayList<>();
         dataMode.add("Death Match");
         dataMode.add("League Match");
-        endTypeOfPlaying = new Selecting(dataMode,0,new Color(0.0f, 0.0f, 0.0f, 0.5f),
-                new Color(201,133,41),new Font("Arial",Font.BOLD,20));
+        endTypeOfPlaying = new Selecting(dataMode,0,Color.WHITE,
+                Color.GRAY,new Font("Arial",Font.BOLD,16));
 
 
         ArrayList<String> dataMode1 = new ArrayList<>();
         dataMode1.add("Single Player");
         dataMode1.add("Team Player");
-        typeOfPlaying = new Selecting(dataMode1,0,new Color(0.0f, 0.0f, 0.0f, 0.5f),
-                new Color(201,133,41),new Font("Arial",Font.BOLD,20));
+        typeOfPlaying = new Selecting(dataMode1,0,Color.WHITE,
+                Color.GRAY,new Font("Arial",Font.BOLD,16));
 
         JLabel numberOfPlayers = new JLabel ("Number Of Players:");
         numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,15));
@@ -180,43 +179,46 @@ public class CreateNewGamePanel extends JPanel
         constraintsL.ipady = 7;
         constraintsL.insets = new Insets (10,5,12,5);
         GridBagSetter
-                .addComponent (gameName,0,0,5,1,layoutL,constraintsL,leftPanel);
+                .addComponent
+                        (new JLabel (" "),0,0,20,1,layoutL,constraintsL,leftPanel);
+        GridBagSetter
+                .addComponent (gameName,1,0,5,1,layoutL,constraintsL,leftPanel);
 
 
         GridBagSetter
-                .addComponent (gameNameTextField,0,5,15,1,
+                .addComponent (gameNameTextField,1,5,13,1,
                         layoutL,constraintsL,leftPanel);
 
         GridBagSetter
-                .addComponent (playersType,1,0,20,1,layoutL,constraintsL,leftPanel);
+                .addComponent (playersType,2,0,20,1,layoutL,constraintsL,leftPanel);
 
         constraintsL.insets = new Insets (0,15,15,15);
         constraintsL.ipadx = 0;
         constraintsL.ipady = 0;
 
         GridBagSetter
-                .addComponent (typeOfPlaying,2,0,20,1,layoutL,constraintsL,leftPanel);
+                .addComponent (typeOfPlaying,3,0,20,1,layoutL,constraintsL,leftPanel);
         constraintsL.ipady = 7;
         constraintsL.ipadx = 200;
         constraintsL.insets = new Insets (0,5,12,5);
 
         GridBagSetter
-                .addComponent (endType,3,0,20,1,layoutL,constraintsL,leftPanel);
+                .addComponent (endType,4,0,20,1,layoutL,constraintsL,leftPanel);
         constraintsL.insets = new Insets (0,15,15,15);
         constraintsL.ipadx = 0;
         constraintsL.ipady = 0;
         GridBagSetter
-                .addComponent (endTypeOfPlaying,4,0,20,1,
+                .addComponent (endTypeOfPlaying,5,0,20,1,
                         layoutL,constraintsL,leftPanel);
         constraintsL.ipady = 7;
         constraintsL.insets = new Insets (20,5,12,5);
         GridBagSetter
-                .addComponent (numberOfPlayers,5,0,8,
+                .addComponent (numberOfPlayers,6,0,8,
                         1,layoutL,constraintsL,leftPanel);
         constraintsL.ipadx = 0;
         constraintsL.insets = new Insets (20,135,12,5);
         GridBagSetter
-                .addComponent (numOfPlayers,5,8,10,1,layoutL,constraintsL,leftPanel);
+                .addComponent (numOfPlayers,6,8,10,1,layoutL,constraintsL,leftPanel);
 
 
 
@@ -271,10 +273,9 @@ public class CreateNewGamePanel extends JPanel
      */
     private void editSlider (JSlider slider)
     {
-        slider.setMinorTickSpacing (10);
-        slider.setSnapToTicks (true);
-        slider.setToolTipText (slider.getValue () + " %");
-        slider.setPaintTicks (true);
+        slider.setMajorTickSpacing(10);
+        slider.setPaintLabels(true);
+        slider.setSnapToTicks(true);
     }
 
     /**
