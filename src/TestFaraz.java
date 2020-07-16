@@ -1,4 +1,5 @@
 import GUI.*;
+import Setting.Setting;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -37,13 +38,14 @@ public class TestFaraz
         serverPanels.add (serverPanel4);
         serverPanels.add (serverPanel5);
 
-        frame.setContentPane (new ServerListPanel (serverPanels));
+        frame.setContentPane (new Setting());
+        frame.pack();
 
 
 
         frame.setLocation (0,0);
 
-        frame.setSize ((720 * 16) / 9,720);
+        //frame.setSize ((720 * 16) / 9,720);
 
 
         frame.setVisible (true);
