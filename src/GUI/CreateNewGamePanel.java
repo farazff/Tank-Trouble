@@ -371,6 +371,9 @@ public class CreateNewGamePanel extends JPanel
         }
     }
 
+    /**
+     * this class handles Mouse
+     */
     private class MouseHandler extends MouseAdapter
     {
         @Override

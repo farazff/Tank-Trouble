@@ -25,7 +25,11 @@ public class TestMain
         CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
 
 
-        frame.setContentPane (loginPanel);
+//<<<<<<< HEAD
+        frame.setContentPane ();
+//=======
+        //frame.setContentPane (newGamePanel);
+//>>>>>>> fc532b336a7eab2d3f338de011b2d3115a9fa68b
 
         frame.setLocation (0,0);
 
