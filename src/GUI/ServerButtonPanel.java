@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class ServerPanel extends JPanel
+public class ServerButtonPanel extends ButtonPanel
 {
     private JLabel url;
     private JLabel creatorName;
@@ -11,21 +11,19 @@ public class ServerPanel extends JPanel
     private JLabel numOfActiveGames;
 
 
-    public ServerPanel (String url, String creatorName, int numOfActiveGames)
+    public ServerButtonPanel (String url, String creatorName, int numOfActiveGames)
     {
         super();
-        setLayout (new FlowLayout (FlowLayout.LEFT));
         this.url = new JLabel ("Url : " + url);
         this.url.setFont (new Font ("Arial",Font.PLAIN,15));
         this.creatorName = new JLabel ("Owner : " + creatorName);
         this.creatorName.setFont (new Font ("Arial",Font.PLAIN,15));
         this.numOfActiveGames = new JLabel ("ActiveGames : " + numOfActiveGames);
         this.numOfActiveGames.setFont (new Font ("Arial",Font.PLAIN,15));
-
         createBasePanel ();
     }
 
-    private void createBasePanel ()
+    protected void createBasePanel ()
     {
         setBackground (Color.GRAY);
         add (url);
@@ -37,17 +35,17 @@ public class ServerPanel extends JPanel
 
     @Override
     public Dimension getMinimumSize () {
-        return new Dimension (350,32);
+        return new Dimension (450,34);
     }
 
     @Override
     public Dimension getMaximumSize () {
-        return new Dimension (720,32);
+        return new Dimension (1800,34);
     }
 
     @Override
     public Dimension getPreferredSize () {
-        return new Dimension (350,32);
+        return new Dimension (450,34);
     }
 
 }
