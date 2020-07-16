@@ -1,10 +1,7 @@
-import GUI.CreateNewGamePanel;
-import GUI.GameWithPC;
-import GUI.LoginPanel;
-import GUI.SignUpPanel;
+import GUI.*;
 
 import javax.swing.*;
-
+import java.util.ArrayList;
 
 
 public class TestMain
@@ -19,13 +16,28 @@ public class TestMain
         }
 
         JFrame frame = new JFrame ();
-        LoginPanel loginPanel = new LoginPanel ();
-        SignUpPanel signUpPanel = new SignUpPanel ();
+
         GameWithPC gameWithPC = new GameWithPC();
-        CreateNewGamePanel newGamePanel = new CreateNewGamePanel ();
+        CreateNewMultiGame newGamePanel = new CreateNewMultiGame ();
+        ServerPanel serverPanel = new ServerPanel ("www.google.com","Amir"
+                ,32);
+        ServerPanel serverPanel2 = new ServerPanel ("www.google.com","Amir"
+                ,32);
+        ServerPanel serverPanel3 = new ServerPanel ("www.google.com","Amir"
+                ,32);
+        ServerPanel serverPanel4 = new ServerPanel ("www.google.com","Amir"
+                ,32);
+        ServerPanel serverPanel5 = new ServerPanel ("www.google.com","Amir"
+                ,32);
 
+        ArrayList<ServerPanel> serverPanels = new ArrayList<> ();
+        serverPanels.add (serverPanel);
+        serverPanels.add (serverPanel2);
+        serverPanels.add (serverPanel3);
+        serverPanels.add (serverPanel4);
+        serverPanels.add (serverPanel5);
 
-        frame.setContentPane (newGamePanel);
+        frame.setContentPane (new ServerListPanel (serverPanels));
 
         frame.setLocation (0,0);
 
