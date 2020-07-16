@@ -1,6 +1,8 @@
 package GUI.Setting;
 
 
+import GUI.PictureJLabel;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class Setting extends JPanel
         return this;
     }
 
+    private PictureJLabel pictureJLabel = new PictureJLabel("Images/Setting.jpg");
     private ColorJLabel userInfo;
     private ColorJLabel defaults;
     private JPanel userInfoPanel;
@@ -25,15 +28,15 @@ public class Setting extends JPanel
     private JPanel tempCanon;
     private JSlider sliderWall;
     private JPanel tempWall;
-    private JButton setDefault;
-    private JButton save;
+    private JLabel setDefault;
+    private JLabel save;
 
     private MouseHandler mouse = new MouseHandler();
 
     public Setting()
     {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(1000,600));
+        this.setPreferredSize(new Dimension(800,600));
         createLeft();
         createMain();
     }
@@ -95,11 +98,22 @@ public class Setting extends JPanel
         sliderWall.setPreferredSize(new Dimension(500,100));
         tempWall.add(sliderWall);
 
-        setDefault = new JButton("Set Default");
+        setDefault = new JLabel("Set as Default",JLabel.CENTER);
+        setDefault.addMouseListener(mouse);
+        setDefault.setBackground(Color.PINK);
+        setDefault.setOpaque(true);
         setDefault.setPreferredSize(new Dimension(250,50));
-        save = new JButton("save");
+        setDefault.setFont(new Font("Arial",Font.PLAIN,20));
 
-        JPanel buttons = new JPanel(new GridLayout(1,2));
+
+        save = new JLabel("save",JLabel.CENTER);
+        save.addMouseListener(mouse);
+        save.setBackground(Color.PINK);
+        save.setOpaque(true);
+        save.setPreferredSize(new Dimension(250,50));
+        save.setFont(new Font("Arial",Font.PLAIN,20));
+
+        JPanel buttons = new JPanel(new FlowLayout());
         buttons.setOpaque(false);
         buttons.add(setDefault);
         buttons.add(save);
@@ -111,6 +125,8 @@ public class Setting extends JPanel
         defaultsPanel.add(wall);
         defaultsPanel.add(tempWall);
         defaultsPanel.add(buttons);
+
+        this.add(pictureJLabel,BorderLayout.CENTER);
     }
 
     private void createLeft()
@@ -129,6 +145,7 @@ public class Setting extends JPanel
         left.add(userInfo);
         left.add(defaults);
     }
+
 
     private class MouseHandler implements MouseListener
     {
@@ -150,6 +167,7 @@ public class Setting extends JPanel
         {
             if(e.getSource().equals(userInfo))
             {
+                getPanel().remove(pictureJLabel);
                 getPanel().remove(defaultsPanel);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
@@ -157,10 +175,17 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(defaults))
             {
+                getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
+            }
+            if(e.getSource().equals(setDefault))
+            {
+                sliderTank.setValue(100);
+                sliderCanon.setValue(100);
+                sliderWall.setValue(100);
             }
         }
 
@@ -171,7 +196,8 @@ public class Setting extends JPanel
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(MouseEvent e)
+        {
 
         }
     }
