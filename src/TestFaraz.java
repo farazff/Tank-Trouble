@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 
-public class TestMain
+public class TestFaraz
 {
     public static void main (String[] args) {
 
@@ -38,6 +38,8 @@ public class TestMain
         serverPanels.add (serverPanel5);
 
         frame.setContentPane (new ServerListPanel (serverPanels));
+
+
 
         frame.setLocation (0,0);
 
