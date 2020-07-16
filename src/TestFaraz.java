@@ -1,5 +1,5 @@
 import GUI.*;
-import Setting.Setting;
+import GUI.Setting.Setting;
 
 import javax.swing.*;
 import java.util.ArrayList;

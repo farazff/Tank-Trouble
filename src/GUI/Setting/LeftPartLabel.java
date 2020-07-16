@@ -1,4 +1,4 @@
-package Setting;
+package GUI.Setting;
 
 import javax.swing.*;
 import java.awt.*;
