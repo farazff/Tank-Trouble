@@ -1,13 +1,11 @@
 package GUI;
 
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
 
 public class Loading extends JPanel
 {
@@ -19,12 +17,6 @@ public class Loading extends JPanel
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0,60,60,60));
 
-
-
-
-
-
-
         progress = new JProgressBar(JProgressBar.HORIZONTAL,0,100);
         progress.setStringPainted(true);
         progress.setString("Loading...");
@@ -35,11 +27,8 @@ public class Loading extends JPanel
     }
 
 
-
-
     public void fill()
     {
-
         Thread a = new Thread(new Runnable()
         {
             @Override
@@ -67,14 +56,13 @@ public class Loading extends JPanel
         a.run();
     }
 
-
     @Override
     protected void paintComponent (Graphics g)
     {
         super.paintComponent (g);
         try
         {
-            g.drawImage (ImageIO.read (new File("C:\\Users\\ffara\\Desktop\\e.jpg")).
+            g.drawImage (ImageIO.read (new File("Images/Loading.jpg")).
                     getScaledInstance (getWidth (),getHeight (),Image.SCALE_FAST),0,0,this);
         }
         catch (IOException e)
