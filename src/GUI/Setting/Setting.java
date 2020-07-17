@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.*;
 
 public class Setting extends JPanel
 {
@@ -31,14 +32,54 @@ public class Setting extends JPanel
     private JLabel setDefault;
     private JLabel save;
 
+    private int tank;
+    private int canon;
+    private int wallfirst;
+
+
     private MouseHandler mouse = new MouseHandler();
 
     public Setting()
     {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
+        readFile();
         createLeft();
         createMain();
+    }
+
+    public void readFile()
+    {
+        int num=0,i=1;
+        try
+        {
+            FileReader reader = new FileReader(new File("Files/Setting.txt"));
+            while(reader.ready())
+            {
+                char temp = (char)(reader.read());
+
+                if(temp=='\n')
+                {
+                    if(i==1)
+                        tank=num;
+                    if(i==2)
+                        canon=num;
+                    if(i==3)
+                        wallfirst=num;
+                    num = 0;
+                    i++;
+                }
+                else
+                {
+                    num = num*10 + Integer.parseInt(String.valueOf(temp));
+                }
+            }
+            reader.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void createMain()
@@ -70,7 +111,7 @@ public class Setting extends JPanel
         defaultsPanel.setOpaque(true);
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        sliderTank = new JSlider(50,150,100);
+        sliderTank = new JSlider(50,150,tank);
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
@@ -80,7 +121,7 @@ public class Setting extends JPanel
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        sliderCanon = new JSlider(50,150,100);
+        sliderCanon = new JSlider(50,150,canon);
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
@@ -90,7 +131,7 @@ public class Setting extends JPanel
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        sliderWall = new JSlider(50,150,100);
+        sliderWall = new JSlider(50,150,wallfirst);
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);
@@ -186,6 +227,25 @@ public class Setting extends JPanel
                 sliderTank.setValue(100);
                 sliderCanon.setValue(100);
                 sliderWall.setValue(100);
+            }
+            if(e.getSource().equals(save))
+            {
+                try
+                {
+                    FileWriter writer = new FileWriter(new File("Files/Setting.txt"));
+                    writer.write(Integer.toString(sliderTank.getValue()));
+                    writer.write("\n");
+                    writer.write(Integer.toString(sliderCanon.getValue()));
+                    writer.write("\n");
+                    writer.write(Integer.toString(sliderWall.getValue()));
+                    writer.write("\n");
+                    writer.close();
+                }
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+
             }
         }
 
