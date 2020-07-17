@@ -2,7 +2,7 @@ package GameData;
 
 import java.io.Serializable;
 
-public class NewMultiGameData implements Serializable
+public class MultiGame implements Serializable
 {
     private final String name;
     private final GameFinishType gameFinishType;
@@ -12,9 +12,9 @@ public class NewMultiGameData implements Serializable
     private final int wallStamina;
     private final int canonPower;
 
-    public NewMultiGameData (String name, GameFinishType gameFinishType,
-                             GameMemberShipType gameMemberShipType, int numberOfPlayers,
-                             int tankStamina, int wallStamina, int canonPower)
+    public MultiGame (String name, GameFinishType gameFinishType,
+                      GameMemberShipType gameMemberShipType, int numberOfPlayers,
+                      int tankStamina, int wallStamina, int canonPower)
     {
         this.name = name;
         this.canonPower = canonPower;

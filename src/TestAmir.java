@@ -1,4 +1,7 @@
 import GUI.*;
+import GUI.MultiGame.CreateNewMultiGame;
+import GUI.MultiGame.MultiGamePanel;
+import GUI.MultiGame.ServerButtonPanel;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,15 +20,15 @@ public class TestAmir {
 
         GameWithPC gameWithPC = new GameWithPC ();
         CreateNewMultiGame newGamePanel = new CreateNewMultiGame ();
-        ServerButtonPanel serverPanel = new ServerButtonPanel ("www.google.com", "Amir"
+        ServerButtonPanel serverPanel = new ServerButtonPanel ("www.google.com"
                 , 32);
-        ServerButtonPanel serverPanel2 = new ServerButtonPanel ("www.google.com", "Amir"
+        ServerButtonPanel serverPanel2 = new ServerButtonPanel ("www.google.com"
                 , 32);
-        ServerButtonPanel serverPanel3 = new ServerButtonPanel ("www.google.com", "Amir"
+        ServerButtonPanel serverPanel3 = new ServerButtonPanel ("www.google.com"
                 , 32);
-        ServerButtonPanel serverPanel4 = new ServerButtonPanel ("www.google.com", "Amir"
+        ServerButtonPanel serverPanel4 = new ServerButtonPanel ("www.google.com"
                 , 32);
-        ServerButtonPanel serverPanel5 = new ServerButtonPanel ("www.google.com", "Amir"
+        ServerButtonPanel serverPanel5 = new ServerButtonPanel ("www.google.com"
                 , 32);
 
         ArrayList<ButtonPanel> serverPanels = new ArrayList<> ();
@@ -35,7 +38,7 @@ public class TestAmir {
         serverPanels.add (serverPanel4);
         serverPanels.add (serverPanel5);
 
-        frame.setContentPane (new MultiGame (serverPanels));
+        frame.setContentPane (new MultiGamePanel (serverPanels));
 
 
 
