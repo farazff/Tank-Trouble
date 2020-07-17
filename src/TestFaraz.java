@@ -44,11 +44,11 @@ public class TestFaraz
         serverPanels.add (serverPanel5);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Loading temp = new Loading();
-        frame.setContentPane (temp);
+        //Loading temp = new Loading();
+        frame.add(new SignUpPanel(frame));
         frame.pack();
         frame.setLocation (230,60);
         frame.setVisible (true);
-        temp.fill();
+        //temp.fill();
     }
 }

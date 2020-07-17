@@ -25,13 +25,16 @@ public class SignUpPanel extends JPanel
     private JPasswordField password1; // password
     private JPasswordField password2; // check password
     private JButton signUp; // sign up button
+    private JButton cancel; // sign up button
+    private JFrame frame;
 
     /**
      * creates new sign up panel
      */
-    public SignUpPanel()
+    public SignUpPanel(JFrame frame)
     {
         super();
+        this.frame = frame;
         setBorder(new EmptyBorder (10,10,10,10));
         setLayout(new FlowLayout (FlowLayout.CENTER));
         createBasePanel ();
@@ -84,6 +87,9 @@ public class SignUpPanel extends JPanel
         signUp = new JButton("Sign up!");
         signUp.addActionListener(e -> checkData());
 
+        cancel = new JButton("Cancel!");
+        cancel.addActionListener(e -> ShowSignIn());
+
         // hint for entering the correct password
         JTextArea hint = new JTextArea("* Password must contain minimum 8 letters!! \n* Password must contain Both letters and numbers!!");
         hint.setFont(new Font("Arial",Font.ITALIC,10));
@@ -95,30 +101,31 @@ public class SignUpPanel extends JPanel
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
 
-        GridBagSetter.addComponent(header,0,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(header,0,0,4,1,layout,constraints,base);
 
         constraints.insets = new Insets(0,5 ,0 ,5 );
 
-        GridBagSetter.addComponent(userNameText,1,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(userNameText,1,0,4,1,layout,constraints,base);
 
-        GridBagSetter.addComponent(username,2,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(username,2,0,4,1,layout,constraints,base);
 
-        GridBagSetter.addComponent(password1text,3,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(password1text,3,0,4,1,layout,constraints,base);
 
-        GridBagSetter.addComponent(password1,4,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(password1,4,0,4,1,layout,constraints,base);
 
-        GridBagSetter.addComponent(password2text,5,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(password2text,5,0,4,1,layout,constraints,base);
 
-        GridBagSetter.addComponent(password2,6,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(password2,6,0,4,1,layout,constraints,base);
 
         constraints.insets = new Insets(10,5 ,0 ,5);
 
-        constraints.fill = GridBagConstraints.CENTER;
-        GridBagSetter.addComponent(signUp,7,0,2,1,layout,constraints,base);
+        //constraints.fill = GridBagConstraints.CENTER;
+        GridBagSetter.addComponent(cancel,7,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(signUp,7,2,2,1,layout,constraints,base);
 
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(5,1 ,0 ,0);
-        GridBagSetter.addComponent(hint,8,0,2,1,layout,constraints,base);
+        GridBagSetter.addComponent(hint,8,0,4,1,layout,constraints,base);
 
         this.add(base);
 
@@ -172,6 +179,15 @@ public class SignUpPanel extends JPanel
         {
             System.out.println("User saved");
         }
+    }
+
+    public void ShowSignIn()
+    {
+        
+        frame.add(new LoginPanel());
+        frame.pack();
+        frame.setVisible(false);
+        frame.setVisible(true);
     }
 
     /**
