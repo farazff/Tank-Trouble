@@ -136,7 +136,7 @@ public class Selecting extends JPanel
                 if(e.getSource().equals(up))
                     temp = up;
                 Thread a = new Thread(new Runnable()
-               {
+                {
                    @Override
                    public void run()
                    {
