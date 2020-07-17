@@ -1,4 +1,7 @@
-package GUI;
+package GUI.MultiGame;
+
+import GUI.GridBagSetter;
+import GUI.Selecting;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

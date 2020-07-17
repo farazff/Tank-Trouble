@@ -1,4 +1,7 @@
-package GUI;
+package GUI.MultiGame;
+
+import GUI.ButtonPanel;
+import GUI.NullPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -6,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public class MultiGame extends JPanel
+public class MultiGamePanel extends JPanel
 {
 
     private JSplitPane splitPane1;
@@ -14,7 +17,7 @@ public class MultiGame extends JPanel
     private ServerListPanel serverListPanel;
 
 
-    public MultiGame (ArrayList<ButtonPanel> serverPanels)
+    public MultiGamePanel (ArrayList<ButtonPanel> serverPanels)
     {
         setBackground (Color.GRAY);
         setLayout (new BorderLayout ());

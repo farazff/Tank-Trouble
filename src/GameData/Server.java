@@ -6,7 +6,9 @@ import java.util.ArrayList;
 public class Server implements Serializable
 {
     private final String url;
-    private static final int maxCapacity = 100;
+    private static final int MAX_CAPACITY = 100;
+    private int currentCapacity;
+    private int numOfActiveGames;
     private final ArrayList<MultiGame> multiGames;
 
     public Server (String url, ArrayList<MultiGame> multiGames)
@@ -17,6 +19,21 @@ public class Server implements Serializable
             this.multiGames = new ArrayList<> (multiGames);
         else
             this.multiGames = new ArrayList<> ();
+
+        if (multiGames == null)
+            numOfActiveGames = 0;
+        else
+            numOfActiveGames = multiGames.size ();
+
+        currentCapacity = MAX_CAPACITY - numOfActiveGames;
+    }
+
+    public int getNumOfActiveGames () {
+        return numOfActiveGames;
+    }
+
+    public int getCurrentCapacity () {
+        return currentCapacity;
     }
 
     public String getUrl () {
@@ -26,12 +43,14 @@ public class Server implements Serializable
     public void addGame (MultiGame multiGame)
     {
         multiGames.add (multiGame);
+        numOfActiveGames = multiGames.size ();
     }
 
     public void removeMultiGame (int index)
     {
         try {
             multiGames.remove (index);
+            numOfActiveGames = multiGames.size ();
         } catch (IndexOutOfBoundsException e)
         {
             System.out.println ("Some Thing went Wrong in removing indexed multi game");
