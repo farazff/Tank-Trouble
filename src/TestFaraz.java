@@ -1,17 +1,21 @@
 import GUI.*;
-import Setting.Setting;
+import GUI.Setting.Setting;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 
 public class TestFaraz
 {
-    public static void main (String[] args) {
+    public static void main (String[] args)
+    {
 
-        try { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
+        try
+        { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
             UIManager.setLookAndFeel ("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace ();
         }
@@ -19,6 +23,7 @@ public class TestFaraz
         JFrame frame = new JFrame ();
 
         GameWithPC gameWithPC = new GameWithPC();
+
         CreateNewMultiGame newGamePanel = new CreateNewMultiGame ();
         ServerPanel serverPanel = new ServerPanel ("www.google.com","Amir"
                 ,32);
@@ -38,16 +43,13 @@ public class TestFaraz
         serverPanels.add (serverPanel4);
         serverPanels.add (serverPanel5);
 
-        frame.setContentPane (new Setting());
-        frame.pack();
-
-
-
-        frame.setLocation (0,0);
-
-        //frame.setSize ((720 * 16) / 9,720);
-
-
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //Loading temp = new Loading();
+        frame.setSize ((720 * 16) / 9, 720);
+        frame.add(new Setting());
+        //frame.pack();
+        frame.setLocation (230,60);
         frame.setVisible (true);
+        //temp.fill();
     }
 }
