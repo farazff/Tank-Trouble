@@ -14,6 +14,7 @@ public class MultiGameDataPanel extends JPanel
     private JLabel memberShip;
     private JLabel remainPlayers;
     private JLabel onlinePlayers;
+    private JButton play;
 
 
     public MultiGameDataPanel (MultiGame multiGame)
@@ -76,7 +77,10 @@ public class MultiGameDataPanel extends JPanel
         middlePart.add (remainPlayersH);
         middlePart.add (remainPlayers);
 
-        add(middlePart);
+        add(middlePart,BorderLayout.CENTER);
+        play = new JButton ("P l a y !");
+        play.setFont (new Font ("Arial",Font.BOLD,20));
+        add(play,BorderLayout.SOUTH);
 
     }
 

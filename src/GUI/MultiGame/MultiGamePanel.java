@@ -17,22 +17,29 @@ public class MultiGamePanel extends JPanel
     private JScrollPane scrollPane1;
     private JScrollPane scrollPane2;
     private JScrollPane scrollPane3;
+    private JButton createNewGame;
 
     public MultiGamePanel (ArrayList<Server> servers)
     {
         setLayout (new GridLayout (1,3));
-        firstPanel = new ServerListPanel (servers,this);
+        firstPanel = new JPanel (new BorderLayout ());
+        createNewGame = new JButton ("Create New Game");
+        createNewGame.setFont (new Font ("Arial",Font.PLAIN,17));
+        createNewGame.setMinimumSize (new Dimension (5,10));
+        firstPanel.add (createNewGame,BorderLayout.SOUTH);
+
         secondPanel = new NullPanel ();
         thirdPanel = new NullPanel ();
 
-        scrollPane1 = new JScrollPane (firstPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        scrollPane1 = new JScrollPane (new ServerListPanel (servers,this),ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        firstPanel.add (scrollPane1,BorderLayout.CENTER);
         scrollPane2 = new JScrollPane (secondPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane3 = new JScrollPane (thirdPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        add(scrollPane1);
+        add(firstPanel);
         add(scrollPane2);
         add(scrollPane3);
     }
@@ -55,5 +62,6 @@ public class MultiGamePanel extends JPanel
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         this.add (scrollPane3,2);
         this.setVisible (true);
+        this.repaint ();
     }
 }
