@@ -11,6 +11,7 @@ public class MultiGame implements Serializable
     private final int tankStamina;
     private final int wallStamina;
     private final int canonPower;
+    private int onlineUsers;
 
     public MultiGame (String name, GameFinishType gameFinishType,
                       GameMemberShipType gameMemberShipType, int numberOfPlayers,
@@ -23,10 +24,21 @@ public class MultiGame implements Serializable
         this.tankStamina = tankStamina;
         this.wallStamina = wallStamina;
         this.numberOfPlayers = numberOfPlayers;
+        this.onlineUsers = 0;
     }
 
     public String getName () {
         return name;
+    }
+
+    public void addUser ()
+    {
+        //TODO : add user
+        onlineUsers++;
+    }
+
+    public int getOnlineUsers () {
+        return onlineUsers;
     }
 
     public GameFinishType getGameFinishType () {

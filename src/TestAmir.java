@@ -1,10 +1,13 @@
-import GUI.*;
-import GUI.MultiGame.CreateNewMultiGame;
+
 import GUI.MultiGame.MultiGamePanel;
-import GUI.MultiGame.ServerButtonPanel;
+import GameData.GameFinishType;
+import GameData.GameMemberShipType;
+import GameData.MultiGame;
+import GameData.Server;
 
 import javax.swing.*;
 import java.util.ArrayList;
+
 
 public class TestAmir {
     public static void main (String[] args) {
@@ -16,38 +19,34 @@ public class TestAmir {
         }
 
         JFrame frame = new JFrame ();
-
-
-        GameWithPC gameWithPC = new GameWithPC ();
-        CreateNewMultiGame newGamePanel = new CreateNewMultiGame ();
-        ServerButtonPanel serverPanel = new ServerButtonPanel ("www.google.com"
-                , 32);
-        ServerButtonPanel serverPanel2 = new ServerButtonPanel ("www.google.com"
-                , 32);
-        ServerButtonPanel serverPanel3 = new ServerButtonPanel ("www.google.com"
-                , 32);
-        ServerButtonPanel serverPanel4 = new ServerButtonPanel ("www.google.com"
-                , 32);
-        ServerButtonPanel serverPanel5 = new ServerButtonPanel ("www.google.com"
-                , 32);
-
-        ArrayList<ButtonPanel> serverPanels = new ArrayList<> ();
-        serverPanels.add (serverPanel);
-        serverPanels.add (serverPanel2);
-        serverPanels.add (serverPanel3);
-        serverPanels.add (serverPanel4);
-        serverPanels.add (serverPanel5);
-
-        frame.setContentPane (new MultiGamePanel (serverPanels));
-
-
-
-
         frame.setLocation (0, 0);
-
         frame.setSize ((720 * 16) / 9, 720);
 
 
+        ArrayList<MultiGame> multiGames = new ArrayList<> ();
+        multiGames.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames.add (new MultiGame ("google2",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames.add (new MultiGame ("google3",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        Server server1 = new Server ("Haasd",multiGames);
+
+        ArrayList<Server> servers = new ArrayList<> ();
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+        servers.add (server1);
+
+
+        frame.setContentPane (new MultiGamePanel (servers));
         frame.setVisible (true);
     }
 }

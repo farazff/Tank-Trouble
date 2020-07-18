@@ -1,10 +1,9 @@
 package GUI.MultiGame;
 
-import GUI.ButtonPanel;
-import GUI.NullPanel;
 
+import GUI.NullPanel;
+import GameData.Server;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -12,35 +11,49 @@ import java.util.ArrayList;
 public class MultiGamePanel extends JPanel
 {
 
-    private JSplitPane splitPane1;
-    private JSplitPane splitPane2;
-    private ServerListPanel serverListPanel;
+    private JPanel firstPanel;
+    private JPanel secondPanel;
+    private JPanel thirdPanel;
+    private JScrollPane scrollPane1;
+    private JScrollPane scrollPane2;
+    private JScrollPane scrollPane3;
 
-
-    public MultiGamePanel (ArrayList<ButtonPanel> serverPanels)
+    public MultiGamePanel (ArrayList<Server> servers)
     {
-        setBackground (Color.GRAY);
-        setLayout (new BorderLayout ());
+        setLayout (new GridLayout (1,3));
+        firstPanel = new ServerListPanel (servers,this);
+        secondPanel = new NullPanel ();
+        thirdPanel = new NullPanel ();
 
-        serverListPanel = new ServerListPanel (serverPanels);
+        scrollPane1 = new JScrollPane (firstPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane2 = new JScrollPane (secondPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane3 = new JScrollPane (thirdPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        add(scrollPane1);
+        add(scrollPane2);
+        add(scrollPane3);
+    }
 
+    public void setSecondPanel (JPanel secondPanel) {
+        this.setVisible (false);
+        this.remove (this.scrollPane2);
+        this.secondPanel = secondPanel;
+        scrollPane2 = new JScrollPane (secondPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add (scrollPane2,1);
+        this.setVisible (true);
+    }
 
-        splitPane1 = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT);
-        splitPane2 = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT);
-        splitPane1.setDividerSize (3);
-        splitPane2.setDividerSize (3);
-
-        splitPane2.setRightComponent (new NullPanel ());
-        splitPane2.setLeftComponent (new NullPanel ());
-        JScrollPane scrollPane = new JScrollPane
-                (serverListPanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setAutoscrolls (true);
-        scrollPane.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
-        scrollPane.setBorder (new LineBorder (Color.GRAY,1));
-        splitPane1.setLeftComponent (serverListPanel);
-        splitPane1.setRightComponent (splitPane2);
-        add(splitPane1);
+    public void setThirdPanel (JPanel thirdPanel) {
+        this.setVisible (false);
+        this.remove (this.scrollPane3);
+        this.thirdPanel = thirdPanel;
+        scrollPane3 = new JScrollPane (thirdPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add (scrollPane3,2);
+        this.setVisible (true);
     }
 }

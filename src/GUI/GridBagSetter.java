@@ -21,9 +21,9 @@ public class GridBagSetter
      * @param constraints constrains for layout
      * @param panel base panel
      */
-    protected static void addComponent (JComponent component, int row, int col, int width,
-                                        int height, GridBagLayout layout,
-                                        GridBagConstraints constraints, JPanel panel) {
+    public static void addComponent (JComponent component, int row, int col, int width,
+                                     int height, GridBagLayout layout,
+                                     GridBagConstraints constraints, JPanel panel) {
 
         if (layout == null || constraints  == null || component == null || panel == null)
             throw new NullPointerException ("inValid input");

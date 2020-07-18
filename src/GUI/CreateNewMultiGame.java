@@ -1,4 +1,4 @@
-package GUI.MultiGame;
+package GUI;
 
 import GUI.GridBagSetter;
 import GUI.Selecting;
@@ -156,19 +156,19 @@ public class CreateNewMultiGame extends JPanel
         tanksStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
         tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         editSlider (tanksStamina);
-        tanksStamina.addChangeListener (changeHandler);
+
 
         JLabel canonPowerLabel = new JLabel ("Canon Power");
         canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,15));
         canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         editSlider (canonPower);
-        canonPower.addChangeListener (changeHandler);
+
 
         JLabel wallsStaminaLabel = new JLabel ("Destroyable Walls Stamina");
         wallsStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
         wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         editSlider (wallsStamina);
-        wallsStamina.addChangeListener (changeHandler);
+
 
 
 
@@ -284,22 +284,8 @@ public class CreateNewMultiGame extends JPanel
     /**
      * this class handles changes in Sliders and some buttons
      */
-    private class ChangeHandler implements ChangeListener , ItemListener
+    private class ChangeHandler implements ItemListener
     {
-
-        @Override
-        public void stateChanged (ChangeEvent e) {
-            if (e.getSource () == tanksStamina)
-            {
-                tanksStamina.setToolTipText (tanksStamina.getValue () +" %");
-            } else if (e.getSource () == wallsStamina)
-            {
-                wallsStamina.setToolTipText (wallsStamina.getValue () + " %");
-            } else if (e.getSource () == canonPower)
-            {
-                canonPower.setToolTipText (canonPower.getValue () + " %");
-            }
-        }
 
         @Override
         public void itemStateChanged (ItemEvent e) {
