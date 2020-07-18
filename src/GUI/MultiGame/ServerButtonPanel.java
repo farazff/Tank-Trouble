@@ -27,19 +27,32 @@ public class ServerButtonPanel extends JPanel {
         if (server == null)
             throw new InputMismatchException ("Server is Null");
         this.mainPanel = mainPanel;
+        setBackground (Color.WHITE);
         this.url = new JLabel ("Url : " + server.getUrl ());
-        this.url.setFont (new Font ("Arial",Font.PLAIN,15));
+        this.url.setFont (new Font ("Arial",Font.PLAIN,14));
+        this.url.setForeground (Color.DARK_GRAY);
         this.server = server;
         this.numOfActiveGames = new JLabel ("ActiveGames : " + server.getNumOfActiveGames ());
-        this.numOfActiveGames.setFont (new Font ("Arial",Font.PLAIN,15));
+        this.numOfActiveGames.setFont (new Font ("Arial",Font.PLAIN,14));
+        this.numOfActiveGames.setForeground (Color.DARK_GRAY);
         this.currentCapacity = new JLabel ("CurrentCapacity : " + server.getCurrentCapacity ());
-        currentCapacity.setFont (new Font ("Arial",Font.PLAIN,15));
-
+        currentCapacity.setFont (new Font ("Arial",Font.PLAIN,14));
+        this.currentCapacity.setForeground (Color.DARK_GRAY);
         multiGameListPanel = new MultiGameListPanel (server.getMultiGames (),mainPanel);
         createBasePanel ();
     }
 
 
+    public void changeFontAndColor (Font font, Color color)
+    {
+        url.setFont (font);
+        numOfActiveGames.setFont (font);
+        currentCapacity.setFont (font);
+        url.setForeground (color);
+        numOfActiveGames.setForeground (color);
+        currentCapacity.setForeground (color);
+
+    }
 
 
     private void createBasePanel ()

@@ -1,5 +1,4 @@
 
-import GUI.CreateNewMultiGame;
 import GUI.MultiGame.MultiGamePanel;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
@@ -34,20 +33,30 @@ public class TestAmir {
         multiGames.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
         Server server1 = new Server ("Haasd",multiGames);
+        ArrayList<MultiGame> multiGames2 = new ArrayList<> ();
+        multiGames2.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames2.add (new MultiGame ("gooe2",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames2.add (new MultiGame ("ggle3",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        multiGames2.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
+                GameMemberShipType.SINGLE,22,30,30,30));
+        Server server2 = new Server ("Amafdad",multiGames2);
 
         ArrayList<Server> servers = new ArrayList<> ();
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
-        servers.add (server1);
+        servers.add (server2);
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
 
 
-        frame.setContentPane (new MultiGamePanel (servers));
+        frame.add(new MultiGamePanel (servers));
         frame.setVisible (true);
     }
 }

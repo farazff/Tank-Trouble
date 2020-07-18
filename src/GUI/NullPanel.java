@@ -8,6 +8,6 @@ public class NullPanel extends JPanel
     public NullPanel ()
     {
         super();
-        setBackground (Color.GRAY);
+        setBackground (Color.WHITE);
     }
 }

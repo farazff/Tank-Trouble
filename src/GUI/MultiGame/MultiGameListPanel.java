@@ -1,10 +1,9 @@
 package GUI.MultiGame;
 
 import GameData.MultiGame;
-import GameData.Server;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,10 +21,11 @@ public class MultiGameListPanel extends JPanel
         if (multiGames == null)
             throw new InputMismatchException ("servers in Null");
         this.mainPanel = mainPanel;
+        setBackground (Color.WHITE);
         multiGameButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
-        setBackground (Color.GRAY);
-        setBorder (new LineBorder (Color.GRAY,10,true));
+
+        setBorder (new EmptyBorder (5,5,5,5));
         MouseHandler mouseHandler = new MouseHandler ();
         for (MultiGame multiGame : multiGames)
         {
@@ -46,13 +46,25 @@ public class MultiGameListPanel extends JPanel
 
         @Override
         public void mouseExited (MouseEvent e) {
-            e.getComponent ().setBackground (Color.GRAY);
+            e.getComponent ().setBackground (Color.WHITE);
         }
 
         @Override
         public void mouseClicked (MouseEvent e) {
-            MultiGameButtonPanel multiGameButtonPanel = (MultiGameButtonPanel)e.getComponent ();
-            mainPanel.setThirdPanel (multiGameButtonPanel.getMultiGameDataPanel ());
+
+            for (MultiGameButtonPanel multiGameButtonPanel : multiGameButtonPanels)
+            {
+                if (e.getComponent () == multiGameButtonPanel)
+                {
+                    mainPanel.setThirdPanel (multiGameButtonPanel.getMultiGameDataPanel ());
+                    multiGameButtonPanel.changeFontAndColor (
+                            new Font ("Arial",Font.ITALIC,14),Color.BLACK);
+                }
+                else
+                     multiGameButtonPanel.changeFontAndColor (new Font ("Arial",Font.PLAIN,14),
+                             Color.DARK_GRAY);
+            }
+
         }
     }
 }

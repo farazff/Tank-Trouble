@@ -1,4 +1,4 @@
-package GUI;
+package GUI.MultiGame;
 
 import GUI.GridBagSetter;
 import GUI.Selecting;

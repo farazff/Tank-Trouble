@@ -4,6 +4,7 @@ package GUI.MultiGame;
 import GameData.MultiGame;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.InputMismatchException;
 
@@ -23,8 +24,9 @@ public class MultiGameDataPanel extends JPanel
             throw new InputMismatchException ("multi game is Null");
 
         setLayout (new BorderLayout ());
-        setBorder (new EmptyBorder (5,5,5,5));
+        setBorder (new EmptyBorder (0,0,0,0));
         name = new JLabel (multiGame.getName ());
+        setBackground (Color.WHITE);
         name.setFont (new Font ("arial",Font.PLAIN,15));
         name.setForeground (Color.GREEN.darker ());
 
@@ -65,6 +67,8 @@ public class MultiGameDataPanel extends JPanel
 
 
         JPanel middlePart = new JPanel (new GridLayout (5,2));
+        middlePart.setBackground (Color.WHITE);
+        middlePart.setBorder (new EmptyBorder (5,5,5,5));
 
         middlePart.add (gameName);
         middlePart.add (name);
@@ -77,9 +81,11 @@ public class MultiGameDataPanel extends JPanel
         middlePart.add (remainPlayersH);
         middlePart.add (remainPlayers);
 
+
         add(middlePart,BorderLayout.CENTER);
         play = new JButton ("P l a y !");
-        play.setFont (new Font ("Arial",Font.BOLD,20));
+        play.setFont (new Font ("Arial",Font.PLAIN,17));
+        play.setMinimumSize (new Dimension (5,10));
         add(play,BorderLayout.SOUTH);
 
     }

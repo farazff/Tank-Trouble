@@ -1,11 +1,9 @@
 package GUI.MultiGame;
 
 
-import GUI.CreateNewMultiGame;
 import GUI.NullPanel;
 import GameData.Server;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -19,30 +17,27 @@ public class MultiGamePanel extends JPanel
     private JPanel firstPanel;
     private JPanel secondPanel;
     private JPanel thirdPanel;
-    private JScrollPane scrollPane1;
+    private JPanel main;
+
     private JScrollPane scrollPane2;
     private JScrollPane scrollPane3;
     private JButton createNewGame;
-    private JPanel main;
+
     private JLabel back;
 
     public MultiGamePanel (ArrayList<Server> servers)
     {
         main = new JPanel (new GridLayout (1,3));
-        JLabel header = new JLabel ("MultiPlayer Game");
+        setLayout (new BorderLayout ());
+
+        // header part
         JPanel headerPanel = new JPanel ();
-
-
         headerPanel.setLayout (new BorderLayout ());
         headerPanel.setBackground (Color.GRAY);
-
+        JLabel header = new JLabel ("MultiPlayer Game");
         back = new JLabel (new ImageIcon ("./Images/back1.png"));
         back.addMouseListener (new MouseHandler ());
-
-
-
         headerPanel.add (back,BorderLayout.WEST);
-
         headerPanel.add (new JLabel (" "),BorderLayout.EAST);
         headerPanel.add (header);
         header.setPreferredSize (new Dimension (300,60));
@@ -53,54 +48,87 @@ public class MultiGamePanel extends JPanel
         header.setHorizontalTextPosition (SwingConstants.CENTER);
         header.setFont (new Font ("arial",Font.BOLD,18));
 
+        add(headerPanel,BorderLayout.NORTH);
 
 
+        setBackground (Color.WHITE);
 
-
-        setLayout (new BorderLayout ());
         setBorder (new LineBorder (Color.GRAY,4,true));
-        firstPanel = new JPanel (new BorderLayout ());
+        main.setBorder (new LineBorder (Color.GRAY,4,true));
         createNewGame = new JButton ("Create New Game");
         createNewGame.setFont (new Font ("Arial",Font.PLAIN,17));
         createNewGame.setMinimumSize (new Dimension (5,10));
-        firstPanel.add (createNewGame,BorderLayout.SOUTH);
 
-        secondPanel = new NullPanel ();
-        thirdPanel = new NullPanel ();
 
-        scrollPane1 = new JScrollPane (new ServerListPanel (servers,this),ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        firstPanel.add (scrollPane1,BorderLayout.CENTER);
-        scrollPane2 = new JScrollPane (secondPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        firstPanel = new JPanel (new BorderLayout ());
+        firstPanel.setBackground (Color.WHITE);
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (servers,this),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane3 = new JScrollPane (thirdPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        scrollPane1.setAutoscrolls (true);
+        scrollPane1.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
+        scrollPane1.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+
+        firstPanel.add (scrollPane1);
+        scrollPane2 = new JScrollPane (new NullPanel (),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane2.setAutoscrolls (true);
+        scrollPane2.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
+        scrollPane2.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+
+        secondPanel = new JPanel (new BorderLayout ());
+        secondPanel.add (scrollPane2,BorderLayout.CENTER);
+        secondPanel.setBackground (Color.WHITE);
+        scrollPane3 = new JScrollPane (new NullPanel (),
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane3.setAutoscrolls (true);
+        scrollPane3.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
+        scrollPane3.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+
+        thirdPanel = new JPanel (new BorderLayout ());
+        thirdPanel.add (scrollPane3);
+        thirdPanel.setBackground (Color.WHITE);
 
         main.add(firstPanel);
-        main.add(scrollPane2);
-        main.add(scrollPane3);
+        main.add(secondPanel);
+        main.add(thirdPanel);
         add(main,BorderLayout.CENTER);
-        add(headerPanel,BorderLayout.NORTH);
+
+
     }
 
-    public void setSecondPanel (JPanel secondPanel) {
+    public void setSecondPanel (JPanel newSecondPanel) {
         main.setVisible (false);
-        main.remove (this.scrollPane2);
-        this.secondPanel = secondPanel;
-        scrollPane2 = new JScrollPane (secondPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        secondPanel.remove (scrollPane2);
+        scrollPane2 = new JScrollPane (newSecondPanel,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        main.add (scrollPane2,1);
+        scrollPane2.setAutoscrolls (true);
+        scrollPane2.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
+        scrollPane2.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+        secondPanel.add (scrollPane2,BorderLayout.CENTER);
+        main.add(secondPanel,1);
+        secondPanel.add (createNewGame,BorderLayout.SOUTH);
         main.setVisible (true);
     }
 
-    public void setThirdPanel (JPanel thirdPanel) {
+    public void setThirdPanel (JPanel newThirdPanel) {
+
         main.setVisible (false);
-        main.remove (this.scrollPane3);
-        this.thirdPanel = thirdPanel;
-        scrollPane3 = new JScrollPane (thirdPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        thirdPanel.remove (scrollPane3);
+        scrollPane3 = new JScrollPane (newThirdPanel,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        main.add (scrollPane3,2);
+        scrollPane3.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
+        scrollPane3.setAutoscrolls (true);
+        scrollPane3.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+        thirdPanel.add (scrollPane3);
+        main.add(thirdPanel,2);
         main.setVisible (true);
+
+
     }
 
     private class MouseHandler extends MouseAdapter
