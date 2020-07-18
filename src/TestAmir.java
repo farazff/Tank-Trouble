@@ -1,4 +1,5 @@
 
+import GUI.CreateNewMultiGame;
 import GUI.MultiGame.MultiGamePanel;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;

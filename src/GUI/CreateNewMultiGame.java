@@ -79,7 +79,7 @@ public class CreateNewMultiGame extends JPanel
         JPanel headerPanel = new JPanel ();
 
 
-        headerPanel.setLayout (new FlowLayout (FlowLayout.LEFT));
+        headerPanel.setLayout (new BorderLayout ());
         headerPanel.setBackground (Color.GRAY);
 
         back = new JLabel (new ImageIcon ("./Images/back1.png"));
@@ -87,10 +87,9 @@ public class CreateNewMultiGame extends JPanel
 
 
 
-        headerPanel.add (back);
-        headerPanel.add (new JLabel ("                              "));
-        headerPanel.add (new JLabel ("                              "));
-        headerPanel.add (new JLabel ("                              "));
+        headerPanel.add (back,BorderLayout.WEST);
+
+        headerPanel.add (new JLabel (" "),BorderLayout.EAST);
         headerPanel.add (header);
 
 
