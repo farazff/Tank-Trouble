@@ -68,7 +68,7 @@ public class ExitJLabel extends JLabel
     public void rePaintEntered()
     {
         inside = Color.CYAN;
-        round = Color.RED;
+        round = Color.BLACK;
         this.repaint();
     }
 

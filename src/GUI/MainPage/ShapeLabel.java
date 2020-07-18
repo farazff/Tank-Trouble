@@ -6,8 +6,7 @@ import java.awt.geom.GeneralPath;
 
 public class ShapeLabel extends JLabel
 {
-
-    private Color inside = Color.RED;
+    private Color inside = new Color(1,114,23 );
     private Color round = Color.BLACK;
 
     private  int[] x;
@@ -18,6 +17,7 @@ public class ShapeLabel extends JLabel
     {
         super(text);
         this.setHorizontalAlignment(JLabel.CENTER);
+        this.setForeground(Color.WHITE);
         this.setFont(new Font("Arial",Font.PLAIN,18));
         this.x = x;
         this.y = y;
@@ -47,13 +47,13 @@ public class ShapeLabel extends JLabel
     public void rePaintEntered()
     {
         inside = Color.CYAN;
-        round = Color.RED;
+        round = new Color(1,114,23 );
         this.repaint();
     }
 
     public void rePaintExited()
     {
-        inside = Color.RED;
+        inside = new Color(1,114,23 );
         round = Color.BLACK;
         this.repaint();
     }

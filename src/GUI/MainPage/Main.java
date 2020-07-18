@@ -86,7 +86,7 @@ public class Main extends JPanel
         int[] x2 = {35,34,60,60,93,60,61};
         int[] y2 = {39,61,62,76,50,24,38};
 
-        exit = new ExitJLabel("exit",x1,y1,x2,y2);
+        exit = new ExitJLabel(" Exit",x1,y1,x2,y2);
         exit.setPreferredSize(new Dimension(100,100));
         exit.addMouseListener(mouse);
 
@@ -164,10 +164,21 @@ public class Main extends JPanel
             if(e.getSource().equals(about))
             {
                 about.rePaintEntered();
+                StringBuilder string = new StringBuilder();
+                string.append("Developers: \n 1) Amirreza Naziri     9726081\n  ##Email##\n2) Faraz Farangizadeh     9726060\n");
+                string.append("  f.farangizadeh@gmail.com");
+                JOptionPane.showMessageDialog(null,string.toString(),"About",JOptionPane.INFORMATION_MESSAGE);
             }
             if(e.getSource().equals(exit))
             {
                 exit.rePaintEntered();
+                int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?",
+                        "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+                System.out.println(ans);
+                if(ans == 0) //yes
+                {
+                    System.exit(0);
+                }
             }
         }
 
