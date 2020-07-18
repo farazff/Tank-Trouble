@@ -1,5 +1,7 @@
 package GUI.MainPage;
 
+import GUI.Setting.Setting;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +13,10 @@ import java.io.IOException;
 
 public class Main extends JPanel
 {
+    public JPanel getPanel()
+    {
+        return this;
+    }
     private JPanel down;
     private JPanel top;
     private JPanel middle;
@@ -23,8 +29,12 @@ public class Main extends JPanel
     private ShapeLabel multi;
     private ExitJLabel exit;
 
-    public Main()
+    private JFrame frame;
+
+    public Main(JFrame frame)
     {
+        super();
+        this.frame = frame;
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(900,530));
         this.setBorder(new EmptyBorder(5,18,18,18));
@@ -151,6 +161,10 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
+                frame.remove(getPanel());
+                frame.add(new Setting());
+                frame.setVisible(false);
+                frame.setVisible(true);
                 setting.rePaintEntered();
             }
             if(e.getSource().equals(single))

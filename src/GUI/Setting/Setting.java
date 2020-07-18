@@ -173,9 +173,14 @@ public class Setting extends JPanel
     private void createLeft()
     {
         JPanel left = new JPanel(new GridLayout(10,1,10,10));
-        left.setPreferredSize(new Dimension(200,600));
+        left.setPreferredSize(new Dimension(300,600));
         left.setBackground(Color.PINK);
         this.add(left,BorderLayout.WEST);
+
+        JLabel back = new JLabel("        Back");
+        back.setFont(new Font("Arial",Font.BOLD,22));
+        back.setBackground(Color.ORANGE);
+        back.setOpaque(true);
 
         userInfo = new ColorJLabel("    User info");
         userInfo.addMouseListener(mouse);
@@ -183,6 +188,7 @@ public class Setting extends JPanel
         defaults = new ColorJLabel("    Game Defaults");
         defaults.addMouseListener(mouse);
 
+        left.add(back);
         left.add(userInfo);
         left.add(defaults);
     }
