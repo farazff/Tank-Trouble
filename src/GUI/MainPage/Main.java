@@ -1,5 +1,7 @@
 package GUI.MainPage;
 
+import GUI.Setting.Setting;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +13,10 @@ import java.io.IOException;
 
 public class Main extends JPanel
 {
+    public JPanel getPanel()
+    {
+        return this;
+    }
     private JPanel down;
     private JPanel top;
     private JPanel middle;
@@ -23,8 +29,12 @@ public class Main extends JPanel
     private ShapeLabel multi;
     private ExitJLabel exit;
 
-    public Main()
+    private JFrame frame;
+
+    public Main(JFrame frame)
     {
+        super();
+        this.frame = frame;
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(900,530));
         this.setBorder(new EmptyBorder(5,18,18,18));
@@ -86,7 +96,7 @@ public class Main extends JPanel
         int[] x2 = {35,34,60,60,93,60,61};
         int[] y2 = {39,61,62,76,50,24,38};
 
-        exit = new ExitJLabel("exit",x1,y1,x2,y2);
+        exit = new ExitJLabel(" Exit",x1,y1,x2,y2);
         exit.setPreferredSize(new Dimension(100,100));
         exit.addMouseListener(mouse);
 
@@ -151,6 +161,10 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
+                frame.remove(getPanel());
+                frame.add(new Setting());
+                frame.setVisible(false);
+                frame.setVisible(true);
                 setting.rePaintEntered();
             }
             if(e.getSource().equals(single))
@@ -164,10 +178,21 @@ public class Main extends JPanel
             if(e.getSource().equals(about))
             {
                 about.rePaintEntered();
+                StringBuilder string = new StringBuilder();
+                string.append("Developers: \n 1) Amirreza Naziri     9726081\n  ##Email##\n2) Faraz Farangizadeh     9726060\n");
+                string.append("  f.farangizadeh@gmail.com");
+                JOptionPane.showMessageDialog(null,string.toString(),"About",JOptionPane.INFORMATION_MESSAGE);
             }
             if(e.getSource().equals(exit))
             {
                 exit.rePaintEntered();
+                int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?",
+                        "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+                System.out.println(ans);
+                if(ans == 0) //yes
+                {
+                    System.exit(0);
+                }
             }
         }
 

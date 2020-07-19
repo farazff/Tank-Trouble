@@ -27,9 +27,8 @@ public class TestFaraz
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //Loading temp = new Loading();
-        //frame.setSize ((720 * 16) / 9, 720);
-        frame.add(new Main());
-        frame.pack();
+        frame.setSize ((720 * 16) / 9, 720);
+        frame.add(new Setting());
         frame.setLocation (230,60);
         frame.setVisible (true);
         //temp.fill();
