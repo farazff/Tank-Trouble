@@ -1,6 +1,7 @@
 package GUI.MultiGame;
 
 import GUI.GridBagSetter;
+import GUI.PictureJLabel;
 import GUI.Selecting;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
@@ -65,12 +66,23 @@ public class CreateNewMultiGame extends JPanel
             @Override
             public void run () {
 
+                int i;
+                if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+                    i = 0;
+                else
+                    i = 1;
                 while (!finishedProcessed)
                 {
-                    if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+
+                    if (i == 0 && typeOfPlaying.getCurrentValue ().equals ("Single Player"))
                     {
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
                                 ,1,100,1));
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setEditable (false);
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setFocusable (false);
+                        i = 1;
                     }
                     else
                     {
@@ -79,11 +91,13 @@ public class CreateNewMultiGame extends JPanel
 
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
                                 ,1,100,2));
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setEditable (false);
+                        ((JSpinner.DefaultEditor)numOfPlayers.
+                                getEditor ()).getTextField ().setFocusable (false);
+                        i = 0;
                     }
-                    ((JSpinner.DefaultEditor)numOfPlayers.
-                            getEditor ()).getTextField ().setEditable (false);
-                    ((JSpinner.DefaultEditor)numOfPlayers.
-                            getEditor ()).getTextField ().setFocusable (false);
+
                     try{
                         Thread.sleep (250);
                     } catch (InterruptedException e)
@@ -122,33 +136,36 @@ public class CreateNewMultiGame extends JPanel
         GridBagConstraints constraintsR = new GridBagConstraints ();
         rightPanel.setLayout (layoutR);
 
-        JLabel header = new JLabel ("Create New MultiPlayer Game");
-        JPanel headerPanel = new JPanel ();
-
-
-        headerPanel.setLayout (new BorderLayout ());
-        headerPanel.setBackground (Color.GRAY);
+        JLabel multiPlayerGame = new JLabel("MultiPlayer Game");
+        multiPlayerGame.setBackground(null);
+        multiPlayerGame.setHorizontalAlignment(JLabel.CENTER);
+        multiPlayerGame.setOpaque(true);
+        multiPlayerGame.setFont(new Font("Arial",Font.BOLD,30));
+        PictureJLabel toRight = new PictureJLabel("Images/toright.jpg");
+        toRight.setPreferredSize(new Dimension(60, 60));
+        PictureJLabel toLeft = new PictureJLabel("Images/toleft.jpg");
+        toLeft.setPreferredSize(new Dimension(60, 60));
+        JPanel top = new JPanel(new FlowLayout());
+        top.setBackground(Color.WHITE);
+        top.setOpaque(true);
+        top.add(toRight);
+        top.add(multiPlayerGame);
+        top.add(toLeft);
+        JPanel topTop = new JPanel(new BorderLayout());
+        topTop.add(top,BorderLayout.CENTER);
+        JPanel back2 = new JPanel(new GridLayout(3,1));
 
         back = new JLabel (new ImageIcon ("./Images/back1.png"));
-        back.addMouseListener (new MouseHandler ());
+
+        back.addMouseListener(new MouseHandler ());
+        back2.add(back);
+        back2.setBackground(Color.WHITE);
+        back2.setOpaque(true);
+        topTop.add(back2,BorderLayout.WEST);
+        add(topTop,BorderLayout.NORTH);
 
 
 
-        headerPanel.add (back,BorderLayout.WEST);
-
-        headerPanel.add (new JLabel (" "),BorderLayout.EAST);
-        headerPanel.add (header);
-
-
-
-
-        header.setPreferredSize (new Dimension (300,60));
-        header.setForeground (Color.WHITE);
-        header.setOpaque (true);
-        header.setBackground (Color.GRAY);
-        header.setHorizontalAlignment (SwingConstants.CENTER);
-        header.setHorizontalTextPosition (SwingConstants.CENTER);
-        header.setFont (new Font ("arial",Font.BOLD,18));
 
         JLabel gameName = new JLabel ("Game's  Name*: ");
         gameName.setFont (new Font ("arial",Font.PLAIN,15));
@@ -305,7 +322,7 @@ public class CreateNewMultiGame extends JPanel
 
 
 
-        basePanel.add(headerPanel,BorderLayout.NORTH);
+        basePanel.add(topTop,BorderLayout.NORTH);
         basePanel.add (leftPanel,BorderLayout.WEST);
         basePanel.add (new JSeparator (SwingConstants.VERTICAL),BorderLayout.CENTER);
         basePanel.add (rightPanel,BorderLayout.EAST);

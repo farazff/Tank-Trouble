@@ -28,25 +28,25 @@ public class MultiGameDataPanel extends JPanel
         name = new JLabel (multiGame.getName ());
         setBackground (Color.WHITE);
         name.setFont (new Font ("arial",Font.PLAIN,15));
-        name.setForeground (Color.GREEN.darker ());
+        name.setForeground (new Color (91, 131, 56));
 
         typeOfFinish = new JLabel (multiGame.getGameFinishType ().toString ());
         typeOfFinish.setFont (new Font ("arial",Font.PLAIN,15));
-        typeOfFinish.setForeground (Color.GREEN.darker ());
+        typeOfFinish.setForeground (new Color (91, 131, 56));
 
         memberShip = new JLabel (multiGame.getGameMemberShipType ().toString ());
         memberShip.setFont (new Font ("arial",Font.PLAIN,15));
-        memberShip.setForeground (Color.GREEN.darker ());
+        memberShip.setForeground (new Color (91, 131, 56));
 
 
         remainPlayers = new JLabel (multiGame.getNumberOfPlayers () - multiGame.getOnlineUsers ()
                 + "");
         remainPlayers.setFont (new Font ("arial",Font.PLAIN,15));
-        remainPlayers.setForeground (Color.GREEN.darker ());
+        remainPlayers.setForeground (new Color (91, 131, 56));
 
         onlinePlayers = new JLabel (multiGame.getOnlineUsers () + "");
         onlinePlayers.setFont (new Font ("arial",Font.PLAIN,15));
-        onlinePlayers.setForeground (Color.GREEN.darker ());
+        onlinePlayers.setForeground (new Color (91, 131, 56));
 
         createComponents ();
     }

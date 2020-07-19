@@ -52,7 +52,8 @@ public class MultiGameListPanel extends JPanel
 
         @Override
         public void mouseEntered (MouseEvent e) {
-            e.getComponent ().setBackground (Color.LIGHT_GRAY);
+            e.getComponent ()
+                    .setBackground (new Color (91, 131, 56));
         }
 
         @Override
