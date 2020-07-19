@@ -106,6 +106,7 @@ public class SignInPanel extends JPanel
 
 
         rememberMe = new JCheckBox ("Remember Me");
+        rememberMe.addItemListener (actionHandler);
 
         signIn = new JButton ("Log in");
         signIn.requestFocus ();
@@ -208,6 +209,9 @@ public class SignInPanel extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == signUp)
             {
+                Music music = new Music ();
+                music.execute ();
+                // sign in
 
                 // sign up
                 frame.setContentPane (new SignUpPanel(frame,getSignIn()));
@@ -227,8 +231,14 @@ public class SignInPanel extends JPanel
             if ((e.getSource () == username || e.getSource () == password ) &&
                     (e.getKeyCode () == KeyEvent.VK_ENTER))
             {
+                Music music = new Music ();
+                music.execute ();
+                if (!checkData ())
+                    return;
                 // sign in
-                System.out.println ("sign in");
+                frame.setContentPane (nex);
+                frame.setVisible (false);
+                frame.setVisible (true);
             }
             else if (e.getSource () == username)
             {
@@ -244,11 +254,13 @@ public class SignInPanel extends JPanel
     /**
      * this class handles actions
      */
-    private class ActionHandler implements ActionListener
+    private class ActionHandler implements ActionListener , ItemListener
     {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource () == signIn) {
+                Music music = new Music ();
+                music.execute ();
                 if (!checkData ())
                     return;
                 // sign in
@@ -256,6 +268,12 @@ public class SignInPanel extends JPanel
                 frame.setVisible (false);
                 frame.setVisible (true);
             }
+        }
+
+        @Override
+        public void itemStateChanged (ItemEvent e) {
+            Music music = new Music ();
+            music.execute ();
         }
     }
 

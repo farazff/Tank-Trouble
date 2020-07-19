@@ -2,6 +2,7 @@ package GUI.MultiGame;
 
 
 import GUI.GameWithPC;
+import GUI.Music;
 import GUI.NullPanel;
 import GUI.PictureJLabel;
 import GameData.Server;
@@ -180,6 +181,8 @@ public class MultiGamePanel extends JPanel
         public void actionPerformed (ActionEvent e) {
             if (e.getSource () == createNewGame)
             {
+                Music music = new Music ();
+                music.execute ();
                 frame.setContentPane (new CreateNewMultiGame (serverButtonPanel,frame,getThis ()));
             }
         }
@@ -203,6 +206,8 @@ public class MultiGamePanel extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == back)
             {
+                Music music = new Music ();
+                music.execute ();
                 if (pre != null)
                 {
                     frame.setContentPane (pre);

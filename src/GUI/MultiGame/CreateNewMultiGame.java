@@ -1,6 +1,7 @@
 package GUI.MultiGame;
 
 import GUI.GridBagSetter;
+import GUI.Music;
 import GUI.PictureJLabel;
 import GUI.Selecting;
 import GameData.GameFinishType;
@@ -12,6 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -233,6 +236,13 @@ public class CreateNewMultiGame extends JPanel
         spinnerModel = new SpinnerNumberModel (1,1,100,1);
         numOfPlayers = new JSpinner ();
         numOfPlayers.setModel (spinnerModel);
+        numOfPlayers.addChangeListener (new ChangeListener () {
+            @Override
+            public void stateChanged (ChangeEvent e) {
+                Music music = new Music ();
+                music.execute ();
+            }
+        });
         ((JSpinner.DefaultEditor)numOfPlayers.getEditor ()).getTextField ().setEditable (false);
         ((JSpinner.DefaultEditor)numOfPlayers.getEditor ()).getTextField ().setFocusable (false);
 
@@ -402,6 +412,8 @@ public class CreateNewMultiGame extends JPanel
         public void actionPerformed (ActionEvent e) {
             if (e.getSource () == create)
             {
+                Music music = new Music ();
+                music.execute ();
                 if (!checkData ())
                     return;
                 GameFinishType finishType = null;
@@ -451,6 +463,8 @@ public class CreateNewMultiGame extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == back)
             {
+                Music music = new Music ();
+                music.execute ();
                 frame.setContentPane (pre);
             }
         }

@@ -1,11 +1,14 @@
 package GUI.MultiGame;
 
 
+import GUI.Music;
 import GameData.MultiGame;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.InputMismatchException;
 
 public class MultiGameDataPanel extends JPanel
@@ -86,8 +89,18 @@ public class MultiGameDataPanel extends JPanel
         play = new JButton ("P l a y !");
         play.setFont (new Font ("Arial",Font.PLAIN,17));
         play.setMinimumSize (new Dimension (5,10));
+        play.addActionListener (new ActionHandler ());
         add(play,BorderLayout.SOUTH);
 
+    }
+
+    private class ActionHandler implements ActionListener
+    {
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            Music music = new Music ();
+            music.execute ();
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package GUI.MultiGame;
 
 
+import GUI.Music;
 import GameData.Server;
 
 import javax.swing.*;
@@ -74,6 +75,8 @@ public class ServerListPanel extends JPanel
 
         @Override
         public void mouseClicked (MouseEvent e) {
+            Music music = new Music ();
+            music.execute ();
             for (ServerButtonPanel serverButtonPanel : serverButtonPanels)
             {
                 if (e.getComponent () == serverButtonPanel)
