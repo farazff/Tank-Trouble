@@ -180,7 +180,7 @@ public class Setting extends JPanel
     {
         JPanel left = new JPanel(new GridLayout(10,1,10,10));
         left.setPreferredSize(new Dimension(200,600));
-        left.setBackground(Color.PINK);
+        left.setBackground(new Color(74,201,255));
         this.add(left,BorderLayout.WEST);
 
         back = new JLabel("        Back");
@@ -298,7 +298,7 @@ public class Setting extends JPanel
         @Override
         public void mouseEntered(MouseEvent e)
         {
-
+            
         }
 
         @Override

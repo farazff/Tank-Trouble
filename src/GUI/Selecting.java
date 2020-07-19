@@ -122,7 +122,6 @@ public class Selecting extends JPanel
                 }
                 mode.setText(data.get(dataCounter));
                 currentValue = data.get(dataCounter);
-                //System.out.println(currentValue);
             }
             if(e.getSource().equals(down))
             {
@@ -138,7 +137,6 @@ public class Selecting extends JPanel
                 }
                 mode.setText(data.get(dataCounter));
                 currentValue = data.get(dataCounter);
-                //System.out.println(currentValue);
             }
         }
 

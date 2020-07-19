@@ -68,21 +68,21 @@ public class SignUpPanel extends JPanel
         // title of the username textfield
         JLabel userNameText = new JLabel("User Name:");
         username = new JTextField();
-        username.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.BLACK,2,true),
+        username.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.GRAY,2,true),
                 new EmptyBorder (0,2,0,2)));
         username.addKeyListener(keyHandler);
 
         // title of the password1 textfield
         JLabel password1text = new JLabel("Password*:");
         password1 = new JPasswordField();
-        password1.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.BLACK,2,true),
+        password1.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.GRAY,2,true),
                 new EmptyBorder (0,2,0,2)));
         password1.addKeyListener(keyHandler);
 
         // title of the password2 textfield
         JLabel password2text = new JLabel("Renter Password:");
         password2 = new JPasswordField();
-        password2.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.BLACK,2,true),
+        password2.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.GRAY,2,true),
                 new EmptyBorder (0,2,0,2)));
         password2.addKeyListener(keyHandler);
 
