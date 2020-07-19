@@ -15,11 +15,13 @@ public class ServerButtonPanel extends JPanel {
     private Server server;
     private MultiGamePanel mainPanel;
     private JPanel multiGameListPanel;
+    private boolean selected;
 
 
     public ServerButtonPanel (Server server, MultiGamePanel mainPanel)
     {
         super();
+        selected = false;
         setLayout (new FlowLayout (FlowLayout.LEFT));
         setBackground (Color.GRAY);
         if (server == null)
@@ -38,6 +40,14 @@ public class ServerButtonPanel extends JPanel {
         this.currentCapacity.setForeground (Color.DARK_GRAY);
         multiGameListPanel = new MultiGameListPanel (server.getMultiGames (),mainPanel);
         createBasePanel ();
+    }
+
+    public void setSelected (boolean selected) {
+        this.selected = selected;
+    }
+
+    public boolean isSelected () {
+        return selected;
     }
 
     public void addNewGame (MultiGame multiGame)

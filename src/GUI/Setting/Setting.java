@@ -1,14 +1,19 @@
 package GUI.Setting;
 
+import GUI.MultiGame.CreateNewServer;
+import GUI.MultiGame.ServerButtonPanel;
+import GUI.MultiGame.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
+import GameData.Server;
+import GameData.ServerDataBase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
-import java.sql.PreparedStatement;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Setting extends JPanel
@@ -33,6 +38,9 @@ public class Setting extends JPanel
     private ColorJLabel server;
     private JPanel userInfoPanel;
     private JPanel defaultsPanel;
+    private JPanel serversListPanelInSetting;
+    private JPanel serverListPanel;
+
     private JSlider sliderTank = new JSlider(50,150,100);
     private JPanel tempTank;
     private JSlider sliderCanon;
@@ -42,6 +50,9 @@ public class Setting extends JPanel
     private JLabel setDefault;
     private JLabel save;
     private JLabel back;
+    private JButton createNewServer;
+    private JButton removeServer;
+
 
     private int tank;
     private int canon;
@@ -50,9 +61,18 @@ public class Setting extends JPanel
 
     private MouseHandler mouse = new MouseHandler();
 
-    public Setting(JFrame frame)
+    public Setting(JFrame frame, ServerDataBase serverDataBase)
     {
         this.frame = frame;
+        this.serverListPanel = new ServerListPanel (serverDataBase,null);
+        JScrollPane scrollPane1 = new JScrollPane (serverListPanel,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+
+        serversListPanelInSetting = new JPanel (new BorderLayout ());
+        serversListPanelInSetting.add (scrollPane1,BorderLayout.CENTER);
+
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
         readFile();
@@ -173,6 +193,16 @@ public class Setting extends JPanel
         defaultsPanel.add(tempWall);
         defaultsPanel.add(buttons);
 
+
+        JPanel buttonsPanel = new JPanel (new GridLayout (1,2));
+        createNewServer = new JButton ("Create New Server");
+        removeServer = new JButton ("Remove Server");
+        buttonsPanel.add (createNewServer);
+        buttonsPanel.add (removeServer);
+        serversListPanelInSetting.add (buttonsPanel,BorderLayout.SOUTH);
+        createNewServer.addMouseListener (mouse);
+        removeServer.addMouseListener (mouse);
+
         this.add(pictureJLabel,BorderLayout.CENTER);
     }
 
@@ -229,7 +259,7 @@ public class Setting extends JPanel
                 music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(defaultsPanel);
-               //////////////////////// getPanel().remove(///////);
+                getPanel ().remove (serversListPanelInSetting);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -240,7 +270,7 @@ public class Setting extends JPanel
                 music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
-                //////////////////////// getPanel().remove(///////);
+                getPanel ().remove (serversListPanelInSetting);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -251,8 +281,8 @@ public class Setting extends JPanel
                 music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
-                //////////////////////// getPanel().remove(///////);
-                ////////////////getPanel().add(////////////,BorderLayout.CENTER);
+                getPanel ().remove (serversListPanelInSetting);
+                getPanel().add(serversListPanelInSetting,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
@@ -293,6 +323,35 @@ public class Setting extends JPanel
                 frame.setVisible(false);
                 frame.setVisible(true);
             }
+            if (e.getSource () == createNewServer)
+            {
+                frame.setContentPane (new CreateNewServer (frame, (ServerListPanel)serverListPanel,
+                        getPanel ()));
+                frame.setVisible(false);
+                frame.setVisible(true);
+            }
+
+            if (e.getSource () == removeServer)
+            {
+                ServerListPanel serverListPanel2 = (ServerListPanel)serverListPanel;
+                for (ServerButtonPanel serverButtonPanel : serverListPanel2.getServerButtonPanels ())
+                    if (serverButtonPanel.isSelected ())
+                    {
+                        String ans = JOptionPane.showInputDialog ("Enter Server Password");
+                        if (ans != null)
+                        {
+                            if (Arrays.equals (serverButtonPanel.getServer ().getPassword (),
+                                    ans.toCharArray ()))
+                            {
+                                serverListPanel2.removeServer (serverButtonPanel);
+                                return;
+                            }
+                        }
+                        JOptionPane.showMessageDialog (getPanel (),"Password is Wrong",
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                    }
+            }
+
         }
 
         @Override

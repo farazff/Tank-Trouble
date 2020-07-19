@@ -7,10 +7,7 @@ import GUI.MultiGame.MultiGamePanel;
 import GUI.Setting.Setting;
 import GUI.SignInPanel;
 import GUI.SignUpPanel;
-import GameData.GameFinishType;
-import GameData.GameMemberShipType;
-import GameData.MultiGame;
-import GameData.Server;
+import GameData.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -40,7 +37,7 @@ public class TestAmir {
                 GameMemberShipType.SINGLE,22,30,30,30));
         multiGames.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        Server server1 = new Server ("Haasd",multiGames);
+        Server server1 = new Server ("Haasd",multiGames,new char[]{'1','0','x'});
         ArrayList<MultiGame> multiGames2 = new ArrayList<> ();
         multiGames2.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
@@ -50,25 +47,25 @@ public class TestAmir {
                 GameMemberShipType.SINGLE,22,30,30,30));
         multiGames2.add (new MultiGame ("goasdfsadfasdfogle4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        Server server2 = new Server ("Amsadfasdfsadfasdfafdad",multiGames2);
+        Server server2 = new Server ("Amsadfasdfsadfasdfafdad",multiGames2,new char[]{'1','0','y'});
 
-        ArrayList<Server> servers = new ArrayList<> ();
-        servers.add (server1);
-        servers.add (server1);
-        servers.add (server1);
-        servers.add (server1);
-        servers.add (server2);
-        servers.add (server1);
-        servers.add (server1);
-        servers.add (server1);
-        servers.add (server1);
+        ServerDataBase servers = new ServerDataBase (null);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
+        servers.addNewServer (server2);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
+        servers.addNewServer (server1);
         Loading loading = new Loading(frame);
         SignInPanel signInPanel = new SignInPanel(frame);
         SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
         Main main = new Main (frame);
         GameWithPC gameWithPC = new GameWithPC(frame);
         MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
-        Setting setting = new Setting(frame);
+        Setting setting = new Setting(frame,servers);
 
 
         loading.setNex(signInPanel);
@@ -82,8 +79,8 @@ public class TestAmir {
         setting.setPre(main);
 
 
-        frame.setContentPane(new CreateNewServer (frame,setting));
+        frame.setContentPane(setting);
         frame.setVisible(true);
-        loading.fill();
+//        loading.fill();
     }
 }

@@ -3,6 +3,7 @@ package GUI.MultiGame;
 
 import GUI.Music;
 import GameData.Server;
+import GameData.ServerDataBase;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,19 +21,21 @@ public class ServerListPanel extends JPanel
 
     private MultiGamePanel mainPanel;
     private ArrayList<ServerButtonPanel> serverButtonPanels;
+    private ServerDataBase serverDataBase;
 
-    public ServerListPanel (ArrayList<Server> servers, MultiGamePanel mainPanel)
+    public ServerListPanel (ServerDataBase serverDataBase, MultiGamePanel mainPanel)
     {
         super();
-        if (servers == null)
+        if (serverDataBase == null)
             throw new InputMismatchException ("servers in Null");
         this.mainPanel = mainPanel;
+        this.serverDataBase = serverDataBase;
         serverButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
         setBackground (Color.WHITE);
         setBorder (new EmptyBorder (5,5,5,5));
         MouseHandler mouseHandler = new MouseHandler ();
-        for (Server server : servers)
+        for (Server server : serverDataBase.getServers ())
         {
             ServerButtonPanel serverButtonPanel = new ServerButtonPanel (server,mainPanel);
             add(serverButtonPanel);
@@ -45,6 +48,7 @@ public class ServerListPanel extends JPanel
     public void addNewServer (Server server)
     {
         MouseHandler mouseHandler = new MouseHandler ();
+        serverDataBase.addNewServer (server);
         ServerButtonPanel serverButtonPanel = new ServerButtonPanel (server,mainPanel);
         serverButtonPanels.add (serverButtonPanel);
         serverButtonPanel.addMouseListener (mouseHandler);
@@ -53,7 +57,20 @@ public class ServerListPanel extends JPanel
         this.setVisible (true);
     }
 
+    public void removeServer (ServerButtonPanel serverButtonPanel)
+    {
 
+        serverButtonPanel.setVisible (false);
+        serverButtonPanel.remove (serverButtonPanel);
+        serverDataBase.removeServer (serverButtonPanel.getServer ());
+        this.setVisible (false);
+        this.setVisible (true);
+    }
+
+
+    public ArrayList<ServerButtonPanel> getServerButtonPanels () {
+        return serverButtonPanels;
+    }
 
     public MultiGamePanel getMainPanel () {
         return mainPanel;
@@ -81,13 +98,18 @@ public class ServerListPanel extends JPanel
             {
                 if (e.getComponent () == serverButtonPanel)
                 {
-                    mainPanel.setSecondPanel (serverButtonPanel.getMultiGameListPanel (),serverButtonPanel);
+                    if (mainPanel != null)
+                        mainPanel.setSecondPanel (serverButtonPanel.getMultiGameListPanel (),serverButtonPanel);
                     serverButtonPanel.changeFontAndColor (
                             new Font ("Arial",Font.ITALIC,14),Color.BLACK);
+                    serverButtonPanel.setSelected (true);
                 }
                 else
+                {
                     serverButtonPanel.changeFontAndColor (new Font ("Arial",Font.PLAIN,14),
                             Color.DARK_GRAY);
+                    serverButtonPanel.setSelected (false);
+                }
             }
         }
     }

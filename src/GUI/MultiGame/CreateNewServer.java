@@ -1,15 +1,20 @@
 package GUI.MultiGame;
 
 import GUI.GridBagSetter;
+import GUI.Music;
 import GUI.PictureJLabel;
 import GUI.SignUpPanel;
+import GameData.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CreateNewServer extends JPanel
@@ -17,6 +22,8 @@ public class CreateNewServer extends JPanel
     private JTextField url; // user name
     private JPasswordField password1; // password
     private JPasswordField password2; // check password
+
+    private ServerListPanel serverListPanel;
     private JButton create; // sign up button
     private JLabel back;
     private JFrame frame;
@@ -25,14 +32,25 @@ public class CreateNewServer extends JPanel
     /**
      * creates new sign up panel
      */
-    public CreateNewServer(JFrame frame,JPanel pre)
+    public CreateNewServer(JFrame frame, ServerListPanel serverListPanel, JPanel pre)
     {
         super();
+        this.serverListPanel = serverListPanel;
         this.frame = frame;
         this.pre = pre;
         setBorder(new EmptyBorder (10,10,10,10));
         setLayout(new FlowLayout (FlowLayout.CENTER));
         createBasePanel ();
+        addComponentListener (new ComponentAdapter () {
+            @Override
+            public void componentResized (ComponentEvent e) {
+                repaint ();
+            }
+        });
+    }
+
+    public void setPre (JPanel pre) {
+        this.pre = pre;
     }
 
     /**
@@ -41,13 +59,15 @@ public class CreateNewServer extends JPanel
     private void createBasePanel ()
     {
         KeyHandler keyHandler = new KeyHandler ();
+        GridBagConstraints constraints = new GridBagConstraints ();
+        GridBagLayout layout = new GridBagLayout ();
 
         JPanel base = new JPanel();
         base.setBackground (Color.WHITE);
         base.setBorder (new LineBorder (Color.GRAY,6,true));
 
 
-        base.setLayout (new BorderLayout ());
+        base.setLayout (layout);
 
         JLabel server = new JLabel("Create New Server");
         server.setHorizontalAlignment(JLabel.CENTER);
@@ -65,16 +85,20 @@ public class CreateNewServer extends JPanel
         top.setBackground(Color.WHITE);
         top.setOpaque(true);
         JPanel topTop = new JPanel(new BorderLayout());
-        topTop.add(top,BorderLayout.CENTER);
         JPanel back2 = new JPanel(new GridLayout(3,1));
+        topTop.add(top,BorderLayout.CENTER);
 
         back = new JLabel (new ImageIcon ("./Images/back1.png"));
-
+        back.addMouseListener (new MouseHandler ());
 
         back2.add(back);
         back2.setBackground(Color.WHITE);
         back2.setOpaque(true);
         topTop.add(back2,BorderLayout.WEST);
+        JLabel a = new JLabel ("      ");
+        topTop.add (a,BorderLayout.EAST);
+        a.setOpaque (true);
+        a.setBackground (Color.WHITE);
 
         // title of the password2 textfield
         JLabel password2text = new JLabel("Renter Password:");
@@ -89,7 +113,7 @@ public class CreateNewServer extends JPanel
                 new EmptyBorder (0,2,0,2)));
         password1.addKeyListener(keyHandler);
         // title of the username textfield
-        JLabel userNameText = new JLabel("User Name:");
+        JLabel userNameText = new JLabel("URL :");
         url = new JTextField();
         url.setBorder (BorderFactory.createCompoundBorder (new LineBorder (Color.BLACK,2,true),
                 new EmptyBorder (0,2,0,2)));
@@ -99,7 +123,7 @@ public class CreateNewServer extends JPanel
 
 
         create = new JButton("Create");
-        create.addActionListener(e -> checkData());
+        create.addActionListener(new ActionHandler ());
 
 
 
@@ -109,6 +133,37 @@ public class CreateNewServer extends JPanel
         hint.setEditable(false);
         hint.setFocusable (false);
 
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.ipady = 15;
+        constraints.ipadx = 0;
+
+
+        GridBagSetter.addComponent(topTop,0,0,4,1,layout,constraints,base);
+
+        constraints.insets = new Insets(0,5 ,0 ,5 );
+
+        GridBagSetter.addComponent(userNameText,1,0,4,1,layout,constraints,base);
+
+        GridBagSetter.addComponent(url,2,0,4,1,layout,constraints,base);
+
+        GridBagSetter.addComponent(password1text,3,0,4,1,layout,constraints,base);
+
+        GridBagSetter.addComponent(password1,4,0,4,1,layout,constraints,base);
+
+        GridBagSetter.addComponent(password2text,5,0,4,1,layout,constraints,base);
+
+        GridBagSetter.addComponent(password2,6,0,4,1,layout,constraints,base);
+
+        constraints.insets = new Insets(10,5 ,0 ,5);
+
+        //constraints.fill = GridBagConstraints.CENTER;
+
+        GridBagSetter.addComponent(create,7,0,4,1,layout,constraints,base);
+
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.insets = new Insets(5,1 ,0 ,0);
+        GridBagSetter.addComponent(hint,8,0,4,1,layout,constraints,base);
 
 
 
@@ -120,7 +175,7 @@ public class CreateNewServer extends JPanel
      * check if the given data for signing up is ok or nor
      * if it is ok it will save the users info
      */
-    private void checkData()
+    private boolean checkData()
     {
         boolean ans = true;
         if(url.getText().length()==0)
@@ -160,10 +215,7 @@ public class CreateNewServer extends JPanel
                     new EmptyBorder (0,2,0,2)));
         }
 
-        if(ans)
-        {
-            System.out.println("User saved");
-        }
+        return ans;
     }
 
 
@@ -218,6 +270,72 @@ public class CreateNewServer extends JPanel
         }
     }
 
+
+    /**
+     * handles Action events
+     */
+    private class ActionHandler implements ActionListener
+    {
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            if (e.getSource () == create)
+            {
+                Music music = new Music ();
+                music.execute ();
+                if (!checkData ())
+                    return;
+
+                Server server = new Server (url.getText (),null,password1.getPassword ());
+                serverListPanel.addNewServer (server);
+                frame.setContentPane (pre);
+
+            }
+        }
+    }
+
+
+    /**
+     * this class handles Mouse
+     */
+    private class MouseHandler extends MouseAdapter
+    {
+        @Override
+        public void mouseEntered (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back2.png"));
+        }
+
+        @Override
+        public void mouseExited (MouseEvent e) {
+            if (e.getSource () == back)
+                back.setIcon (new ImageIcon ("./Images/back1.png"));
+        }
+
+        @Override
+        public void mouseReleased (MouseEvent e) {
+            if (e.getSource () == back)
+            {
+                Music music = new Music ();
+                music.execute ();
+                frame.setContentPane (pre);
+            }
+        }
+    }
+
+
+    @Override
+    protected void paintComponent (Graphics g) {
+        super.paintComponent (g);
+        try {
+
+
+            g.drawImage (ImageIO.read (new File ("./Images/login.jpg")).
+                            getScaledInstance (getWidth (),getHeight (),Image.SCALE_FAST)
+                    ,0,0,this);
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+    }
 
 
 }

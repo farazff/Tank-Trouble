@@ -14,11 +14,13 @@ public class MultiGameButtonPanel extends JPanel
     private MultiGame multiGame;
     private MultiGamePanel mainPanel;
     private JPanel multiGameDataPanel;
+    private boolean selected;
 
 
     public MultiGameButtonPanel (MultiGame multiGame, MultiGamePanel mainPanel)
     {
         super();
+        selected = false;
         setLayout (new FlowLayout (FlowLayout.LEFT));
         setBackground (Color.GRAY);
         if (multiGame == null)
@@ -39,6 +41,14 @@ public class MultiGameButtonPanel extends JPanel
         remainPlayers.setForeground (Color.DARK_GRAY);
         multiGameDataPanel = new MultiGameDataPanel (multiGame);
         createComponents ();
+    }
+
+    public void setSelected (boolean selected) {
+        this.selected = selected;
+    }
+
+    public boolean isSelected () {
+        return selected;
     }
 
     public JPanel getMultiGameDataPanel () {

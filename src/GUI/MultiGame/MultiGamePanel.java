@@ -6,6 +6,8 @@ import GUI.Music;
 import GUI.NullPanel;
 import GUI.PictureJLabel;
 import GameData.Server;
+import GameData.ServerDataBase;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -34,10 +36,12 @@ public class MultiGamePanel extends JPanel
     private JScrollPane scrollPane3;
     private JButton createNewGame;
 
+
     private JLabel back;
 
-    public MultiGamePanel (JFrame frame, ArrayList<Server> servers)
+    public MultiGamePanel (JFrame frame, ServerDataBase serverDataBase)
     {
+
         main = new JPanel (new GridLayout (1,3));
         setLayout (new BorderLayout ());
 
@@ -85,7 +89,7 @@ public class MultiGamePanel extends JPanel
 
         firstPanel = new JPanel (new BorderLayout ());
         firstPanel.setBackground (Color.WHITE);
-        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (servers,this),
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (serverDataBase,this),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
@@ -128,6 +132,7 @@ public class MultiGamePanel extends JPanel
     {
         return this;
     }
+
 
 
 

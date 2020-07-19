@@ -48,6 +48,10 @@ public class MultiGameListPanel extends JPanel
         this.setVisible (true);
     }
 
+    public ArrayList<MultiGameButtonPanel> getMultiGameButtonPanels () {
+        return multiGameButtonPanels;
+    }
+
     private class MouseHandler extends MouseAdapter
     {
 
@@ -74,10 +78,14 @@ public class MultiGameListPanel extends JPanel
                     mainPanel.setThirdPanel (multiGameButtonPanel.getMultiGameDataPanel (),multiGameButtonPanel);
                     multiGameButtonPanel.changeFontAndColor (
                             new Font ("Arial",Font.ITALIC,14),Color.BLACK);
+                    multiGameButtonPanel.setSelected (true);
                 }
                 else
-                     multiGameButtonPanel.changeFontAndColor (new Font ("Arial",Font.PLAIN,14),
-                             Color.DARK_GRAY);
+                {
+                    multiGameButtonPanel.changeFontAndColor (new Font ("Arial",Font.PLAIN,14),
+                            Color.DARK_GRAY);
+                    multiGameButtonPanel.setSelected (false);
+                }
             }
 
         }

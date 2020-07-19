@@ -5,16 +5,17 @@ import java.util.ArrayList;
 
 public class Server implements Serializable
 {
+    private final char[] password;
     private final String url;
     private static final int MAX_CAPACITY = 100;
     private int currentCapacity;
     private int numOfActiveGames;
     private final ArrayList<MultiGame> multiGames;
 
-    public Server (String url, ArrayList<MultiGame> multiGames)
+    public Server (String url, ArrayList<MultiGame> multiGames, char[] password)
     {
         this.url = url;
-
+        this.password = password;
         if (multiGames != null)
             this.multiGames = new ArrayList<> (multiGames);
         else
@@ -26,6 +27,10 @@ public class Server implements Serializable
             numOfActiveGames = multiGames.size ();
 
         currentCapacity = MAX_CAPACITY - numOfActiveGames;
+    }
+
+    public char[] getPassword () {
+        return password;
     }
 
     public int getNumOfActiveGames () {
