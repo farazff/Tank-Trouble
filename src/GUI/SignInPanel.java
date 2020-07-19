@@ -205,6 +205,8 @@ public class SignInPanel extends JPanel
 
                 // sign up
                 frame.setContentPane (new SignUpPanel (frame));
+                frame.setVisible (false);
+                frame.setVisible (true);
             }
         }
     }
@@ -245,6 +247,8 @@ public class SignInPanel extends JPanel
                     return;
                 // sign in
                 frame.setContentPane (nex);
+                frame.setVisible (false);
+                frame.setVisible (true);
             }
         }
     }

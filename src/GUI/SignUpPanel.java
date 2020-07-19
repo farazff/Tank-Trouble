@@ -184,7 +184,7 @@ public class SignUpPanel extends JPanel
     public void ShowSignIn()
     {
         frame.remove(this);
-        frame.add(new LoginPanel());
+//        frame.add(new LoginPanel());
         //frame.pack();
         frame.setVisible(false);
         frame.setVisible(true);

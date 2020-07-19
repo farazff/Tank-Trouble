@@ -191,7 +191,12 @@ public class MultiGamePanel extends JPanel
             if (e.getSource () == back)
             {
                 if (pre != null)
+                {
                     frame.setContentPane (pre);
+                    frame.setVisible (false);
+                    frame.setVisible (true);
+                }
+
             }
         }
     }
