@@ -226,6 +226,7 @@ public class Setting extends JPanel
             {
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(defaultsPanel);
+               //////////////////////// getPanel().remove(///////);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -234,7 +235,17 @@ public class Setting extends JPanel
             {
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
+                //////////////////////// getPanel().remove(///////);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
+                getPanel().setVisible(false);
+                getPanel().setVisible(true);
+            }
+            if(e.getSource().equals(defaults))
+            {
+                getPanel().remove(pictureJLabel);
+                getPanel().remove(userInfoPanel);
+                //////////////////////// getPanel().remove(///////);
+                ////////////////getPanel().add(////////////,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
