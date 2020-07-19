@@ -325,6 +325,8 @@ public class Setting extends JPanel
             }
             if (e.getSource () == createNewServer)
             {
+                Music music = new Music();
+                music.execute();
                 frame.setContentPane (new CreateNewServer (frame, (ServerListPanel)serverListPanel,
                         getPanel ()));
                 frame.setVisible(false);
@@ -333,6 +335,8 @@ public class Setting extends JPanel
 
             if (e.getSource () == removeServer)
             {
+                Music music = new Music();
+                music.execute();
                 ServerListPanel serverListPanel2 = (ServerListPanel)serverListPanel;
                 for (ServerButtonPanel serverButtonPanel : serverListPanel2.getServerButtonPanels ())
                     if (serverButtonPanel.isSelected ())
