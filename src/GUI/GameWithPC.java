@@ -17,6 +17,7 @@ public class GameWithPC extends JPanel
     private PictureJLabel picture;
     private JPanel pre;
     private JFrame frame;
+    private JLabel start;
 
     public GameWithPC(JFrame frame)
     {
@@ -63,7 +64,7 @@ public class GameWithPC extends JPanel
         ArrayList<String> data = new ArrayList<>();
         data.add("Death Match");
         data.add("League Match");
-        Selecting selecting = new Selecting(data,0,Color.WHITE,Color.PINK,
+        Selecting selecting = new Selecting(data,0,Color.WHITE,Color.GRAY,
                 new Font("Arial",Font.BOLD,20));
 
         JLabel tankStamina = new JLabel("Tank Stamina:");
@@ -91,12 +92,13 @@ public class GameWithPC extends JPanel
         JPanel startPanel = new JPanel(new FlowLayout());
         startPanel.setBackground(Color.WHITE);
         startPanel.setOpaque(true);
-        JLabel start = new JLabel("Start");
+        start = new JLabel("Start");
         start.setHorizontalAlignment(JLabel.CENTER);
-        start.setBackground(Color.PINK);
+        start.setBackground(new Color(150,150,150));
         start.setOpaque(true);
         start.setPreferredSize(new Dimension(120,50));
         start.setFont(new Font("Arial",Font.BOLD,26));
+        start.addMouseListener(new MouseHandler());
         startPanel.add(start);
 
 
@@ -164,22 +166,96 @@ public class GameWithPC extends JPanel
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
+        public void mouseEntered(MouseEvent e)
+        {
+            if(e.getSource().equals(start))
+            {
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for(int i=0;i<4;i++)
+                        {
+
+                            switch (i)
+                            {
+                                case 0 : start.setBackground(new Color(148,148,148));
+                                    break;
+                                case 1 : start.setBackground(new Color(128,128,128));
+                                    break;
+                                case 2 : start.setBackground(new Color(104,104,104));
+                                    break;
+                                case 3 : start.setBackground(new Color(94,94,94));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            if(e.getSource().equals(start))
+            {
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+
+                            switch (i)
+                            {
+                                case 0:
+                                    start.setBackground(new Color(104, 104, 104));
+                                    break;
+                                case 1:
+                                    start.setBackground(new Color(128, 128, 128));
+                                    break;
+                                case 2:
+                                    start.setBackground(new Color(148, 148, 148));
+                                    break;
+                                case 3:
+                                    start.setBackground(new Color(150, 150, 150));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e)
+        {
 
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
+        public void mouseMoved(MouseEvent e)
+        {
 
         }
     }

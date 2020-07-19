@@ -21,6 +21,8 @@ public class TestFaraz
         JFrame frame = new JFrame ();
         frame.setLocation (40, 40);
         frame.setSize ((720 * 16) / 9, 720);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
         ArrayList<MultiGame> multiGames = new ArrayList<> ();
