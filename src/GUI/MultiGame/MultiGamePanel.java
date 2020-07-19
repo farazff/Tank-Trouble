@@ -141,6 +141,7 @@ public class MultiGamePanel extends JPanel
         main.add(secondPanel,1);
         secondPanel.add (createNewGame,BorderLayout.SOUTH);
         main.setVisible (true);
+        setThirdPanel (new NullPanel (),null);
     }
 
     public void setThirdPanel (JPanel newThirdPanel, MultiGameButtonPanel multiGameButtonPanel) {

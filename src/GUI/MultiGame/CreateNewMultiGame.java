@@ -16,6 +16,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 
 /**
  * this class represents a new game panel in network game
@@ -36,6 +37,8 @@ public class CreateNewMultiGame extends JPanel
     private ServerButtonPanel owner;
     private JFrame frame;
     private JPanel pre;
+    private boolean finishedProcessed;
+    private boolean typeOfPlayingChanged;
 
 
     /**
@@ -44,6 +47,8 @@ public class CreateNewMultiGame extends JPanel
     public CreateNewMultiGame (ServerButtonPanel owner, JFrame frame, JPanel pre)
     {
         super();
+        finishedProcessed = false;
+        typeOfPlayingChanged = false;
         this.owner = owner;
         this.pre = pre;
         this.frame = frame;
@@ -56,6 +61,40 @@ public class CreateNewMultiGame extends JPanel
                 repaint ();
             }
         });
+        new Thread (new Runnable () {
+            @Override
+            public void run () {
+
+                while (!finishedProcessed)
+                {
+                    if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+                    {
+                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+                                ,1,100,1));
+                    }
+                    else
+                    {
+                        if ((int)(numOfPlayers.getValue ()) % 2 == 1)
+                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
+
+                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
+                                ,1,100,2));
+                    }
+                    ((JSpinner.DefaultEditor)numOfPlayers.
+                            getEditor ()).getTextField ().setEditable (false);
+                    ((JSpinner.DefaultEditor)numOfPlayers.
+                            getEditor ()).getTextField ().setFocusable (false);
+                    try{
+                        Thread.sleep (250);
+                    } catch (InterruptedException e)
+                    {
+                        System.out.println ("Interrupted");
+                    }
+                }
+
+            }
+
+        }).start ();
     }
 
     /**
@@ -63,7 +102,7 @@ public class CreateNewMultiGame extends JPanel
      */
     private void createBasePanel ()
     {
-        ChangeHandler changeHandler = new ChangeHandler ();
+
         JPanel basePanel = new JPanel (new BorderLayout ());
         JPanel leftPanel = new JPanel ();
         JPanel rightPanel = new JPanel ();
@@ -288,47 +327,9 @@ public class CreateNewMultiGame extends JPanel
         slider.setSnapToTicks(true);
     }
 
-    /**
-     * this class handles changes in Sliders and some buttons
-     */
-    private class ChangeHandler implements ItemListener
-    {
 
-        @Override
-        public void itemStateChanged (ItemEvent e) {
-            if (e.getStateChange () == ItemEvent.SELECTED)
-            {
-//                if (e.getSource () == teamPlayer)
-//                {
-//                    if (teamPlayer.isSelected ())
-//                    {
-//                        if ((int)(numOfPlayers.getValue ()) % 2 == 1)
-//                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
-//
-//                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-//                                ,1,100,2));
-//                        ((JSpinner.DefaultEditor)numOfPlayers.
-//                                getEditor ()).getTextField ().setEditable (false);
-//                        ((JSpinner.DefaultEditor)numOfPlayers.
-//                                getEditor ()).getTextField ().setFocusable (false);
-//                    }
-//                } else if (e.getSource () == singlePlayer)
-//                {
-//                    if (singlePlayer.isSelected ())
-//                    {
-//                        numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-//                                ,1,100,1));
-//                        ((JSpinner.DefaultEditor)numOfPlayers.
-//                                getEditor ()).getTextField ().setEditable (false);
-//                        ((JSpinner.DefaultEditor)numOfPlayers.
-//                                getEditor ()).getTextField ().setFocusable (false);
-//                    }
-//
-//                }
-            }
 
-        }
-    }
+
 
     /**
      * check if the given data for creating new game is ok or nor
@@ -375,13 +376,16 @@ public class CreateNewMultiGame extends JPanel
                 else
                     finishType = GameFinishType.LEAGUE;
 
+                finishedProcessed = true;
 
                 owner.addNewGame (new MultiGame (gameNameTextField.getText (),
                         finishType, memberShipType,
                         (int)numOfPlayers.getValue (),tanksStamina.getValue (),
                         wallsStamina.getValue (),canonPower.getValue ()));
 
+
                 frame.setContentPane (pre);
+
             }
         }
     }
