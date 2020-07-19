@@ -58,6 +58,7 @@ public class SignUpPanel extends JPanel
         base.setLayout (layout);
 
         JLabel header = new JLabel("sign up");
+        header.setForeground(Color.WHITE);
         header.setFont (new Font ("DialogInput",Font.BOLD,23));
         header.setHorizontalTextPosition (SwingConstants.CENTER);
         header.setHorizontalAlignment (SwingConstants.CENTER);

@@ -29,6 +29,7 @@ public class Setting extends JPanel
     private PictureJLabel pictureJLabel = new PictureJLabel("Images/Setting.jpg");
     private ColorJLabel userInfo;
     private ColorJLabel defaults;
+    private ColorJLabel server;
     private JPanel userInfoPanel;
     private JPanel defaultsPanel;
     private JSlider sliderTank = new JSlider(50,150,100);
@@ -193,9 +194,13 @@ public class Setting extends JPanel
         defaults = new ColorJLabel("    Game Defaults");
         defaults.addMouseListener(mouse);
 
+        server = new ColorJLabel("    Server");
+        server.addMouseListener(mouse);
+
         left.add(back);
         left.add(userInfo);
         left.add(defaults);
+        left.add(server);
     }
 
 
