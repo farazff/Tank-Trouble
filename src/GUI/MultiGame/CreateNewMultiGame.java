@@ -17,6 +17,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -66,15 +67,10 @@ public class CreateNewMultiGame extends JPanel
             @Override
             public void run () {
 
-                int i;
-                if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
-                    i = 0;
-                else
-                    i = 1;
                 while (!finishedProcessed)
                 {
 
-                    if (i == 0 && typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+                    if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
                     {
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
                                 ,1,100,1));
@@ -82,7 +78,6 @@ public class CreateNewMultiGame extends JPanel
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setFocusable (false);
-                        i = 1;
                     }
                     else
                     {
@@ -95,7 +90,7 @@ public class CreateNewMultiGame extends JPanel
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setFocusable (false);
-                        i = 0;
+
                     }
 
                     try{
@@ -109,8 +104,36 @@ public class CreateNewMultiGame extends JPanel
             }
 
         }).start ();
+        readFile ();
     }
 
+    public void readFile()
+    {
+        int i=1;
+        try
+        {
+            Scanner scanner = new Scanner (new File("Files/Setting.txt"));
+            while (scanner.hasNext ())
+            {
+                if (i == 1)
+                {
+                    tanksStamina.setValue (scanner.nextInt ());
+                } else if (i == 2)
+                {
+                    canonPower.setValue (scanner.nextInt ());
+                } else
+                {
+                    wallsStamina.setValue (scanner.nextInt ());
+                }
+                i++;
+            }
+
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
     /**
      * create base panel
      */

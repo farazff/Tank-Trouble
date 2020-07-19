@@ -1,9 +1,12 @@
 
 import GUI.GameWithPC;
+import GUI.Loading;
 import GUI.MainPage.Main;
+import GUI.MultiGame.CreateNewServer;
 import GUI.MultiGame.MultiGamePanel;
 import GUI.Setting.Setting;
 import GUI.SignInPanel;
+import GUI.SignUpPanel;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
 import GameData.MultiGame;
@@ -59,19 +62,28 @@ public class TestAmir {
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
-        SignInPanel signInPanel = new SignInPanel (frame);
-        MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
+        Loading loading = new Loading(frame);
+        SignInPanel signInPanel = new SignInPanel(frame);
+        SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
         Main main = new Main (frame);
-        multiGamePanel.setPre (main);
-        signInPanel.setNex (main);
-        GameWithPC gameWithPC = new GameWithPC (frame);
-        gameWithPC.setPre (main);
-        main.setSing (gameWithPC);
-        main.setMul (multiGamePanel);
-        Setting setting = new Setting (frame);
-        setting.setPre (main);
+        GameWithPC gameWithPC = new GameWithPC(frame);
+        MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
+        Setting setting = new Setting(frame);
 
-        frame.setContentPane (signInPanel);
-        frame.setVisible (true);
+
+        loading.setNex(signInPanel);
+        signInPanel.setNex(main);
+
+        main.setSing(gameWithPC);
+        main.setMul(multiGamePanel);
+        main.setSett(setting);
+        gameWithPC.setPre(main);
+        multiGamePanel.setPre(main);
+        setting.setPre(main);
+
+
+        frame.setContentPane(new CreateNewServer (frame,setting));
+        frame.setVisible(true);
+        loading.fill();
     }
 }
