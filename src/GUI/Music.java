@@ -7,7 +7,15 @@ import java.io.IOException;
 
 public class Music extends SwingWorker<Long, Object>
 {
+    boolean repeat = false;
     Clip clip;
+    String filePath = "Files/Sounds/Button.au";
+
+    public void setFilePath(String filePath , boolean repeat)
+    {
+        this.filePath = filePath;
+        repeat = true;
+    }
 
     public void start()
     {
@@ -20,10 +28,12 @@ public class Music extends SwingWorker<Long, Object>
         try
         {
             AudioInputStream audioInputStream;
-            String filePath = "Files/Sounds/Button.au";
             audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+            if(repeat)
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
             start();
         }
         catch (UnsupportedAudioFileException | LineUnavailableException | IOException e)
