@@ -5,8 +5,6 @@ import GameData.MultiGame;
 import GameData.Server;
 import javax.swing.*;
 import java.awt.*;
-
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 
@@ -42,6 +40,16 @@ public class ServerButtonPanel extends JPanel {
         createBasePanel ();
     }
 
+    public void addNewGame (MultiGame multiGame)
+    {
+        getServer ().addGame (multiGame);
+        MultiGameListPanel multiGameListPanel = (MultiGameListPanel)getMultiGameListPanel ();
+        multiGameListPanel.addNewMultiGame (multiGame);
+    }
+
+    public Server getServer () {
+        return server;
+    }
 
     public void changeFontAndColor (Font font, Color color)
     {

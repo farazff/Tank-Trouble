@@ -2,13 +2,15 @@ package GUI.MultiGame;
 
 import GUI.GridBagSetter;
 import GUI.Selecting;
+import GameData.GameFinishType;
+import GameData.GameMemberShipType;
+import GameData.MultiGame;
+import GameData.Server;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -31,14 +33,20 @@ public class CreateNewMultiGame extends JPanel
     private JSlider wallsStamina;
     private JButton create;
     private JLabel back;
+    private ServerButtonPanel owner;
+    private JFrame frame;
+    private JPanel pre;
 
 
     /**
      * create a new game panel
      */
-    public CreateNewMultiGame ()
+    public CreateNewMultiGame (ServerButtonPanel owner, JFrame frame, JPanel pre)
     {
         super();
+        this.owner = owner;
+        this.pre = pre;
+        this.frame = frame;
         setBorder (new EmptyBorder (10,10,10,10));
         setLayout (new FlowLayout ());
         createBasePanel ();
@@ -355,7 +363,25 @@ public class CreateNewMultiGame extends JPanel
             {
                 if (!checkData ())
                     return;
-                System.out.println ("created");
+                GameFinishType finishType = null;
+                GameMemberShipType memberShipType = null;
+                if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+                    memberShipType = GameMemberShipType.SINGLE;
+                else
+                    memberShipType = GameMemberShipType.TEAM;
+
+                if (endTypeOfPlaying.getCurrentValue ().equals ("Death Match"))
+                    finishType = GameFinishType.DEATH_MATCH;
+                else
+                    finishType = GameFinishType.LEAGUE;
+
+
+                owner.addNewGame (new MultiGame (gameNameTextField.getText (),
+                        finishType, memberShipType,
+                        (int)numOfPlayers.getValue (),tanksStamina.getValue (),
+                        wallsStamina.getValue (),canonPower.getValue ()));
+
+                frame.setContentPane (pre);
             }
         }
     }
@@ -381,7 +407,7 @@ public class CreateNewMultiGame extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == back)
             {
-                System.out.println ("back");
+                frame.setContentPane (pre);
             }
         }
     }

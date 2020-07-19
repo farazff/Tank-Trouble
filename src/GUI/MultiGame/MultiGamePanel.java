@@ -6,6 +6,8 @@ import GameData.Server;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -14,10 +16,16 @@ import java.util.ArrayList;
 public class MultiGamePanel extends JPanel
 {
 
+    private JPanel pre;
+    private JPanel nex;
+    private JFrame frame;
+
     private JPanel firstPanel;
     private JPanel secondPanel;
     private JPanel thirdPanel;
     private JPanel main;
+    private ServerButtonPanel serverButtonPanel;
+    private MultiGameButtonPanel multiGameButtonPanel;
 
     private JScrollPane scrollPane2;
     private JScrollPane scrollPane3;
@@ -25,11 +33,12 @@ public class MultiGamePanel extends JPanel
 
     private JLabel back;
 
-    public MultiGamePanel (ArrayList<Server> servers)
+    public MultiGamePanel (JFrame frame, ArrayList<Server> servers)
     {
         main = new JPanel (new GridLayout (1,3));
         setLayout (new BorderLayout ());
 
+        this.frame = frame;
         // header part
         JPanel headerPanel = new JPanel ();
         headerPanel.setLayout (new BorderLayout ());
@@ -58,6 +67,7 @@ public class MultiGamePanel extends JPanel
         createNewGame = new JButton ("Create New Game");
         createNewGame.setFont (new Font ("Arial",Font.PLAIN,17));
         createNewGame.setMinimumSize (new Dimension (5,10));
+        createNewGame.addActionListener (new ActionHandler ());
 
 
         firstPanel = new JPanel (new BorderLayout ());
@@ -101,8 +111,24 @@ public class MultiGamePanel extends JPanel
 
     }
 
-    public void setSecondPanel (JPanel newSecondPanel) {
+    private JPanel getThis ()
+    {
+        return this;
+    }
+
+
+
+    public void setPre (JPanel pre) {
+        this.pre = pre;
+    }
+
+    public void setNex (JPanel nex) {
+        this.nex = nex;
+    }
+
+    public void setSecondPanel (JPanel newSecondPanel, ServerButtonPanel serverButtonPanel) {
         main.setVisible (false);
+        this.serverButtonPanel = serverButtonPanel;
         secondPanel.remove (scrollPane2);
         scrollPane2 = new JScrollPane (newSecondPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -117,9 +143,10 @@ public class MultiGamePanel extends JPanel
         main.setVisible (true);
     }
 
-    public void setThirdPanel (JPanel newThirdPanel) {
+    public void setThirdPanel (JPanel newThirdPanel, MultiGameButtonPanel multiGameButtonPanel) {
 
         main.setVisible (false);
+        this.multiGameButtonPanel = multiGameButtonPanel;
         thirdPanel.remove (scrollPane3);
         scrollPane3 = new JScrollPane (newThirdPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -132,6 +159,17 @@ public class MultiGamePanel extends JPanel
         main.setVisible (true);
 
 
+    }
+
+    private class ActionHandler implements ActionListener
+    {
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            if (e.getSource () == createNewGame)
+            {
+                frame.setContentPane (new CreateNewMultiGame (serverButtonPanel,frame,getThis ()));
+            }
+        }
     }
 
     private class MouseHandler extends MouseAdapter
@@ -152,7 +190,8 @@ public class MultiGamePanel extends JPanel
         public void mouseReleased (MouseEvent e) {
             if (e.getSource () == back)
             {
-                System.out.println ("back");
+                if (pre != null)
+                    frame.setContentPane (pre);
             }
         }
     }

@@ -36,6 +36,17 @@ public class MultiGameListPanel extends JPanel
         }
     }
 
+    public void addNewMultiGame (MultiGame multiGame)
+    {
+        MouseHandler mouseHandler = new MouseHandler ();
+        MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel);
+        multiGameButtonPanels.add (multiGameButtonPanel);
+        multiGameButtonPanel.addMouseListener (mouseHandler);
+        this.setVisible (false);
+        add(multiGameButtonPanel);
+        this.setVisible (true);
+    }
+
     private class MouseHandler extends MouseAdapter
     {
 
@@ -56,7 +67,7 @@ public class MultiGameListPanel extends JPanel
             {
                 if (e.getComponent () == multiGameButtonPanel)
                 {
-                    mainPanel.setThirdPanel (multiGameButtonPanel.getMultiGameDataPanel ());
+                    mainPanel.setThirdPanel (multiGameButtonPanel.getMultiGameDataPanel (),multiGameButtonPanel);
                     multiGameButtonPanel.changeFontAndColor (
                             new Font ("Arial",Font.ITALIC,14),Color.BLACK);
                 }

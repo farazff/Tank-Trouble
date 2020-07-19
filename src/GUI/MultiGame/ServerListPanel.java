@@ -41,6 +41,17 @@ public class ServerListPanel extends JPanel
 
     }
 
+    public void addNewServer (Server server)
+    {
+        MouseHandler mouseHandler = new MouseHandler ();
+        ServerButtonPanel serverButtonPanel = new ServerButtonPanel (server,mainPanel);
+        serverButtonPanels.add (serverButtonPanel);
+        serverButtonPanel.addMouseListener (mouseHandler);
+        this.setVisible (false);
+        add(serverButtonPanel);
+        this.setVisible (true);
+    }
+
 
 
     public MultiGamePanel getMainPanel () {
@@ -66,7 +77,7 @@ public class ServerListPanel extends JPanel
             {
                 if (e.getComponent () == serverButtonPanel)
                 {
-                    mainPanel.setSecondPanel (serverButtonPanel.getMultiGameListPanel ());
+                    mainPanel.setSecondPanel (serverButtonPanel.getMultiGameListPanel (),serverButtonPanel);
                     serverButtonPanel.changeFontAndColor (
                             new Font ("Arial",Font.ITALIC,14),Color.BLACK);
                 }
