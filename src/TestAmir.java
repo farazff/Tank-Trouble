@@ -1,6 +1,7 @@
 
 import GUI.MainPage.Main;
 import GUI.MultiGame.MultiGamePanel;
+import GUI.SignInPanel;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
 import GameData.MultiGame;
@@ -55,12 +56,13 @@ public class TestAmir {
         servers.add (server1);
         servers.add (server1);
         servers.add (server1);
-
+        SignInPanel signInPanel = new SignInPanel (frame);
         MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
         Main main = new Main (frame);
         multiGamePanel.setPre (main);
+        signInPanel.setNex (main);
 
-        frame.add(multiGamePanel);
+        frame.setContentPane (multiGamePanel);
         frame.setVisible (true);
     }
 }

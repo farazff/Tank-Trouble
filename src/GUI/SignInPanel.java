@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @author Amir Naziri
  */
-public class LoginPanel extends JPanel
+public class SignInPanel extends JPanel
 {
     private JTextField username; // user name
     private boolean usernameTyped;
@@ -24,13 +24,16 @@ public class LoginPanel extends JPanel
     private JButton signIn;
     private JLabel signUp;
     private JLabel errorMessage;
+    private JPanel nex;
+    private JFrame frame;
 
     /**
-     * creates new LoginPanel
+     * creates new SignInPanel
      */
-    public LoginPanel ()
+    public SignInPanel (JFrame frame)
     {
         super();
+        this.frame = frame;
         setBorder (new EmptyBorder (10,10,10,10));
         setLayout (new FlowLayout (FlowLayout.CENTER));
         createBasePanel ();
@@ -43,6 +46,12 @@ public class LoginPanel extends JPanel
             }
         });
     }
+
+    public void setNex (JPanel nex) {
+        this.nex = nex;
+    }
+
+
 
     /**
      * creates base panel
@@ -195,7 +204,7 @@ public class LoginPanel extends JPanel
             {
 
                 // sign up
-                System.out.println ("sign up");
+                frame.setContentPane (new SignUpPanel (frame));
             }
         }
     }
@@ -235,7 +244,7 @@ public class LoginPanel extends JPanel
                 if (!checkData ())
                     return;
                 // sign in
-                System.out.println ("sign in");
+                frame.setContentPane (nex);
             }
         }
     }
