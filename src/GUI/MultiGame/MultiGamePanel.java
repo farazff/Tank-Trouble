@@ -64,7 +64,8 @@ public class MultiGamePanel extends JPanel
         firstPanel.setBackground (Color.WHITE);
         JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (servers,this),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
         scrollPane1.setAutoscrolls (true);
         scrollPane1.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
         scrollPane1.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
@@ -72,10 +73,11 @@ public class MultiGamePanel extends JPanel
         firstPanel.add (scrollPane1);
         scrollPane2 = new JScrollPane (new NullPanel (),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane2.setAutoscrolls (true);
         scrollPane2.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
         scrollPane2.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+        scrollPane2.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
 
         secondPanel = new JPanel (new BorderLayout ());
         secondPanel.add (scrollPane2,BorderLayout.CENTER);
@@ -104,10 +106,11 @@ public class MultiGamePanel extends JPanel
         secondPanel.remove (scrollPane2);
         scrollPane2 = new JScrollPane (newSecondPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane2.setAutoscrolls (true);
         scrollPane2.getVerticalScrollBar ().setPreferredSize (new Dimension (10,8));
         scrollPane2.setBorder (new LineBorder (Color.LIGHT_GRAY,1));
+        scrollPane2.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
         secondPanel.add (scrollPane2,BorderLayout.CENTER);
         main.add(secondPanel,1);
         secondPanel.add (createNewGame,BorderLayout.SOUTH);

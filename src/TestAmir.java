@@ -40,9 +40,9 @@ public class TestAmir {
                 GameMemberShipType.SINGLE,22,30,30,30));
         multiGames2.add (new MultiGame ("ggle3",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames2.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
+        multiGames2.add (new MultiGame ("goasdfsadfasdfogle4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        Server server2 = new Server ("Amafdad",multiGames2);
+        Server server2 = new Server ("Amsadfasdfsadfasdfafdad",multiGames2);
 
         ArrayList<Server> servers = new ArrayList<> ();
         servers.add (server1);

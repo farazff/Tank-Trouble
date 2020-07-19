@@ -70,17 +70,17 @@ public class ServerButtonPanel extends JPanel {
 
     @Override
     public Dimension getMinimumSize () {
-        return new Dimension (400,32);
+        return new Dimension (1000,32);
     }
 
     @Override
     public Dimension getMaximumSize () {
-        return new Dimension (1800,32);
+        return new Dimension (1000,32);
     }
 
     @Override
     public Dimension getPreferredSize () {
-        return new Dimension (400,32);
+        return new Dimension (1000,32);
     }
 
 }
