@@ -1,6 +1,8 @@
 
+import GUI.GameWithPC;
 import GUI.MainPage.Main;
 import GUI.MultiGame.MultiGamePanel;
+import GUI.Setting.Setting;
 import GUI.SignInPanel;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
@@ -9,6 +11,7 @@ import GameData.Server;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class TestAmir {
@@ -61,8 +64,14 @@ public class TestAmir {
         Main main = new Main (frame);
         multiGamePanel.setPre (main);
         signInPanel.setNex (main);
+        GameWithPC gameWithPC = new GameWithPC (frame);
+        gameWithPC.setPre (main);
+        main.setSing (gameWithPC);
+        main.setMul (multiGamePanel);
+        Setting setting = new Setting (frame);
+        setting.setPre (main);
 
-        frame.setContentPane (multiGamePanel);
+        frame.setContentPane (signInPanel);
         frame.setVisible (true);
     }
 }

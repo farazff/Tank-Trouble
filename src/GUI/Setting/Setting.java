@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
 import java.sql.PreparedStatement;
+import java.util.Scanner;
 
 public class Setting extends JPanel
 {
@@ -59,31 +60,25 @@ public class Setting extends JPanel
 
     public void readFile()
     {
-        int num=0,i=1;
+        int i=1;
         try
         {
-            FileReader reader = new FileReader(new File("Files/Setting.txt"));
-            while(reader.ready())
+            Scanner scanner = new Scanner (new File("Files/Setting.txt"));
+            while (scanner.hasNext ())
             {
-                char temp = (char)(reader.read());
-
-                if(temp=='\n')
+                if (i == 1)
                 {
-                    if(i==1)
-                        tank=num;
-                    if(i==2)
-                        canon=num;
-                    if(i==3)
-                        wallfirst=num;
-                    num = 0;
-                    i++;
-                }
-                else
+                    tank = scanner.nextInt ();
+                } else if (i == 2)
                 {
-                    num = num*10 + Integer.parseInt(String.valueOf(temp));
+                    canon = scanner.nextInt ();
+                } else
+                {
+                    wallfirst = scanner.nextInt ();
                 }
+                i++;
             }
-            reader.close();
+
         }
         catch(IOException e)
         {
