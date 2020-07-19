@@ -1,10 +1,8 @@
 package GUI.Setting;
 
-
 import GUI.PictureJLabel;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -173,7 +171,7 @@ public class Setting extends JPanel
     private void createLeft()
     {
         JPanel left = new JPanel(new GridLayout(10,1,10,10));
-        left.setPreferredSize(new Dimension(300,600));
+        left.setPreferredSize(new Dimension(200,600));
         left.setBackground(Color.PINK);
         this.add(left,BorderLayout.WEST);
 

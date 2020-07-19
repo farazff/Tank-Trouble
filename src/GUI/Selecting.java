@@ -19,7 +19,8 @@ import java.util.ArrayList;
  */
 public class Selecting extends JPanel
 {
-    JLabel temp;
+    private String currentValue;
+    private JLabel temp;
     private JLabel down; // left button
     private JLabel mode; // mode
     private JLabel up; // right button
@@ -59,6 +60,7 @@ public class Selecting extends JPanel
 
 
         mode = new JLabel(data.get(dataCounter));
+        currentValue = data.get(dataCounter);
         mode.setFont(font);
         mode.setForeground(Color.WHITE);
         mode.setBackground(middlePart);
@@ -81,6 +83,11 @@ public class Selecting extends JPanel
         add(up);
     }
 
+    public String getCurrentValue()
+    {
+        return currentValue;
+    }
+
     /**
      * handles mouse events
      */
@@ -88,7 +95,8 @@ public class Selecting extends JPanel
     {
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(MouseEvent e)
+        {
 
         }
 
@@ -111,6 +119,8 @@ public class Selecting extends JPanel
                     dataCounter++;
                 }
                 mode.setText(data.get(dataCounter));
+                currentValue = data.get(dataCounter);
+                //System.out.println(currentValue);
             }
             if(e.getSource().equals(down))
             {
@@ -123,6 +133,8 @@ public class Selecting extends JPanel
                     dataCounter--;
                 }
                 mode.setText(data.get(dataCounter));
+                currentValue = data.get(dataCounter);
+                //System.out.println(currentValue);
             }
         }
 

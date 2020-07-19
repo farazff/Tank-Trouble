@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.io.IOException;
 public class Loading extends JPanel
 {
     private JProgressBar progress;
+    private Clip clip;
 
     public Loading()
     {
@@ -24,8 +26,38 @@ public class Loading extends JPanel
         progress.setPreferredSize(new Dimension(600,40));
 
         this.add(progress,BorderLayout.SOUTH);
+//        startMusic();
+//        clip.start();
     }
 
+
+//    public void startMusic()
+//    {
+//        Long currentFrame;
+//
+//        // current status of clip
+//        String status;
+//        try
+//        {
+//            AudioInputStream audioInputStream;
+//            String filePath = "C:\\Users\\ffara\\Downloads\\;
+//
+//            audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+//
+//            // create clip reference
+//            clip = AudioSystem.getClip();
+//
+//            // open audioInputStream to the clip
+//            clip.open(audioInputStream);
+//
+//            clip.loop(Clip.LOOP_CONTINUOUSLY);
+//        }
+//        catch (LineUnavailableException | IOException | UnsupportedAudioFileException e)
+//        {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     public void fill()
     {
