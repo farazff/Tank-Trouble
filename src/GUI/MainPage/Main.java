@@ -182,28 +182,28 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
-                setting.rePaintEntered();
+                setting.rePaintExited();
                 frame.setContentPane(sett);
                 frame.setVisible(false);
                 frame.setVisible(true);
             }
             if(e.getSource().equals(single))
             {
+                single.rePaintExited();
                 frame.setContentPane(sing);
                 frame.setVisible(false);
                 frame.setVisible(true);
-                single.rePaintEntered();
             }
             if(e.getSource().equals(multi))
             {
+                multi.rePaintExited();
                 frame.setContentPane(mul);
                 frame.setVisible(false);
                 frame.setVisible(true);
-                multi.rePaintEntered();
             }
             if(e.getSource().equals(about))
             {
-                about.rePaintEntered();
+                about.rePaintExited();
                 StringBuilder string = new StringBuilder();
                 string.append("Developers: \n 1) Amirreza Naziri     9726081\n  ##Email##\n2) Faraz Farangizadeh     9726060\n");
                 string.append("  f.farangizadeh@gmail.com");
@@ -211,7 +211,7 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(exit))
             {
-                exit.rePaintEntered();
+                exit.rePaintExited();
                 int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?",
                         "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
                 System.out.println(ans);
