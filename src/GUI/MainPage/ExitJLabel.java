@@ -79,7 +79,7 @@ public class ExitJLabel extends JLabel
         this.repaint();
     }
 
-    public void rePaintHlolding()
+    public void rePaintHolding()
     {
         inside = Color.GRAY;
         round = Color.GREEN;

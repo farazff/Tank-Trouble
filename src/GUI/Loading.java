@@ -76,7 +76,7 @@ public class Loading extends JPanel
             {
                 // fill the menu bar
                 progress.setValue(i);
-                Thread.sleep(50);
+                Thread.sleep(20);
                 i += 1;
             }
             frame.setContentPane(nex);

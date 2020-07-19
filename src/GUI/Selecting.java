@@ -110,6 +110,8 @@ public class Selecting extends JPanel
         {
             if(e.getSource().equals(up))
             {
+                Music music = new Music();
+                music.execute();
                 if(dataCounter==data.size()-1)
                 {
                     dataCounter=0;
@@ -124,6 +126,8 @@ public class Selecting extends JPanel
             }
             if(e.getSource().equals(down))
             {
+                Music music = new Music();
+                music.execute();
                 if(dataCounter==0)
                 {
                     dataCounter=data.size()-1;
