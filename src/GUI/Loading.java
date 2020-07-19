@@ -10,11 +10,14 @@ import java.io.IOException;
 
 public class Loading extends JPanel
 {
+    private JFrame frame;
+    private JPanel nex;
     private JProgressBar progress;
     private Clip clip;
 
-    public Loading()
+    public Loading(JFrame frame)
     {
+        this.frame = frame;
         this.setPreferredSize(new Dimension(900,600));
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0,60,60,60));
@@ -59,34 +62,33 @@ public class Loading extends JPanel
 //
 //    }
 
+    public void setNex(JPanel nex)
+    {
+        this.nex = nex;
+    }
+
     public void fill()
     {
-        Thread a = new Thread(new Runnable()
+        int i = 0;
+        try
         {
-            @Override
-            public void run()
+            while(i<=100)
             {
-                int i = 0;
-                try
-                {
-                    while(i<=100)
-                    {
-                        // fill the menu bar
-                        progress.setValue(i);
-
-                        // delay the thread
-                        Thread.sleep(300);
-                        i += 10;
-                    }
-                }
-                catch (Exception e)
-                {
-
-                }
+                // fill the menu bar
+                progress.setValue(i);
+                Thread.sleep(50);
+                i += 1;
             }
-        });
-        a.run();
+            frame.setContentPane(nex);
+            frame.setVisible(false);
+            frame.setVisible(true);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     protected void paintComponent (Graphics g)

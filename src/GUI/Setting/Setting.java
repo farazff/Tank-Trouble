@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.sql.PreparedStatement;
 
 public class Setting extends JPanel
 {
@@ -14,6 +15,14 @@ public class Setting extends JPanel
     public JPanel getPanel()
     {
         return this;
+    }
+
+    private JFrame frame;
+    private JPanel pre;
+
+    public void setPre(JPanel pre)
+    {
+        this.pre = pre;
     }
 
     private PictureJLabel pictureJLabel = new PictureJLabel("Images/Setting.jpg");
@@ -29,6 +38,7 @@ public class Setting extends JPanel
     private JPanel tempWall;
     private JLabel setDefault;
     private JLabel save;
+    private JLabel back;
 
     private int tank;
     private int canon;
@@ -37,8 +47,9 @@ public class Setting extends JPanel
 
     private MouseHandler mouse = new MouseHandler();
 
-    public Setting()
+    public Setting(JFrame frame)
     {
+        this.frame = frame;
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
         readFile();
@@ -175,9 +186,10 @@ public class Setting extends JPanel
         left.setBackground(Color.PINK);
         this.add(left,BorderLayout.WEST);
 
-        JLabel back = new JLabel("        Back");
+        back = new JLabel("        Back");
         back.setFont(new Font("Arial",Font.BOLD,22));
         back.setBackground(Color.ORANGE);
+        back.addMouseListener(mouse);
         back.setOpaque(true);
 
         userInfo = new ColorJLabel("    User info");
@@ -250,6 +262,12 @@ public class Setting extends JPanel
                     ex.printStackTrace();
                 }
 
+            }
+            if(e.getSource().equals(back))
+            {
+                frame.setContentPane(pre);
+                frame.setVisible(false);
+                frame.setVisible(true);
             }
         }
 
