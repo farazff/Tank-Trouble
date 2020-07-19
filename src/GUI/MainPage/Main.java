@@ -1,5 +1,6 @@
 package GUI.MainPage;
 
+import GUI.Music;
 import GUI.Setting.Setting;
 
 import javax.imageio.ImageIO;
@@ -157,23 +158,23 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
-                setting.rePaintHlolding();
+                setting.rePaintHolding();
             }
             if(e.getSource().equals(single))
             {
-                single.rePaintHlolding();
+                single.rePaintHolding();
             }
             if(e.getSource().equals(multi))
             {
-                multi.rePaintHlolding();
+                multi.rePaintHolding();
             }
             if(e.getSource().equals(about))
             {
-                about.rePaintHlolding();
+                about.rePaintHolding();
             }
             if(e.getSource().equals(exit))
             {
-                exit.rePaintHlolding();
+                exit.rePaintHolding();
             }
         }
 
@@ -182,6 +183,8 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
+                Music music = new Music();
+                music.execute();
                 setting.rePaintExited();
                 frame.setContentPane(sett);
                 frame.setVisible(false);
@@ -189,6 +192,8 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(single))
             {
+                Music music = new Music();
+                music.execute();
                 single.rePaintExited();
                 frame.setContentPane(sing);
                 frame.setVisible(false);
@@ -196,6 +201,8 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(multi))
             {
+                Music music = new Music();
+                music.execute();
                 multi.rePaintExited();
                 frame.setContentPane(mul);
                 frame.setVisible(false);
@@ -203,6 +210,8 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(about))
             {
+                Music music = new Music();
+                music.execute();
                 about.rePaintExited();
                 StringBuilder string = new StringBuilder();
                 string.append("Developers: \n 1) Amirreza Naziri     9726081\n  ##Email##\n2) Faraz Farangizadeh     9726060\n");
@@ -211,6 +220,8 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(exit))
             {
+                Music music = new Music();
+                music.execute();
                 exit.rePaintExited();
                 int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?",
                         "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);

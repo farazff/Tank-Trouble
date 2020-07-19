@@ -1,5 +1,6 @@
 package GUI.Setting;
 
+import GUI.Music;
 import GUI.PictureJLabel;
 
 import javax.swing.*;
@@ -224,6 +225,8 @@ public class Setting extends JPanel
         {
             if(e.getSource().equals(userInfo))
             {
+                Music music = new Music();
+                music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(defaultsPanel);
                //////////////////////// getPanel().remove(///////);
@@ -233,6 +236,8 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(defaults))
             {
+                Music music = new Music();
+                music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
                 //////////////////////// getPanel().remove(///////);
@@ -240,8 +245,10 @@ public class Setting extends JPanel
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
-            if(e.getSource().equals(defaults))
+            if(e.getSource().equals(server))
             {
+                Music music = new Music();
+                music.execute();
                 getPanel().remove(pictureJLabel);
                 getPanel().remove(userInfoPanel);
                 //////////////////////// getPanel().remove(///////);
@@ -251,6 +258,8 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(setDefault))
             {
+                Music music = new Music();
+                music.execute();
                 sliderTank.setValue(100);
                 sliderCanon.setValue(100);
                 sliderWall.setValue(100);
@@ -259,6 +268,8 @@ public class Setting extends JPanel
             {
                 try
                 {
+                    Music music = new Music();
+                    music.execute();
                     FileWriter writer = new FileWriter(new File("Files/Setting.txt"));
                     writer.write(Integer.toString(sliderTank.getValue()));
                     writer.write("\n");
@@ -276,6 +287,8 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(back))
             {
+                Music music = new Music();
+                music.execute();
                 frame.setContentPane(pre);
                 frame.setVisible(false);
                 frame.setVisible(true);

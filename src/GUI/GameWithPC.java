@@ -155,6 +155,8 @@ public class GameWithPC extends JPanel
         {
             if(e.getSource().equals(picture))
             {
+                Music music = new Music();
+                music.execute();
                 frame.setContentPane(pre);
                 frame.setVisible(false);
                 frame.setVisible(true);

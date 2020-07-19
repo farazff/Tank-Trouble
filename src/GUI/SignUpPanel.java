@@ -140,6 +140,8 @@ public class SignUpPanel extends JPanel
      */
     private void checkData()
     {
+        Music music = new Music();
+        music.execute();
         boolean ans = true;
         if(username.getText().length()==0)
         {
@@ -186,6 +188,8 @@ public class SignUpPanel extends JPanel
 
     public void ShowSignIn()
     {
+        Music music = new Music();
+        music.execute();
         frame.setContentPane(signIn);
         frame.setVisible(false);
         frame.setVisible(true);
