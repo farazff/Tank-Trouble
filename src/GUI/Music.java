@@ -20,7 +20,7 @@ public class Music extends SwingWorker<Long, Object>
         try
         {
             AudioInputStream audioInputStream;
-            String filePath = "C:\\Users\\ffara\\Desktop\\Button.au";
+            String filePath = "Files/Sounds/Button.au";
             audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
