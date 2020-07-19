@@ -27,14 +27,16 @@ public class SignUpPanel extends JPanel
     private JButton signUp; // sign up button
     private JButton cancel; // sign up button
     private JFrame frame;
+    private JPanel signIn;
 
     /**
      * creates new sign up panel
      */
-    public SignUpPanel(JFrame frame)
+    public SignUpPanel(JFrame frame,JPanel signIn)
     {
         super();
         this.frame = frame;
+        this.signIn = signIn;
         setBorder(new EmptyBorder (10,10,10,10));
         setLayout(new FlowLayout (FlowLayout.CENTER));
         createBasePanel ();
@@ -183,9 +185,7 @@ public class SignUpPanel extends JPanel
 
     public void ShowSignIn()
     {
-        frame.remove(this);
-//        frame.add(new LoginPanel());
-        //frame.pack();
+        frame.setContentPane(signIn);
         frame.setVisible(false);
         frame.setVisible(true);
     }

@@ -15,9 +15,12 @@ public class GameWithPC extends JPanel
 {
 
     private PictureJLabel picture;
+    private JPanel pre;
+    private JFrame frame;
 
-    public GameWithPC()
+    public GameWithPC(JFrame frame)
     {
+        this.frame = frame;
         GridBagLayout layout = new GridBagLayout();
         JPanel base = new JPanel(layout);
         base.setBackground(Color.WHITE);
@@ -113,6 +116,12 @@ public class GameWithPC extends JPanel
         GridBagSetter.addComponent(sliderWall,13,0,2,1,layout,c,base);
         GridBagSetter.addComponent(startPanel,14,0,2,2,layout,c,base);
     }
+
+    public void setPre(JPanel pre)
+    {
+       this.pre = pre;
+    }
+
     @Override
     protected void paintComponent (Graphics g)
     {
@@ -146,7 +155,9 @@ public class GameWithPC extends JPanel
         {
             if(e.getSource().equals(picture))
             {
-                System.out.println("BACK");
+                frame.setContentPane(pre);
+                frame.setVisible(false);
+                frame.setVisible(true);
             }
         }
 

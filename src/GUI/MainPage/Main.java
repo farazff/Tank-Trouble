@@ -13,6 +13,27 @@ import java.io.IOException;
 
 public class Main extends JPanel
 {
+
+    private JPanel sett;
+    private JPanel sing;
+    private JPanel mul;
+
+
+    public void setSett(JPanel sett)
+    {
+        this.sett = sett;
+    }
+
+    public void setSing(JPanel sing)
+    {
+        this.sing = sing;
+    }
+
+    public void setMul(JPanel mul)
+    {
+        this.mul = mul;
+    }
+
     public JPanel getPanel()
     {
         return this;
@@ -161,18 +182,23 @@ public class Main extends JPanel
         {
             if(e.getSource().equals(setting))
             {
-                frame.remove(getPanel());
-                frame.add(new Setting());
+                setting.rePaintEntered();
+                frame.setContentPane(sett);
                 frame.setVisible(false);
                 frame.setVisible(true);
-                setting.rePaintEntered();
             }
             if(e.getSource().equals(single))
             {
+                frame.setContentPane(sing);
+                frame.setVisible(false);
+                frame.setVisible(true);
                 single.rePaintEntered();
             }
             if(e.getSource().equals(multi))
             {
+                frame.setContentPane(mul);
+                frame.setVisible(false);
+                frame.setVisible(true);
                 multi.rePaintEntered();
             }
             if(e.getSource().equals(about))

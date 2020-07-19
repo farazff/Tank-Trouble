@@ -16,6 +16,12 @@ import java.io.IOException;
  */
 public class SignInPanel extends JPanel
 {
+
+    public JPanel getSignIn()
+    {
+        return this;
+    }
+
     private JTextField username; // user name
     private boolean usernameTyped;
     private JPasswordField password; // pass word
@@ -204,7 +210,7 @@ public class SignInPanel extends JPanel
             {
 
                 // sign up
-                frame.setContentPane (new SignUpPanel (frame));
+                frame.setContentPane (new SignUpPanel(frame,getSignIn()));
                 frame.setVisible (false);
                 frame.setVisible (true);
             }
