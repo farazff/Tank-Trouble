@@ -76,7 +76,7 @@ public class GameWithPC extends JPanel
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderCanon = new JSlider(100,100,100);
+        JSlider sliderCanon = new JSlider(10,100,100);
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);

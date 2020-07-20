@@ -138,7 +138,7 @@ public class Setting extends JPanel
         defaultsPanel.setOpaque(true);
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        sliderTank = new JSlider(50,150,tank);
+        sliderTank = new JSlider(10,100,tank);
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
@@ -148,7 +148,7 @@ public class Setting extends JPanel
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        sliderCanon = new JSlider(50,150,canon);
+        sliderCanon = new JSlider(10,100,canon);
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
@@ -158,7 +158,7 @@ public class Setting extends JPanel
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        sliderWall = new JSlider(50,150,wallfirst);
+        sliderWall = new JSlider(10,100,wallfirst);
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);
