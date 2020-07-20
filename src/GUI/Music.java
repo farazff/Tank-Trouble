@@ -14,7 +14,7 @@ public class Music extends SwingWorker<Long, Object>
     public void setFilePath(String filePath , boolean repeat)
     {
         this.filePath = filePath;
-        repeat = true;
+        this.repeat = repeat;
     }
 
     public void start()
