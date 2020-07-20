@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 public class Setting extends JPanel
 {
+    private ColorJLabel temp = null;
 
     public JPanel getPanel()
     {
@@ -41,7 +42,7 @@ public class Setting extends JPanel
     private JPanel serversListPanelInSetting;
     private JPanel serverListPanel;
 
-    private JSlider sliderTank = new JSlider(50,150,100);
+    private JSlider sliderTank = new JSlider(10,100,100);
     private JPanel tempTank;
     private JSlider sliderCanon;
     private JPanel tempCanon;
@@ -255,9 +256,13 @@ public class Setting extends JPanel
         {
             if(e.getSource().equals(userInfo))
             {
+                userInfo.setBackground(new Color(78,35,78));
+                defaults.setBackground(new Color(163,73,164));
+                server.setBackground(new Color(163,73,164));
                 Music music = new Music();
                 music.execute();
                 getPanel().remove(pictureJLabel);
+                getPanel().remove(userInfo);
                 getPanel().remove(defaultsPanel);
                 getPanel ().remove (serversListPanelInSetting);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
@@ -266,9 +271,13 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(defaults))
             {
+                defaults.setBackground(new Color(78,35,78));
+                userInfo.setBackground(new Color(163,73,164));
+                server.setBackground(new Color(163,73,164));
                 Music music = new Music();
                 music.execute();
                 getPanel().remove(pictureJLabel);
+                getPanel().remove(defaultsPanel);
                 getPanel().remove(userInfoPanel);
                 getPanel ().remove (serversListPanelInSetting);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
@@ -277,9 +286,13 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(server))
             {
+                server.setBackground(new Color(78,35,78));
+                defaults.setBackground(new Color(163,73,164));
+                userInfo.setBackground(new Color(163,73,164));
                 Music music = new Music();
                 music.execute();
                 getPanel().remove(pictureJLabel);
+                getPanel().remove(defaultsPanel);
                 getPanel().remove(userInfoPanel);
                 getPanel ().remove (serversListPanelInSetting);
                 getPanel().add(serversListPanelInSetting,BorderLayout.CENTER);
@@ -361,13 +374,91 @@ public class Setting extends JPanel
         @Override
         public void mouseEntered(MouseEvent e)
         {
-            
+//            if(e.getSource().equals(userInfo) || e.getSource().equals(server) || e.getSource().equals(defaults))
+//            {
+//                if(e.getSource().equals(userInfo))
+//                    temp = userInfo;
+//                if(e.getSource().equals(server))
+//                    temp = server;
+//                if(e.getSource().equals(defaults))
+//                    temp = defaults;
+//                Thread a = new Thread(new Runnable()
+//                {
+//                    @Override
+//                    public void run()
+//                    {
+//                        for(int i=0;i<4;i++)
+//                        {
+//
+//                            switch (i)
+//                            {
+//                                case 0 : temp.setBackground(new Color(141,63,141));
+//                                    break;
+//                                case 1 : temp.setBackground(new Color(118,52,118));
+//                                    break;
+//                                case 2 : temp.setBackground(new Color(78,35,78));
+//                                    break;
+//                                case 3 : temp.setBackground(new Color(63,29,63));
+//                                    break;
+//                            }
+//                            try
+//                            {
+//                                Thread.sleep(50);
+//                            }
+//                            catch (InterruptedException ex)
+//                            {
+//                                ex.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                });
+//                a.start();
+//            }
         }
 
         @Override
         public void mouseExited(MouseEvent e)
         {
-
+//            if(e.getSource().equals(userInfo) || e.getSource().equals(server) || e.getSource().equals(defaults))
+//            {
+//                if(e.getSource().equals(userInfo))
+//                    temp = userInfo;
+//                if(e.getSource().equals(server))
+//                    temp = server;
+//                if(e.getSource().equals(defaults))
+//                    temp = defaults;
+//                Thread a = new Thread(new Runnable()
+//                {
+//                    @Override
+//                    public void run()
+//                    {
+//                        for(int i=0;i<4;i++)
+//                        {
+//
+//                            switch (i)
+//                            {
+//                                case 0 : temp.setBackground(new Color(78,35,78));
+//                                    break;
+//                                case 1 : temp.setBackground(new Color(118,52,118));
+//                                    break;
+//                                case 2 : temp.setBackground(new Color(141,63,141));
+//                                    break;
+//                                case 3 : temp.setBackground(new Color(163,73,164));
+//                                    break;
+//                            }
+//                            try
+//                            {
+//                                Thread.sleep(50);
+//                            }
+//                            catch (InterruptedException ex)
+//                            {
+//                                ex.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                });
+//                a.start();
+//            }
         }
     }
 }

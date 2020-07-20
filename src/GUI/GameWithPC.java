@@ -69,21 +69,21 @@ public class GameWithPC extends JPanel
 
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderTank = new JSlider(50,150,100);
+        JSlider sliderTank = new JSlider(10,100,100);
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderCanon = new JSlider(50,150,100);
+        JSlider sliderCanon = new JSlider(100,100,100);
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderWall = new JSlider(50,150,100);
+        JSlider sliderWall = new JSlider(10,100,100);
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);
