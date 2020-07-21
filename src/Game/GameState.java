@@ -70,6 +70,11 @@ public class GameState {
 			tank.addLocX((int) (8*Math.cos(   Math.toRadians(tank.getDegree())  )));
 			tank.addLocY((int) (8*Math.sin(   Math.toRadians(tank.getDegree())  )));
 		}
+		if(keyDOWN)
+		{
+			tank.addLocX((int) (-8*Math.cos(   Math.toRadians(tank.getDegree())  )));
+			tank.addLocY((int) (-8*Math.sin(   Math.toRadians(tank.getDegree())  )));
+		}
 
 
 		if(keyRIGHT && !keyLEFT)
