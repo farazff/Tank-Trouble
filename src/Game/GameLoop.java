@@ -1,6 +1,8 @@
 /*** In The Name of Allah ***/
 package Game;
 
+import java.io.IOException;
+
 /**
  * A very simple structure for the main game loop.
  * THIS IS NOT PERFECT, but works for most situations.
@@ -54,9 +56,13 @@ public class GameLoop implements Runnable {
 				long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
 				if (delay > 0)
 					Thread.sleep(delay);
-			} catch (InterruptedException ex) {
+			} catch (InterruptedException | IOException ex) {
 			}
 		}
-		canvas.render(state);
+		try {
+			canvas.render(state);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

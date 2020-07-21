@@ -19,7 +19,7 @@ public class GameState {
 	
 	private Tank tank;
 	public boolean gameOver;
-	private String degree = "270";
+	private int degree = 270;
 
 	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
 	private boolean mousePress;
@@ -27,7 +27,7 @@ public class GameState {
 	private KeyHandler keyHandler;
 	private MouseHandler mouseHandler;
 
-	public String getDegree()
+	public int getDegree()
 	{
 		return degree;
 	}
@@ -60,45 +60,48 @@ public class GameState {
 	 */
 	public void update()
 	{
-		if (mousePress)
+		if(mousePress)
 		{
 			tank.setLocY( mouseY - 30 / 2 );
 			tank.setLocX( mouseX - 30 / 2 );
 		}
-		if (keyUP)
-			tank.addLocY(-8);
-		if (keyDOWN)
-			tank.addLocY(+8);
-		if (keyLEFT)
-			tank.addLocX(-8);
-		if (keyRIGHT)
-			tank.addLocX(+8);
+		if(keyUP)
+		{
+			tank.addLocX((int) (8*Math.cos(   Math.toRadians(tank.getDegree())  )));
+			tank.addLocY((int) (8*Math.sin(   Math.toRadians(tank.getDegree())  )));
+		}
 
 
+		if(keyRIGHT && !keyLEFT)
+			tank.increaseDegree();
 
-		if(keyRIGHT && !keyUP && !keyLEFT && !keyDOWN)
-			degree = "0";
+		if(!keyRIGHT  && keyLEFT)
+			tank.decreaseDegree();
 
-		if(keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-			degree = "45";
 
-		if(!keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-			degree = "90";
-
-		if(!keyRIGHT && keyUP && keyLEFT && !keyDOWN)
-			degree = "135";
-
-		if(!keyRIGHT && !keyUP && keyLEFT && !keyDOWN)
-			degree = "180";
-
-		if(!keyRIGHT && !keyUP && keyLEFT && keyDOWN)
-			degree= "225";
-
-		if(!keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-			degree = "270";
-
-		if(keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-			degree = "315";
+//		if(keyRIGHT && !keyUP && !keyLEFT && !keyDOWN)
+//			degree = 0;
+//
+//		if(keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
+//			degree = 45;
+//
+//		if(!keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
+//			degree = 90;
+//
+//		if(!keyRIGHT && keyUP && keyLEFT && !keyDOWN)
+//			degree = 135;
+//
+//		if(!keyRIGHT && !keyUP && keyLEFT && !keyDOWN)
+//			degree = 180;
+//
+//		if(!keyRIGHT && !keyUP && keyLEFT && keyDOWN)
+//			degree= 225;
+//
+//		if(!keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
+//			degree = 270;
+//
+//		if(keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
+//			degree = 315;
 
 
 		tank.setLocX(Math.max(tank.getLocX(), 0));

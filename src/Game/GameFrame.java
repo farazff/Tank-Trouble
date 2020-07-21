@@ -3,6 +3,7 @@ package Game;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -64,18 +65,23 @@ public class GameFrame extends JFrame {
 	/**
 	 * Game rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state) {
+	public void render(GameState state) throws IOException {
 		// Render single frame
-		do {
+		do
+			{
 			// The following loop ensures that the contents of the drawing buffer
 			// are consistent in case the underlying surface was recreated
-			do {
+			do
+				{
 				// Get a new graphics context every time through the loop
 				// to make sure the strategy is validated
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
-				try {
+				try
+				{
 					doRendering(graphics, state);
-				} finally {
+				}
+				finally
+				{
 					// Dispose the graphics
 					graphics.dispose();
 				}
@@ -95,36 +101,41 @@ public class GameFrame extends JFrame {
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state)
-	{
+	private void doRendering(Graphics2D g2d, GameState state) throws IOException {
+		System.out.println(state.getTank().getDegree() + " " + state.getTank().getLocX() + " " +state.getTank().getLocY());
+
 		g2d.setColor(Color.GRAY);
-		g2d.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
 
-
-		BufferedImage img = null;
+		BufferedImage image = null;
 		try
 		{
-			String temp = state.getTank().getImage() + state.getDegree() + ".png";
-			img = ImageIO.read(new File(temp));
+			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
+			image = ImageIO.read(new File("Images/Tanks/red315.png"));
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 
 
-		g2d.drawImage(img,state.getTank().getLocX(),state.getTank().getLocY(),null);
+		assert image != null;
+		g2d.drawImage(rotateImage(image,state.getTank().getDegree()-45),state.getTank().getLocX() ,state.getTank().getLocY(),null);
+
 
 
 		// Print FPS info
 		long currentRender = System.currentTimeMillis();
-		if (lastRender > 0) {
+		if (lastRender > 0)
+		{
 			fpsHistory.add(1000.0f / (currentRender - lastRender));
-			if (fpsHistory.size() > 100) {
+			if (fpsHistory.size() > 100)
+			{
 				fpsHistory.remove(0); // remove oldest
 			}
 			float avg = 0.0f;
-			for (float fps : fpsHistory) {
+			for (float fps : fpsHistory)
+			{
 				avg += fps;
 			}
 			avg /= fpsHistory.size();
@@ -144,7 +155,8 @@ public class GameFrame extends JFrame {
 		g2d.setFont(g2d.getFont().deriveFont(18.0f));
 		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
 		// Draw GAME OVER
-		if (state.gameOver) {
+		if (state.gameOver)
+		{
 			String str = "GAME OVER";
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
@@ -152,5 +164,19 @@ public class GameFrame extends JFrame {
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
 		}
 	}
-	
+
+	private BufferedImage rotateImage(BufferedImage sourceImage, double angle)
+	{
+		int width = sourceImage.getWidth();
+		int height = sourceImage.getHeight();
+		BufferedImage destImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = destImage.createGraphics();
+
+		AffineTransform transform = new AffineTransform();
+		transform.rotate(angle / 180 * Math.PI, width / 2 , height / 2);
+		g2d.drawRenderedImage(sourceImage, transform);
+
+		//g2d.dispose();
+		return destImage;
+	}
 }

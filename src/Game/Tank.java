@@ -3,17 +3,17 @@ package Game;
 public class Tank
 {
     private int locX,locY,Health,power;
-    private Direction direction;
+    private int degree;
     private String image;
 
     public Tank()
     {
-        locX=100;
-        locY=100;
+        locX=200;
+        locY=200;
         Health=100;
         power=50;
-        direction = Direction.NORTH;
-        image = "Images/Tanks/red";
+        degree = 45;
+        image = "Images/Tanks/red0.png";
     }
 
     public int getLocX()
@@ -56,9 +56,25 @@ public class Tank
         return power;
     }
 
-    public Direction getDirection()
+    public int getDegree()
     {
-        return direction;
+        return degree;
+    }
+
+    public void increaseDegree()
+    {
+        degree+=10;
+        if(degree>=360)
+            degree=0;
+    }
+
+    public void decreaseDegree()
+    {
+        degree-=10;
+        if(degree<=0)
+        {
+            degree=359;
+        }
     }
 
     public String getImage()
