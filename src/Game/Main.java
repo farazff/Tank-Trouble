@@ -1,5 +1,5 @@
 /*** In The Name of Allah ***/
-package game.sample.ball;
+package Game;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;

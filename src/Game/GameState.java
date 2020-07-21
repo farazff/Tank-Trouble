@@ -1,5 +1,5 @@
 /*** In The Name of Allah ***/
-package game.sample.ball;
+package Game;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,19 +17,24 @@ import java.awt.event.MouseMotionListener;
  */
 public class GameState {
 	
-	public int locX, locY, diam;
+	private Tank tank;
 	public boolean gameOver;
-	
+	private String degree = "270";
+
 	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
 	private boolean mousePress;
 	private int mouseX, mouseY;	
 	private KeyHandler keyHandler;
 	private MouseHandler mouseHandler;
-	
-	public GameState() {
-		locX = 100;
-		locY = 100;
-		diam = 32;
+
+	public String getDegree()
+	{
+		return degree;
+	}
+
+	public GameState()
+	{
+		tank = new Tank();
 		gameOver = false;
 		//
 		keyUP = false;
@@ -44,28 +49,62 @@ public class GameState {
 		keyHandler = new KeyHandler();
 		mouseHandler = new MouseHandler();
 	}
-	
+
+	public Tank getTank()
+	{
+		return tank;
+	}
+
 	/**
 	 * The method which updates the game state.
 	 */
-	public void update() {
-		if (mousePress) {
-			locY = mouseY - diam / 2;
-			locX = mouseX - diam / 2;
+	public void update()
+	{
+		if (mousePress)
+		{
+			tank.setLocY( mouseY - 30 / 2 );
+			tank.setLocX( mouseX - 30 / 2 );
 		}
 		if (keyUP)
-			locY -= 8;
+			tank.addLocY(-8);
 		if (keyDOWN)
-			locY += 8;
+			tank.addLocY(+8);
 		if (keyLEFT)
-			locX -= 8;
+			tank.addLocX(-8);
 		if (keyRIGHT)
-			locX += 8;
+			tank.addLocX(+8);
 
-		locX = Math.max(locX, 0);
-		locX = Math.min(locX, GameFrame.GAME_WIDTH - diam);
-		locY = Math.max(locY, 0);
-		locY = Math.min(locY, GameFrame.GAME_HEIGHT - diam);
+
+
+		if(keyRIGHT && !keyUP && !keyLEFT && !keyDOWN)
+			degree = "0";
+
+		if(keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
+			degree = "45";
+
+		if(!keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
+			degree = "90";
+
+		if(!keyRIGHT && keyUP && keyLEFT && !keyDOWN)
+			degree = "135";
+
+		if(!keyRIGHT && !keyUP && keyLEFT && !keyDOWN)
+			degree = "180";
+
+		if(!keyRIGHT && !keyUP && keyLEFT && keyDOWN)
+			degree= "225";
+
+		if(!keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
+			degree = "270";
+
+		if(keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
+			degree = "315";
+
+
+		tank.setLocX(Math.max(tank.getLocX(), 0));
+		tank.setLocX(Math.min(tank.getLocX(), GameFrame.GAME_WIDTH - 30));
+		tank.setLocY(Math.max(tank.getLocY(), 0));
+		tank.setLocY(Math.min(tank.getLocY(), GameFrame.GAME_HEIGHT - 30));
 	}
 	
 	

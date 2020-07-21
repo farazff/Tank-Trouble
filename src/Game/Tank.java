@@ -4,7 +4,7 @@ public class Tank
 {
     private int locX,locY,Health,power;
     private Direction direction;
-    private String tank;
+    private String image;
 
     public Tank()
     {
@@ -13,7 +13,7 @@ public class Tank
         Health=100;
         power=50;
         direction = Direction.NORTH;
-        tank = "C:\\Users\\ffara\\Desktop\\shapes\\PNG\\Retina\\tank_red.png";
+        image = "Images/Tanks/red";
     }
 
     public int getLocX()
@@ -21,9 +21,29 @@ public class Tank
         return locX;
     }
 
+    public void setLocX(int locX)
+    {
+        this.locX = locX;
+    }
+
+    public void addLocX(int adder)
+    {
+        locX += adder;
+    }
+
     public int getLocY()
     {
         return locY;
+    }
+
+    public void setLocY(int locY)
+    {
+        this.locY = locY;
+    }
+
+    public void addLocY(int adder)
+    {
+        locY += adder;
     }
 
     public int getHealth()
@@ -39,5 +59,10 @@ public class Tank
     public Direction getDirection()
     {
         return direction;
+    }
+
+    public String getImage()
+    {
+        return image;
     }
 }

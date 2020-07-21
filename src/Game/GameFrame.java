@@ -1,10 +1,8 @@
 /*** In The Name of Allah ***/
-package game.sample.ball;
+package Game;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -97,15 +95,25 @@ public class GameFrame extends JFrame {
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state) {
-		// Draw background
+	private void doRendering(Graphics2D g2d, GameState state)
+	{
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-		// Draw ball
-		g2d.setColor(Color.BLACK);
-		g2d.fillOval(state.locX, state.locY, state.diam, state.diam);
 
-/*		g2d.drawImage(image,state.locX,state.locY,null);*/
+
+		BufferedImage img = null;
+		try
+		{
+			String temp = state.getTank().getImage() + state.getDegree() + ".png";
+			img = ImageIO.read(new File(temp));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+
+		g2d.drawImage(img,state.getTank().getLocX(),state.getTank().getLocY(),null);
 
 
 		// Print FPS info
