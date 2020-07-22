@@ -1,10 +1,7 @@
 package Game;
 
 import javax.imageio.ImageIO;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +40,15 @@ public class Tank implements Runnable
     public KeyHandler getKeyHandler()
     {
         return keyHandler;
+    }
+
+    public MouseHandler getMouseHandler()
+    {
+        return mouseHandler;
+    }
+
+    public MouseMotionListener getMouseMotionListener() {
+        return mouseHandler;
     }
 
     public int getCenterX() throws IOException

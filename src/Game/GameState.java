@@ -27,7 +27,6 @@ public class GameState {
 	private boolean mousePress;
 	private int mouseX, mouseY;
 	private KeyHandler keyHandler;
-	private MouseHandler mouseHandler;
 
 	public GameState()
 	{
@@ -44,7 +43,6 @@ public class GameState {
 		mouseY = 0;
 		//
 		keyHandler = new KeyHandler();
-		mouseHandler = new MouseHandler();
 	}
 
 	public Tank getTank()
@@ -71,15 +69,11 @@ public class GameState {
 	}
 
 
-	public KeyListener getKeyListener() {
+	public KeyListener getKeyListener()
+	{
 		return keyHandler;
 	}
-	public MouseListener getMouseListener() {
-		return mouseHandler;
-	}
-	public MouseMotionListener getMouseMotionListener() {
-		return mouseHandler;
-	}
+
 
 
 
@@ -143,28 +137,5 @@ public class GameState {
 		return bullets;
 	}
 
-	/**
-	 * The mouse handler.
-	 */
-	class MouseHandler extends MouseAdapter {
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			mouseX = e.getX();
-			mouseY = e.getY();
-			mousePress = true;
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			mousePress = false;
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			mouseX = e.getX();
-			mouseY = e.getY();
-		}
-	}
 }
 
