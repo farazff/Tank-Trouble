@@ -6,13 +6,16 @@ public class Bullet implements Runnable
     private double x;
     private double y;
     private String m;
+    private double degree;
     private Direction direction;
     private final String imageAddress = "./Images/bulletDark1_outline.png";
     private static final int STEP = 8;
 
     public Bullet (int x, int y, double degree)
     {
+        this.degree = degree;
         findQuarterAndM (degree);
+        System.out.println (direction.toString () + " / m = " + m);
         this.x = x;
         this.y = y;
     }
@@ -20,7 +23,7 @@ public class Bullet implements Runnable
     private void findQuarterAndM (double degree)
     {
         degree = Math.abs (degree);
-        degree %= 360;
+
         if (degree >= 0 && degree < 90)
             this.direction = Direction.SOUTHEAST;
         else if (degree >= 90 && degree < 180)
@@ -73,13 +76,13 @@ public class Bullet implements Runnable
                     {
                         if (newM != 0 && newM < 1)
                         {
-                            y += STEP;
-                            x -= ((1/newM)*STEP);
+                            y += newM * STEP;
+                            x -= STEP;
                         }
                         else if (newM >= 1)
                         {
-                            x -= STEP;
-                            y += newM * STEP;
+                            x -= ((1/newM)*STEP);
+                            y += STEP;
                         } else if (newM == 0)
                         {
                             x -= STEP;
@@ -105,6 +108,7 @@ public class Bullet implements Runnable
                         }
                         else if (newM != 0 && newM < 1)
                         {
+
                             x += STEP;
                             y -= newM * STEP;
                         } else if (newM == 0)
@@ -115,13 +119,14 @@ public class Bullet implements Runnable
                     {
                         if (newM != 0 && newM < 1)
                         {
-                            y -= STEP;
-                            x -= ((1/newM)*STEP);
+                            x -= STEP;
+                            y -= newM * STEP;
+
                         }
                         else if (newM >= 1)
                         {
-                            x -= STEP;
-                            y -= newM * STEP;
+                            y -= STEP;
+                            x -= ((1/newM)*STEP);
                         } else if (newM == 0)
                         {
                             x -= STEP;
@@ -152,6 +157,10 @@ public class Bullet implements Runnable
 
     public int getY () {
         return ((int)y);
+    }
+
+    public double getDegree () {
+        return degree;
     }
 
     public String getImageAddress () {

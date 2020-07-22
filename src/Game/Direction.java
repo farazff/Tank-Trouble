@@ -2,10 +2,10 @@ package Game;
 
 public enum Direction
 {
-    NORTHWEST ("+","-"),
-    NORTHEAST ("+","+"),
-    SOUTHWEST ("-","-"),
-    SOUTHEAST ("-","+");
+    NORTHWEST ("-","-"),
+    NORTHEAST ("-","+"),
+    SOUTHWEST ("+","-"),
+    SOUTHEAST ("+","+");
 
 
     private final String Y_AXIS;
