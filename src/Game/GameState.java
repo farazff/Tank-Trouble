@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 /**
  * This class holds the state of game and all of its elements.
@@ -18,6 +19,7 @@ import java.awt.event.MouseMotionListener;
 public class GameState {
 	
 	private Tank tank;
+	private ArrayList<Bullet> bullets = new ArrayList<> ();
 	public boolean gameOver;
 	private int degree = 270;
 

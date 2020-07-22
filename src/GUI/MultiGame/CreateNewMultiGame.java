@@ -254,7 +254,7 @@ public class CreateNewMultiGame extends JPanel
         editSlider (tanksStamina);
 
 
-        JLabel canonPowerLabel = new JLabel ("Canon Power");
+        JLabel canonPowerLabel = new JLabel ("Bullet Power");
         canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,15));
         canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
         editSlider (canonPower);

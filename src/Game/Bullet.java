@@ -1,6 +1,6 @@
 package Game;
 
-public class Canon implements Runnable
+public class Bullet implements Runnable
 
 {
     private double x;
@@ -10,12 +10,36 @@ public class Canon implements Runnable
     private final String imageAddress = "./Images/bulletDark1_outline.png";
     private static final int STEP = 8;
 
-    public Canon (int x, int y, String m, Direction direction)
+    public Bullet (int x, int y, double degree)
     {
+        findQuarterAndM (degree);
         this.x = x;
         this.y = y;
-        this.m = m;
-        this.direction = direction;
+    }
+
+    private void findQuarterAndM (double degree)
+    {
+        degree = Math.abs (degree);
+        degree %= 360;
+        if (degree >= 0 && degree < 90)
+            this.direction = Direction.SOUTHEAST;
+        else if (degree >= 90 && degree < 180)
+            this.direction = Direction.SOUTHWEST;
+        else if (degree >= 180 && degree < 270)
+            this.direction = Direction.NORTHWEST;
+        else if (degree >= 270)
+            this.direction = Direction.NORTHEAST;
+
+        if (degree == 0)
+            this.m = "0";
+        else if (degree == 90)
+            this.m = "infinity";
+        else if (degree == 180)
+            this.m = "0";
+        else if (degree == 270)
+            this.m = "infinity";
+        else
+            this.m = "" + Math.abs (Math.tan (Math.toRadians (degree)));
     }
 
     private void update ()
@@ -128,5 +152,9 @@ public class Canon implements Runnable
 
     public int getY () {
         return ((int)y);
+    }
+
+    public String getImageAddress () {
+        return imageAddress;
     }
 }
