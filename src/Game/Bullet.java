@@ -1,9 +1,12 @@
 package Game;
 
+import java.awt.*;
+
 public class Bullet implements Runnable
 
 {
     private double x;
+    private long startTime;
     private double y;
     private String m;
     private double degree;
@@ -12,13 +15,13 @@ public class Bullet implements Runnable
     private static final int STEP = 10;
     private int canonPower;
 
-    public Bullet (int x, int y, double degree)
+    public Bullet (int x, int y, double degree, long startTime)
     {
         this.degree = degree;
         findQuarterAndM (degree);
-        System.out.println (direction.toString () + " / m = " + m);
         this.x = x;
         this.y = y;
+        this.startTime = startTime;
     }
 
     private void findQuarterAndM (double degree)
@@ -142,6 +145,11 @@ public class Bullet implements Runnable
         {
             System.out.println (e.getMessage ());
         }
+    }
+
+    public boolean hasExpired ()
+    {
+        return System.currentTimeMillis () - startTime >= 4;
     }
 
     @Override

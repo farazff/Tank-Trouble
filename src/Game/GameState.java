@@ -181,7 +181,7 @@ public class GameState {
 				case KeyEvent.VK_SPACE :
 					try {
 						bullets.add (new Bullet (tank.getCenterX (),tank.getCenterY (),
-								tank.getDegree ()));
+								tank.getDegree (), System.currentTimeMillis ()));
 					} catch (IOException ex) {
 						ex.printStackTrace ();
 					}
