@@ -3,6 +3,9 @@ package Game;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -22,7 +25,8 @@ import javax.swing.JFrame;
  * 
  * @author Seyed Mohammad Ghaffarian
  */
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame
+{
 	
 	public static final int GAME_HEIGHT = 720;                  // 720p game resolution
 	public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
@@ -65,7 +69,8 @@ public class GameFrame extends JFrame {
 	/**
 	 * Game rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state) throws IOException {
+	public void render(GameState state,Prizes prizes) throws IOException
+	{
 		// Render single frame
 		do
 			{
@@ -78,7 +83,7 @@ public class GameFrame extends JFrame {
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 				try
 				{
-					doRendering(graphics, state);
+					doRendering(graphics, state ,prizes);
 				}
 				finally
 				{
@@ -101,8 +106,8 @@ public class GameFrame extends JFrame {
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state) throws IOException {
-		System.out.println(state.getTank().getDegree() + " " + state.getTank().getLocX() + " " +state.getTank().getLocY());
+	private void doRendering(Graphics2D g2d, GameState state , Prizes prizes) throws IOException
+	{
 
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
@@ -122,7 +127,12 @@ public class GameFrame extends JFrame {
 		assert image != null;
 		g2d.drawImage(rotateImage(image,state.getTank().getDegree()-45),state.getTank().getLocX() ,state.getTank().getLocY(),null);
 
-
+		g2d.setPaint(Color.red);
+		for(int i=0;i<prizes.getPrizes().size();i++)
+		{
+			System.out.println(i);
+			g2d.fill(new Ellipse2D.Double(prizes.getPrizes().get(i).getLocX(),prizes.getPrizes().get(i).getLocY(),40,40));
+		}
 
 		// Print FPS info
 		long currentRender = System.currentTimeMillis();

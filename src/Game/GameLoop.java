@@ -27,15 +27,19 @@ public class GameLoop implements Runnable {
 	
 	private GameFrame canvas;
 	private GameState state;
+	private Prizes prizes;
 
-	public GameLoop(GameFrame frame) {
+	public GameLoop(GameFrame frame , Prizes prizes)
+	{
 		canvas = frame;
+		this.prizes = prizes;
 	}
 	
 	/**
 	 * This must be called before the game loop starts.
 	 */
-	public void init() {
+	public void init()
+	{
 		state = new GameState();
 		canvas.addKeyListener(state.getKeyListener());
 		canvas.addMouseListener(state.getMouseListener());
@@ -43,25 +47,34 @@ public class GameLoop implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		boolean gameOver = false;
-		while (!gameOver) {
-			try {
+		while(!gameOver)
+		{
+			try
+			{
 				long start = System.currentTimeMillis();
-				//
+
 				state.update();
-				canvas.render(state);
+				canvas.render(state,prizes);
 				gameOver = state.gameOver;
-				//
+
 				long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
 				if (delay > 0)
 					Thread.sleep(delay);
-			} catch (InterruptedException | IOException ex) {
+			}
+			catch(InterruptedException | IOException ex)
+			{
+				ex.printStackTrace();
 			}
 		}
-		try {
-			canvas.render(state);
-		} catch (IOException e) {
+		try
+		{
+			canvas.render(state,prizes);
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}

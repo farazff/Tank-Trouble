@@ -1,4 +1,3 @@
-/*** In The Name of Allah ***/
 package Game;
 
 import java.awt.event.KeyAdapter;
@@ -16,12 +15,12 @@ import java.util.ArrayList;
  * 
  * @author Seyed Mohammad Ghaffarian
  */
-public class GameState {
-	
+public class GameState
+{
+
 	private Tank tank;
 	private ArrayList<Bullet> bullets = new ArrayList<> ();
 	public boolean gameOver;
-	private int degree = 270;
 
 	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
 	private boolean mousePress;
@@ -29,10 +28,6 @@ public class GameState {
 	private KeyHandler keyHandler;
 	private MouseHandler mouseHandler;
 
-	public int getDegree()
-	{
-		return degree;
-	}
 
 	public GameState()
 	{
@@ -84,31 +79,6 @@ public class GameState {
 
 		if(!keyRIGHT  && keyLEFT)
 			tank.decreaseDegree();
-
-
-//		if(keyRIGHT && !keyUP && !keyLEFT && !keyDOWN)
-//			degree = 0;
-//
-//		if(keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-//			degree = 45;
-//
-//		if(!keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-//			degree = 90;
-//
-//		if(!keyRIGHT && keyUP && keyLEFT && !keyDOWN)
-//			degree = 135;
-//
-//		if(!keyRIGHT && !keyUP && keyLEFT && !keyDOWN)
-//			degree = 180;
-//
-//		if(!keyRIGHT && !keyUP && keyLEFT && keyDOWN)
-//			degree= 225;
-//
-//		if(!keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-//			degree = 270;
-//
-//		if(keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-//			degree = 315;
 
 
 		tank.setLocX(Math.max(tank.getLocX(), 0));
