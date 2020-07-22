@@ -22,18 +22,11 @@ public class GameState {
 	private Tank tank;
 	private ArrayList<Bullet> bullets = new ArrayList<> ();
 	public boolean gameOver;
-	private int degree = 270;
 
 	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
 	private boolean mousePress;
 	private int mouseX, mouseY;
 	private KeyHandler keyHandler;
-	private MouseHandler mouseHandler;
-
-	public int getDegree()
-	{
-		return degree;
-	}
 
 	public GameState()
 	{
@@ -50,7 +43,6 @@ public class GameState {
 		mouseY = 0;
 		//
 		keyHandler = new KeyHandler();
-		mouseHandler = new MouseHandler();
 	}
 
 	public Tank getTank()
@@ -67,54 +59,8 @@ public class GameState {
 		{
 			bullet.run ();
 		}
-		if(mousePress)
-		{
-			tank.setLocY( mouseY - 30 / 2 );
-			tank.setLocX( mouseX - 30 / 2 );
-		}
-		if(keyUP)
-		{
-			tank.addLocX((int) (8*Math.cos(   Math.toRadians(tank.getDegree())  )));
-			tank.addLocY((int) (8*Math.sin(   Math.toRadians(tank.getDegree())  )));
-		}
-		if(keyDOWN)
-		{
-			tank.addLocX((int) (-8*Math.cos(   Math.toRadians(tank.getDegree())  )));
-			tank.addLocY((int) (-8*Math.sin(   Math.toRadians(tank.getDegree())  )));
-		}
 
-
-		if(keyRIGHT && !keyLEFT)
-			tank.increaseDegree();
-
-		if(!keyRIGHT  && keyLEFT)
-			tank.decreaseDegree();
-
-
-//		if(keyRIGHT && !keyUP && !keyLEFT && !keyDOWN)
-//			degree = 0;
-//
-//		if(keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-//			degree = 45;
-//
-//		if(!keyRIGHT && keyUP && !keyLEFT && !keyDOWN)
-//			degree = 90;
-//
-//		if(!keyRIGHT && keyUP && keyLEFT && !keyDOWN)
-//			degree = 135;
-//
-//		if(!keyRIGHT && !keyUP && keyLEFT && !keyDOWN)
-//			degree = 180;
-//
-//		if(!keyRIGHT && !keyUP && keyLEFT && keyDOWN)
-//			degree= 225;
-//
-//		if(!keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-//			degree = 270;
-//
-//		if(keyRIGHT && !keyUP && !keyLEFT && keyDOWN)
-//			degree = 315;
-
+		tank.run();
 
 		tank.setLocX(Math.max(tank.getLocX(), 0));
 		tank.setLocX(Math.min(tank.getLocX(), GameFrame.GAME_WIDTH - 30));
@@ -123,15 +69,11 @@ public class GameState {
 	}
 
 
-	public KeyListener getKeyListener() {
+	public KeyListener getKeyListener()
+	{
 		return keyHandler;
 	}
-	public MouseListener getMouseListener() {
-		return mouseHandler;
-	}
-	public MouseMotionListener getMouseMotionListener() {
-		return mouseHandler;
-	}
+
 
 
 
@@ -195,28 +137,5 @@ public class GameState {
 		return bullets;
 	}
 
-	/**
-	 * The mouse handler.
-	 */
-	class MouseHandler extends MouseAdapter {
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			mouseX = e.getX();
-			mouseY = e.getY();
-			mousePress = true;
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			mousePress = false;
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			mouseX = e.getX();
-			mouseY = e.getY();
-		}
-	}
 }
 
