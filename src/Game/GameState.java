@@ -13,11 +13,11 @@ import java.util.ArrayList;
 /**
  * This class holds the state of game and all of its elements.
  * This class also handles user inputs, which affect the game state.
- * 
+ *
  * @author Seyed Mohammad Ghaffarian
  */
 public class GameState {
-	
+
 	private Tank tank;
 	private ArrayList<Bullet> bullets = new ArrayList<> ();
 	public boolean gameOver;
@@ -25,7 +25,7 @@ public class GameState {
 
 	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
 	private boolean mousePress;
-	private int mouseX, mouseY;	
+	private int mouseX, mouseY;
 	private KeyHandler keyHandler;
 	private MouseHandler mouseHandler;
 
@@ -120,8 +120,8 @@ public class GameState {
 		tank.setLocY(Math.max(tank.getLocY(), 0));
 		tank.setLocY(Math.min(tank.getLocY(), GameFrame.GAME_HEIGHT - 30));
 	}
-	
-	
+
+
 	public KeyListener getKeyListener() {
 		return keyHandler;
 	}

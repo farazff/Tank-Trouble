@@ -6,12 +6,12 @@ import javax.swing.JFrame;
 
 /**
  * Program start.
- * 
+ *
  * @author Seyed Mohammad Ghaffarian
  */
 public class Main {
-	
-    public static void main(String[] args) {
+
+	public static void main(String[] args) {
 		// Initialize the global thread-pool
 		ThreadPool.init();
 
@@ -34,5 +34,5 @@ public class Main {
 			}
 		});
 
-    }
+	}
 }

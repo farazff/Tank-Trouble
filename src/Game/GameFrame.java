@@ -14,27 +14,27 @@ import javax.swing.JFrame;
 
 /**
  * The window on which the rendering is performed.
- * This example uses the modern BufferStrategy approach for double-buffering, 
+ * This example uses the modern BufferStrategy approach for double-buffering,
  * actually it performs triple-buffering!
  * For more information on BufferStrategy check out:
  *    http://docs.oracle.com/javase/tutorial/extra/fullscreen/bufferstrategy.html
  *    http://docs.oracle.com/javase/8/docs/api/java/awt/image/BufferStrategy.html
- * 
+ *
  * @author Seyed Mohammad Ghaffarian
  */
 public class GameFrame extends JFrame {
-	
+
 	public static final int GAME_HEIGHT = 720;                  // 720p game resolution
 	public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
 
 	//uncomment all /*...*/ in the class for using Tank icon instead of a simple circle
-	/*private BufferedImage image;*/ 
+	/*private BufferedImage image;*/
 
 	private long lastRender;
 	private ArrayList<Float> fpsHistory;
 
 	private BufferStrategy bufferStrategy;
-	
+
 	public GameFrame(String title) {
 		super(title);
 		setResizable(false);
@@ -49,7 +49,7 @@ public class GameFrame extends JFrame {
 			System.out.println(e);
 		}*/
 	}
-	
+
 	/**
 	 * This must be called once after the JFrame is shown:
 	 *    frame.setVisible(true);
@@ -61,18 +61,18 @@ public class GameFrame extends JFrame {
 		bufferStrategy = getBufferStrategy();
 	}
 
-	
+
 	/**
 	 * Game rendering with triple-buffering using BufferStrategy.
 	 */
 	public void render(GameState state) throws IOException {
 		// Render single frame
 		do
-			{
+		{
 			// The following loop ensures that the contents of the drawing buffer
 			// are consistent in case the underlying surface was recreated
 			do
-				{
+			{
 				// Get a new graphics context every time through the loop
 				// to make sure the strategy is validated
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
@@ -94,10 +94,10 @@ public class GameFrame extends JFrame {
 			// otherwise it can take a few extra ms and will feel jerky!
 			Toolkit.getDefaultToolkit().sync();
 
-		// Repeat the rendering if the drawing buffer was lost
+			// Repeat the rendering if the drawing buffer was lost
 		} while (bufferStrategy.contentsLost());
 	}
-	
+
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
