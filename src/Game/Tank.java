@@ -47,7 +47,8 @@ public class Tank implements Runnable
         return mouseHandler;
     }
 
-    public MouseMotionListener getMouseMotionListener() {
+    public MouseMotionListener getMouseMotionListener()
+    {
         return mouseHandler;
     }
 
@@ -136,6 +137,12 @@ public class Tank implements Runnable
 
     public void update()
     {
+        if(mousePress)
+        {
+            this.setLocY( mouseY - 30 / 2 );
+            this.setLocX( mouseX - 30 / 2 );
+        }
+
         if(keyUP)
 		{
 			this.addLocX((int) (8*Math.cos(  Math.toRadians(this.getDegree())  )));
@@ -210,22 +217,28 @@ public class Tank implements Runnable
             }
         }
     }
-    class MouseHandler extends MouseAdapter {
+
+    class MouseHandler extends MouseAdapter
+    {
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(MouseEvent e)
+        {
             mouseX = e.getX();
             mouseY = e.getY();
             mousePress = true;
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(MouseEvent e)
+        {
             mousePress = false;
+            System.out.println("hiiiiiiiiii");
         }
 
         @Override
-        public void mouseDragged(MouseEvent e) {
+        public void mouseDragged(MouseEvent e)
+        {
             mouseX = e.getX();
             mouseY = e.getY();
         }

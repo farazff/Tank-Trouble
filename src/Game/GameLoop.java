@@ -35,11 +35,13 @@ public class GameLoop implements Runnable {
 	/**
 	 * This must be called before the game loop starts.
 	 */
-	public void init() {
+	public void init()
+	{
 		state = new GameState();
+
 		canvas.addKeyListener(state.getTank().getKeyHandler());
 		canvas.addKeyListener(state.getKeyListener());
-		
+
 		canvas.addMouseListener(state.getTank().getMouseHandler());
 
 		canvas.addMouseMotionListener(state.getTank().getMouseMotionListener());
