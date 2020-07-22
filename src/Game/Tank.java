@@ -1,5 +1,10 @@
 package Game;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class Tank
 {
     private int locX,locY,Health,power;
@@ -13,8 +18,26 @@ public class Tank
         Health=100;
         power=50;
         degree = 45;
-        image = "Images/Tanks/red0.png";
+        image = "Images/Tanks/red315.png";
     }
+
+
+    public int getCenterX() throws IOException
+    {
+        BufferedImage sourceImage;
+        sourceImage = ImageIO.read(new File(image));
+        int width = sourceImage.getWidth();
+        return locX + width/2;
+    }
+
+    public int getCenterY() throws IOException
+    {
+        BufferedImage sourceImage;
+        sourceImage = ImageIO.read(new File(image));
+        int height = sourceImage.getHeight();
+        return locX + height/2;
+    }
+
 
     public int getLocX()
     {
