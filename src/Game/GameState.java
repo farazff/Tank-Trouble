@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -178,8 +179,12 @@ public class GameState {
 					keyRIGHT = false;
 					break;
 				case KeyEvent.VK_SPACE :
-					bullets.add (new Bullet (tank.getLocX (),tank.getLocY (),
-							tank.getDegree ()));
+					try {
+						bullets.add (new Bullet (tank.getCenterX (),tank.getCenterY (),
+								tank.getDegree ()));
+					} catch (IOException ex) {
+						ex.printStackTrace ();
+					}
 
 			}
 		}

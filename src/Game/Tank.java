@@ -35,7 +35,7 @@ public class Tank
         BufferedImage sourceImage;
         sourceImage = ImageIO.read(new File(image));
         int height = sourceImage.getHeight();
-        return locX + height/2;
+        return locY + height/2;
     }
 
 

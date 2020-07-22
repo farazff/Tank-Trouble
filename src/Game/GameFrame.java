@@ -111,10 +111,10 @@ public class GameFrame extends JFrame {
 		BufferedImage image = null;
 		try
 		{
-<<<<<<< HEAD
+
 			String temp = state.getTank().getImage();
 			image = ImageIO.read(new File(temp));
-=======
+
 			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
 			image = ImageIO.read(new File("Images/Tanks/red315.png"));
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
@@ -126,7 +126,7 @@ public class GameFrame extends JFrame {
 				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90), bullet.getX ()
 						,bullet.getY (),null);
 			}
->>>>>>> 31ee239d5c9908e86bd9da8be3dc783b89ad3ab7
+
 		}
 		catch(IOException e)
 		{
@@ -178,7 +178,7 @@ public class GameFrame extends JFrame {
 		}
 	}
 
-	private BufferedImage rotateImage(BufferedImage sourceImage, double angle)
+	private static BufferedImage rotateImage(BufferedImage sourceImage, double angle)
 	{
 		int width = sourceImage.getWidth();
 		int height = sourceImage.getHeight();
@@ -212,7 +212,7 @@ public class GameFrame extends JFrame {
 
 		at.rotate(rads, x, y);
 		g2d.setTransform(at);
-		g2d.drawImage(img, 0, 0, this);
+		g2d.drawImage(img, 0, 0, null);
 		g2d.dispose();
 
 		return rotated;
