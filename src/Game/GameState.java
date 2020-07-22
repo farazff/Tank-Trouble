@@ -62,6 +62,10 @@ public class GameState {
 	 */
 	public void update()
 	{
+		for (Bullet bullet : bullets)
+		{
+			bullet.run ();
+		}
 		if(mousePress)
 		{
 			tank.setLocY( mouseY - 30 / 2 );
@@ -173,9 +177,17 @@ public class GameState {
 				case KeyEvent.VK_RIGHT:
 					keyRIGHT = false;
 					break;
+				case KeyEvent.VK_SPACE :
+					bullets.add (new Bullet (tank.getLocX (),tank.getLocY (),
+							tank.getDegree ()));
+
 			}
 		}
 
+	}
+
+	public ArrayList<Bullet> getBullets () {
+		return bullets;
 	}
 
 	/**

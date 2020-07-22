@@ -111,8 +111,21 @@ public class GameFrame extends JFrame {
 		BufferedImage image = null;
 		try
 		{
+<<<<<<< HEAD
 			String temp = state.getTank().getImage();
 			image = ImageIO.read(new File(temp));
+=======
+			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
+			image = ImageIO.read(new File("Images/Tanks/red315.png"));
+
+			for (Bullet bullet : state.getBullets ())
+			{
+				BufferedImage image2 = ImageIO.read (new File (bullet.getImageAddress ()));
+
+				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90), bullet.getX ()
+						,bullet.getY (),null);
+			}
+>>>>>>> 31ee239d5c9908e86bd9da8be3dc783b89ad3ab7
 		}
 		catch(IOException e)
 		{
