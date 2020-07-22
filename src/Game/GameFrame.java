@@ -112,8 +112,9 @@ public class GameFrame extends JFrame {
 		{
 			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
 			image = ImageIO.read(new File("Images/Tanks/red315.png"));
+			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
 
-			for (Bullet bullet : state.getBullets ())
+			for (Bullet bullet : bullets)
 			{
 				BufferedImage image2 = ImageIO.read (new File (bullet.getImageAddress ()));
 

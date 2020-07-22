@@ -9,7 +9,8 @@ public class Bullet implements Runnable
     private double degree;
     private Direction direction;
     private final String imageAddress = "./Images/bulletDark1_outline.png";
-    private static final int STEP = 8;
+    private static final int STEP = 10;
+    private int canonPower;
 
     public Bullet (int x, int y, double degree)
     {
@@ -136,10 +137,7 @@ public class Bullet implements Runnable
             }
 
 
-//            x = Math.max(x, 0);
-//            x = Math.min(x, GameFrame.GAME_WIDTH);
-//            y = Math.max(y, 0);
-//            y = Math.min(y, GameFrame.GAME_HEIGHT);
+
         } catch (NumberFormatException e)
         {
             System.out.println (e.getMessage ());
