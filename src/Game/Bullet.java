@@ -12,7 +12,7 @@ public class Bullet implements Runnable
     private double degree;
     private Direction direction;
     private final String imageAddress = "./Images/bulletDark1_outline.png";
-    private static final int STEP = 10;
+    private static final int STEP = 5;
     private int canonPower;
 
     public Bullet (int x, int y, double degree, long startTime)
@@ -149,7 +149,7 @@ public class Bullet implements Runnable
 
     public boolean hasExpired ()
     {
-        return System.currentTimeMillis () - startTime >= 4;
+        return System.currentTimeMillis () - startTime >= 4000;
     }
 
     @Override

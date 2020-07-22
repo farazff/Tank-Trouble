@@ -19,35 +19,30 @@ import java.util.ArrayList;
  */
 public class GameState {
 
-	private Tank tank;
-	private ArrayList<Bullet> bullets = new ArrayList<> ();
+	private Tank tank1;
+	private Tank tank2;
+	private ArrayList<Bullet> bullets;
 	public boolean gameOver;
 
-	private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
-	private boolean mousePress;
-	private int mouseX, mouseY;
-	private KeyHandler keyHandler;
+
 
 	public GameState()
 	{
-		tank = new Tank();
+		bullets = new ArrayList<> ();
+		tank1 = new Tank(bullets);
+		tank2 = new Tank (bullets);
+		checkBulletsTimeExpiration ();
 		gameOver = false;
-		//
-		keyUP = false;
-		keyDOWN = false;
-		keyRIGHT = false;
-		keyLEFT = false;
-		//
-		mousePress = false;
-		mouseX = 0;
-		mouseY = 0;
-		//
-		keyHandler = new KeyHandler();
 	}
 
-	public Tank getTank()
-	{
-		return tank;
+
+
+	public Tank getTank1 () {
+		return tank1;
+	}
+
+	public Tank getTank2 () {
+		return tank2;
 	}
 
 	/**
@@ -60,78 +55,47 @@ public class GameState {
 			bullet.run ();
 		}
 
-		tank.run();
-
-		tank.setLocX(Math.max(tank.getLocX(), 0));
-		tank.setLocX(Math.min(tank.getLocX(), GameFrame.GAME_WIDTH - 30));
-		tank.setLocY(Math.max(tank.getLocY(), 0));
-		tank.setLocY(Math.min(tank.getLocY(), GameFrame.GAME_HEIGHT - 30));
+		tank1.run();
+		tank2.run ();
 	}
 
 
-	public KeyListener getKeyListener()
+
+
+	private void checkBulletsTimeExpiration ()
 	{
-		return keyHandler;
-	}
+		new Thread (new Runnable () {
 
-
-
-
-	/**
-	 * The keyboard handler.
-	 */
-	class KeyHandler extends KeyAdapter {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			switch (e.getKeyCode())
-			{
-				case KeyEvent.VK_UP:
-					keyUP = true;
-					break;
-				case KeyEvent.VK_DOWN:
-					keyDOWN = true;
-					break;
-				case KeyEvent.VK_LEFT:
-					keyLEFT = true;
-					break;
-				case KeyEvent.VK_RIGHT:
-					keyRIGHT = true;
-					break;
-				case KeyEvent.VK_ESCAPE:
-					gameOver = true;
-					break;
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			switch (e.getKeyCode())
-			{
-				case KeyEvent.VK_UP:
-					keyUP = false;
-					break;
-				case KeyEvent.VK_DOWN:
-					keyDOWN = false;
-					break;
-				case KeyEvent.VK_LEFT:
-					keyLEFT = false;
-					break;
-				case KeyEvent.VK_RIGHT:
-					keyRIGHT = false;
-					break;
-				case KeyEvent.VK_SPACE :
-					try {
-						bullets.add (new Bullet (tank.getCenterX (),tank.getCenterY (),
-								tank.getDegree (), System.currentTimeMillis ()));
-					} catch (IOException ex) {
-						ex.printStackTrace ();
+			@Override
+			public void run () {
+				while (!gameOver) {
+					ArrayList<Bullet> removeBullets = new ArrayList<> ();
+					ArrayList<Bullet> bullets = new ArrayList<> (getBullets ());
+					int i = 1;
+					for (Bullet bullet : bullets) {
+						System.out.println (i);
+						if (bullet.hasExpired ())
+							removeBullets.add (bullet);
+						i++;
 					}
 
-			}
-		}
 
+					getBullets ().removeAll (removeBullets);
+
+					try {
+						Thread.sleep (200);
+					} catch (InterruptedException e) {
+						e.printStackTrace ();
+					}
+				}
+			}
+		}).start ();
 	}
+
+
+
+
+
 
 	public ArrayList<Bullet> getBullets () {
 		return bullets;

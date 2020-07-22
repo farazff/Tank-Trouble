@@ -39,12 +39,13 @@ public class GameLoop implements Runnable {
 	{
 		state = new GameState();
 
-		canvas.addKeyListener(state.getTank().getKeyHandler());
-		canvas.addKeyListener(state.getKeyListener());
+		canvas.addKeyListener(state.getTank1().getKeyHandler());
+		canvas.addMouseListener(state.getTank1().getMouseHandler());
+		canvas.addMouseMotionListener(state.getTank1().getMouseMotionListener());
 
-		canvas.addMouseListener(state.getTank().getMouseHandler());
-
-		canvas.addMouseMotionListener(state.getTank().getMouseMotionListener());
+		canvas.addKeyListener(state.getTank2().getKeyHandler());
+		canvas.addMouseListener(state.getTank2().getMouseHandler());
+		canvas.addMouseMotionListener(state.getTank2().getMouseMotionListener());
 	}
 
 	@Override

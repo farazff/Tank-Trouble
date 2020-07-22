@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Tank implements Runnable
 {
@@ -16,10 +18,14 @@ public class Tank implements Runnable
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
+    private int remainBullet;
+    private ArrayList<Bullet> bullets;
 
 
-    public Tank()
+    public Tank(ArrayList<Bullet> bullets)
     {
+        this.bullets = bullets;
+        remainBullet = 2;
         keyUP = false;
         keyDOWN = false;
         keyRIGHT = false;
@@ -29,12 +35,34 @@ public class Tank implements Runnable
         mouseY = 0;
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-        locX=200;
+        locX= new Random ().nextInt (1000);
         locY=200;
         Health=100;
         power=50;
         degree = 45;
         image = "Images/Tanks/red315.png";
+        checkRemainBullet ();
+    }
+
+    private void checkRemainBullet ()
+    {
+        new Thread (new Runnable () {
+            @Override
+            public void run () {
+                while (getHealth () > 0)
+                {
+
+                    remainBullet = 2;
+
+                    try {
+                        Thread.sleep (1000);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace ();
+                    }
+                }
+            }
+        }).start ();
     }
 
     public KeyHandler getKeyHandler()
@@ -174,7 +202,7 @@ public class Tank implements Runnable
         this.update();
     }
 
-    class KeyHandler extends KeyAdapter
+    private class KeyHandler extends KeyAdapter
     {
 
         @Override
@@ -214,11 +242,23 @@ public class Tank implements Runnable
                 case KeyEvent.VK_RIGHT:
                     keyRIGHT = false;
                     break;
+                case KeyEvent.VK_SPACE :
+                    try {
+                        if (remainBullet > 0)
+                        {
+                            bullets.add (new Bullet (getCenterX (),getCenterY (),
+                                    getDegree (), System.currentTimeMillis ()));
+                            remainBullet--;
+                        }
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace ();
+                    }
             }
         }
     }
 
-    class MouseHandler extends MouseAdapter
+    private class MouseHandler extends MouseAdapter
     {
 
         @Override
