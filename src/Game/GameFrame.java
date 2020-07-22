@@ -108,18 +108,18 @@ public class GameFrame extends JFrame {
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
 
-		BufferedImage image = null;
-		BufferedImage image1 = null;
+
 		try
 		{
 
-			String temp = state.getTank1().getImage();
-			String temp2 = state.getTank2 ().getImage ();
-			image = ImageIO.read(new File(temp));
-			image1 = ImageIO.read (new File (temp2));
+			for (Tank tank : state.getTanks ())
+			{
+				BufferedImage image = ImageIO.read (new File (tank.getImageAddress ()));
 
-			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
-			image = ImageIO.read(new File("Images/Tanks/red315.png"));
+				g2d.drawImage (rotateImage(image,tank.getDegree()-45),
+						tank.getLocX() ,tank.getLocY(),null);
+			}
+
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
 
 			for (Bullet bullet : bullets)
@@ -136,12 +136,7 @@ public class GameFrame extends JFrame {
 			e.printStackTrace();
 		}
 
-		assert image != null;
-		g2d.drawImage (rotateImage(image,state.getTank1().getDegree()-45),
-				state.getTank1().getLocX() ,state.getTank1().getLocY(),null);
-		assert image1 != null;
-		g2d.drawImage (rotateImage(image1,state.getTank2().getDegree()-45),
-				state.getTank2().getLocX() ,state.getTank2().getLocY(),null);
+
 
 
 		// Print FPS info

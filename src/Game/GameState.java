@@ -19,8 +19,7 @@ import java.util.ArrayList;
  */
 public class GameState {
 
-	private Tank tank1;
-	private Tank tank2;
+	private ArrayList<Tank> tanks;
 	private ArrayList<Bullet> bullets;
 	public boolean gameOver;
 
@@ -29,20 +28,20 @@ public class GameState {
 	public GameState()
 	{
 		bullets = new ArrayList<> ();
-		tank1 = new Tank(bullets);
-		tank2 = new Tank (bullets);
+		tanks = new ArrayList<> ();
+		Tank tank1 = new Tank(bullets);
+		Tank tank2 = new Tank (bullets);
+		Tank tank3 = new Tank (bullets);
+		tanks.add (tank1);
+		tanks.add (tank2);
+		tanks.add (tank3);
 		checkBulletsTimeExpiration ();
 		gameOver = false;
 	}
 
 
-
-	public Tank getTank1 () {
-		return tank1;
-	}
-
-	public Tank getTank2 () {
-		return tank2;
+	public ArrayList<Tank> getTanks () {
+		return tanks;
 	}
 
 	/**
@@ -55,8 +54,8 @@ public class GameState {
 			bullet.run ();
 		}
 
-		tank1.run();
-		tank2.run ();
+		for (Tank tank : tanks)
+			tank.run ();
 	}
 
 

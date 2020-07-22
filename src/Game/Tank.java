@@ -12,7 +12,7 @@ public class Tank implements Runnable
 {
     private int locX,locY,Health,power;
     private int degree;
-    private String image;
+    private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean mousePress;
     private int mouseX, mouseY;
@@ -35,12 +35,12 @@ public class Tank implements Runnable
         mouseY = 0;
         keyHandler = new KeyHandler();
         mouseHandler = new MouseHandler();
-        locX= new Random ().nextInt (1000);
-        locY=200;
+        locX= new Random ().nextInt (((16 * 720) / 9) - 200) + 100;
+        locY=new Random ().nextInt (720 - 200) + 100;
         Health=100;
         power=50;
         degree = 45;
-        image = "Images/Tanks/red315.png";
+        imageAddress = "Images/Tanks/red315.png";
         checkRemainBullet ();
     }
 
@@ -83,7 +83,7 @@ public class Tank implements Runnable
     public int getCenterX() throws IOException
     {
         BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(image));
+        sourceImage = ImageIO.read(new File(imageAddress));
         int width = sourceImage.getWidth();
         return locX + width/2;
     }
@@ -91,11 +91,15 @@ public class Tank implements Runnable
     public int getCenterY() throws IOException
     {
         BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(image));
+        sourceImage = ImageIO.read(new File(imageAddress));
         int height = sourceImage.getHeight();
         return locY + height/2;
     }
 
+
+    public String getImageAddress () {
+        return imageAddress;
+    }
 
     public int getLocX()
     {
@@ -158,10 +162,6 @@ public class Tank implements Runnable
         }
     }
 
-    public String getImage()
-    {
-        return image;
-    }
 
     public void update()
     {
