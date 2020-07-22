@@ -101,8 +101,9 @@ public class GameFrame extends JFrame {
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state) throws IOException {
-		System.out.println(state.getTank().getDegree() + " " + state.getTank().getLocX() + " " +state.getTank().getLocY());
+	private void doRendering(Graphics2D g2d, GameState state) throws IOException
+	{
+		//System.out.println(state.getTank().getDegree() + " " + state.getTank().getLocX() + " " +state.getTank().getLocY());
 
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
@@ -110,6 +111,10 @@ public class GameFrame extends JFrame {
 		BufferedImage image = null;
 		try
 		{
+<<<<<<< HEAD
+			String temp = state.getTank().getImage();
+			image = ImageIO.read(new File(temp));
+=======
 			//String temp = state.getTank().getImage() + state.getDegree() + ".png";
 			image = ImageIO.read(new File("Images/Tanks/red315.png"));
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
@@ -121,16 +126,15 @@ public class GameFrame extends JFrame {
 				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90), bullet.getX ()
 						,bullet.getY (),null);
 			}
+>>>>>>> 31ee239d5c9908e86bd9da8be3dc783b89ad3ab7
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 
-
 		assert image != null;
 		g2d.drawImage(rotateImage(image,state.getTank().getDegree()-45),state.getTank().getLocX() ,state.getTank().getLocY(),null);
-
 
 
 		// Print FPS info
