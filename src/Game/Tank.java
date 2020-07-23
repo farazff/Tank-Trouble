@@ -276,7 +276,7 @@ public class Tank implements Runnable
                         if (remainBullet > 0)
                         {
                             Music music = new Music();
-                            music.setFilePath("C:\\Users\\ffara\\Downloads\\weapon_gun_1911_A_33-_AudioTrimmer.com_.au",false);
+                            music.setFilePath("Files/Sounds/Bullet.au",false);
                             music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
                                     getDegree (), System.currentTimeMillis ()));
