@@ -273,7 +273,8 @@ public class Tank implements Runnable
                     try {
                         if (remainBullet > 0)
                         {
-                            bullets.add (new Bullet (getCanonStartX () - 3, getCanonStartY () - 3,
+
+                            bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
                                     getDegree (), System.currentTimeMillis ()));
                             remainBullet--;
                             shot = true;

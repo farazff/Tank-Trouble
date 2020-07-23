@@ -136,11 +136,13 @@ public class GameFrame extends JFrame {
 
 			for (Bullet bullet : bullets)
 			{
-				BufferedImage image2 = ImageIO.read (new File (bullet.getImageAddress ()));
+				BufferedImage image2 = rotateImageBullet
+						(ImageIO.read (new File (bullet.getImageAddress ()))
+						,bullet.getDegree () + 90);
 
-				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90),
-						bullet.getX ()
-						,bullet.getY (),null);
+				g2d.drawImage (image2,
+						bullet.getX () - image2.getWidth () / 2 + 3
+						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
 		}
