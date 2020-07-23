@@ -33,8 +33,8 @@ public class GameState {
 		Tank tank2 = new Tank (bullets);
 		Tank tank3 = new Tank (bullets);
 		tanks.add (tank1);
-		tanks.add (tank2);
-		tanks.add (tank3);
+//		tanks.add (tank2);
+//		tanks.add (tank3);
 		checkBulletsTimeExpiration ();
 		gameOver = false;
 	}
@@ -50,9 +50,7 @@ public class GameState {
 	public void update()
 	{
 		for (Bullet bullet : bullets)
-		{
 			bullet.run ();
-		}
 
 		for (Tank tank : tanks)
 			tank.run ();

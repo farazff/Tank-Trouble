@@ -14,6 +14,7 @@ public class Tank implements Runnable
     private int degree;
     private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
+    private boolean shot;
     private boolean mousePress;
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
@@ -30,6 +31,7 @@ public class Tank implements Runnable
         keyDOWN = false;
         keyRIGHT = false;
         keyLEFT = false;
+        shot = false;
         mousePress = false;
         mouseX = 0;
         mouseY = 0;
@@ -80,20 +82,36 @@ public class Tank implements Runnable
         return mouseHandler;
     }
 
-    public int getCenterX() throws IOException
+    public int getCanonStartX () throws IOException {
+        BufferedImage sourceImage;
+        sourceImage = ImageIO.read(new File(imageAddress));
+        int width = sourceImage.getWidth();
+        return locX + width/2 - 2 +
+                ((int)(Math.sqrt (968) * Math.cos (Math.toRadians (degree))));
+    }
+
+    public int getCanonStartY () throws IOException {
+        BufferedImage sourceImage;
+        sourceImage = ImageIO.read(new File(imageAddress));
+        int height = sourceImage.getHeight();
+        return locY + height/2 - 2 +
+                ((int)(Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
+    }
+
+    public int getFireStartX () throws IOException
     {
         BufferedImage sourceImage;
         sourceImage = ImageIO.read(new File(imageAddress));
         int width = sourceImage.getWidth();
-        return locX + width/2;
+        return locX + width/2 - 2;
     }
 
-    public int getCenterY() throws IOException
+    public int getFireStartY () throws IOException
     {
         BufferedImage sourceImage;
         sourceImage = ImageIO.read(new File(imageAddress));
         int height = sourceImage.getHeight();
-        return locY + height/2;
+        return locY + height/2 - 2;
     }
 
 
@@ -202,6 +220,15 @@ public class Tank implements Runnable
         this.update();
     }
 
+    public boolean isShot () {
+        return shot;
+    }
+
+    public String getFireImageAddress ()
+    {
+       return "./Images/Bullet/shotLarge.png";
+    }
+
     private class KeyHandler extends KeyAdapter
     {
 
@@ -246,9 +273,22 @@ public class Tank implements Runnable
                     try {
                         if (remainBullet > 0)
                         {
-                            bullets.add (new Bullet (getCenterX (),getCenterY (),
+                            bullets.add (new Bullet (getCanonStartX () - 3, getCanonStartY () - 3,
                                     getDegree (), System.currentTimeMillis ()));
                             remainBullet--;
+                            shot = true;
+                            new Thread (new Runnable () {
+                                @Override
+                                public void run () {
+                                    try {
+                                        Thread.sleep (100);
+                                        shot = false;
+                                    } catch (InterruptedException e)
+                                    {
+                                        e.printStackTrace ();
+                                    }
+                                }
+                            }).start ();
                         }
 
                     } catch (IOException ex) {

@@ -118,6 +118,18 @@ public class GameFrame extends JFrame {
 
 				g2d.drawImage (rotateImage(image,tank.getDegree()-45),
 						tank.getLocX() ,tank.getLocY(),null);
+
+				if (tank.isShot ())
+				{
+					BufferedImage image1 = rotateImageBullet (ImageIO.read
+									(new File (tank.getFireImageAddress ()))
+							,tank.getDegree () - 90);
+
+					g2d.drawImage (image1,
+							tank.getCanonStartX () - image1.getWidth () / 2 + 3 ,
+							tank.getCanonStartY () - image1.getHeight () / 2 + 2
+							, null);
+				}
 			}
 
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
@@ -126,7 +138,8 @@ public class GameFrame extends JFrame {
 			{
 				BufferedImage image2 = ImageIO.read (new File (bullet.getImageAddress ()));
 
-				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90), bullet.getX ()
+				g2d.drawImage (rotateImageBullet (image2,bullet.getDegree () + 90),
+						bullet.getX ()
 						,bullet.getY (),null);
 			}
 
