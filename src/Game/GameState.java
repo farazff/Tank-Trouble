@@ -75,7 +75,7 @@ public class GameState {
 					ArrayList<Bullet> bullets = new ArrayList<> (getBullets ());
 					int i = 1;
 					for (Bullet bullet : bullets) {
-						System.out.println (i);
+						//System.out.println (i);
 						if (bullet.hasExpired ())
 							removeBullets.add (bullet);
 						i++;

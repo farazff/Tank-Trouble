@@ -1,5 +1,7 @@
 package Game;
 
+import GUI.Music;
+
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -273,7 +275,9 @@ public class Tank implements Runnable
                     try {
                         if (remainBullet > 0)
                         {
-
+                            Music music = new Music();
+                            music.setFilePath("C:\\Users\\ffara\\Downloads\\weapon_gun_1911_A_33-_AudioTrimmer.com_.au",false);
+                            music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
                                     getDegree (), System.currentTimeMillis ()));
                             remainBullet--;
@@ -314,7 +318,6 @@ public class Tank implements Runnable
         public void mouseReleased(MouseEvent e)
         {
             mousePress = false;
-            System.out.println("hiiiiiiiiii");
         }
 
         @Override

@@ -57,8 +57,6 @@ public class Maps
                 {
                     if(data.get(j).get(i) == '1')
                     {
-//                        System.out.println(j + " " + i);
-//                        System.out.println(horizontal * (i - 1)/2 + "  " + vertical * (j)/2);
                         walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H"));
                     }
                 }
@@ -69,7 +67,6 @@ public class Maps
                 {
                     if(data.get(j).get(i) == '1')
                     {
-                        //System.out.println(j + " " + i + " " + horizontal * (i)/2 + "  " + vertical * (j-1)/2);
                         walls.add(new Wall(horizontal * (i)/2, vertical * (j-1)/2, vertical, "V"));
                     }
                 }
@@ -92,7 +89,6 @@ public class Maps
                 int temp = reader.read();
                 if((char)temp == '1' || (char)temp == '0')
                 {
-                    //System.out.println((char)temp);
                     data.get(y).add((char)temp);
                 }
                 if((char)temp == '\n')
@@ -100,11 +96,6 @@ public class Maps
                     data.add(new ArrayList<Character>());
                     y++;
                 }
-            }
-
-            for(int i=0;i<data.size();i++)
-            {
-                System.out.println(data.get(i).toString());
             }
         }
         catch(IOException e)
