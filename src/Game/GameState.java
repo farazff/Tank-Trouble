@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * This class holds the state of game and all of its elements.
@@ -22,11 +23,15 @@ public class GameState {
 	private ArrayList<Tank> tanks;
 	private ArrayList<Bullet> bullets;
 	public boolean gameOver;
+	private Maps maps;
 
-
+	public Maps getMaps() {
+		return maps;
+	}
 
 	public GameState()
 	{
+		maps = new Maps();
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
 		Tank tank1 = new Tank(bullets);
