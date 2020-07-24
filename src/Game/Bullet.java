@@ -12,6 +12,7 @@ public class Bullet implements Runnable
 
 {
     private double x;
+    private static final int ACCURACY = 4;
     private long startTime;
     private double y;
     private int height;
@@ -87,11 +88,11 @@ public class Bullet implements Runnable
 
             if (wall.getType ().equals ("H"))
             {
-                if ((getCenterX () < wall.getX () + wall.getLength ()) &&
-                    getCenterX () > wall.getX ())
+                if ((getCenterX () < wall.getX () + wall.getLength () + ACCURACY) &&
+                    getCenterX () > wall.getX () - ACCURACY)
                 {
-                    if ((getCenterY () <= wall.getY () + wall.getThick ()) &&
-                        getCenterY () >= wall.getY ())
+                    if ((getCenterY () <= wall.getY () + wall.getThick () + ACCURACY) &&
+                        getCenterY () >= wall.getY () - ACCURACY)
                     {
                         mirrorBack ("X_AXIS");
                     }
@@ -99,8 +100,8 @@ public class Bullet implements Runnable
                 else if ((getCenterX () == wall.getX () + wall.getLength ()) &&
                         getCenterX () == wall.getX ())
                 {
-                    if ((getCenterY () <= wall.getY () + wall.getThick ()) &&
-                            getCenterY () >= wall.getY ())
+                    if ((getCenterY () <= wall.getY () + wall.getThick () + ACCURACY) &&
+                            getCenterY () >= wall.getY () - ACCURACY)
                     {
                         mirrorBack ("Y_AXIS");
                     }
@@ -108,11 +109,11 @@ public class Bullet implements Runnable
             }
             else
             {
-                if ((getCenterY () < wall.getY () + wall.getLength ()) &&
-                    getCenterY () > wall.getY ())
+                if ((getCenterY () < wall.getY () + wall.getLength () + ACCURACY) &&
+                    getCenterY () > wall.getY () - 3)
                 {
-                    if ((getCenterX () <= wall.getX () + wall.getThick ()) &&
-                        getCenterX () >= wall.getX ())
+                    if ((getCenterX () <= wall.getX () + wall.getThick () + ACCURACY) &&
+                        getCenterX () >= wall.getX () - ACCURACY)
                     {
                         mirrorBack ("Y_AXIS");
                     }
@@ -120,8 +121,8 @@ public class Bullet implements Runnable
                 else if ((getCenterY () == wall.getY () + wall.getLength ()) &&
                         getCenterY () == wall.getY ())
                 {
-                    if ((getCenterX () <= wall.getX () + wall.getThick ()) &&
-                            getCenterX () >= wall.getX ())
+                    if ((getCenterX () <= wall.getX () + wall.getThick () + ACCURACY) &&
+                            getCenterX () >= wall.getX () - ACCURACY)
                     {
                         mirrorBack ("X_AXIS");
                     }
