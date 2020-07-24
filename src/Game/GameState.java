@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -34,13 +35,12 @@ public class GameState {
 		maps = new Maps();
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
-		Tank tank1 = new Tank(bullets);
-		Tank tank2 = new Tank (bullets);
-		Tank tank3 = new Tank (bullets);
+		Tank tank1 = new Tank(bullets, maps.getWalls ());
+//		Tank tank2 = new Tank (bullets, maps.getWalls ());
+//		Tank tank3 = new Tank (bullets, maps.getWalls ());
 		tanks.add (tank1);
 //		tanks.add (tank2);
 //		tanks.add (tank3);
-		checkBulletsTimeExpiration ();
 		gameOver = false;
 	}
 
@@ -54,8 +54,15 @@ public class GameState {
 	 */
 	public void update()
 	{
-		for (Bullet bullet : bullets)
-			bullet.run ();
+		Iterator<Bullet> bulletIterator = bullets.iterator ();
+		while (bulletIterator.hasNext ())
+		{
+			Bullet bullet = bulletIterator.next ();
+			if (bullet.hasExpired ())
+				bulletIterator.remove ();
+			else
+				bullet.run ();
+		}
 
 		for (Tank tank : tanks)
 			tank.run ();
@@ -63,36 +70,6 @@ public class GameState {
 
 
 
-
-	private void checkBulletsTimeExpiration ()
-	{
-		new Thread (new Runnable () {
-
-			@Override
-			public void run () {
-				while (!gameOver) {
-					ArrayList<Bullet> removeBullets = new ArrayList<> ();
-					ArrayList<Bullet> bullets = new ArrayList<> (getBullets ());
-					int i = 1;
-					for (Bullet bullet : bullets) {
-						//System.out.println (i);
-						if (bullet.hasExpired ())
-							removeBullets.add (bullet);
-						i++;
-					}
-
-
-					getBullets ().removeAll (removeBullets);
-
-					try {
-						Thread.sleep (200);
-					} catch (InterruptedException e) {
-						e.printStackTrace ();
-					}
-				}
-			}
-		}).start ();
-	}
 
 
 

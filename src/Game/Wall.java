@@ -28,6 +28,11 @@ public class Wall
         return length;
     }
 
+    public int getThick ()
+    {
+        return 5;
+    }
+
     public String getType()
     {
         return type;
