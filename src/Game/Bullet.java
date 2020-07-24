@@ -1,7 +1,6 @@
 package Game;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +11,8 @@ public class Bullet implements Runnable
 
 {
     private double x;
-    private static final int ACCURACY = 4;
+    private static final int WALL_ACCURACY = 4;
+    private static final int TANK_ACCURACY = -10;
     private long startTime;
     private double y;
     private int height;
@@ -97,11 +97,11 @@ public class Bullet implements Runnable
 
             if (wall.getType ().equals ("H"))
             {
-                if ((getCenterX () < wall.getX () + wall.getLength () + ACCURACY) &&
-                    getCenterX () > wall.getX () - ACCURACY)
+                if ((getCenterX () < wall.getX () + wall.getLength () + WALL_ACCURACY) &&
+                    getCenterX () > wall.getX () - WALL_ACCURACY)
                 {
-                    if ((getCenterY () <= wall.getY () + wall.getThick () + ACCURACY) &&
-                        getCenterY () >= wall.getY () - ACCURACY)
+                    if ((getCenterY () <= wall.getY () + wall.getThick () + WALL_ACCURACY) &&
+                        getCenterY () >= wall.getY () - WALL_ACCURACY)
                     {
                         mirrorBack ("X_AXIS");
                     }
@@ -109,8 +109,8 @@ public class Bullet implements Runnable
                 else if ((getCenterX () == wall.getX () + wall.getLength ()) &&
                         getCenterX () == wall.getX ())
                 {
-                    if ((getCenterY () <= wall.getY () + wall.getThick () + ACCURACY) &&
-                            getCenterY () >= wall.getY () - ACCURACY)
+                    if ((getCenterY () <= wall.getY () + wall.getThick () + WALL_ACCURACY) &&
+                            getCenterY () >= wall.getY () - WALL_ACCURACY)
                     {
                         mirrorBack ("Y_AXIS");
                     }
@@ -118,11 +118,11 @@ public class Bullet implements Runnable
             }
             else
             {
-                if ((getCenterY () < wall.getY () + wall.getLength () + ACCURACY) &&
+                if ((getCenterY () < wall.getY () + wall.getLength () + WALL_ACCURACY) &&
                     getCenterY () > wall.getY () - 3)
                 {
-                    if ((getCenterX () <= wall.getX () + wall.getThick () + ACCURACY) &&
-                        getCenterX () >= wall.getX () - ACCURACY)
+                    if ((getCenterX () <= wall.getX () + wall.getThick () + WALL_ACCURACY) &&
+                        getCenterX () >= wall.getX () - WALL_ACCURACY)
                     {
                         mirrorBack ("Y_AXIS");
                     }
@@ -130,8 +130,8 @@ public class Bullet implements Runnable
                 else if ((getCenterY () == wall.getY () + wall.getLength ()) &&
                         getCenterY () == wall.getY ())
                 {
-                    if ((getCenterX () <= wall.getX () + wall.getThick () + ACCURACY) &&
-                            getCenterX () >= wall.getX () - ACCURACY)
+                    if ((getCenterX () <= wall.getX () + wall.getThick () + WALL_ACCURACY) &&
+                            getCenterX () >= wall.getX () - WALL_ACCURACY)
                     {
                         mirrorBack ("X_AXIS");
                     }
@@ -143,16 +143,13 @@ public class Bullet implements Runnable
         {
             Tank tank = tanks.next ();
 
-            if ((getCenterY () <= tank.getLocY () + tank.getHeight () + ACCURACY) &&
+            if ((getCenterY () <= tank.getLocY () + tank.getHeight () + TANK_ACCURACY) &&
                     getCenterY () >= tank.getLocY () - 3)
             {
-                if ((getCenterX () <= tank.getLocX () + tank.getHeight () + ACCURACY) &&
-                        getCenterX () >= tank.getLocX () - ACCURACY)
+                if ((getCenterX () <= tank.getLocX () + tank.getHeight () + TANK_ACCURACY) &&
+                        getCenterX () >= tank.getLocX () - TANK_ACCURACY)
                 {
-                    if (tank.looseStamina (canonPower))
-                    {
-                        tanks.remove ();
-                    }
+                    tank.looseStamina (canonPower);
                     setExpired ();
                 }
             }

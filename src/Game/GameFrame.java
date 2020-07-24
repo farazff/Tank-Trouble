@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -118,24 +119,41 @@ public class GameFrame extends JFrame {
 
 			drawRoads(g2d);
 
-			for (Tank tank : state.getTanks ())
+			Iterator<Tank> tankIterator = state.getTanks ().iterator ();
+			while (tankIterator.hasNext ())
 			{
-				BufferedImage image = ImageIO.read (new File (tank.getImageAddress ()));
-
-				g2d.drawImage (rotateImage(image,tank.getDegree()-45),
-						tank.getLocX() ,tank.getLocY(),null);
-
-				if (tank.isShot ())
+				Tank tank = tankIterator.next ();
+				if (tank.isDestroyed ())
+					tankIterator.remove ();
+				else
 				{
-					BufferedImage image1 = rotateImageBullet (ImageIO.read
-									(new File (tank.getFireImageAddress ()))
-							,tank.getDegree () - 90);
+					if (tank.isFireDestroyed ())
+					{
+						BufferedImage image1 = ImageIO.read
+								(new File (tank.getFireDestroyedImageAddress ()));
+						g2d.drawImage (image1,tank.getCenterX () - image1.getWidth () / 2 + 3 ,
+								tank.getCenterY () - image1.getHeight () / 2 + 2,null);
+					}
+					else {
+						BufferedImage image = ImageIO.read (new File (tank.getImageAddress ()));
 
-					g2d.drawImage (image1,
-							tank.getCanonStartX () - image1.getWidth () / 2 + 3 ,
-							tank.getCanonStartY () - image1.getHeight () / 2 + 2
-							, null);
+						g2d.drawImage (rotateImage(image,tank.getDegree()-45),
+								tank.getLocX() ,tank.getLocY(),null);
+
+						if (tank.isShot ())
+						{
+							BufferedImage image1 = rotateImageBullet (ImageIO.read
+											(new File (tank.getFireImageAddress ()))
+									,tank.getDegree () - 90);
+
+							g2d.drawImage (image1,
+									tank.getCanonStartX () - image1.getWidth () / 2 + 3 ,
+									tank.getCanonStartY () - image1.getHeight () / 2 + 2
+									, null);
+						}
+					}
 				}
+
 			}
 
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());

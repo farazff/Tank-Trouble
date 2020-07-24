@@ -17,6 +17,8 @@ public class Tank implements Runnable
     private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
+    private boolean fireDestroyed;
+    private boolean destroyed;
     private boolean mousePress;
     private int height;
     private int width;
@@ -33,6 +35,8 @@ public class Tank implements Runnable
         this.bullets = bullets;
         this.walls = walls;
         this.tanks = tanks;
+        destroyed = false;
+        fireDestroyed = false;
         canShot = true;
         keyUP = false;
         keyDOWN = false;
@@ -70,10 +74,30 @@ public class Tank implements Runnable
         return width;
     }
 
-    public boolean looseStamina (int damage)
+    public void looseStamina (int damage)
     {
         stamina -= damage;
-        return stamina <= 0;
+        if (stamina <= 0)
+        {
+            fireDestroyed = true;
+            keyUP = false;
+            keyDOWN = false;
+            keyLEFT = false;
+            keyRIGHT = false;
+            new Thread (new Runnable () {
+                @Override
+                public void run () {
+                    try {
+                        Thread.sleep (200);
+                        destroyed = true;
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace ();
+                    }
+                }
+            }).start ();
+        }
+
     }
 
     public KeyHandler getKeyHandler()
@@ -91,14 +115,24 @@ public class Tank implements Runnable
         return mouseHandler;
     }
 
+    public int getCenterX ()
+    {
+        return locX + width/2 - 2;
+    }
+
+    public int getCenterY ()
+    {
+        return locY + height/2 - 2;
+    }
+
     public int getCanonStartX ()  {
 
-        return locX + width/2 - 2 +
+        return getCenterX () +
                 ((int)(Math.sqrt (968) * Math.cos (Math.toRadians (degree))));
     }
 
     public int getCanonStartY () {
-        return locY + height/2 - 2 +
+        return getCenterY () +
                 ((int)(Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
     }
 
@@ -207,6 +241,14 @@ public class Tank implements Runnable
         this.update();
     }
 
+    public boolean isFireDestroyed () {
+        return fireDestroyed;
+    }
+
+    public boolean isDestroyed () {
+        return destroyed;
+    }
+
     public boolean isShot () {
         return shot;
     }
@@ -216,54 +258,63 @@ public class Tank implements Runnable
        return "./Images/Bullet/shotLarge.png";
     }
 
+    public String getFireDestroyedImageAddress ()
+    {
+        return "./Images/Explosion/explosion3.png";
+    }
+
     private class KeyHandler extends KeyAdapter
     {
 
         @Override
         public void keyPressed(KeyEvent e)
         {
-            switch (e.getKeyCode())
+            if (!(destroyed || fireDestroyed))
             {
-                case KeyEvent.VK_UP:
-                    keyUP = true;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    keyDOWN = true;
-                    break;
-                case KeyEvent.VK_LEFT:
-                    keyLEFT = true;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    keyRIGHT = true;
-                    break;
+                switch (e.getKeyCode())
+                {
+                    case KeyEvent.VK_UP:
+                        keyUP = true;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        keyDOWN = true;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        keyLEFT = true;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        keyRIGHT = true;
+                        break;
+                }
             }
         }
 
         @Override
         public void keyReleased(KeyEvent e)
         {
-            switch (e.getKeyCode())
+            if (!(destroyed || fireDestroyed))
             {
-                case KeyEvent.VK_UP:
-                    keyUP = false;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    keyDOWN = false;
-                    break;
-                case KeyEvent.VK_LEFT:
-                    keyLEFT = false;
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    keyRIGHT = false;
-                    break;
-                case KeyEvent.VK_SPACE :
-
+                switch (e.getKeyCode())
+                {
+                    case KeyEvent.VK_UP:
+                        keyUP = false;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        keyDOWN = false;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        keyLEFT = false;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        keyRIGHT = false;
+                        break;
+                    case KeyEvent.VK_SPACE :
                         if (canShot)
                         {
                             Music music = new Music();
                             music.setFilePath("Files/Sounds/Bullet.au",false);
                             music.execute();
-                            bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
+                            bullets.add (new Bullet (getCanonStartX () , getCanonStartY (),
                                     getDegree (), System.currentTimeMillis (),walls,tanks,bullets));
                             canShot = false;
                             shot = true;
@@ -293,7 +344,9 @@ public class Tank implements Runnable
                             }).start ();
                         }
 
+                }
             }
+
         }
     }
 
