@@ -350,7 +350,6 @@ public class Tank implements Runnable
 
             }
         }
-    }
 
     private class MouseHandler extends MouseAdapter {
 
@@ -373,4 +372,7 @@ public class Tank implements Runnable
         }
     }
 }
+
+
+
 
