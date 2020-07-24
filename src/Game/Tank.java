@@ -1,5 +1,7 @@
 package Game;
 
+import GUI.Music;
+
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -240,7 +242,9 @@ public class Tank implements Runnable
                     try {
                         if (canShot)
                         {
-
+                            Music music = new Music();
+                            music.setFilePath("Files/Sounds/Bullet.au",false);
+                            music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
                                     getDegree (), System.currentTimeMillis ()));
                             canShot = false;
@@ -293,7 +297,6 @@ public class Tank implements Runnable
         public void mouseReleased(MouseEvent e)
         {
             mousePress = false;
-            System.out.println("hiiiiiiiiii");
         }
 
         @Override
