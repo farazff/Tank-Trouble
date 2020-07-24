@@ -18,16 +18,19 @@ public class Tank implements Runnable
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
     private boolean mousePress;
+    private int height;
+    private int width;
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
     private boolean canShot;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Wall> walls;
 
-
-    public Tank(ArrayList<Bullet> bullets)
+    public Tank(ArrayList<Bullet> bullets, ArrayList<Wall> walls)
     {
         this.bullets = bullets;
+        this.walls = walls;
         canShot = true;
         keyUP = false;
         keyDOWN = false;
@@ -45,6 +48,14 @@ public class Tank implements Runnable
         power=50;
         degree = 45;
         imageAddress = "Images/Tanks/red315.png";
+        try {
+            BufferedImage image = ImageIO.read (new File (getImageAddress ()));
+            width = image.getWidth ();
+            height = image.getHeight ();
+        } catch (IOException e)
+        {
+            e.printStackTrace ();
+        }
 
     }
 
@@ -65,18 +76,13 @@ public class Tank implements Runnable
         return mouseHandler;
     }
 
-    public int getCanonStartX () throws IOException {
-        BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(imageAddress));
-        int width = sourceImage.getWidth();
+    public int getCanonStartX ()  {
+
         return locX + width/2 - 2 +
                 ((int)(Math.sqrt (968) * Math.cos (Math.toRadians (degree))));
     }
 
-    public int getCanonStartY () throws IOException {
-        BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(imageAddress));
-        int height = sourceImage.getHeight();
+    public int getCanonStartY () {
         return locY + height/2 - 2 +
                 ((int)(Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
     }
@@ -239,14 +245,14 @@ public class Tank implements Runnable
                     keyRIGHT = false;
                     break;
                 case KeyEvent.VK_SPACE :
-                    try {
+
                         if (canShot)
                         {
                             Music music = new Music();
                             music.setFilePath("Files/Sounds/Bullet.au",false);
                             music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
-                                    getDegree (), System.currentTimeMillis ()));
+                                    getDegree (), System.currentTimeMillis (),walls));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
@@ -275,9 +281,6 @@ public class Tank implements Runnable
                             }).start ();
                         }
 
-                    } catch (IOException ex) {
-                        ex.printStackTrace ();
-                    }
             }
         }
     }
