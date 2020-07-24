@@ -185,10 +185,11 @@ public class GameFrame extends JFrame {
 					}
 					else
 					{
-						for(int p=0;p<=temp.getLength()/w;p++)
-						{
-							g2d.drawImage(wallD, temp.getX() + p * w, y, null);
-						}
+						if(temp.isOK())
+							for(int p=0;p<=temp.getLength()/w;p++)
+							{
+								g2d.drawImage(wallD, temp.getX() + p * w, y, null);
+							}
 					}
 				}
 				if(temp.getType().equals("V")) // amodi
@@ -216,10 +217,11 @@ public class GameFrame extends JFrame {
 					}
 					else
 					{
-						for(int p=0;p<=temp.getLength()/h;p++)
-						{
-							g2d.drawImage(wallD,x,temp.getY()+p*h,null);
-						}
+						if(temp.isOK())
+							for(int p=0;p<=temp.getLength()/h;p++)
+							{
+								g2d.drawImage(wallD,x,temp.getY()+p*h,null);
+							}
 					}
 				}
 			}

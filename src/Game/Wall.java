@@ -62,5 +62,7 @@ public class Wall
     public void decreaseHealth(int count)
     {
         health -= count;
+        if(health<=0)
+            isOK = false;
     }
 }
