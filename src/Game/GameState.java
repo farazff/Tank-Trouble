@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This class holds the state of game and all of its elements.
@@ -54,6 +56,8 @@ public class GameState {
 	 */
 	public void update()
 	{
+		ExecutorService executorService = Executors.newCachedThreadPool ();
+
 		Iterator<Bullet> bulletIterator = bullets.iterator ();
 		while (bulletIterator.hasNext ())
 		{
@@ -61,11 +65,29 @@ public class GameState {
 			if (bullet.hasExpired ())
 				bulletIterator.remove ();
 			else
-				bullet.run ();
+				executorService.execute (bullet);
 		}
 
-		for (Tank tank : tanks)
-			tank.run ();
+		Iterator<Tank> tankIterator = tanks.iterator ();
+		while (tankIterator.hasNext ())
+		{
+			Tank tank = tankIterator.next ();
+			if (tank.isDestroyed ())
+				tankIterator.remove ();
+			else
+				executorService.execute (tank);
+		}
+		executorService.shutdown();
+
+		try {
+			while (!executorService.isTerminated ())
+			{
+				Thread.sleep (1);
+			}
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace ();
+		}
 	}
 
 
