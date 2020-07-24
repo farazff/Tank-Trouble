@@ -458,7 +458,7 @@ public class GameFrame extends JFrame {
 		////////////////////////////////////////////////////////////////////////////
 
 		g2d.drawImage(balabepayinsabz, 0, 31+9*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+9*h, null);
+		g2d.drawImage(pichbalaberastsabz, w, 31+9*h, null);
 		for(int i=2;i<=9;i++)
 			g2d.drawImage(rastbechapsabz,i*w,31+9*h,null);
 		g2d.drawImage(chaharrahsabz, 10*w, 31+9*h, null);
