@@ -30,7 +30,7 @@ public class Wall
 
     public int getThick ()
     {
-        return 5;
+        return 10;
     }
 
     public String getType()

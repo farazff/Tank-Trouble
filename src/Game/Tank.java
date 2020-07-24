@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Tank implements Runnable
 {
-    private int locX,locY,Health,power;
+    private int locX,locY,stamina;
     private int degree;
     private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
@@ -26,11 +26,13 @@ public class Tank implements Runnable
     private boolean canShot;
     private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls;
+    private ArrayList<Tank> tanks;
 
-    public Tank(ArrayList<Bullet> bullets, ArrayList<Wall> walls)
+    public Tank(ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks)
     {
         this.bullets = bullets;
         this.walls = walls;
+        this.tanks = tanks;
         canShot = true;
         keyUP = false;
         keyDOWN = false;
@@ -44,8 +46,8 @@ public class Tank implements Runnable
         mouseHandler = new MouseHandler();
         locX= new Random ().nextInt (((16 * 720) / 9) - 200) + 100;
         locY=new Random ().nextInt (720 - 200) + 100;
-        Health=100;
-        power=50;
+        stamina =100;
+
         degree = 45;
         imageAddress = "Images/Tanks/red315.png";
         try {
@@ -60,6 +62,19 @@ public class Tank implements Runnable
     }
 
 
+    public int getHeight () {
+        return height;
+    }
+
+    public int getWidth () {
+        return width;
+    }
+
+    public boolean looseStamina (int damage)
+    {
+        stamina -= damage;
+        return stamina <= 0;
+    }
 
     public KeyHandler getKeyHandler()
     {
@@ -124,15 +139,12 @@ public class Tank implements Runnable
         locY += adder;
     }
 
-    public int getHealth()
+    public int getStamina()
     {
-        return Health;
+        return stamina;
     }
 
-    public int getPower()
-    {
-        return power;
-    }
+
 
     public int getDegree()
     {
@@ -252,7 +264,7 @@ public class Tank implements Runnable
                             music.setFilePath("Files/Sounds/Bullet.au",false);
                             music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
-                                    getDegree (), System.currentTimeMillis (),walls));
+                                    getDegree (), System.currentTimeMillis (),walls,tanks,bullets));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {

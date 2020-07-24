@@ -24,15 +24,24 @@ public class Bullet implements Runnable
     private static final int STEP = 10;
     private int canonPower;
     private ArrayList<Wall> walls;
+    private ArrayList<Tank> tanks;
+    private ArrayList<Bullet> bullets;
+    private boolean expired;
 
-    public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls)
+    public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
+                   ArrayList<Tank> tanks, ArrayList<Bullet> bullets)
     {
+
         this.degree = degree;
+        expired = false;
         findQuarterAndM (degree);
         this.x = x;
         this.y = y;
+        canonPower = 50;
         this.startTime = startTime;
         this.walls = walls;
+        this.tanks = tanks;
+        this.bullets = bullets;
         try {
             BufferedImage image = ImageIO.read (new File (getImageAddress ()));
             width = image.getWidth ();
@@ -129,6 +138,32 @@ public class Bullet implements Runnable
                 }
             }
         }
+        Iterator<Tank> tanks = this.tanks.iterator ();
+        while (tanks.hasNext ())
+        {
+            Tank tank = tanks.next ();
+
+            if ((getCenterY () <= tank.getLocY () + tank.getHeight () + ACCURACY) &&
+                    getCenterY () >= tank.getLocY () - 3)
+            {
+                if ((getCenterX () <= tank.getLocX () + tank.getHeight () + ACCURACY) &&
+                        getCenterX () >= tank.getLocX () - ACCURACY)
+                {
+                    if (tank.looseStamina (canonPower))
+                    {
+                        tanks.remove ();
+                    }
+                    setExpired ();
+                }
+            }
+        }
+
+        //TODO : Add bullets
+    }
+
+    private void setExpired ()
+    {
+        expired = true;
     }
 
     private void mirrorBack (String axis)
@@ -248,7 +283,8 @@ public class Bullet implements Runnable
 
     public boolean hasExpired ()
     {
-        return System.currentTimeMillis () - startTime >= 3500;
+        return System.currentTimeMillis () - startTime >= 3500 ||
+                expired;
     }
 
     @Override
