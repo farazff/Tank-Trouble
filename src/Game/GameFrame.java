@@ -1,6 +1,8 @@
 /*** In The Name of Allah ***/
 package Game;
 
+import GUI.GameWithPC;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
@@ -149,37 +151,47 @@ public class GameFrame extends JFrame {
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
-//			g2d.setPaint(Color.BLACK);
-//			for(int i=0;i<state.getMaps().getWalls().size();i++)
-//			{
-//				Wall temp = state.getMaps().getWalls().get(i);
-//				if(temp.getType().equals("H")) // ofoqi
-//				{
-//					int y = temp.getY();
-//					if(y==0)
-//					{
-//						y+=31;
-//					}
-//					if(y==GAME_HEIGHT)
-//					{
-//						y-=12;
-//					}
-//					g2d.fill(new Rectangle2D.Double(temp.getX(),y,temp.getLength(),5));
-//				}
-//				if(temp.getType().equals("V")) // ofoqi
-//				{
-//					int x = temp.getX();
-//					if(x==0)
-//					{
-//						x+=6;
-//					}
-//					if(x==GAME_WIDTH)
-//					{
-//						x-=12;
-//					}
-//					g2d.fill(new Rectangle2D.Double(x,temp.getY(),5,temp.getLength()));
-//				}
-//			}
+			for(int i=0;i<state.getMaps().getWalls().size();i++)
+			{
+				Wall temp = state.getMaps().getWalls().get(i);
+				if(temp.getType().equals("H")) // ofoqi
+				{
+					int y = temp.getY();
+					if(y==0)
+					{
+						y+=31;
+					}
+					if(GAME_HEIGHT-y<=5)
+					{
+						y-=20;
+					}
+					BufferedImage wall = ImageIO.read (new File("Images/Walls/RedH.png"));
+					int w = wall.getWidth();
+					for(int p=0;p<=temp.getLength()/w;p++)
+					{
+						g2d.drawImage(wall, temp.getX() + p*w ,y,null);
+					}
+				}
+				if(temp.getType().equals("V")) // amodi
+				{
+					//System.out.println(temp.getX() + " " + temp.getY());
+					int x = temp.getX();
+					if(x==0)
+					{
+						x+=6;
+					}
+					if(GAME_WIDTH-x<5)
+					{
+						x-=20;
+					}
+					BufferedImage wall = ImageIO.read (new File("Images/Walls/RedV.png"));
+					int h = wall.getHeight();
+					for(int p=0;p<=temp.getLength()/h;p++)
+					{
+						g2d.drawImage(wall, x , temp.getY() + p*h ,null);
+					}
+				}
+			}
 
 		}
 		catch(IOException e)
