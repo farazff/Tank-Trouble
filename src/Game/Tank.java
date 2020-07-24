@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Tank implements Runnable
@@ -201,6 +202,51 @@ public class Tank implements Runnable
         }
     }
 
+    public boolean canMove()
+    {
+        boolean ans = true;
+
+        Iterator<Wall> walls = this.walls.iterator();
+
+        while(walls.hasNext ())
+        {
+            Wall wall = walls.next();
+
+            if(wall.getType ().equals ("H"))
+            {
+                if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
+                {
+                    if(wall.getY()-locY<=30 && wall.getY()-locY>=0 && degree>=0 && degree<=150)
+                    {
+                        ans=false;
+                    }
+                    if(locY-wall.getY()<=15 && locY-wall.getY()>=0 && degree>=180 && degree<=360)
+                    {
+                        ans=false;
+                    }
+                }
+            }
+
+            if(wall.getType ().equals ("V"))
+            {
+                if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
+                {
+                    if(wall.getX()-locX<=30 && wall.getX()-locX>=0 &&
+                            ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
+                    {
+                        ans=false;
+                    }
+                    if(locX-wall.getX()<=15 && locX-wall.getX()>=0 &&
+                            degree>=90 && degree<=270 )
+                    {
+                        ans=false;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
 
     public void update()
     {
@@ -210,23 +256,26 @@ public class Tank implements Runnable
             this.setLocX( mouseX - 30 / 2 );
         }
 
-        if(keyUP)
-		{
-			this.addLocX((int) (8*Math.cos(  Math.toRadians(this.getDegree())  )));
-			this.addLocY((int) (8*Math.sin(  Math.toRadians(this.getDegree())  )));
-		}
-		if(keyDOWN)
-		{
-			this.addLocX((int) (-8*Math.cos(  Math.toRadians(this.getDegree())  )));
-			this.addLocY((int) (-8*Math.sin(  Math.toRadians(this.getDegree())  )));
-		}
+        int forX = (int) (8*Math.cos(  Math.toRadians(this.getDegree())  ));
+        int forY = (int) (8*Math.sin(  Math.toRadians(this.getDegree())  ));
+
+        if(keyUP && canMove())
+        {
+            this.addLocX(forX);
+            this.addLocY(forY);
+        }
+        if(keyDOWN && canMove())
+        {
+            this.addLocX(-1*forX);
+            this.addLocY(-1*forY);
+        }
 
 
-		if(keyRIGHT && !keyLEFT)
-			this.increaseDegree();
+        if(keyRIGHT && !keyLEFT)
+            this.increaseDegree();
 
-		if(!keyRIGHT  && keyLEFT)
-			this.decreaseDegree();
+        if(!keyRIGHT  && keyLEFT)
+            this.decreaseDegree();
 
         this.setLocX(Math.max(this.getLocX(), 0));
         this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
@@ -255,7 +304,7 @@ public class Tank implements Runnable
 
     public String getFireImageAddress ()
     {
-       return "./Images/Bullet/shotLarge.png";
+        return "./Images/Bullet/shotLarge.png";
     }
 
     public String getFireDestroyedImageAddress ()
@@ -343,6 +392,56 @@ public class Tank implements Runnable
                                 }
                             }).start ();
                         }
+            switch (e.getKeyCode())
+            {
+                case KeyEvent.VK_UP:
+                    keyUP = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    keyDOWN = false;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    keyLEFT = false;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    keyRIGHT = false;
+                    break;
+                case KeyEvent.VK_SPACE :
+
+                    if (canShot)
+                    {
+                        Music music = new Music();
+                        music.setFilePath("Files/Sounds/Bullet.au",false);
+                        music.execute();
+                        bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
+                                getDegree (), System.currentTimeMillis (),walls,tanks,bullets));
+                        canShot = false;
+                        shot = true;
+                        new Thread (new Runnable () {
+                            @Override
+                            public void run () {
+                                try {
+                                    Thread.sleep (100);
+                                    shot = false;
+                                } catch (InterruptedException e)
+                                {
+                                    e.printStackTrace ();
+                                }
+                            }
+                        }).start ();
+                        new Thread (new Runnable () {
+                            @Override
+                            public void run () {
+                                try {
+                                    Thread.sleep (500);
+                                    canShot = true;
+                                } catch (InterruptedException e)
+                                {
+                                    e.printStackTrace ();
+                                }
+                            }
+                        }).start ();
+                    }
 
                 }
             }
@@ -375,3 +474,4 @@ public class Tank implements Runnable
         }
     }
 }
+
