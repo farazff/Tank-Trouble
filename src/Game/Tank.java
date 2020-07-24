@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Tank implements Runnable {
-    private int locX, locY, stamina;
+public class Tank implements Runnable
+{
+    private int locX,locY,stamina;
     private int degree;
     private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
@@ -24,6 +25,7 @@ public class Tank implements Runnable {
     private int width;
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
+    private MouseHandler mouseHandler;
     private boolean canShot;
     private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls;
@@ -168,34 +170,44 @@ public class Tank implements Runnable {
         }
     }
 
-    public boolean canMove () {
+    public boolean canMoveForward()
+    {
         boolean ans = true;
 
-        Iterator<Wall> walls = this.walls.iterator ();
+        Iterator<Wall> walls = this.walls.iterator();
 
-        while (walls.hasNext ()) {
-            Wall wall = walls.next ();
+        while(walls.hasNext ())
+        {
+            Wall wall = walls.next();
 
-            if (wall.getType ().equals ("H")) {
-                if (locX >= wall.getX () - 15 && locX <= wall.getX () + wall.getLength () + 15) {
-                    if (wall.getY () - locY <= 30 && wall.getY () - locY >= 0 && degree >= 0 && degree <= 150) {
-                        ans = false;
+            if(wall.getType ().equals ("H"))
+            {
+                if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
+                {
+                    if(wall.getY()-locY<=60 && wall.getY()-locY>=0 && degree>=0 && degree<=150)
+                    {
+                        ans=false;
                     }
-                    if (locY - wall.getY () <= 15 && locY - wall.getY () >= 0 && degree >= 180 && degree <= 360) {
-                        ans = false;
+                    if(locY-wall.getY()<=8 && locY-wall.getY()>=0 && degree>=180 && degree<=360)
+                    {
+                        ans=false;
                     }
                 }
             }
 
-            if (wall.getType ().equals ("V")) {
-                if (locY >= wall.getY () - 15 && locY <= wall.getY () + wall.getLength () + 15) {
-                    if (wall.getX () - locX <= 30 && wall.getX () - locX >= 0 &&
-                            ((degree >= 0 && degree <= 90) || (degree >= 270 && degree <= 360))) {
-                        ans = false;
+            if(wall.getType ().equals ("V"))
+            {
+                if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
+                {
+                    if(wall.getX()-locX<=60 && wall.getX()-locX>=0 &&
+                            ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
+                    {
+                        ans=false;
                     }
-                    if (locX - wall.getX () <= 15 && locX - wall.getX () >= 0 &&
-                            degree >= 90 && degree <= 270) {
-                        ans = false;
+                    if(locX-wall.getX()<=8 && locX-wall.getX()>=0 &&
+                            degree>=90 && degree<=270 )
+                    {
+                        ans=false;
                     }
                 }
             }
@@ -213,13 +225,15 @@ public class Tank implements Runnable {
         int forX = (int) (8 * Math.cos (Math.toRadians (this.getDegree ())));
         int forY = (int) (8 * Math.sin (Math.toRadians (this.getDegree ())));
 
-        if (keyUP && canMove ()) {
-            this.addLocX (forX);
-            this.addLocY (forY);
+        if(keyUP && canMoveForward())
+        {
+            this.addLocX(forX);
+            this.addLocY(forY);
         }
-        if (keyDOWN && canMove ()) {
-            this.addLocX (-1 * forX);
-            this.addLocY (-1 * forY);
+        if(keyDOWN && canMoveForward())
+        {
+            this.addLocX(-1*forX);
+            this.addLocY(-1*forY);
         }
 
 
@@ -335,6 +349,7 @@ public class Tank implements Runnable {
             }
 
             }
+        }
     }
 
     private class MouseHandler extends MouseAdapter {
