@@ -214,6 +214,57 @@ public class Tank implements Runnable
         return ans;
     }
 
+
+    public boolean canMoveBackward()
+    {
+        boolean ans = true;
+
+        Iterator<Wall> walls = this.walls.iterator();
+
+        while(walls.hasNext ())
+        {
+            Wall wall = walls.next();
+
+            if(wall.getType ().equals ("H"))
+            {
+                if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
+                {
+                    //tank upper than wall
+                    if(wall.getY()-locY<=60 && wall.getY()-locY>=0 && degree>=270 && degree<=360)
+                    {
+                        ans=false;
+                    }
+                    //tank lower than wall
+                    if(locY-wall.getY()<=8 && locY-wall.getY()>=0 && degree>=0 && degree<=180)
+                    {
+                        ans=false;
+                    }
+                }
+            }
+
+            if(wall.getType ().equals ("V"))
+            {
+                if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
+                {
+                    //tank at the left side of the wall
+                    if(wall.getX()-locX<=60 && wall.getX()-locX>=0 &&
+                            (degree>=90 && degree<=270) )
+                    {
+                        ans=false;
+                    }
+                    //tank at the right side of the wall
+                    if(locX-wall.getX()<=8 && locX-wall.getX()>=0 &&
+                            ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
+                    {
+                        ans=false;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+
     public void update()
     {
         if(mousePress)
@@ -230,7 +281,7 @@ public class Tank implements Runnable
             this.addLocX(forX);
             this.addLocY(forY);
         }
-        if(keyDOWN && canMoveForward())
+        if(keyDOWN && canMoveBackward())
         {
             this.addLocX(-1*forX);
             this.addLocY(-1*forY);
