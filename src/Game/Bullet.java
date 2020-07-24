@@ -12,7 +12,7 @@ public class Bullet implements Runnable
     private double degree;
     private Direction direction;
     private final String imageAddress = "./Images/Bullet/bulletDark1_outline.png";
-    private static final int STEP = 4;
+    private static final int STEP = 10;
     private int canonPower;
 
     public Bullet (int x, int y, double degree, long startTime)
