@@ -216,10 +216,63 @@ public class Tank implements Runnable
         return ans;
     }
 
-    public void update () {
-        if (mousePress) {
-            this.setLocY (mouseY - 30 / 2);
-            this.setLocX (mouseX - 30 / 2);
+
+    public boolean canMoveBackward()
+    {
+        boolean ans = true;
+
+        Iterator<Wall> walls = this.walls.iterator();
+
+        while(walls.hasNext ())
+        {
+            Wall wall = walls.next();
+
+            if(wall.getType ().equals ("H"))
+            {
+                if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
+                {
+                    //tank upper than wall
+                    if(wall.getY()-locY<=60 && wall.getY()-locY>=0 && degree>=270 && degree<=360)
+                    {
+                        ans=false;
+                    }
+                    //tank lower than wall
+                    if(locY-wall.getY()<=8 && locY-wall.getY()>=0 && degree>=0 && degree<=180)
+                    {
+                        ans=false;
+                    }
+                }
+            }
+
+            if(wall.getType ().equals ("V"))
+            {
+                if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
+                {
+                    //tank at the left side of the wall
+                    if(wall.getX()-locX<=60 && wall.getX()-locX>=0 &&
+                            (degree>=90 && degree<=270) )
+                    {
+                        ans=false;
+                    }
+                    //tank at the right side of the wall
+                    if(locX-wall.getX()<=8 && locX-wall.getX()>=0 &&
+                            ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
+                    {
+                        ans=false;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public void update()
+    {
+        if(mousePress)
+        {
+            this.setLocY( mouseY - 30 / 2 );
+            this.setLocX( mouseX - 30 / 2 );
         }
 
         int forX = (int) (8 * Math.cos (Math.toRadians (this.getDegree ())));
@@ -230,29 +283,30 @@ public class Tank implements Runnable
             this.addLocX(forX);
             this.addLocY(forY);
         }
-        if(keyDOWN && canMoveForward())
+        if(keyDOWN && canMoveBackward())
         {
             this.addLocX(-1*forX);
             this.addLocY(-1*forY);
         }
 
 
-        if (keyRIGHT && !keyLEFT)
-            this.increaseDegree ();
+        if(keyRIGHT && !keyLEFT)
+            this.increaseDegree();
 
-        if (!keyRIGHT && keyLEFT)
-            this.decreaseDegree ();
+        if(!keyRIGHT  && keyLEFT)
+            this.decreaseDegree();
 
-        this.setLocX (Math.max (this.getLocX (), 0));
-        this.setLocX (Math.min (this.getLocX (), GameFrame.GAME_WIDTH - 30));
-        this.setLocY (Math.max (this.getLocY (), 0));
-        this.setLocY (Math.min (this.getLocY (), GameFrame.GAME_HEIGHT - 30));
+        this.setLocX(Math.max(this.getLocX(), 0));
+        this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
+        this.setLocY(Math.max(this.getLocY(), 0));
+        this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
     }
 
 
     @Override
-    public void run () {
-        this.update ();
+    public void run()
+    {
+        this.update();
     }
 
     public boolean isFireDestroyed () {
