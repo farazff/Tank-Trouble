@@ -64,8 +64,15 @@ public class GameState {
 				bullet.run ();
 		}
 
-		for (Tank tank : tanks)
-			tank.run ();
+		Iterator<Tank> tankIterator = tanks.iterator ();
+		while (tankIterator.hasNext ())
+		{
+			Tank tank = tankIterator.next ();
+			if (tank.isDestroyed ())
+				tankIterator.remove ();
+			else
+				tank.run ();
+		}
 	}
 
 
