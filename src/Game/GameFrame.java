@@ -173,30 +173,53 @@ public class GameFrame extends JFrame {
 					{
 						y-=20;
 					}
-					BufferedImage wall = ImageIO.read (new File("Images/Walls/RedH.png"));
-					int w = wall.getWidth();
-					for(int p=0;p<=temp.getLength()/w;p++)
+					BufferedImage wallND = ImageIO.read (new File("Images/Walls/RedH.png"));
+					BufferedImage wallD = ImageIO.read (new File("Images/Walls/YellowH.png"));
+					int w = wallND.getWidth();
+					if(!temp.isDestructible())
 					{
-						g2d.drawImage(wall, temp.getX() + p*w ,y,null);
+						for(int p=0;p<=temp.getLength()/w;p++)
+						{
+							g2d.drawImage(wallND, temp.getX() + p * w, y, null);
+						}
+					}
+					else
+					{
+						for(int p=0;p<=temp.getLength()/w;p++)
+						{
+							g2d.drawImage(wallD, temp.getX() + p * w, y, null);
+						}
 					}
 				}
 				if(temp.getType().equals("V")) // amodi
 				{
 					//System.out.println(temp.getX() + " " + temp.getY());
 					int x = temp.getX();
-					if(x==0)
+					if (x == 0)
 					{
-						x+=6;
+						x += 6;
 					}
-					if(GAME_WIDTH-x<5)
+					if(GAME_WIDTH - x < 5)
 					{
 						x-=20;
 					}
-					BufferedImage wall = ImageIO.read (new File("Images/Walls/RedV.png"));
-					int h = wall.getHeight();
-					for(int p=0;p<=temp.getLength()/h;p++)
+
+					BufferedImage wallND = ImageIO.read(new File("Images/Walls/RedV.png"));
+					BufferedImage wallD = ImageIO.read(new File("Images/Walls/YellowV.png"));
+					int h = wallND.getHeight();
+					if(!temp.isDestructible())
 					{
-						g2d.drawImage(wall, x , temp.getY() + p*h ,null);
+						for(int p=0;p<=temp.getLength()/h;p++)
+						{
+							g2d.drawImage(wallND,x,temp.getY()+p*h,null);
+						}
+					}
+					else
+					{
+						for(int p=0;p<=temp.getLength()/h;p++)
+						{
+							g2d.drawImage(wallD,x,temp.getY()+p*h,null);
+						}
 					}
 				}
 			}

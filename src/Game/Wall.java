@@ -4,13 +4,19 @@ public class Wall
 {
     private int x,y,length;
     private String type;
+    private boolean destructible;
+    private boolean isOK;
+    private int health;
 
-    public Wall(int x,int y,int length,String type)
+    public Wall(int x,int y,int length,String type,boolean destructible)
     {
         this.x = x;
         this.y = y;
         this.length = length;
         this.type = type;
+        this.destructible = destructible;
+        isOK = true;
+        health = 100;
     }
 
     public int getX()
@@ -36,5 +42,25 @@ public class Wall
     public String getType()
     {
         return type;
+    }
+
+    public boolean isDestructible()
+    {
+        return destructible;
+    }
+
+    public boolean isOK()
+    {
+        return isOK;
+    }
+
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public void decreaseHealth(int count)
+    {
+        health -= count;
     }
 }

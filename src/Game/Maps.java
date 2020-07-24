@@ -59,7 +59,11 @@ public class Maps
                 {
                     if(data.get(j).get(i) == '1')
                     {
-                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H"));
+                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",false));
+                    }
+                    if(data.get(j).get(i) == '2')
+                    {
+                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",true));
                     }
                 }
             }
@@ -69,7 +73,13 @@ public class Maps
                 {
                     if(data.get(j).get(i) == '1')
                     {
-                        walls.add(new Wall(horizontal * (i)/2, vertical * (j-1)/2, vertical, "V"));
+                        walls.add(new Wall(horizontal * (i)/2,
+                                vertical * (j-1)/2, vertical, "V",false));
+                    }
+                    if(data.get(j).get(i) == '2')
+                    {
+                        walls.add(new Wall(horizontal * (i)/2,
+                                vertical * (j-1)/2, vertical, "V",true));
                     }
                 }
             }
@@ -103,7 +113,7 @@ public class Maps
             while(reader.ready())
             {
                 int temp = reader.read();
-                if((char)temp == '1' || (char)temp == '0')
+                if((char)temp == '1' || (char)temp == '0' || (char)temp == '2')
                 {
                     data.get(y).add((char)temp);
                 }
@@ -112,6 +122,10 @@ public class Maps
                     data.add(new ArrayList<Character>());
                     y++;
                 }
+            }
+            for(int i=0;i<data.size();i++)
+            {
+                System.out.println(data.get(i).toString());
             }
         }
         catch(IOException e)
