@@ -19,14 +19,14 @@ public class Tank implements Runnable
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
-    private int remainBullet;
+    private boolean canShot;
     private ArrayList<Bullet> bullets;
 
 
     public Tank(ArrayList<Bullet> bullets)
     {
         this.bullets = bullets;
-        remainBullet = 2;
+        canShot = true;
         keyUP = false;
         keyDOWN = false;
         keyRIGHT = false;
@@ -43,29 +43,10 @@ public class Tank implements Runnable
         power=50;
         degree = 45;
         imageAddress = "Images/Tanks/red315.png";
-        checkRemainBullet ();
+
     }
 
-    private void checkRemainBullet ()
-    {
-        new Thread (new Runnable () {
-            @Override
-            public void run () {
-                while (getHealth () > 0)
-                {
 
-                    remainBullet = 2;
-
-                    try {
-                        Thread.sleep (1000);
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace ();
-                    }
-                }
-            }
-        }).start ();
-    }
 
     public KeyHandler getKeyHandler()
     {
@@ -98,21 +79,7 @@ public class Tank implements Runnable
                 ((int)(Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
     }
 
-    public int getFireStartX () throws IOException
-    {
-        BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(imageAddress));
-        int width = sourceImage.getWidth();
-        return locX + width/2 - 2;
-    }
 
-    public int getFireStartY () throws IOException
-    {
-        BufferedImage sourceImage;
-        sourceImage = ImageIO.read(new File(imageAddress));
-        int height = sourceImage.getHeight();
-        return locY + height/2 - 2;
-    }
 
 
     public String getImageAddress () {
@@ -271,12 +238,12 @@ public class Tank implements Runnable
                     break;
                 case KeyEvent.VK_SPACE :
                     try {
-                        if (remainBullet > 0)
+                        if (canShot)
                         {
 
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
                                     getDegree (), System.currentTimeMillis ()));
-                            remainBullet--;
+                            canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
                                 @Override
@@ -284,6 +251,18 @@ public class Tank implements Runnable
                                     try {
                                         Thread.sleep (100);
                                         shot = false;
+                                    } catch (InterruptedException e)
+                                    {
+                                        e.printStackTrace ();
+                                    }
+                                }
+                            }).start ();
+                            new Thread (new Runnable () {
+                                @Override
+                                public void run () {
+                                    try {
+                                        Thread.sleep (500);
+                                        canShot = true;
                                     } catch (InterruptedException e)
                                     {
                                         e.printStackTrace ();
