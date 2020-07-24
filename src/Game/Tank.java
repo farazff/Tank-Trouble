@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Tank implements Runnable
 {
-    private int locX,locY,stamina;
+    private static final int ACCURACY = 4;
+    private int locX,locY,Health,power;
     private int degree;
     private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
@@ -26,13 +28,11 @@ public class Tank implements Runnable
     private boolean canShot;
     private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls;
-    private ArrayList<Tank> tanks;
 
-    public Tank(ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks)
+    public Tank(ArrayList<Bullet> bullets, ArrayList<Wall> walls)
     {
         this.bullets = bullets;
         this.walls = walls;
-        this.tanks = tanks;
         canShot = true;
         keyUP = false;
         keyDOWN = false;
@@ -46,8 +46,8 @@ public class Tank implements Runnable
         mouseHandler = new MouseHandler();
         locX= new Random ().nextInt (((16 * 720) / 9) - 200) + 100;
         locY=new Random ().nextInt (720 - 200) + 100;
-        stamina =100;
-
+        Health=100;
+        power=50;
         degree = 45;
         imageAddress = "Images/Tanks/red315.png";
         try {
@@ -62,19 +62,6 @@ public class Tank implements Runnable
     }
 
 
-    public int getHeight () {
-        return height;
-    }
-
-    public int getWidth () {
-        return width;
-    }
-
-    public boolean looseStamina (int damage)
-    {
-        stamina -= damage;
-        return stamina <= 0;
-    }
 
     public KeyHandler getKeyHandler()
     {
@@ -139,12 +126,15 @@ public class Tank implements Runnable
         locY += adder;
     }
 
-    public int getStamina()
+    public int getHealth()
     {
-        return stamina;
+        return Health;
     }
 
-
+    public int getPower()
+    {
+        return power;
+    }
 
     public int getDegree()
     {
@@ -176,15 +166,18 @@ public class Tank implements Runnable
             this.setLocX( mouseX - 30 / 2 );
         }
 
-        if(keyUP)
+        int forX = (int) (8*Math.cos(  Math.toRadians(this.getDegree())  ));
+        int forY = (int) (8*Math.sin(  Math.toRadians(this.getDegree())  ));
+
+        if(keyUP && canMove())
 		{
-			this.addLocX((int) (8*Math.cos(  Math.toRadians(this.getDegree())  )));
-			this.addLocY((int) (8*Math.sin(  Math.toRadians(this.getDegree())  )));
+			this.addLocX(forX);
+			this.addLocY(forY);
 		}
-		if(keyDOWN)
+		if(keyDOWN && canMove())
 		{
-			this.addLocX((int) (-8*Math.cos(  Math.toRadians(this.getDegree())  )));
-			this.addLocY((int) (-8*Math.sin(  Math.toRadians(this.getDegree())  )));
+			this.addLocX(-1*forX);
+			this.addLocY(-1*forY);
 		}
 
 
@@ -200,6 +193,51 @@ public class Tank implements Runnable
         this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
     }
 
+    public boolean canMove()
+    {
+        boolean ans = true;
+
+        Iterator<Wall> walls = this.walls.iterator();
+
+        while(walls.hasNext ())
+        {
+            Wall wall = walls.next();
+
+            if(wall.getType ().equals ("H"))
+            {
+                if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
+                {
+                    if(wall.getY()-locY<=30 && wall.getY()-locY>=0 && degree>=0 && degree<=150)
+                    {
+                        ans=false;
+                    }
+                    if(locY-wall.getY()<=15 && locY-wall.getY()>=0 && degree>=180 && degree<=360)
+                    {
+                        ans=false;
+                    }
+                }
+            }
+
+            if(wall.getType ().equals ("V"))
+            {
+                if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
+                {
+                    if(wall.getX()-locX<=30 && wall.getX()-locX>=0 &&
+                            ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
+                    {
+                        ans=false;
+                    }
+                    if(locX-wall.getX()<=15 && locX-wall.getX()>=0 &&
+                            degree>=90 && degree<=270 )
+                    {
+                        ans=false;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
 
     @Override
     public void run()
@@ -264,7 +302,7 @@ public class Tank implements Runnable
                             music.setFilePath("Files/Sounds/Bullet.au",false);
                             music.execute();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY () ,
-                                    getDegree (), System.currentTimeMillis (),walls,tanks,bullets));
+                                    getDegree (), System.currentTimeMillis (),walls));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
