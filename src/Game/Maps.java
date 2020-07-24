@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 
 public class Maps
 {
@@ -79,7 +81,21 @@ public class Maps
 
     public void readFromFile()
     {
-        File map = new File("Files/Maps/map1.txt");
+        File directory = new File("Files/Maps/");
+        int count = 0;
+        for (File file : Objects.requireNonNull(directory.listFiles()))
+        {
+            if (file.isFile())
+            {
+                count++;
+            }
+
+        }
+
+        Random random = new Random();
+        Integer t = random.nextInt(count) + 1;
+
+        File map = new File("Files/Maps/map" + t.toString() + ".txt");
         try
         {
             FileReader reader = new FileReader(map);
