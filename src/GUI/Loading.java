@@ -29,6 +29,8 @@ public class Loading extends JPanel
         progress.setPreferredSize(new Dimension(600,40));
 
         this.add(progress,BorderLayout.SOUTH);
+
+
         Music music = new Music();
         music.setFilePath("Files/Sounds/World-of-Tanks.au",true);
         music.execute();

@@ -1,19 +1,12 @@
-/*** In The Name of Allah ***/
 package Game;
-
-import GUI.GameWithPC;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -28,7 +21,8 @@ import javax.swing.JFrame;
  *
  * @author Seyed Mohammad Ghaffarian
  */
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame
+{
 
 	public static final int GAME_HEIGHT = 720;                  // 720p game resolution
 	public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
@@ -38,10 +32,9 @@ public class GameFrame extends JFrame {
 
 	private long lastRender;
 	private ArrayList<Float> fpsHistory;
-
 	private BufferStrategy bufferStrategy;
-
 	private int mapTheme ;
+	private BufferedImage theme;
 
 	public GameFrame(String title)
 	{
@@ -54,12 +47,17 @@ public class GameFrame extends JFrame {
 		Random random = new Random();
 		mapTheme = random.nextInt(2) + 1;
 
-	/*	try{
-			image = ImageIO.read(new File("Icon.png"));
+		try
+		{
+			if(mapTheme == 1)
+				theme = ImageIO.read(new File("Images/Roads/Light.png"));
+			if(mapTheme == 2)
+				theme = ImageIO.read(new File("Images/Roads/Dark.png"));
 		}
-		catch(IOException e){
-			System.out.println(e);
-		}*/
+		catch (IOException e)
+		{
+			System.out.println("hii");
+		}
 	}
 
 	/**
@@ -159,7 +157,7 @@ public class GameFrame extends JFrame {
 			{
 				BufferedImage image2 = rotateImageBullet
 						(ImageIO.read (new File (bullet.getImageAddress ()))
-						,bullet.getDegree () + 90);
+								,bullet.getDegree () + 90);
 
 				g2d.drawImage (image2,
 						bullet.getX () - image2.getWidth () / 2 + 3
@@ -266,21 +264,21 @@ public class GameFrame extends JFrame {
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, strHeight+50);
 		}
 		lastRender = currentRender;
-//		// Print user guide
-//		String userGuide
-//				= "Use the MOUSE or ARROW KEYS to move the BALL. "
-//				+ "Press ESCAPE to end the game.";
-//		g2d.setFont(g2d.getFont().deriveFont(18.0f));
-//		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
-//		// Draw GAME OVER
-//		if (state.gameOver)
-//		{
-//			String str = "GAME OVER";
-//			g2d.setColor(Color.WHITE);
-//			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-//			int strWidth = g2d.getFontMetrics().stringWidth(str);
-//			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
-//		}
+		// Print user guide
+		String userGuide
+				= "Use the MOUSE or ARROW KEYS to move the BALL. "
+				+ "Press ESCAPE to end the game.";
+		g2d.setFont(g2d.getFont().deriveFont(18.0f));
+		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
+		// Draw GAME OVER
+		if (state.gameOver)
+		{
+			String str = "GAME OVER";
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
+			int strWidth = g2d.getFontMetrics().stringWidth(str);
+			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+		}
 	}
 
 	private static BufferedImage rotateImage(BufferedImage sourceImage, double angle)
@@ -327,240 +325,6 @@ public class GameFrame extends JFrame {
 
 	public void drawRoads(Graphics2D g2d) throws IOException
 	{
-
-		BufferedImage chaharrahsabz;
-		BufferedImage pichpayinberastsabz;
-		BufferedImage pichpayinbechapsabz;
-		BufferedImage pichbalabechapsabz;
-		BufferedImage pichbalaberastsabz;
-		BufferedImage rastbechapsabz ;
-		BufferedImage balabepayinsabz;
-		BufferedImage serahberastsabz;
-		BufferedImage serahbebalasabz;
-		BufferedImage serahbepayinsabz;
-		BufferedImage serahbechapsabz;
-		BufferedImage chamansabz;
-
-		if(mapTheme==1)
-		{
-			chaharrahsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCrossing.png"));
-			pichpayinberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLR.png"));
-			pichpayinbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLL.png"));
-			pichbalabechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUL.png"));
-			pichbalaberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUR.png"));
-			rastbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadEast.png"));
-			balabepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadNorth.png"));
-			serahberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitE.png"));
-			serahbebalasabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitN.png"));
-			serahbepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitS.png"));
-			serahbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitW.png"));
-			chamansabz = ImageIO.read(new File("Images/Roads/tileGrass2.png"));
-		}
-		else
-		{
-			chaharrahsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCrossing.png"));
-			pichpayinberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerLR.png"));
-			pichpayinbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerLL.png"));
-			pichbalabechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerUL.png"));
-			pichbalaberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerUR.png"));
-			rastbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadEast.png"));
-			balabepayinsabz = ImageIO.read(new File("Images/Roads/tileSand_roadNorth.png"));
-			serahberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitE.png"));
-			serahbebalasabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitN.png"));
-			serahbepayinsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitS.png"));
-			serahbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitW.png"));
-			chamansabz = ImageIO.read(new File("Images/Roads/tileSand2.png"));
-		}
-
-		int w = chamansabz.getWidth();
-		int h = chamansabz.getHeight();
-
-
-		g2d.drawImage(pichpayinberastsabz, 0, 31, null);
-		g2d.drawImage(rastbechapsabz, w, 31, null);
-		g2d.drawImage(rastbechapsabz, 2*w, 31, null);
-		g2d.drawImage(pichpayinbechapsabz, 3*w, 31, null);
-		g2d.drawImage(pichpayinberastsabz,4*w,31,null);
-		for(int i=5;i<=18;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31,null);
-		g2d.drawImage(pichpayinbechapsabz,19*w,31,null);
-
-		////////////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+h, null);
-		g2d.drawImage(pichpayinberastsabz, w, 31+h, null);
-		g2d.drawImage(pichpayinbechapsabz, 2*w, 31+h, null);
-		g2d.drawImage(balabepayinsabz, 3*w, 31+h, null);
-		g2d.drawImage(balabepayinsabz,4*w,31+h,null);
-		g2d.drawImage(pichpayinberastsabz,5*w,31+h,null);
-		for(int i=6;i<=18;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+h,null);
-		g2d.drawImage(serahbechapsabz,19*w,31+h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+2*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+2*h, null);
-		g2d.drawImage(pichbalaberastsabz, 2*w, 31+2*h, null);
-		g2d.drawImage(chaharrahsabz, 3*w, 31+2*h, null);
-		g2d.drawImage(pichbalabechapsabz,4*w,31+2*h,null);
-		g2d.drawImage(balabepayinsabz,5*w,31+2*h,null);
-		g2d.drawImage(pichpayinberastsabz,6*w,31+2*h,null);
-		g2d.drawImage(rastbechapsabz,7*w,31+2*h,null);
-		g2d.drawImage(rastbechapsabz,8*w,31+2*h,null);
-		g2d.drawImage(rastbechapsabz,9*w,31+2*h,null);
-		g2d.drawImage(pichpayinbechapsabz,10*w,31+2*h,null);
-		for(int i=11;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+2*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+2*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+3*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+3*h, null);
-		g2d.drawImage(pichpayinberastsabz, 2*w, 31+3*h, null);
-		g2d.drawImage(chaharrahsabz, 3*w, 31+3*h, null);
-		g2d.drawImage(rastbechapsabz,4*w,31+3*h,null);
-		g2d.drawImage(pichbalabechapsabz,5*w,31+3*h,null);
-		g2d.drawImage(balabepayinsabz,6*w,31+3*h,null);
-		g2d.drawImage(pichpayinberastsabz,7*w,31+3*h,null);
-		g2d.drawImage(rastbechapsabz,8*w,31+3*h,null);
-		g2d.drawImage(pichpayinbechapsabz,9*w,31+3*h,null);
-		g2d.drawImage(balabepayinsabz,10*w,31+3*h,null);
-		for(int i=11;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+3*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+3*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+4*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+4*h, null);
-		g2d.drawImage(balabepayinsabz, 2*w, 31+4*h, null);
-		g2d.drawImage(balabepayinsabz, 3*w, 31+4*h, null);
-		g2d.drawImage(pichpayinberastsabz,4*w,31+4*h,null);
-		g2d.drawImage(rastbechapsabz,5*w,31+4*h,null);
-		g2d.drawImage(pichbalabechapsabz,6*w,31+4*h,null);
-		g2d.drawImage(pichbalaberastsabz,7*w,31+4*h,null);
-		g2d.drawImage(pichpayinbechapsabz,8*w,31+4*h,null);
-		g2d.drawImage(balabepayinsabz,9*w,31+4*h,null);
-		g2d.drawImage(balabepayinsabz,10*w,31+4*h,null);
-		for(int i=11;i<=12;i++)
-			g2d.drawImage(chamansabz,i*w,31+4*h,null);
-		g2d.drawImage(pichpayinberastsabz,13*w,31+4*h,null);
-		g2d.drawImage(rastbechapsabz,14*w,31+4*h,null);
-		g2d.drawImage(pichpayinbechapsabz,15*w,31+4*h,null);
-		for(int i=16;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+4*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+4*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+5*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+5*h, null);
-		g2d.drawImage(pichbalaberastsabz, 2*w, 31+5*h, null);
-		g2d.drawImage(pichbalabechapsabz, 3*w, 31+5*h, null);
-		g2d.drawImage(balabepayinsabz,4*w,31+5*h,null);
-		g2d.drawImage(pichpayinberastsabz,5*w,31+5*h,null);
-		g2d.drawImage(rastbechapsabz,6*w,31+5*h,null);
-		g2d.drawImage(rastbechapsabz,7*w,31+5*h,null);
-		g2d.drawImage(serahbechapsabz,8*w,31+5*h,null);
-		g2d.drawImage(balabepayinsabz,9*w,31+5*h,null);
-		g2d.drawImage(balabepayinsabz,10*w,31+5*h,null);
-		for(int i=11;i<=12;i++)
-			g2d.drawImage(chamansabz,i*w,31+5*h,null);
-		g2d.drawImage(balabepayinsabz,13*w,31+5*h,null);
-		g2d.drawImage(chamansabz,14*w,31+5*h,null);
-		g2d.drawImage(balabepayinsabz,15*w,31+5*h,null);
-		for(int i=16;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+5*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+5*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+6*h, null);
-		g2d.drawImage(serahberastsabz, w, 31+6*h, null);
-		g2d.drawImage(pichpayinbechapsabz, 2*w, 31+6*h, null);
-		g2d.drawImage(pichpayinberastsabz, 3*w, 31+6*h, null);
-		g2d.drawImage(pichbalabechapsabz,4*w,31+6*h,null);
-		g2d.drawImage(pichbalaberastsabz,5*w,31+6*h,null);
-		g2d.drawImage(rastbechapsabz,6*w,31+6*h,null);
-		g2d.drawImage(rastbechapsabz,7*w,31+6*h,null);
-		g2d.drawImage(pichbalabechapsabz,8*w,31+6*h,null);
-		g2d.drawImage(balabepayinsabz,9*w,31+6*h,null);
-		g2d.drawImage(balabepayinsabz,10*w,31+6*h,null);
-		for(int i=11;i<=12;i++)
-			g2d.drawImage(chamansabz,i*w,31+6*h,null);
-		g2d.drawImage(pichbalaberastsabz,13*w,31+6*h,null);
-		g2d.drawImage(serahbepayinsabz,14*w,31+6*h,null);
-		g2d.drawImage(pichbalabechapsabz,15*w,31+6*h,null);
-		for(int i=16;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+6*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+6*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+7*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+7*h, null);
-		g2d.drawImage(balabepayinsabz, 2*w, 31+7*h, null);
-		g2d.drawImage(balabepayinsabz, 3*w, 31+7*h, null);
-		g2d.drawImage(pichpayinberastsabz,4*w,31+7*h,null);
-		g2d.drawImage(rastbechapsabz,5*w,31+7*h,null);
-		g2d.drawImage(rastbechapsabz,6*w,31+7*h,null);
-		g2d.drawImage(rastbechapsabz,7*w,31+7*h,null);
-		g2d.drawImage(rastbechapsabz,8*w,31+7*h,null);
-		g2d.drawImage(pichbalabechapsabz,9*w,31+7*h,null);
-		g2d.drawImage(balabepayinsabz,10*w,31+7*h,null);
-		for(int i=11;i<=13;i++)
-			g2d.drawImage(chamansabz,i*w,31+7*h,null);
-		g2d.drawImage(balabepayinsabz,14*w,31+7*h,null);
-		for(int i=15;i<=18;i++)
-			g2d.drawImage(chamansabz,i*w,31+7*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+7*h,null);
-
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+8*h, null);
-		g2d.drawImage(balabepayinsabz, w, 31+8*h, null);
-		g2d.drawImage(pichbalaberastsabz, 2*w, 31+8*h, null);
-		g2d.drawImage(pichbalabechapsabz, 3*w, 31+8*h, null);
-		g2d.drawImage(pichbalaberastsabz,4*w,31+8*h,null);
-		g2d.drawImage(rastbechapsabz,5*w,31+8*h,null);
-		g2d.drawImage(rastbechapsabz,6*w,31+8*h,null);
-		g2d.drawImage(rastbechapsabz,7*w,31+8*h,null);
-		g2d.drawImage(rastbechapsabz,8*w,31+8*h,null);
-		g2d.drawImage(rastbechapsabz,9*w,31+8*h,null);
-		g2d.drawImage(serahbechapsabz,10*w,31+8*h,null);
-		for(int i=11;i<=13;i++)
-			g2d.drawImage(chamansabz,i*w,31+8*h,null);
-		g2d.drawImage(pichbalaberastsabz,14*w,31+8*h,null);
-		for(int i=15;i<=17;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+8*h,null);
-		g2d.drawImage(pichpayinbechapsabz,18*w,31+8*h,null);
-		g2d.drawImage(balabepayinsabz,19*w,31+8*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(balabepayinsabz, 0, 31+9*h, null);
-		g2d.drawImage(pichbalaberastsabz, w, 31+9*h, null);
-		for(int i=2;i<=9;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+9*h,null);
-		g2d.drawImage(chaharrahsabz, 10*w, 31+9*h, null);
-		for(int i=11;i<=17;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+9*h,null);
-		g2d.drawImage(pichbalabechapsabz, 18*w, 31+9*h, null);
-		g2d.drawImage(balabepayinsabz,19*w,31+9*h,null);
-
-		////////////////////////////////////////////////////////////////////////////
-
-		g2d.drawImage(pichbalaberastsabz, 0, 31+10*h, null);
-		for(int i=1;i<=9;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+10*h,null);
-		g2d.drawImage(serahbebalasabz, 10*w, 31+10*h, null);
-		for(int i=11;i<=18;i++)
-			g2d.drawImage(rastbechapsabz,i*w,31+10*h,null);
-		g2d.drawImage(pichbalabechapsabz,19*w,31+10*h,null);
-
-
+		g2d.drawImage(theme,5,31,null);
 	}
 }
