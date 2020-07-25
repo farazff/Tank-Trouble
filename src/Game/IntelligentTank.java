@@ -10,9 +10,11 @@ import java.util.concurrent.Executors;
 public class IntelligentTank extends Tank
 {
     private ArrayList<SignalBullet> signalBullets;
+    private boolean timeToSignal;
 
     public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks) {
         super (bullets, walls, tanks);
+        timeToSignal = true;
     }
 
     public void sendSignals ()
@@ -33,7 +35,29 @@ public class IntelligentTank extends Tank
 
     @Override
     public void update () {
-        //TODO : AI move
+        if (timeToSignal)
+        {
+            sendSignals ();
+            timeToSignal = false;
+
+            new Thread (new Runnable () {
+                @Override
+                public void run () {
+                    try {
+                        Thread.sleep (5000);
+                        timeToSignal = true;
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace ();
+                    }
+                }
+            }).start ();
+        }
+        else
+        {
+            //TODO : AI move
+        }
+
     }
 
     @Override
