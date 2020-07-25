@@ -67,6 +67,15 @@ public class GameWithPC extends JPanel
         Selecting selecting = new Selecting(data,0,Color.WHITE,Color.GRAY,
                 new Font("Arial",Font.BOLD,20));
 
+        JLabel level = new JLabel("Level:");
+        level.setFont(new Font("Arial",Font.BOLD,20));
+        ArrayList<String> levelData = new ArrayList<>();
+        levelData.add("EASY");
+        levelData.add("MEDIUM");
+        levelData.add("HARD");
+        Selecting selecting2 = new Selecting(levelData,0,Color.WHITE,Color.GRAY,
+                new Font("Arial",Font.BOLD,20));
+
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
         JSlider sliderTank = new JSlider(10,100,100);
@@ -108,15 +117,17 @@ public class GameWithPC extends JPanel
 
         c.insets = new Insets(7,8 ,7 ,8);
 
-        GridBagSetter.addComponent(mode,6,0,2,1,layout,c,base);
-        GridBagSetter.addComponent(selecting,7,0,2,1,layout,c,base);
-        GridBagSetter.addComponent(tankStamina,8,0,1,1,layout,c,base);
-        GridBagSetter.addComponent(sliderTank,9,0,2,1,layout,c,base);
-        GridBagSetter.addComponent(canonPower,10,0,1,1,layout,c,base);
-        GridBagSetter.addComponent(sliderCanon,11,0,2,1,layout,c,base);
-        GridBagSetter.addComponent(wall,12,0,1,1,layout,c,base);
-        GridBagSetter.addComponent(sliderWall,13,0,2,1,layout,c,base);
-        GridBagSetter.addComponent(startPanel,14,0,2,2,layout,c,base);
+        GridBagSetter.addComponent(mode,        6,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(selecting,   7,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(level,       8,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(selecting2,  10,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(tankStamina, 11,0,1,1,layout,c,base);
+        GridBagSetter.addComponent(sliderTank,  12,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(canonPower,  13,0,1,1,layout,c,base);
+        GridBagSetter.addComponent(sliderCanon, 14,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(wall,        15,0,1,1,layout,c,base);
+        GridBagSetter.addComponent(sliderWall,  16,0,2,1,layout,c,base);
+        GridBagSetter.addComponent(startPanel,  17,0,2,2,layout,c,base);
     }
 
     public void setPre(JPanel pre)

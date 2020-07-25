@@ -123,10 +123,6 @@ public class Maps
                     y++;
                 }
             }
-            for(int i=0;i<data.size();i++)
-            {
-                System.out.println(data.get(i).toString());
-            }
         }
         catch(IOException e)
         {
