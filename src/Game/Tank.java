@@ -47,8 +47,12 @@ public class Tank implements Runnable
         mouseX = 0;
         mouseY = 0;
         keyHandler = new KeyHandler ();
-        locX = new Random ().nextInt (((16 * 720) / 9) - 200) + 100;
-        locY = new Random ().nextInt (720 - 200) + 100;
+        do
+        {
+            locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
+            locY = new Random().nextInt(720 - 200) + 100;
+
+        }while(!canMoveForward());
         stamina = 100;
 
         degree = 45;
@@ -270,14 +274,6 @@ public class Tank implements Runnable
                     }
                 }
             }
-        }
-
-        Iterator<Tank> tanks = this.tanks.iterator ();
-        while (tanks.hasNext ())
-        {
-            Tank tank = tanks.next ();
-
-
         }
 
         return ans;

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -40,12 +41,18 @@ public class GameFrame extends JFrame {
 
 	private BufferStrategy bufferStrategy;
 
-	public GameFrame(String title) {
+	private int mapTheme ;
+
+	public GameFrame(String title)
+	{
 		super(title);
 		setResizable(false);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		lastRender = -1;
 		fpsHistory = new ArrayList<>(100);
+
+		Random random = new Random();
+		mapTheme = random.nextInt(2) + 1;
 
 	/*	try{
 			image = ImageIO.read(new File("Icon.png"));
@@ -320,18 +327,50 @@ public class GameFrame extends JFrame {
 
 	public void drawRoads(Graphics2D g2d) throws IOException
 	{
-		BufferedImage chaharrahsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCrossing.png"));
-		BufferedImage pichpayinberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLR.png"));
-		BufferedImage pichpayinbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLL.png"));
-		BufferedImage pichbalabechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUL.png"));
-		BufferedImage pichbalaberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUR.png"));
-		BufferedImage rastbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadEast.png"));
-		BufferedImage balabepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadNorth.png"));
-		BufferedImage serahberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitE.png"));
-		BufferedImage serahbebalasabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitN.png"));
-		BufferedImage serahbepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitS.png"));
-		BufferedImage serahbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitW.png"));
-		BufferedImage chamansabz = ImageIO.read(new File("Images/Roads/tileGrass2.png"));
+
+		BufferedImage chaharrahsabz;
+		BufferedImage pichpayinberastsabz;
+		BufferedImage pichpayinbechapsabz;
+		BufferedImage pichbalabechapsabz;
+		BufferedImage pichbalaberastsabz;
+		BufferedImage rastbechapsabz ;
+		BufferedImage balabepayinsabz;
+		BufferedImage serahberastsabz;
+		BufferedImage serahbebalasabz;
+		BufferedImage serahbepayinsabz;
+		BufferedImage serahbechapsabz;
+		BufferedImage chamansabz;
+
+		if(mapTheme==1)
+		{
+			chaharrahsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCrossing.png"));
+			pichpayinberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLR.png"));
+			pichpayinbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerLL.png"));
+			pichbalabechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUL.png"));
+			pichbalaberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadCornerUR.png"));
+			rastbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadEast.png"));
+			balabepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadNorth.png"));
+			serahberastsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitE.png"));
+			serahbebalasabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitN.png"));
+			serahbepayinsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitS.png"));
+			serahbechapsabz = ImageIO.read(new File("Images/Roads/tileGrass_roadSplitW.png"));
+			chamansabz = ImageIO.read(new File("Images/Roads/tileGrass2.png"));
+		}
+		else
+		{
+			chaharrahsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCrossing.png"));
+			pichpayinberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerLR.png"));
+			pichpayinbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerLL.png"));
+			pichbalabechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerUL.png"));
+			pichbalaberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadCornerUR.png"));
+			rastbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadEast.png"));
+			balabepayinsabz = ImageIO.read(new File("Images/Roads/tileSand_roadNorth.png"));
+			serahberastsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitE.png"));
+			serahbebalasabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitN.png"));
+			serahbepayinsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitS.png"));
+			serahbechapsabz = ImageIO.read(new File("Images/Roads/tileSand_roadSplitW.png"));
+			chamansabz = ImageIO.read(new File("Images/Roads/tileSand2.png"));
+		}
 
 		int w = chamansabz.getWidth();
 		int h = chamansabz.getHeight();
