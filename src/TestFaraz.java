@@ -78,7 +78,7 @@ public class TestFaraz
         setting.setPre(main);
 
 
-        frame.setContentPane(loading);
+        frame.setContentPane(gameWithPC);
         frame.setVisible(true);
         loading.fill();
     }
