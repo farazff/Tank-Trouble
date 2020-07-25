@@ -90,7 +90,7 @@ public class Bullet implements Runnable
         return (int)y + height/2;
     }
 
-    private void checkCoincidence ()
+    protected void checkCoincidence ()
     {
         Iterator<Wall> walls = this.walls.iterator ();
         while (walls.hasNext ())
@@ -191,7 +191,23 @@ public class Bullet implements Runnable
 
     }
 
-    private void setExpired ()
+    public ArrayList<Tank> getTanks () {
+        return tanks;
+    }
+
+    public ArrayList<Wall> getWalls () {
+        return walls;
+    }
+
+    public static int getWallAccuracy () {
+        return WALL_ACCURACY;
+    }
+
+    public static int getTankAccuracy () {
+        return TANK_ACCURACY;
+    }
+
+    protected void setExpired ()
     {
         expired = true;
     }
