@@ -35,6 +35,11 @@ public class GameFrame extends JFrame
 	private BufferStrategy bufferStrategy;
 	private int mapTheme ;
 	private BufferedImage theme;
+	BufferedImage wallNDH;
+	BufferedImage wallDH;
+	BufferedImage wallNDV;
+	BufferedImage wallDV;
+
 
 	public GameFrame(String title)
 	{
@@ -53,6 +58,11 @@ public class GameFrame extends JFrame
 				theme = ImageIO.read(new File("Images/Roads/Light.png"));
 			if(mapTheme == 2)
 				theme = ImageIO.read(new File("Images/Roads/Dark.png"));
+
+			wallNDH = ImageIO.read (new File("Images/Walls/RedH.png"));
+			wallDH = ImageIO.read (new File("Images/Walls/YellowH.png"));
+			wallNDV = ImageIO.read(new File("Images/Walls/RedV.png"));
+			wallDV  = ImageIO.read(new File("Images/Walls/YellowV.png"));
 		}
 		catch (IOException e)
 		{
@@ -164,72 +174,78 @@ public class GameFrame extends JFrame
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
-			for(int i=0;i<state.getMaps().getWalls().size();i++)
+
+			new Thread(new Runnable()
 			{
-				Wall temp = state.getMaps().getWalls().get(i);
-				if(temp.getType().equals("H")) // ofoqi
+				@Override
+				public void run()
 				{
-					int y = temp.getY();
-					if(y==0)
+					for(int i=0;i<state.getMaps().getWalls().size();i++)
 					{
-						y+=31;
-					}
-					if(GAME_HEIGHT-y<=5)
-					{
-						y-=20;
-					}
-					BufferedImage wallND = ImageIO.read (new File("Images/Walls/RedH.png"));
-					BufferedImage wallD = ImageIO.read (new File("Images/Walls/YellowH.png"));
-					int w = wallND.getWidth();
-					if(!temp.isDestructible())
-					{
-						for(int p=0;p<=temp.getLength()/w;p++)
+						Wall temp = state.getMaps().getWalls().get(i);
+						if(temp.getType().equals("H")) // ofoqi
 						{
-							g2d.drawImage(wallND, temp.getX() + p * w, y, null);
-						}
-					}
-					else
-					{
-						if(temp.isOK())
-							for(int p=0;p<=temp.getLength()/w;p++)
+							int y = temp.getY();
+							if(y==0)
 							{
-								g2d.drawImage(wallD, temp.getX() + p * w, y, null);
+								y+=31;
 							}
-					}
-				}
-				if(temp.getType().equals("V")) // amodi
-				{
-					//System.out.println(temp.getX() + " " + temp.getY());
-					int x = temp.getX();
-					if (x == 0)
-					{
-						x += 6;
-					}
-					if(GAME_WIDTH - x < 5)
-					{
-						x-=20;
+							if(720-y<=5)
+							{
+								y-=20;
+							}
+							int w = wallNDH.getWidth();
+							if(!temp.isDestructible())
+							{
+								for(int p=0;p<=temp.getLength()/w;p++)
+								{
+									g2d.drawImage(wallNDH, temp.getX() + p * w, y, null);
+								}
+							}
+							else
+							{
+								if(temp.isOK())
+									for(int p=0;p<=temp.getLength()/w;p++)
+									{
+										g2d.drawImage(wallDH, temp.getX() + p * w, y, null);
+									}
+							}
+						}
+						if(temp.getType().equals("V")) // amodi
+						{
+							//System.out.println(temp.getX() + " " + temp.getY());
+							int x = temp.getX();
+							if (x == 0)
+							{
+								x += 6;
+							}
+							if(1280 - x < 5)
+							{
+								x-=20;
+							}
+
+
+							int h = wallNDV.getHeight();
+							if(!temp.isDestructible())
+							{
+								for(int p=0;p<=temp.getLength()/h;p++)
+								{
+									g2d.drawImage(wallNDV,x,temp.getY()+p*h,null);
+								}
+							}
+							else
+							{
+								if(temp.isOK())
+									for(int p=0;p<=temp.getLength()/h;p++)
+									{
+										g2d.drawImage(wallDV,x,temp.getY()+p*h,null);
+									}
+							}
+						}
 					}
 
-					BufferedImage wallND = ImageIO.read(new File("Images/Walls/RedV.png"));
-					BufferedImage wallD = ImageIO.read(new File("Images/Walls/YellowV.png"));
-					int h = wallND.getHeight();
-					if(!temp.isDestructible())
-					{
-						for(int p=0;p<=temp.getLength()/h;p++)
-						{
-							g2d.drawImage(wallND,x,temp.getY()+p*h,null);
-						}
-					}
-					else
-					{
-						if(temp.isOK())
-							for(int p=0;p<=temp.getLength()/h;p++)
-							{
-								g2d.drawImage(wallD,x,temp.getY()+p*h,null);
-							}
-					}
 				}
-			}
+			}).run();
 
 		}
 		catch(IOException e)
