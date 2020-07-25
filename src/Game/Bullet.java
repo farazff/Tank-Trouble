@@ -21,7 +21,7 @@ public class Bullet implements Runnable
     private double degree;
     private Direction direction;
     private final String imageAddress = "./Images/Bullet/bulletDark1_outline.png";
-    private static final int STEP = 10;
+    private static final int STEP = 12;
     private int canonPower;
     private ArrayList<Wall> walls;
     private ArrayList<Tank> tanks;
@@ -93,7 +93,7 @@ public class Bullet implements Runnable
         while (walls.hasNext ())
         {
             Wall wall = walls.next ();
-            // TODO : add destroy walls
+
 
             if (wall.getType ().equals ("H"))
             {
@@ -103,7 +103,15 @@ public class Bullet implements Runnable
                     if ((getCenterY () <= wall.getY () + wall.getThick () + WALL_ACCURACY) &&
                         getCenterY () >= wall.getY () - WALL_ACCURACY)
                     {
-                        mirrorBack ("X_AXIS");
+                        if (wall.isDestructible ())
+                        {
+                            wall.decreaseHealth (canonPower);
+                            setExpired ();
+                            if (!wall.isOK ())
+                                walls.remove ();
+                        }
+                        else
+                            mirrorBack ("X_AXIS");
                     }
                 }
                 else if ((getCenterX () == wall.getX () + wall.getLength ()) &&
@@ -112,7 +120,15 @@ public class Bullet implements Runnable
                     if ((getCenterY () <= wall.getY () + wall.getThick () + WALL_ACCURACY) &&
                             getCenterY () >= wall.getY () - WALL_ACCURACY)
                     {
-                        mirrorBack ("Y_AXIS");
+                        if (wall.isDestructible ())
+                        {
+                            wall.decreaseHealth (canonPower);
+                            setExpired ();
+                            if (!wall.isOK ())
+                                walls.remove ();
+                        }
+                        else
+                            mirrorBack ("Y_AXIS");
                     }
                 }
             }
@@ -124,7 +140,15 @@ public class Bullet implements Runnable
                     if ((getCenterX () <= wall.getX () + wall.getThick () + WALL_ACCURACY) &&
                         getCenterX () >= wall.getX () - WALL_ACCURACY)
                     {
-                        mirrorBack ("Y_AXIS");
+                        if (wall.isDestructible ())
+                        {
+                            wall.decreaseHealth (canonPower);
+                            setExpired ();
+                            if (!wall.isOK ())
+                                walls.remove ();
+                        }
+                        else
+                            mirrorBack ("Y_AXIS");
                     }
                 }
                 else if ((getCenterY () == wall.getY () + wall.getLength ()) &&
@@ -133,7 +157,15 @@ public class Bullet implements Runnable
                     if ((getCenterX () <= wall.getX () + wall.getThick () + WALL_ACCURACY) &&
                             getCenterX () >= wall.getX () - WALL_ACCURACY)
                     {
-                        mirrorBack ("X_AXIS");
+                        if (wall.isDestructible ())
+                        {
+                            wall.decreaseHealth (canonPower);
+                            setExpired ();
+                            if (!wall.isOK ())
+                                walls.remove ();
+                        }
+                        else
+                            mirrorBack ("X_AXIS");
                     }
                 }
             }
