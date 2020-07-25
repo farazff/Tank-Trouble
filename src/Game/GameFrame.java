@@ -283,12 +283,12 @@ public class GameFrame extends JFrame
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, strHeight+50);
 		}
 		lastRender = currentRender;
-		// Print user guide
-		String userGuide
-				= "Use the MOUSE or ARROW KEYS to move the BALL. "
-				+ "Press ESCAPE to end the game.";
-		g2d.setFont(g2d.getFont().deriveFont(18.0f));
-		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
+//		// Print user guide
+//		String userGuide
+//				= "Use the MOUSE or ARROW KEYS to move the BALL. "
+//				+ "Press ESCAPE to end the game.";
+//		g2d.setFont(g2d.getFont().deriveFont(18.0f));
+//		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
 		// Draw GAME OVER
 		if (state.gameOver)
 		{

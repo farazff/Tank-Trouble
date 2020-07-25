@@ -56,6 +56,8 @@ public class GameState {
 	 */
 	public void update()
 	{
+		if (tanks.size () == 0)
+			gameOver = true;
 		ExecutorService executorService = Executors.newCachedThreadPool ();
 
 		Iterator<Bullet> bulletIterator = bullets.iterator ();
