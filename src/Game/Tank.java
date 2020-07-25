@@ -213,6 +213,14 @@ public class Tank implements Runnable
             }
         }
 
+        Iterator<Tank> tanks = this.tanks.iterator ();
+        while (tanks.hasNext ())
+        {
+            Tank tank = tanks.next ();
+
+
+        }
+
         return ans;
     }
 
@@ -262,6 +270,14 @@ public class Tank implements Runnable
                     }
                 }
             }
+        }
+
+        Iterator<Tank> tanks = this.tanks.iterator ();
+        while (tanks.hasNext ())
+        {
+            Tank tank = tanks.next ();
+
+
         }
 
         return ans;

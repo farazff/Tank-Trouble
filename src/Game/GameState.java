@@ -38,11 +38,11 @@ public class GameState {
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks);
-//		Tank tank2 = new Tank (bullets, maps.getWalls ());
-//		Tank tank3 = new Tank (bullets, maps.getWalls ());
+		Tank tank2 = new Tank (bullets, maps.getWalls (),tanks);
+		Tank tank3 = new Tank (bullets, maps.getWalls (),tanks);
 		tanks.add (tank1);
-//		tanks.add (tank2);
-//		tanks.add (tank3);
+		tanks.add (tank2);
+		tanks.add (tank3);
 		gameOver = false;
 	}
 

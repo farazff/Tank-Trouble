@@ -187,7 +187,7 @@ public class Bullet implements Runnable
             }
         }
 
-        //TODO : Add bullets
+
     }
 
     private void setExpired ()
