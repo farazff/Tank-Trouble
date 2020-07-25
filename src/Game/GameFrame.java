@@ -35,6 +35,8 @@ public class GameFrame extends JFrame {
 	//uncomment all /*...*/ in the class for using Tank icon instead of a simple circle
 	/*private BufferedImage image;*/
 
+
+
 	private long lastRender;
 	private ArrayList<Float> fpsHistory;
 
@@ -46,6 +48,9 @@ public class GameFrame extends JFrame {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		lastRender = -1;
 		fpsHistory = new ArrayList<>(100);
+
+
+
 
 	/*	try{
 			image = ImageIO.read(new File("Icon.png"));
@@ -121,19 +126,17 @@ public class GameFrame extends JFrame {
 
 			for (Tank tank : state.getTanks ()) {
 				if (tank.isFireDestroyed ()) {
-					BufferedImage image1 = ImageIO.read
-							(new File (tank.getFireDestroyedImageAddress ()));
+					BufferedImage image1 = Tank.getFireDestroyImage ();
 					g2d.drawImage (image1, tank.getCenterX () - image1.getWidth () / 2 + 3,
 							tank.getCenterY () - image1.getHeight () / 2 + 2, null);
 				} else {
-					BufferedImage image = ImageIO.read (new File (tank.getImageAddress ()));
+					BufferedImage image = tank.getTankImage ();
 
 					g2d.drawImage (rotateImage (image, tank.getDegree () - 45),
 							tank.getLocX (), tank.getLocY (), null);
 
 					if (tank.isShot ()) {
-						BufferedImage image1 = rotateImageBullet (ImageIO.read
-										(new File (tank.getFireImageAddress ()))
+						BufferedImage image1 = rotateImageBullet (Tank.getFireImage ()
 								, tank.getDegree () - 90);
 
 						g2d.drawImage (image1,
@@ -151,8 +154,7 @@ public class GameFrame extends JFrame {
 			for (Bullet bullet : bullets)
 			{
 				BufferedImage image2 = rotateImageBullet
-						(ImageIO.read (new File (bullet.getImageAddress ()))
-						,bullet.getDegree () + 90);
+						(Bullet.getImage (),bullet.getDegree () + 90);
 
 				g2d.drawImage (image2,
 						bullet.getX () - image2.getWidth () / 2 + 3

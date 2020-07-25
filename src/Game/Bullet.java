@@ -20,16 +20,25 @@ public class Bullet implements Runnable
     private String m;
     private double degree;
     private Direction direction;
-    private final String imageAddress = "./Images/Bullet/bulletDark1_outline.png";
+    private static BufferedImage image;
+
+    static {
+        try {
+            image = ImageIO.read (new File ("./Images/Bullet/bulletDark1_outline.png"));
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+    }
+
     private static final int STEP = 12;
     private int canonPower;
     private ArrayList<Wall> walls;
     private ArrayList<Tank> tanks;
-    private ArrayList<Bullet> bullets;
+
     private boolean expired;
 
     public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
-                   ArrayList<Tank> tanks, ArrayList<Bullet> bullets)
+                   ArrayList<Tank> tanks)
     {
 
         this.degree = degree;
@@ -41,16 +50,10 @@ public class Bullet implements Runnable
         this.startTime = startTime;
         this.walls = walls;
         this.tanks = tanks;
-        this.bullets = bullets;
-        try {
-            BufferedImage image = ImageIO.read (new File (getImageAddress ()));
-            width = image.getWidth ();
-            height = image.getHeight ();
-        } catch (IOException e)
-        {
-            e.printStackTrace ();
-        }
 
+
+        width = image.getWidth ();
+        height = image.getHeight ();
     }
 
     private void findQuarterAndM (double degree)
@@ -176,11 +179,9 @@ public class Bullet implements Runnable
             Tank tank = tanks.next ();
 
             if ((getCenterY () <= tank.getLocY () + tank.getHeight () + TANK_ACCURACY) &&
-                    getCenterY () >= tank.getLocY () - 3)
-            {
+                    getCenterY () >= tank.getLocY () - 3) {
                 if ((getCenterX () <= tank.getLocX () + tank.getHeight () + TANK_ACCURACY) &&
-                        getCenterX () >= tank.getLocX () - TANK_ACCURACY)
-                {
+                        getCenterX () >= tank.getLocX () - TANK_ACCURACY) {
                     tank.looseStamina (canonPower);
                     setExpired ();
                 }
@@ -333,7 +334,7 @@ public class Bullet implements Runnable
         return degree;
     }
 
-    public String getImageAddress () {
-        return imageAddress;
+    public static BufferedImage getImage () {
+        return image;
     }
 }

@@ -15,7 +15,7 @@ public class Tank implements Runnable
 {
     private int locX,locY,stamina;
     private int degree;
-    private String imageAddress;
+    private static String imageAddress = "Images/Tanks/red315.png";
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
     private boolean fireDestroyed;
@@ -30,6 +30,20 @@ public class Tank implements Runnable
     private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls;
     private ArrayList<Tank> tanks;
+
+    private  BufferedImage tankImage;
+    private static BufferedImage fireImage;
+    private static BufferedImage fireDestroyImage;
+
+    static {
+        try {
+            fireImage = ImageIO.read (new File ("./Images/Bullet/shotLarge.png"));
+            fireDestroyImage = ImageIO.read (new File ("./Images/Explosion/explosion3.png"));
+        } catch (IOException e)
+        {
+            e.printStackTrace ();
+        }
+    }
 
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks) {
         this.bullets = bullets;
@@ -52,11 +66,11 @@ public class Tank implements Runnable
         stamina = 100;
 
         degree = 45;
-        imageAddress = "Images/Tanks/red315.png";
+
         try {
-            BufferedImage image = ImageIO.read (new File (getImageAddress ()));
-            width = image.getWidth ();
-            height = image.getHeight ();
+            tankImage = ImageIO.read (new File (getImageAddress ()));
+            height = tankImage.getHeight ();
+            width = tankImage.getWidth ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
@@ -337,12 +351,18 @@ public class Tank implements Runnable
         return shot;
     }
 
-    public String getFireImageAddress () {
-        return "./Images/Bullet/shotLarge.png";
+
+
+    public  BufferedImage getTankImage () {
+        return tankImage;
     }
 
-    public String getFireDestroyedImageAddress () {
-        return "./Images/Explosion/explosion3.png";
+    public static BufferedImage getFireDestroyImage () {
+        return fireDestroyImage;
+    }
+
+    public static BufferedImage getFireImage () {
+        return fireImage;
     }
 
     private class KeyHandler extends KeyAdapter {
@@ -389,7 +409,7 @@ public class Tank implements Runnable
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                    getDegree (), System.currentTimeMillis (), walls, tanks, bullets));
+                                    getDegree (), System.currentTimeMillis (), walls, tanks));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
