@@ -13,6 +13,7 @@ public class SignalBullet extends Bullet
                          ArrayList<Wall> walls, ArrayList<Tank> tanks, Tank owner) {
         super (x, y, degree, startTime, walls, tanks);
         this.owner = owner;
+        data = null;
     }
 
 
@@ -33,6 +34,7 @@ public class SignalBullet extends Bullet
                             getCenterY () >= wall.getY () - getWallAccuracy ())
                     {
                         data = wall;
+                        setExpired ();
                         return;
                     }
                 }
@@ -43,6 +45,8 @@ public class SignalBullet extends Bullet
                             getCenterY () >= wall.getY () - getWallAccuracy ())
                     {
                         data = wall;
+                        setExpired ();
+                        return;
                     }
                 }
             }
@@ -55,6 +59,8 @@ public class SignalBullet extends Bullet
                             getCenterX () >= wall.getX () - getWallAccuracy ())
                     {
                         data = wall;
+                        setExpired ();
+                        return;
                     }
                 }
                 else if ((getCenterY () == wall.getY () + wall.getLength ()) &&
@@ -64,6 +70,9 @@ public class SignalBullet extends Bullet
                             getCenterX () >= wall.getX () - getWallAccuracy ())
                     {
                         data = wall;
+                        setExpired ();
+                        return;
+
                     }
                 }
             }
@@ -79,14 +88,22 @@ public class SignalBullet extends Bullet
                 if ((getCenterX () <= tank.getLocX () + tank.getHeight () + getTankAccuracy ()) &&
                         getCenterX () >= tank.getLocX () - getTankAccuracy ()) {
                     data = tank;
+                    setExpired ();
+                    return;
                 }
             }
         }
-        setExpired ();
+
     }
 
     public Object receiveData ()
     {
         return data;
+    }
+
+    @Override
+    public boolean hasExpired () {
+        return System.currentTimeMillis () - getStartTime () >= 4500 ||
+                getHandExpired ();
     }
 }

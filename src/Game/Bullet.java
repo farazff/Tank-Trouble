@@ -184,6 +184,7 @@ public class Bullet implements Runnable
                         getCenterX () >= tank.getLocX () - TANK_ACCURACY) {
                     tank.looseStamina (canonPower);
                     setExpired ();
+                    return;
                 }
             }
         }
@@ -331,6 +332,15 @@ public class Bullet implements Runnable
     {
         return System.currentTimeMillis () - startTime >= 3500 ||
                 expired;
+    }
+
+    public long getStartTime () {
+        return startTime;
+    }
+
+    public boolean getHandExpired ()
+    {
+        return expired;
     }
 
     @Override
