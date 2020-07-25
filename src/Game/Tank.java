@@ -176,13 +176,13 @@ public class Tank implements Runnable
     }
 
     public void increaseDegree () {
-        degree += 10;
+        degree += 7;
         if (degree >= 360)
             degree = 0;
     }
 
     public void decreaseDegree () {
-        degree -= 10;
+        degree -= 7;
         if (degree <= 0) {
             degree = 359;
         }
@@ -202,7 +202,7 @@ public class Tank implements Runnable
             {
                 if(locX>=wall.getX()-15 && locX<=wall.getX()+wall.getLength()+15)
                 {
-                    if(wall.getY()-locY<=60 && wall.getY()-locY>=0 && degree>=0 && degree<=150)
+                    if(wall.getY()-locY<=50 && wall.getY()-locY>=0 && degree>=0 && degree<=150)
                     {
                         ans=false;
                     }
@@ -217,7 +217,7 @@ public class Tank implements Runnable
             {
                 if(locY>=wall.getY()-15 &&locY<=wall.getY()+wall.getLength()+15)
                 {
-                    if(wall.getX()-locX<=60 && wall.getX()-locX>=0 &&
+                    if(wall.getX()-locX<=50 && wall.getX()-locX>=0 &&
                             ((degree>=0 && degree<=90)||(degree>=270 && degree<=360)) )
                     {
                         ans=false;
@@ -231,13 +231,6 @@ public class Tank implements Runnable
             }
         }
 
-        Iterator<Tank> tanks = this.tanks.iterator ();
-        while (tanks.hasNext ())
-        {
-            Tank tank = tanks.next ();
-
-
-        }
 
         return ans;
     }
@@ -293,6 +286,36 @@ public class Tank implements Runnable
         return ans;
     }
 
+    public boolean isEmpty(int forX , int forY , int dir)
+    {
+        boolean ans = true;
+        if(dir==-1)
+        {
+            forX *= (-1);
+            forY *= (-1);
+        }
+
+        for(int i=0;i<tanks.size();i++)
+        {
+            if(tanks.get(i)!=this)
+            {
+                int thisX = this.getLocX() + forX;
+                int thisY = this.getLocY() + forY;
+                int otherX = tanks.get(i).getLocX();
+                int otherY = tanks.get(i).getLocY();
+                if(   ( (thisX-otherX)*(thisX-otherX) + (thisY-otherY)*(thisY-otherY) ) <= (56)*(56)  )
+                {
+                    ans = false;
+                    break;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+
+
     public void update()
     {
         if(mousePress)
@@ -301,15 +324,15 @@ public class Tank implements Runnable
             this.setLocX( mouseX - 30 / 2 );
         }
 
-        int forX = (int) (8 * Math.cos (Math.toRadians (this.getDegree ())));
-        int forY = (int) (8 * Math.sin (Math.toRadians (this.getDegree ())));
+        int forX = (int) (6 * Math.cos (Math.toRadians (this.getDegree ())));
+        int forY = (int) (6 * Math.sin (Math.toRadians (this.getDegree ())));
 
-        if(keyUP && canMoveForward())
+        if(keyUP && canMoveForward() && isEmpty(forX,forY,1))
         {
             this.addLocX(forX);
             this.addLocY(forY);
         }
-        if(keyDOWN && canMoveBackward())
+        if(keyDOWN && canMoveBackward() && isEmpty(forX,forY,-1))
         {
             this.addLocX(-1*forX);
             this.addLocY(-1*forY);
