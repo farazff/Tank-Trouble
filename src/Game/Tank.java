@@ -25,7 +25,6 @@ public class Tank implements Runnable
     private int width;
     private int mouseX, mouseY;
     private KeyHandler keyHandler;
-    private MouseHandler mouseHandler;
     private boolean canShot;
     private ArrayList<Bullet> bullets;
     private ArrayList<Wall> walls;
@@ -170,6 +169,17 @@ public class Tank implements Runnable
         return stamina;
     }
 
+    public ArrayList<Tank> getTanks () {
+        return tanks;
+    }
+
+    public ArrayList<Bullet> getBullets () {
+        return bullets;
+    }
+
+    public ArrayList<Wall> getWalls () {
+        return walls;
+    }
 
     public int getDegree () {
         return degree;
@@ -384,7 +394,7 @@ public class Tank implements Runnable
         return fireImage;
     }
 
-    private class KeyHandler extends KeyAdapter {
+    protected class KeyHandler extends KeyAdapter {
 
         @Override
         public void keyPressed (KeyEvent e) {
@@ -460,26 +470,7 @@ public class Tank implements Runnable
             }
         }
 
-    private class MouseHandler extends MouseAdapter {
 
-        @Override
-        public void mousePressed (MouseEvent e) {
-            mouseX = e.getX ();
-            mouseY = e.getY ();
-            mousePress = true;
-        }
-
-        @Override
-        public void mouseReleased (MouseEvent e) {
-            mousePress = false;
-        }
-
-        @Override
-        public void mouseDragged (MouseEvent e) {
-            mouseX = e.getX ();
-            mouseY = e.getY ();
-        }
-    }
 }
 
 
