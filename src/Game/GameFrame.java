@@ -1,5 +1,7 @@
 package Game;
 
+import GUI.Music;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
@@ -137,6 +139,9 @@ public class GameFrame extends JFrame
 
 			for (Tank tank : state.getTanks ()) {
 				if (tank.isFireDestroyed ()) {
+					Music music = new Music();
+					music.setFilePath("Files/Sounds/Blast.au",false);
+					music.execute();
 					BufferedImage image1 = Tank.getFireDestroyImage ();
 					g2d.drawImage (image1, tank.getCenterX () - image1.getWidth () / 2 + 3,
 							tank.getCenterY () - image1.getHeight () / 2 + 2, null);
