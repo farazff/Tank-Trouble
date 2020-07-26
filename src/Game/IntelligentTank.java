@@ -308,6 +308,10 @@ public class IntelligentTank extends Tank
                         timeToSignal = false;
                         timeToInterrupt = false;
                         timeToAct = true;
+                        Thread.sleep (4000);
+                        timeToAct = false;
+                        timeToInterrupt = false;
+                        timeToSignal = true;
                     } catch (InterruptedException e)
                     {
                         e.printStackTrace ();
