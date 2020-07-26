@@ -31,7 +31,7 @@ public class Bullet implements Runnable
     private boolean expired;
 
     public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
-                   ArrayList<Tank> tanks, int canonPower)
+                   ArrayList<Tank> tanks , int canonPower)
     {
 
         this.degree = degree;

@@ -40,7 +40,7 @@ public class IntelligentTank extends Tank
         {
             signalBullets.add (new SignalBullet (getCenterX (),getCenterY (),
                     i, System.currentTimeMillis (),getWalls (),
-                    getTanks (),this,0));
+                    getTanks (),this,getCanonPower()));
             i += 10;
         }
     }
@@ -424,7 +424,7 @@ public class IntelligentTank extends Tank
                         music.execute ();
 
                         getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),50));
+                                getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),getCanonPower()));
                         setCanShot (false);
                         setShot (true);
                         new Thread (new Runnable () {

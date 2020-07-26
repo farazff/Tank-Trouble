@@ -161,6 +161,41 @@ public class GameFrame extends JFrame
 								tank.getCanonStartY () - image1.getHeight () / 2 + 2
 								, null);
 					}
+					g2d.setStroke(new BasicStroke(4));
+					g2d.setPaint(Color.RED);
+					if(tank.getPrizeOwn()!=null)
+					{
+						if(tank.getPrizeOwn().getType().equals("Protect"))
+						{
+							g2d.setStroke(new BasicStroke(4));
+							g2d.setPaint(Color.ORANGE);
+							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
+						}
+						if(tank.getPrizeOwn().getType().equals("Laser"))
+						{
+							g2d.setStroke(new BasicStroke(4));
+							g2d.setPaint(Color.YELLOW);
+							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
+						}
+						if(tank.getPrizeOwn().getType().equals("Health"))
+						{
+							g2d.setStroke(new BasicStroke(4));
+							g2d.setPaint(Color.GREEN);
+							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
+						}
+						if(tank.getPrizeOwn().getType().equals("Power2"))
+						{
+							g2d.setStroke(new BasicStroke(4));
+							g2d.setPaint(Color.BLACK);
+							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
+						}
+						if(tank.getPrizeOwn().getType().equals("Power3"))
+						{
+							g2d.setStroke(new BasicStroke(6));
+							g2d.setPaint(Color.BLACK);
+							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
+						}
+					}
 				}
 
 

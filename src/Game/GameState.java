@@ -40,13 +40,12 @@ public class GameState {
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
 		prizes = new Prizes(maps,tanks);
-		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks, prizes);
-		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks, prizes);
-		Tank tank3 = new Tank (bullets, maps.getWalls (),tanks, prizes);
 
-
+		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes);
+		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
+		//Tank tank3 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
 		tanks.add (tank1);
-		tanks.add (tank2);
+		//tanks.add (tank2);
 //		tanks.add (tank3);
 		gameOver = false;
 		Thread t1 = new Thread(prizes);
