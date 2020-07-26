@@ -380,7 +380,21 @@ public class Tank implements Runnable
         return shot;
     }
 
+    public boolean isCanShot () {
+        return canShot;
+    }
 
+    public void setDegree (int degree) {
+        this.degree = degree;
+    }
+
+    public void setCanShot (boolean canShot) {
+        this.canShot = canShot;
+    }
+
+    public void setShot (boolean shot) {
+        this.shot = shot;
+    }
 
     public  BufferedImage getTankImage () {
         return tankImage;

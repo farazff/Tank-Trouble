@@ -81,7 +81,7 @@ public class SignalBullet extends Bullet
         while (tanks.hasNext ())
         {
             Tank tank = tanks.next ();
-            if (tank == owner)
+            if (tank == owner || tank instanceof IntelligentTank)
                 continue;
             if ((getCenterY () <= tank.getLocY () + tank.getHeight () + getTankAccuracy ()) &&
                     getCenterY () >= tank.getLocY () - 3) {
@@ -103,7 +103,7 @@ public class SignalBullet extends Bullet
 
     @Override
     public boolean hasExpired () {
-        return System.currentTimeMillis () - getStartTime () >= 4500 ||
+        return System.currentTimeMillis () - getStartTime () >= 2000 ||
                 getHandExpired ();
     }
 }

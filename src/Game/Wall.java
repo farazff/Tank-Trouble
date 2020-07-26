@@ -34,6 +34,25 @@ public class Wall
         return length;
     }
 
+    public int getCenterX ()
+    {
+        if (getType ().equals ("H"))
+        {
+            return getX () + (getLength () / 2);
+        } else {
+            return getX () + (getThick () / 2);
+        }
+    }
+
+    public int getCenterY ()
+    {
+        if (getType ().equals ("H"))
+        {
+            return getY () + (getThick () / 2);
+        } else {
+            return getY () + (getLength () / 2);
+        }
+    }
     public int getThick ()
     {
         return 10;
