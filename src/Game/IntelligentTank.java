@@ -176,13 +176,13 @@ public class IntelligentTank extends Tank
         {
             if (x2 > x1)
             {
-                System.out.println (degree);
-                return degree;
+                System.out.println (degree % 360);
+                return degree % 360;
             }
             else
             {
-                System.out.println (180 - degree);
-                return 180 - degree;
+                System.out.println ((180 - degree) % 360);
+                return (180 - degree) % 360;
             }
 
         }
@@ -190,13 +190,13 @@ public class IntelligentTank extends Tank
         {
             if (x2 > x1)
             {
-                System.out.println (360 - degree);
-                return 360 -degree;
+                System.out.println ((360 -degree) % 360);
+                return (360 -degree) % 360;
             }
             else
             {
-                System.out.println (180 + degree);
-                return 180 + degree;
+                System.out.println ((180 + degree) % 360);
+                return (180 + degree) % 360;
             }
         }
         return 45;
@@ -407,9 +407,11 @@ public class IntelligentTank extends Tank
             if (getDegree () < findDegree (target))
             {
                 setDegree (getDegree () + 10);
+                setDegree (getDegree () % 360);
             } else if (getDegree () > findDegree (target))
             {
                 setDegree (getDegree () - 10);
+                setDegree (getDegree () % 360);
             }
                 if (target instanceof Tank ||
                         (target instanceof Wall && ((Wall)target).isDestructible ()))
