@@ -25,6 +25,7 @@ public class GameState {
 
 	private ArrayList<Tank> tanks;
 	private ArrayList<Bullet> bullets;
+
 	public boolean gameOver;
 	private Maps maps;
 	private Prizes prizes;
@@ -38,9 +39,10 @@ public class GameState {
 		maps = new Maps();
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
+
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks);
-		Tank tank2 = new Tank (bullets, maps.getWalls (),tanks);
-		Tank tank3 = new Tank (bullets, maps.getWalls (),tanks);
+		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks);
+		Tank tank3 = new IntelligentTank (bullets, maps.getWalls (),tanks);
 		tanks.add (tank1);
 		tanks.add (tank2);
 		tanks.add (tank3);
@@ -58,6 +60,8 @@ public class GameState {
 	public ArrayList<Tank> getTanks () {
 		return tanks;
 	}
+
+
 
 	/**
 	 * The method which updates the game state.

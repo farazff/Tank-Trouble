@@ -6,9 +6,10 @@ import GUI.Music;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class IntelligentTank extends Tank
 {
@@ -25,6 +26,7 @@ public class IntelligentTank extends Tank
         timeToInterrupt = false;
         timeToAct = false;
         target = null;
+        signalBullets = new ArrayList<> ();
     }
 
     public ArrayList<SignalBullet> getSignalBullets () {
@@ -33,31 +35,57 @@ public class IntelligentTank extends Tank
 
     public void sendSignals ()
     {
-        Iterator<Tank> tankIterator = getTanks ().iterator ();
-        ExecutorService executorService = Executors.newCachedThreadPool ();
-        signalBullets = new ArrayList<> ();
-        while (tankIterator.hasNext ())
+        signalBullets.clear ();
+        for (int i = 0; i < 360; i++)
         {
-            Tank tank = tankIterator.next ();
-            if (!(tank instanceof IntelligentTank))
-            {
-                SignalBullet signalBullet = new SignalBullet (getCanonStartX (),getCanonStartY (),
-                        findDegree (tank), System.currentTimeMillis (),getWalls (),
-                        getTanks (),this);
-                signalBullets.add (signalBullet);
-                 executorService.execute (signalBullet);
-            }
+            signalBullets.add (new SignalBullet (getCenterX (),getCenterY (),
+                    i, System.currentTimeMillis (),getWalls (),
+                    getTanks (),this));
+            i += 10;
         }
-        executorService.shutdown ();
     }
 
-    private double findDegree (Object object)
+//    private int[] findXAndY (Object object)
+//    {
+//        int[] coordinates = new int[4];
+//        coordinates[0] = getCenterX ();
+//        coordinates[1] = getCenterY ();
+//
+//        if (object instanceof Tank)
+//        {
+//            Tank enemyTank = (Tank) object;
+//
+//            coordinates[2] = enemyTank.getCenterX ();
+//            coordinates[3] = enemyTank.getCenterY ();
+//        } else if (object instanceof Wall)
+//        {
+//            Wall wall = (Wall) object;
+//
+//            coordinates[2] = wall.getCenterX ();
+//            coordinates[3] = wall.getCenterY ();
+//        } else if (object instanceof NullTarget)
+//        {
+//
+//            NullTarget nullTarget = (NullTarget) object;
+//
+//            coordinates[2] = nullTarget.getX ();
+//            coordinates[3] = nullTarget.getY ();
+//        } else
+//        {
+//            coordinates[2] = getCenterX ();
+//            coordinates[3] = getCenterY ();
+//        }
+//
+//        return coordinates;
+//    }
+
+    private int findDegree (Object object)
     {
         if (object == null)
             return 45;
         int x1;
-        int y1;
         int x2;
+        int y1;
         int y2;
 
         if (object instanceof Tank)
@@ -115,25 +143,61 @@ public class IntelligentTank extends Tank
             }
         }
 
-        double degree;
+        int degree;
         double m = Math.abs ((1.0 * (y2 - y1)) / (x2 - x1));
 
-        degree = Math.atan (m);
+        degree = (int)Math.toDegrees (Math.atan (m));
+
+        switch (degree % 10)
+        {
+            case 1 : degree -= 1;
+                break;
+            case 2 : degree -= 2;
+                break;
+            case 3 : degree -= 3;
+                break;
+            case 4 : degree -= 4;
+                break;
+            case 5 : degree += 5;
+                break;
+            case 6 : degree += 4;
+                break;
+            case 7 : degree += 3;
+                break;
+            case 8 : degree += 2;
+                break;
+            case 9 : degree += 1;
+        }
+
+
+
 
         if (y2 > y1)
         {
             if (x2 > x1)
+            {
+                System.out.println (degree);
                 return degree;
+            }
             else
+            {
+                System.out.println (180 - degree);
                 return 180 - degree;
+            }
 
         }
         else if (y1 > y2)
         {
             if (x2 > x1)
+            {
+                System.out.println (360 - degree);
                 return 360 -degree;
+            }
             else
+            {
+                System.out.println (180 + degree);
                 return 180 + degree;
+            }
         }
         return 45;
     }
@@ -292,10 +356,12 @@ public class IntelligentTank extends Tank
         }
     }
     @Override
-    public void update () {
+    public void update ()  {
+
         if (timeToSignal)
         {
             sendSignals ();
+            System.out.println ("Signals Sent");
             timeToSignal = false;
             timeToInterrupt = true;
             timeToAct = false;
@@ -303,12 +369,12 @@ public class IntelligentTank extends Tank
                 @Override
                 public void run () {
                     try {
-                        Thread.sleep (2200);
+                        Thread.sleep (1300);
                         analyseReceivedData ();
                         timeToSignal = false;
                         timeToInterrupt = false;
                         timeToAct = true;
-                        Thread.sleep (4000);
+                        Thread.sleep (1300);
                         timeToAct = false;
                         timeToInterrupt = false;
                         timeToSignal = true;
@@ -328,31 +394,29 @@ public class IntelligentTank extends Tank
                     executorService.execute (signalBullet);
             }
             executorService.shutdown ();
-            while (!executorService.isTerminated ())
+            try {
+                executorService.awaitTermination (3800, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e)
             {
-                try {
-                    Thread.sleep (1);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace ();
-                }
+                e.printStackTrace ();
             }
 
         } else if (timeToAct)
         {
+
             if (getDegree () < findDegree (target))
             {
                 setDegree (getDegree () + 10);
             } else if (getDegree () > findDegree (target))
             {
                 setDegree (getDegree () - 10);
-            } else
-            {
+            }
                 if (target instanceof Tank ||
                         (target instanceof Wall && ((Wall)target).isDestructible ()))
                 {
-
-                    if (isCanShot ()) {
+                    if ((target instanceof Tank && !((Tank)target).isDestroyed ()) ||
+                            (target instanceof Wall && ((Wall)target).isOK ()))
+                        if (isCanShot ()) {
                         Music music = new Music ();
                         music.setFilePath ("Files/Sounds/Bullet.au", false);
                         music.execute ();
@@ -395,8 +459,12 @@ public class IntelligentTank extends Tank
                         this.addLocX(forX);
                         this.addLocY(forY);
                     }
+                    this.setLocX(Math.max(this.getLocX(), 0));
+                    this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
+                    this.setLocY(Math.max(this.getLocY(), 0));
+                    this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
                 }
-            }
+
 
         }
     }

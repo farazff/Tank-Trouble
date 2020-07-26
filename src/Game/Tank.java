@@ -186,13 +186,13 @@ public class Tank implements Runnable
     }
 
     public void increaseDegree () {
-        degree += 7;
+        degree += 10;
         if (degree >= 360)
             degree = 0;
     }
 
     public void decreaseDegree () {
-        degree -= 7;
+        degree -= 10;
         if (degree <= 0) {
             degree = 359;
         }

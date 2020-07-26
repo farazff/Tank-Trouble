@@ -178,6 +178,7 @@ public class GameFrame extends JFrame
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
+
 			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
 			{
 				Prize prize = state.getPrizes().getPrizes().get(i);

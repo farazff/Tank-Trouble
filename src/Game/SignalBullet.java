@@ -103,7 +103,7 @@ public class SignalBullet extends Bullet
 
     @Override
     public boolean hasExpired () {
-        return System.currentTimeMillis () - getStartTime () >= 2000 ||
+        return System.currentTimeMillis () - getStartTime () >= 1200 ||
                 getHandExpired ();
     }
 }
