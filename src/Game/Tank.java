@@ -34,6 +34,9 @@ public class Tank implements Runnable
     private static BufferedImage fireImage;
     private static BufferedImage fireDestroyImage;
 
+    private Prize prizeOwn;
+    private Prizes prizes;
+
     static {
         try {
             fireImage = ImageIO.read (new File ("./Images/Bullet/shotLarge.png"));
@@ -44,7 +47,9 @@ public class Tank implements Runnable
         }
     }
 
-    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks) {
+    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes)
+    {
+        this.prizes = prizes;
         this.bullets = bullets;
         this.walls = walls;
         this.tanks = tanks;
@@ -60,6 +65,8 @@ public class Tank implements Runnable
         mouseX = 0;
         mouseY = 0;
         keyHandler = new KeyHandler ();
+        prizeOwn = null;
+
         do
         {
             locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
@@ -348,6 +355,7 @@ public class Tank implements Runnable
             this.addLocY(-1*forY);
         }
 
+        checkPrize();
 
         if(keyRIGHT && !keyLEFT)
             this.increaseDegree();
@@ -359,6 +367,63 @@ public class Tank implements Runnable
         this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
         this.setLocY(Math.max(this.getLocY(), 0));
         this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
+    }
+
+    public void checkPrize()
+    {
+        for(Prize prize : prizes.getPrizes())
+        {
+            if( ( (locX-prize.getX())*(locX-prize.getX()) + (locY-prize.getY())*(locY-prize.getY()) ) <= 35*35)
+            {
+                if(prizeOwn == null)
+                {
+                    int lastStamina = stamina;
+                    prize.deActive();
+                    prizeOwn = prize;
+                    if(prize.getType().equals("Health"))
+                    {
+                        stamina += stamina/10 + stamina;
+                    }
+                    if(prize.getType().equals("Power2"))
+                    {
+                        for(Bullet bullet : bullets)
+                        {
+
+
+                        }
+                    }
+
+                    new Thread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                Thread.sleep(10000);
+                                prizeOwn = null;
+                                if(prize.getType().equals("Health"))
+                                {
+                                    stamina = lastStamina ;
+                                }
+                                if(prize.getType().equals("Power2"))
+                                {
+                                    for(Bullet bullet : bullets)
+                                    {
+
+                                    }
+                                }
+                            }
+                            catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                }
+            }
+        }
     }
 
 
@@ -481,8 +546,8 @@ public class Tank implements Runnable
                 }
             }
 
-            }
         }
+    }
 
 
 }

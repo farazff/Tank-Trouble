@@ -182,8 +182,8 @@ public class GameFrame extends JFrame
 			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
 			{
 				Prize prize = state.getPrizes().getPrizes().get(i);
-
-				g2d.drawImage(prize.getImg(),prize.getX(),prize.getY(),null);
+				if(prize.isActive())
+					g2d.drawImage(prize.getImg(),prize.getX(),prize.getY(),null);
 			}
 
 

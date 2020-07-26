@@ -39,6 +39,10 @@ public class GameState {
 		maps = new Maps();
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
+		prizes = new Prizes(maps,tanks);
+		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks, prizes);
+		Tank tank2 = new Tank (bullets, maps.getWalls (),tanks, prizes);
+		Tank tank3 = new Tank (bullets, maps.getWalls (),tanks, prizes);
 
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks);
 		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks);
@@ -47,7 +51,6 @@ public class GameState {
 		tanks.add (tank2);
 //		tanks.add (tank3);
 		gameOver = false;
-		prizes = new Prizes(maps,tanks);
 		Thread t1 = new Thread(prizes);
 		t1.start();
 	}
