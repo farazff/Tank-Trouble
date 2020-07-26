@@ -20,15 +20,8 @@ public class Bullet implements Runnable
     private String m;
     private double degree;
     private Direction direction;
-    private static BufferedImage image;
+    private BufferedImage image;
 
-    static {
-        try {
-            image = ImageIO.read (new File ("./Images/Bullet/bulletDark1_outline.png"));
-        } catch (IOException e) {
-            e.printStackTrace ();
-        }
-    }
 
     private static final int STEP = 12;
     private int canonPower;
@@ -50,10 +43,18 @@ public class Bullet implements Runnable
         this.startTime = startTime;
         this.walls = walls;
         this.tanks = tanks;
-
+        try {
+            image = ImageIO.read (new File ("./Images/Bullet/bulletDark1_outline.png"));
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
         width = image.getWidth ();
         height = image.getHeight ();
+    }
+
+    public void setImage (BufferedImage image) {
+        this.image = image;
     }
 
     private void findQuarterAndM (double degree)
@@ -192,6 +193,10 @@ public class Bullet implements Runnable
 
     }
 
+    public int getCanonPower () {
+        return canonPower;
+    }
+
     public ArrayList<Tank> getTanks () {
         return tanks;
     }
@@ -213,7 +218,7 @@ public class Bullet implements Runnable
         expired = true;
     }
 
-    private void mirrorBack (String axis)
+    protected void mirrorBack (String axis)
     {
         if (axis == null)
             return;
@@ -360,7 +365,7 @@ public class Bullet implements Runnable
         return degree;
     }
 
-    public static BufferedImage getImage () {
+    public BufferedImage getImage () {
         return image;
     }
 }
