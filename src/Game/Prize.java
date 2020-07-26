@@ -57,7 +57,7 @@ public class Prize
         }
         if(rand==4)
         {
-            type = "power2";
+            type = "Power2";
             try
             {
                 img = ImageIO.read(new File("Images/Prizes/Power2.png"));
@@ -72,7 +72,7 @@ public class Prize
             type = "Power3";
             try
             {
-                img = ImageIO.read(new File("Images/Prizes/Power2.png"));
+                img = ImageIO.read(new File("Images/Prizes/Power3.png"));
             }
             catch(IOException e)
             {
