@@ -45,7 +45,7 @@ public class GameState {
 		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
 		//Tank tank3 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
 		tanks.add (tank1);
-		tanks.add (tank2);
+		//tanks.add (tank2);
 //		tanks.add (tank3);
 		gameOver = false;
 		Thread t1 = new Thread(prizes);
