@@ -401,7 +401,7 @@ public class Tank implements Runnable
                         prize.deActive();
                         prizeOwn = prize;
                         if (prize.getType().equals("Health")) {
-                            stamina += stamina / 10 + stamina;
+                            stamina += (stamina / 10);
                         }
                         if (prize.getType().equals("Power2")) {
                             canonPower *= 2;
