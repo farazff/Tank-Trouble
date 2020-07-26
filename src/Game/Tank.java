@@ -34,6 +34,9 @@ public class Tank implements Runnable
     private static BufferedImage fireImage;
     private static BufferedImage fireDestroyImage;
 
+    private Prize prize;
+    private Prizes prizes;
+
     static {
         try {
             fireImage = ImageIO.read (new File ("./Images/Bullet/shotLarge.png"));
@@ -44,7 +47,9 @@ public class Tank implements Runnable
         }
     }
 
-    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks) {
+    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks , Prizes prizes)
+    {
+        this.prizes = prizes;
         this.bullets = bullets;
         this.walls = walls;
         this.tanks = tanks;
@@ -60,6 +65,8 @@ public class Tank implements Runnable
         mouseX = 0;
         mouseY = 0;
         keyHandler = new KeyHandler ();
+        prize = null;
+
         do
         {
             locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
@@ -325,7 +332,6 @@ public class Tank implements Runnable
     }
 
 
-
     public void update()
     {
         if(mousePress)
@@ -348,6 +354,7 @@ public class Tank implements Runnable
             this.addLocY(-1*forY);
         }
 
+        checkPrize();
 
         if(keyRIGHT && !keyLEFT)
             this.increaseDegree();
@@ -359,6 +366,14 @@ public class Tank implements Runnable
         this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
         this.setLocY(Math.max(this.getLocY(), 0));
         this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
+    }
+
+    public void checkPrize()
+    {
+        for(int i=0;i<=prizes.getPrizes().size();i++)
+        {
+
+        }
     }
 
 
@@ -380,21 +395,7 @@ public class Tank implements Runnable
         return shot;
     }
 
-    public boolean isCanShot () {
-        return canShot;
-    }
 
-    public void setDegree (int degree) {
-        this.degree = degree;
-    }
-
-    public void setCanShot (boolean canShot) {
-        this.canShot = canShot;
-    }
-
-    public void setShot (boolean shot) {
-        this.shot = shot;
-    }
 
     public  BufferedImage getTankImage () {
         return tankImage;
