@@ -423,8 +423,18 @@ public class IntelligentTank extends Tank
                         music.setFilePath ("Files/Sounds/Bullet.au", false);
                         music.execute ();
 
-                        getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),getCanonPower()));
+                            if (getBulletType ().equals ("Laser"))
+                            {
+                                getBullets ().add (new LaserBullet (getCanonStartX (), getCanonStartY (),
+                                        getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),
+                                        getCanonPower ()));
+                                setBulletType ("Normal");
+                            } else
+                            {
+                                getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
+                                        getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),
+                                        getCanonPower ()));
+                            }
                         setCanShot (false);
                         setShot (true);
                         new Thread (new Runnable () {
@@ -461,6 +471,7 @@ public class IntelligentTank extends Tank
                         this.addLocX(forX);
                         this.addLocY(forY);
                     }
+                    checkPrize ();
                     this.setLocX(Math.max(this.getLocX(), 0));
                     this.setLocX(Math.min(this.getLocX(), GameFrame.GAME_WIDTH - 30));
                     this.setLocY(Math.max(this.getLocY(), 0));
