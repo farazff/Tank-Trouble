@@ -18,6 +18,7 @@ public class Tank implements Runnable
     private static String imageAddress = "Images/Tanks/red315.png";
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
+    private String bulletType;
     private boolean fireDestroyed;
     private boolean destroyed;
     private boolean mousePress;
@@ -73,7 +74,7 @@ public class Tank implements Runnable
         mouseY = 0;
         keyHandler = new KeyHandler ();
         prizeOwn = null;
-
+        bulletType = "Normal";
         do
         {
             locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
@@ -94,6 +95,14 @@ public class Tank implements Runnable
 
     }
 
+
+    public void setBulletType (String bulletType) {
+        this.bulletType = bulletType;
+    }
+
+    public String getBulletType () {
+        return bulletType;
+    }
 
     public int getHeight () {
         return height;
@@ -400,6 +409,9 @@ public class Tank implements Runnable
                         if (prize.getType().equals("Power3")) {
                             canonPower *= 3;
                         }
+                        if (prize.getType ().equals ("Laser")) {
+                            setBulletType ("Laser");
+                        }
 
                         new Thread(new Runnable() {
                             @Override
@@ -447,6 +459,8 @@ public class Tank implements Runnable
     public boolean isCanShot () {
         return canShot;
     }
+
+
 
     public void setDegree (int degree) {
         this.degree = degree;
@@ -515,8 +529,17 @@ public class Tank implements Runnable
                             Music music = new Music ();
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();
-                            bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                    getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                            if (getBulletType ().equals ("Laser"))
+                            {
+                                bullets.add (new LaserBullet (getCanonStartX (), getCanonStartY (),
+                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                                setBulletType ("Normal");
+                            } else
+                            {
+                                bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
+                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                            }
+
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {

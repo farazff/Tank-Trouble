@@ -106,12 +106,6 @@ public class GameState {
 
 
 
-
-
-
-
-
-
 	public ArrayList<Bullet> getBullets () {
 		return bullets;
 	}
