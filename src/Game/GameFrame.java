@@ -4,7 +4,9 @@ import GUI.Music;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * The window on which the rendering is performed.
@@ -161,40 +163,59 @@ public class GameFrame extends JFrame
 								tank.getCanonStartY () - image1.getHeight () / 2 + 2
 								, null);
 					}
-					g2d.setStroke(new BasicStroke(4));
-					g2d.setPaint(Color.RED);
+
+
+					g2d.setStroke(new BasicStroke(1));
+					g2d.setPaint(Color.BLACK);
+
+
+					g2d.draw(new Rectangle2D.Double(tank.getLocX(),tank.getLocY()-12,55,6));
+
+					if(tank.getStamina()>=90)
+						g2d.setPaint(Color.GREEN);
+
+					if(tank.getStamina()>=55 && tank.getStamina()<90)
+						g2d.setPaint(Color.YELLOW);
+
+					if(tank.getStamina()<55)
+						g2d.setPaint(Color.RED);
+
+					g2d.fill(new Rectangle2D.Double(tank.getLocX(),tank.getLocY()-12,
+							tank.getStamina()/2,6));
+
 					if(tank.getPrizeOwn()!=null)
 					{
 						if(tank.getPrizeOwn().getType().equals("Protect"))
 						{
 							g2d.setStroke(new BasicStroke(4));
 							g2d.setPaint(Color.ORANGE);
-							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
 						}
 						if(tank.getPrizeOwn().getType().equals("Laser"))
 						{
 							g2d.setStroke(new BasicStroke(4));
 							g2d.setPaint(Color.YELLOW);
-							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
 						}
 						if(tank.getPrizeOwn().getType().equals("Health"))
 						{
 							g2d.setStroke(new BasicStroke(4));
 							g2d.setPaint(Color.GREEN);
-							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
 						}
 						if(tank.getPrizeOwn().getType().equals("Power2"))
 						{
 							g2d.setStroke(new BasicStroke(4));
 							g2d.setPaint(Color.BLACK);
-							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
 						}
 						if(tank.getPrizeOwn().getType().equals("Power3"))
 						{
 							g2d.setStroke(new BasicStroke(6));
 							g2d.setPaint(Color.BLACK);
-							g2d.draw(new Ellipse2D.Double(tank.getLocX()-11,tank.getLocY()-11,80,80));
 						}
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,0,40,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,135,175,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,185,230,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,235,280,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,285,330,Arc2D.OPEN));
+						//g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,100,180,Arc2D.OPEN));
 					}
 				}
 
