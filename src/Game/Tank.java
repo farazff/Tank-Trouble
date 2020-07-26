@@ -34,7 +34,7 @@ public class Tank implements Runnable
     private static BufferedImage fireImage;
     private static BufferedImage fireDestroyImage;
 
-    private Prize prize;
+    private Prize prizeOwn;
     private Prizes prizes;
 
     static {
@@ -47,7 +47,7 @@ public class Tank implements Runnable
         }
     }
 
-    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks , Prizes prizes)
+    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes)
     {
         this.prizes = prizes;
         this.bullets = bullets;
@@ -65,7 +65,7 @@ public class Tank implements Runnable
         mouseX = 0;
         mouseY = 0;
         keyHandler = new KeyHandler ();
-        prize = null;
+        prizeOwn = null;
 
         do
         {
@@ -332,6 +332,7 @@ public class Tank implements Runnable
     }
 
 
+
     public void update()
     {
         if(mousePress)
@@ -354,7 +355,6 @@ public class Tank implements Runnable
             this.addLocY(-1*forY);
         }
 
-        checkPrize();
 
         if(keyRIGHT && !keyLEFT)
             this.increaseDegree();
@@ -370,9 +370,13 @@ public class Tank implements Runnable
 
     public void checkPrize()
     {
-        for(int i=0;i<=prizes.getPrizes().size();i++)
+        for(Prize prize : prizes.getPrizes())
         {
-
+            if( ( (locX-prize.getX())*(locX-prize.getX()) + (locY-prize.getY())*(locY-prize.getY()) ) <= 35*35)
+            {
+                prize.deActive();
+                prizeOwn = prize;
+            }
         }
     }
 
@@ -395,7 +399,21 @@ public class Tank implements Runnable
         return shot;
     }
 
+    public boolean isCanShot () {
+        return canShot;
+    }
 
+    public void setDegree (int degree) {
+        this.degree = degree;
+    }
+
+    public void setCanShot (boolean canShot) {
+        this.canShot = canShot;
+    }
+
+    public void setShot (boolean shot) {
+        this.shot = shot;
+    }
 
     public  BufferedImage getTankImage () {
         return tankImage;
@@ -482,8 +500,8 @@ public class Tank implements Runnable
                 }
             }
 
-            }
         }
+    }
 
 
 }
