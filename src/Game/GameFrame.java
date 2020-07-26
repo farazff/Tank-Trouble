@@ -171,7 +171,7 @@ public class GameFrame extends JFrame
 			for (Bullet bullet : bullets)
 			{
 				BufferedImage image2 = rotateImageBullet
-						(Bullet.getImage (),bullet.getDegree () + 90);
+						(bullet.getImage (),bullet.getDegree () + 90);
 
 				g2d.drawImage (image2,
 						bullet.getX () - image2.getWidth () / 2 + 3

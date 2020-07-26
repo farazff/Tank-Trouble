@@ -517,7 +517,7 @@ public class Tank implements Runnable
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                    getDegree (), System.currentTimeMillis (), walls, tanks));
+                                    getDegree (), System.currentTimeMillis (), walls, tanks,50));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
