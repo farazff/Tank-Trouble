@@ -4,6 +4,7 @@ import GUI.Music;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -126,11 +127,9 @@ public class GameFrame extends JFrame
 	 */
 	private void doRendering(Graphics2D g2d, GameState state) throws IOException
 	{
-		//System.out.println(state.getTank().getDegree() + " " + state.getTank().getLocX() + " " +state.getTank().getLocY());
 
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
-
 
 		try
 		{
@@ -175,6 +174,13 @@ public class GameFrame extends JFrame
 				g2d.drawImage (image2,
 						bullet.getX () - image2.getWidth () / 2 + 3
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
+			}
+
+			g2d.setPaint(Color.RED);
+			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
+			{
+				Prize prize = state.getPrizes().getPrizes().get(i);
+				g2d.fill(new Ellipse2D.Double(prize.getX(),prize.getY(),30,30));
 			}
 
 

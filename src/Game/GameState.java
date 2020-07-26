@@ -27,6 +27,7 @@ public class GameState {
 	private ArrayList<Bullet> bullets;
 	public boolean gameOver;
 	private Maps maps;
+	private Prizes prizes;
 
 	public Maps getMaps() {
 		return maps;
@@ -44,8 +45,15 @@ public class GameState {
 		tanks.add (tank2);
 		tanks.add (tank3);
 		gameOver = false;
+		prizes = new Prizes(maps,tanks);
+		Thread t1 = new Thread(prizes);
+		t1.start();
 	}
 
+	public Prizes getPrizes()
+	{
+		return prizes;
+	}
 
 	public ArrayList<Tank> getTanks () {
 		return tanks;
