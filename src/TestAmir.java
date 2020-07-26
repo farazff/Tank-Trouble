@@ -84,58 +84,10 @@ public class TestAmir {
 //        frame.setVisible(true);
 ////        loading.fill();
 
-        System.out.println (findDegree (12,35,12,10));
-        System.out.println (findDegree (12,35,16,20));
-        System.out.println (findDegree (12,35,25,35));
-        System.out.println (findDegree (12,35,17,45));
-        System.out.println (findDegree (12,35,12,50));
-        System.out.println (findDegree (12,35,4,38));
-        System.out.println (findDegree (12,35,2,35));
-        System.out.println (findDegree (12,35,4,25));
+
 
 
     }
 
-    private static int findDegree (int x1, int y1, int x2, int y2)
-    {
-        int degree;
-        if (x2 == x1)
-        {
-            if (y2 > y1)
-                return  90;
-            else if (y1 > y2)
-                return  270;
-        }
 
-        if (y1 == y2)
-        {
-            if (x2 > x1)
-                return 0;
-            else if (x1 > x2)
-                return 180;
-        }
-
-        double m = Math.abs ((1.0 * (y2 - y1)) / (x2 - x1));
-
-        degree = (int)Math.atan (m);
-
-        if (y2 > y1)
-        {
-            if (x2 > x1)
-                return degree;
-            else
-            {
-                return 180 - degree;
-            }
-
-        }
-        else if (y1 > y2)
-        {
-            if (x2 > x1)
-                return 360 -degree;
-            else
-                return 180 + degree;
-        }
-        return 45;
-    }
 }

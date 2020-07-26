@@ -51,15 +51,50 @@ public class IntelligentTank extends Tank
         executorService.shutdown ();
     }
 
-    private double findDegree (Tank enemyTank)
+    private double findDegree (Object object)
     {
-        if (enemyTank == null)
+        if (object == null)
             return 45;
-        int x1 = getCenterX ();
-        int y1 = getCenterY ();
+        int x1;
+        int y1;
+        int x2;
+        int y2;
 
-        int x2 = enemyTank.getCenterX ();
-        int y2 = enemyTank.getCenterY ();
+        if (object instanceof Tank)
+        {
+            Tank enemyTank = (Tank) object;
+            x1 = getCenterX ();
+            y1 = getCenterY ();
+
+            x2 = enemyTank.getCenterX ();
+            y2 = enemyTank.getCenterY ();
+        } else if (object instanceof Wall)
+        {
+            Wall wall = (Wall) object;
+
+            x1 = getCenterX ();
+            y1 = getCenterY ();
+
+            x2 = wall.getCenterX ();
+            y2 = wall.getCenterY ();
+        } else if (object instanceof NullTarget)
+        {
+
+            NullTarget nullTarget = (NullTarget) object;
+
+            x1 = getCenterX ();
+            y1 = getCenterY ();
+
+            x2 = nullTarget.getX ();
+            y2 = nullTarget.getY ();
+        } else
+        {
+            x1 = getCenterX ();
+            y1 = getCenterY ();
+
+            x2 = getCenterX ();
+            y2 = getCenterY ();
+        }
         if (x2 == x1)
         {
             if (y2 > y1) {
@@ -301,49 +336,23 @@ public class IntelligentTank extends Tank
 
         } else if (timeToAct)
         {
-            if (target instanceof Tank)
+            if (getDegree () < findDegree (target))
             {
-                Tank enemyTank = (Tank) target;
-                if (isCanShot ()) {
-                    Music music = new Music ();
-                    music.setFilePath ("Files/Sounds/Bullet.au", false);
-                    music.execute ();
-
-                    getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
-                            getDegree (), System.currentTimeMillis (), getWalls (), getTanks ()));
-                    setCanShot (false);
-                    setShot (true);
-                    new Thread (new Runnable () {
-                        @Override
-                        public void run () {
-                            try {
-                                Thread.sleep (100);
-                                setShot (false);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace ();
-                            }
-                        }
-                    }).start ();
-                    new Thread (new Runnable () {
-                        @Override
-                        public void run () {
-                            try {
-                                Thread.sleep (500);
-                                setCanShot (true);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace ();
-                            }
-                        }
-                    }).start ();
-                }
-            } else if (target instanceof Wall)
+                setDegree (getDegree () + 10);
+            } else if (getDegree () > findDegree (target))
             {
-                if (((Wall)target).isDestructible ())
+                setDegree (getDegree () - 10);
+            } else
+            {
+                if (target instanceof Tank ||
+                        (target instanceof Wall && ((Wall)target).isDestructible ()))
                 {
+
                     if (isCanShot ()) {
                         Music music = new Music ();
                         music.setFilePath ("Files/Sounds/Bullet.au", false);
                         music.execute ();
+
                         getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
                                 getDegree (), System.currentTimeMillis (), getWalls (), getTanks ()));
                         setCanShot (false);
@@ -371,15 +380,16 @@ public class IntelligentTank extends Tank
                             }
                         }).start ();
                     }
-                }
-                else
+                } else if (target instanceof Wall && !((Wall)target).isDestructible ())
                 {
-                    // TODO : move to Wall
+                    // TODO : Move to Wall
+
+                } else if (target instanceof NullTarget)
+                {
+                    // TODO : Move to Null target
                 }
-            } else if (target instanceof NullTarget)
-            {
-                // TODO : Move to Null target
             }
+
         }
     }
 
