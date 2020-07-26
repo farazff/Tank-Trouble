@@ -383,7 +383,12 @@ public class Tank implements Runnable
             if(prize.isActive())
             {
                 if (((locX - prize.getX()) * (locX - prize.getX()) + (locY - prize.getY()) * (locY - prize.getY())) <= 35 * 35) {
-                    if (prizeOwn == null) {
+                    if (prizeOwn == null)
+                    {
+                        Music music = new Music();
+                        music.setFilePath("Files/Sounds/GetPrize.au",false);
+                        music.execute();
+
                         prize.deActive();
                         prizeOwn = prize;
                         if (prize.getType().equals("Health")) {

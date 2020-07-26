@@ -1,5 +1,7 @@
 package Game;
 
+import GUI.Music;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,6 +34,9 @@ public class Prizes implements Runnable
                     y = random.nextInt(650) + 60;
                 } while(!isEmpty(x, y));
 
+                Music music = new Music();
+                music.setFilePath("Files/Sounds/NewGift.au",false);
+                music.execute();
                 prizes.add(new Prize(r, x, y));
             }
             catch (InterruptedException e)
