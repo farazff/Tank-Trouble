@@ -384,13 +384,17 @@ public class IntelligentTank extends Tank
                             }
                         }).start ();
                     }
-                } else if (target instanceof Wall && !((Wall)target).isDestructible ())
+                } else if (target instanceof NullTarget ||
+                        (target instanceof Wall && !((Wall)target).isDestructible ()))
                 {
-                    // TODO : Move to Wall
+                    int forX = (int) (6 * Math.cos (Math.toRadians (this.getDegree ())));
+                    int forY = (int) (6 * Math.sin (Math.toRadians (this.getDegree ())));
 
-                } else if (target instanceof NullTarget)
-                {
-                    // TODO : Move to Null target
+                    if(canMoveForward() && isEmpty(forX,forY,1))
+                    {
+                        this.addLocX(forX);
+                        this.addLocY(forY);
+                    }
                 }
             }
 
