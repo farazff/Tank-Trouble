@@ -355,6 +355,7 @@ public class Tank implements Runnable
             this.addLocY(-1*forY);
         }
 
+        checkPrize();
 
         if(keyRIGHT && !keyLEFT)
             this.increaseDegree();
@@ -374,8 +375,53 @@ public class Tank implements Runnable
         {
             if( ( (locX-prize.getX())*(locX-prize.getX()) + (locY-prize.getY())*(locY-prize.getY()) ) <= 35*35)
             {
-                prize.deActive();
-                prizeOwn = prize;
+                if(prizeOwn == null)
+                {
+                    int lastStamina = stamina;
+                    prize.deActive();
+                    prizeOwn = prize;
+                    if(prize.getType().equals("Health"))
+                    {
+                        stamina += stamina/10 + stamina;
+                    }
+                    if(prize.getType().equals("Power2"))
+                    {
+                        for(Bullet bullet : bullets)
+                        {
+
+
+                        }
+                    }
+
+                    new Thread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            try
+                            {
+                                Thread.sleep(10000);
+                                prizeOwn = null;
+                                if(prize.getType().equals("Health"))
+                                {
+                                    stamina = lastStamina ;
+                                }
+                                if(prize.getType().equals("Power2"))
+                                {
+                                    for(Bullet bullet : bullets)
+                                    {
+
+                                    }
+                                }
+                            }
+                            catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
+                }
             }
         }
     }
