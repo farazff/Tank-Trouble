@@ -21,7 +21,7 @@ public class Prizes implements Runnable
         while(true)
         {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(4000);
                 Random random = new Random();
                 int r = random.nextInt(5) + 1;
                 int x, y;
