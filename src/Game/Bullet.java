@@ -38,7 +38,7 @@ public class Bullet implements Runnable
     private boolean expired;
 
     public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
-                   ArrayList<Tank> tanks)
+                   ArrayList<Tank> tanks , int canonPower)
     {
 
         this.degree = degree;
@@ -46,7 +46,7 @@ public class Bullet implements Runnable
         findQuarterAndM (degree);
         this.x = x;
         this.y = y;
-        canonPower = 50;
+        this.canonPower = canonPower;
         this.startTime = startTime;
         this.walls = walls;
         this.tanks = tanks;

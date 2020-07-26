@@ -37,6 +37,13 @@ public class Tank implements Runnable
     private Prize prizeOwn;
     private Prizes prizes;
 
+    public Prize getPrizeOwn()
+    {
+        return prizeOwn;
+    }
+
+    private int canonPower = 50;
+
     static {
         try {
             fireImage = ImageIO.read (new File ("./Images/Bullet/shotLarge.png"));
@@ -373,54 +380,41 @@ public class Tank implements Runnable
     {
         for(Prize prize : prizes.getPrizes())
         {
-            if( ( (locX-prize.getX())*(locX-prize.getX()) + (locY-prize.getY())*(locY-prize.getY()) ) <= 35*35)
+            if(prize.isActive())
             {
-                if(prizeOwn == null)
-                {
-                    int lastStamina = stamina;
-                    prize.deActive();
-                    prizeOwn = prize;
-                    if(prize.getType().equals("Health"))
-                    {
-                        stamina += stamina/10 + stamina;
-                    }
-                    if(prize.getType().equals("Power2"))
-                    {
-                        for(Bullet bullet : bullets)
-                        {
-
-
+                if (((locX - prize.getX()) * (locX - prize.getX()) + (locY - prize.getY()) * (locY - prize.getY())) <= 35 * 35) {
+                    if (prizeOwn == null) {
+                        prize.deActive();
+                        prizeOwn = prize;
+                        if (prize.getType().equals("Health")) {
+                            stamina += stamina / 10 + stamina;
                         }
-                    }
+                        if (prize.getType().equals("Power2")) {
+                            canonPower *= 2;
+                        }
+                        if (prize.getType().equals("Power3")) {
+                            canonPower *= 3;
+                        }
 
-                    new Thread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            try
-                            {
-                                Thread.sleep(10000);
-                                prizeOwn = null;
-                                if(prize.getType().equals("Health"))
-                                {
-                                    stamina = lastStamina ;
-                                }
-                                if(prize.getType().equals("Power2"))
-                                {
-                                    for(Bullet bullet : bullets)
-                                    {
-
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(10000);
+                                    prizeOwn = null;
+                                    if (prize.getType().equals("Power2")) {
+                                        canonPower /= 2;
                                     }
+                                    if (prize.getType().equals("Power3")) {
+                                        canonPower /= 3;
+                                    }
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
                             }
-                            catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
+                        }).start();
 
+                    }
                 }
             }
         }
@@ -517,7 +511,7 @@ public class Tank implements Runnable
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();
                             bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                    getDegree (), System.currentTimeMillis (), walls, tanks));
+                                    getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
                             canShot = false;
                             shot = true;
                             new Thread (new Runnable () {
@@ -549,7 +543,9 @@ public class Tank implements Runnable
         }
     }
 
-
+    public int getCanonPower() {
+        return canonPower;
+    }
 }
 
 

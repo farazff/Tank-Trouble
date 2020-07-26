@@ -10,8 +10,8 @@ public class SignalBullet extends Bullet
     private Object data;
     private Tank owner;
     public SignalBullet (int x, int y, double degree, long startTime,
-                         ArrayList<Wall> walls, ArrayList<Tank> tanks, Tank owner) {
-        super (x, y, degree, startTime, walls, tanks);
+                         ArrayList<Wall> walls, ArrayList<Tank> tanks, Tank owner , int canonPower) {
+        super (x, y, degree, startTime, walls, tanks , canonPower);
         this.owner = owner;
         data = null;
     }
