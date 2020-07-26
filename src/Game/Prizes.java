@@ -83,7 +83,7 @@ public class Prizes implements Runnable
         for(int i= 0 ; i<prizes.size();i++)
         {
             if( ( (x-prizes.get(i).getX())*(x-prizes.get(i).getX()) +
-                    (y-prizes.get(i).getY())*(y-prizes.get(i).getY()) ) <= 30*30 )
+                    (y-prizes.get(i).getY())*(y-prizes.get(i).getY()) ) <= 39*39 )
             {
                 return false;
             }

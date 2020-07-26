@@ -1,11 +1,17 @@
 package Game;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Prize
 {
     private int x;
     private int y;
     private String type;
-    private String imgLoc;
+    private BufferedImage img;
     private boolean active;
 
     public Prize(int rand , int x ,int y)
@@ -16,22 +22,62 @@ public class Prize
         if(rand==1)
         {
             type = "Protect";
+            try
+            {
+                img = ImageIO.read(new File("Images/Prizes/Protect.png"));
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
         if(rand==2)
         {
             type = "Laser";
+            try
+            {
+                img = ImageIO.read(new File("Images/Prizes/Laser.png"));
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
         if(rand==3)
         {
             type = "Health";
+            try
+            {
+                img = ImageIO.read(new File("Images/Prizes/Health.png"));
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
         if(rand==4)
         {
             type = "power2";
+            try
+            {
+                img = ImageIO.read(new File("Images/Prizes/Power2.png"));
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
         if(rand==5)
         {
             type = "Power3";
+            try
+            {
+                img = ImageIO.read(new File("Images/Prizes/Power2.png"));
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -50,9 +96,9 @@ public class Prize
         return type;
     }
 
-    public String getImgLoc()
+    public BufferedImage getImg()
     {
-        return imgLoc;
+        return img;
     }
 
     public int getX()

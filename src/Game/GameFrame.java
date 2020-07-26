@@ -41,10 +41,12 @@ public class GameFrame extends JFrame
 	private BufferStrategy bufferStrategy;
 	private int mapTheme ;
 	private BufferedImage theme;
-	BufferedImage wallNDH;
-	BufferedImage wallDH;
-	BufferedImage wallNDV;
-	BufferedImage wallDV;
+	private BufferedImage wallNDH;
+	private BufferedImage wallDH;
+	private BufferedImage wallNDV;
+	private BufferedImage wallDV;
+
+
 
 	public GameFrame(String title) {
 		super(title);
@@ -176,11 +178,11 @@ public class GameFrame extends JFrame
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
-			g2d.setPaint(Color.RED);
 			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
 			{
 				Prize prize = state.getPrizes().getPrizes().get(i);
-				g2d.fill(new Ellipse2D.Double(prize.getX(),prize.getY(),30,30));
+
+				g2d.drawImage(prize.getImg(),prize.getX(),prize.getY(),null);
 			}
 
 
