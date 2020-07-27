@@ -5,7 +5,6 @@ import GUI.Music;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -28,18 +27,11 @@ import javax.swing.*;
  */
 public class GameFrame extends JFrame
 {
-
 	public static final int GAME_HEIGHT = 720;                  // 720p game resolution
 	public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
 
-	//uncomment all /*...*/ in the class for using Tank icon instead of a simple circle
-	/*private BufferedImage image;*/
-
-
-
 	private long lastRender;
 	private ArrayList<Float> fpsHistory;
-
 	private BufferStrategy bufferStrategy;
 	private int mapTheme ;
 	private BufferedImage theme;
@@ -48,9 +40,8 @@ public class GameFrame extends JFrame
 	private BufferedImage wallNDV;
 	private BufferedImage wallDV;
 
-
-
-	public GameFrame(String title) {
+	public GameFrame(String title)
+	{
 		super(title);
 		setResizable(false);
 		setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -89,7 +80,6 @@ public class GameFrame extends JFrame
 		bufferStrategy = getBufferStrategy();
 	}
 
-
 	/**
 	 * Game rendering with triple-buffering using BufferStrategy.
 	 */
@@ -124,7 +114,7 @@ public class GameFrame extends JFrame
 			Toolkit.getDefaultToolkit().sync();
 
 			// Repeat the rendering if the drawing buffer was lost
-		} while (bufferStrategy.contentsLost());
+		}while(bufferStrategy.contentsLost());
 	}
 
 	/**
@@ -132,10 +122,8 @@ public class GameFrame extends JFrame
 	 */
 	private void doRendering(Graphics2D g2d, GameState state) throws IOException
 	{
-
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
-
 		try
 		{
 			drawRoads(g2d);
@@ -164,10 +152,8 @@ public class GameFrame extends JFrame
 								, null);
 					}
 
-
 					g2d.setStroke(new BasicStroke(1));
 					g2d.setPaint(Color.BLACK);
-
 
 					g2d.draw(new Rectangle2D.Double(tank.getLocX()+5,tank.getLocY()-12,55,6));
 
@@ -182,8 +168,6 @@ public class GameFrame extends JFrame
 
 					g2d.fill(new Rectangle2D.Double(tank.getLocX()+5,tank.getLocY()-12,
 							tank.getStamina()/2,6));
-
-
 
 					if(tank.getPrizeOwn()!=null)
 					{
@@ -224,12 +208,8 @@ public class GameFrame extends JFrame
 								270,30,Arc2D.OPEN));
 						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
 							315,30,Arc2D.OPEN));
-
-
 					}
 				}
-
-
 			}
 
 			ArrayList<Bullet> bullets = new ArrayList<> (state.getBullets ());
@@ -244,14 +224,12 @@ public class GameFrame extends JFrame
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
-
 			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
 			{
 				Prize prize = state.getPrizes().getPrizes().get(i);
 				if(prize.isActive())
 					g2d.drawImage(prize.getImg(),prize.getX(),prize.getY(),null);
 			}
-
 
 			new Thread(new Runnable()
 			{
@@ -302,7 +280,6 @@ public class GameFrame extends JFrame
 								x-=20;
 							}
 
-
 							int h = wallNDV.getHeight();
 							if(!temp.isDestructible())
 							{
@@ -330,7 +307,6 @@ public class GameFrame extends JFrame
 		{
 			e.printStackTrace();
 		}
-
 
 		// Print FPS info
 		long currentRender = System.currentTimeMillis();
@@ -414,8 +390,6 @@ public class GameFrame extends JFrame
 
 		return rotated;
 	}
-
-
 
 	public void drawRoads(Graphics2D g2d) throws IOException
 	{

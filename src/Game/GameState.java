@@ -19,6 +19,7 @@ public class GameState
 	public int gameOver;
 	private Maps maps;
 	private Prizes prizes;
+	private Thread t1;
 
 	public GameState(int level,int tankStamina,int canonPower,int wallStamina)
 	{
@@ -39,7 +40,7 @@ public class GameState
 		}
 
 		gameOver = 0;
-		Thread t1 = new Thread(prizes);
+		t1 = new Thread(prizes);
 		t1.start();
 	}
 
@@ -92,18 +93,26 @@ public class GameState
 				executorService.execute (tank);
 		}
 		executorService.shutdown();
-		if (numberOfNormalTanks == 0 )
+		if(numberOfNormalTanks == 0 )
+		{
 			gameOver = -1;
+			t1.stop();
+		}
 
-		if (numberOfIntelligentTanks == 0)
+		if(numberOfIntelligentTanks == 0)
+		{
 			gameOver = 1;
 
-		try {
+		}
+
+		try
+		{
 			while (!executorService.isTerminated ())
 			{
 				Thread.sleep (1);
 			}
-		} catch (InterruptedException e)
+		}
+		catch (InterruptedException e)
 		{
 			e.printStackTrace ();
 		}
