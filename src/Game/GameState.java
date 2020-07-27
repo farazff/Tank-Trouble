@@ -75,8 +75,9 @@ public class GameState
 	 */
 	public void update()
 	{
-		if (tanks.size () == 0)
-			gameOver = true;
+		int numberOfNormalTanks = 0;
+		int numberOfIntelligentTanks = 0;
+
 		ExecutorService executorService = Executors.newCachedThreadPool ();
 
 		Iterator<Bullet> bulletIterator = bullets.iterator ();
@@ -93,12 +94,18 @@ public class GameState
 		while (tankIterator.hasNext ())
 		{
 			Tank tank = tankIterator.next ();
+			if (!(tank instanceof IntelligentTank))
+				numberOfNormalTanks++;
+			else
+				numberOfIntelligentTanks++;
 			if (tank.isDestroyed ())
 				tankIterator.remove ();
 			else
 				executorService.execute (tank);
 		}
 		executorService.shutdown();
+		if (numberOfNormalTanks == 0 || numberOfIntelligentTanks == 0)
+			gameOver = true;
 
 		try {
 			while (!executorService.isTerminated ())
