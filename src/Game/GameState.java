@@ -102,7 +102,7 @@ public class GameState
 		if(numberOfIntelligentTanks == 0)
 		{
 			gameOver = 1;
-
+			t1.stop();
 		}
 
 		try
