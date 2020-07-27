@@ -1,7 +1,6 @@
 package Game;
 
 import GUI.Music;
-
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;

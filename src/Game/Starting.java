@@ -19,9 +19,6 @@ public class Starting
 		// Initialize the global thread-pool
 		ThreadPool.init();
 
-		// Show the game menu ...
-
-		// After the player clicks 'PLAY' ...
 		EventQueue.invokeLater(new Runnable()
 		{
 			@Override
@@ -34,13 +31,10 @@ public class Starting
 				frame.setVisible(true);
 				frame.initBufferStrategy();
 
-
 				GameLoop game = new GameLoop(frame,menuFrame,level,tankStamina,canonPower,wallStamina);
 				game.init();
 				ThreadPool.execute(game);
-
 			}
 		});
-
 	}
 }
