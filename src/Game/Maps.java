@@ -6,11 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import Game.Graph.*;
 
 public class Maps
 {
     private ArrayList<Wall> walls;
     private ArrayList< ArrayList<Character> > data = new ArrayList<>();
+
+    private ArrayList< ArrayList<Character> > graph = new ArrayList<>();
+
+    private boolean[][] isOk = new boolean[30][30];
+
     private int x = 0;
     private int y = 0;
     private int horizontal = 0; //ofoqi
@@ -48,6 +54,111 @@ public class Maps
         vertical = (720)/(houseY);
 
         createWalls();
+        createGraph();
+
+    }
+
+
+    public boolean canPut(int x,int y)
+    {
+        int xx = 0 , yy = 0;
+
+        xx = (int) (Math.floor(x/horizontal) + 1);
+        yy = (int) (Math.floor(y/vertical) + 1);
+//      System.out.println(x + " " + y + " " + xx + " " + yy);
+
+        return isOk[yy][xx];
+    }
+
+
+    public void createGraph()
+    {
+        int vertexNum = (data.size()-1)/2 * (data.get(0).size()-1)/2;
+        Graph graph = new Graph(vertexNum + 1);
+        for(int j=1;j<data.size();j+=2)
+        {
+            for(int i=1;i<data.get(0).size();i+=2)
+            {
+                int thisNum = ((data.get(0).size()-1)/2)*((j-1)/2) + (i+1)/2;
+                int findNum = 0;
+                int t=0;
+
+                //System.out.println(thisNum + "->");
+
+                if(data.get(j-1).get(i)=='0')
+                {
+                    findNum = thisNum-(data.get(0).size()-1)/2;
+                    graph.addEdge(thisNum,findNum);
+                    t++;
+                }
+
+                if(data.get(j+1).get(i)=='0')
+                {
+                    findNum = thisNum+(data.get(0).size()-1)/2;
+                    graph.addEdge(thisNum,findNum);
+                    t++;
+                }
+
+                if(data.get(j).get(i-1)=='0')
+                {
+                    findNum = thisNum-1;
+                    graph.addEdge(thisNum,findNum);
+                    t++;
+                }
+
+                if(data.get(j).get(i+1)=='0')
+                {
+                    findNum = thisNum + 1;
+                    graph.addEdge(thisNum,findNum);
+                    t++;
+                }
+            }
+        }
+
+        int m = 0 ;
+        int flag = 0;
+        for(int i=1;i<=vertexNum;i++)
+        {
+            if(graph.BFS(i).size() > m)
+            {
+                m = graph.BFS(i).size();
+                flag = i;
+            }
+        }
+
+        for(int i=0;i<graph.BFS(flag).size();i++)
+        {
+            int w=0 , h=0;
+            int node = graph.BFS(flag).get(i);
+            //System.out.print(node + " ");
+
+            while(node>=(data.get(0).size()-1)/2)
+            {
+                node -= (data.get(0).size()-1)/2;
+                w++;
+            }
+
+            //System.out.print(node);
+            //System.out.println();
+
+            if(node > 0)
+            {
+                isOk[w+1][node] = true;
+            }
+            if(node == 0)
+            {
+                isOk[w][(data.get(0).size()-1)/2] = true;
+            }
+        }
+
+//        for(int i=1;i<=(data.size()-1)/2;i++)
+//        {
+//            for(int j=1;j<=(data.get(0).size()-1)/2;j++)
+//            {
+//                System.out.print(isOk[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
 
     }
 

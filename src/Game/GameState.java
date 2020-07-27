@@ -29,13 +29,13 @@ public class GameState
 		prizes = new Prizes(maps,tanks);
 
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes ,
-				tankStamina,canonPower);
+				tankStamina,canonPower,maps);
 		tanks.add (tank1);
 
 		for(int i=1;i<=level;i++)
 		{
 			Tank tank2 = new IntelligentTank(bullets, maps.getWalls(), tanks, prizes,
-					tankStamina,canonPower);
+					tankStamina,canonPower,maps);
 			tanks.add (tank2);
 		}
 

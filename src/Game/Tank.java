@@ -44,6 +44,7 @@ public class Tank implements Runnable
     }
 
     private int canonPower;
+    private Maps maps;
 
     static {
         try {
@@ -56,8 +57,9 @@ public class Tank implements Runnable
     }
 
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
-                int tankStamina,int canonPower)
+                int tankStamina,int canonPower , Maps maps)
     {
+        this.maps = maps;
         this.canonPower = canonPower;
         this.prizes = prizes;
         this.bullets = bullets;
@@ -78,12 +80,15 @@ public class Tank implements Runnable
         keyHandler = new KeyHandler ();
         prizeOwn = null;
         bulletType = "Normal";
+
         do
         {
             locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
             locY = new Random().nextInt(720 - 200) + 100;
 
-        }while(!canMoveForward());
+        }while(!canMoveForward() || !maps.canPut(locX,locY));
+
+
         stamina = tankStamina;
 
         degree = 45;

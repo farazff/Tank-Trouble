@@ -20,9 +20,9 @@ public class IntelligentTank extends Tank
     private boolean timeToAct;
 
     public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks
-            , Prizes prizes , int tankStamina,int canonPower)
+            , Prizes prizes , int tankStamina,int canonPower , Maps maps)
     {
-        super (bullets, walls, tanks , prizes,tankStamina,canonPower);
+        super (bullets, walls, tanks , prizes,tankStamina,canonPower,maps);
         timeToSignal = true;
         timeToInterrupt = false;
         timeToAct = false;
@@ -177,12 +177,12 @@ public class IntelligentTank extends Tank
         {
             if (x2 > x1)
             {
-                System.out.println (degree % 360);
+                //System.out.println (degree % 360);
                 return degree % 360;
             }
             else
             {
-                System.out.println ((180 - degree) % 360);
+                //System.out.println ((180 - degree) % 360);
                 return (180 - degree) % 360;
             }
 
@@ -191,12 +191,12 @@ public class IntelligentTank extends Tank
         {
             if (x2 > x1)
             {
-                System.out.println ((360 -degree) % 360);
+                //System.out.println ((360 -degree) % 360);
                 return (360 -degree) % 360;
             }
             else
             {
-                System.out.println ((180 + degree) % 360);
+                //System.out.println ((180 + degree) % 360);
                 return (180 + degree) % 360;
             }
         }
@@ -362,7 +362,7 @@ public class IntelligentTank extends Tank
         if (timeToSignal)
         {
             sendSignals ();
-            System.out.println ("Signals Sent");
+            //System.out.println ("Signals Sent");
             timeToSignal = false;
             timeToInterrupt = true;
             timeToAct = false;
