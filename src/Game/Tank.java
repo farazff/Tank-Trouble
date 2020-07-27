@@ -43,7 +43,7 @@ public class Tank implements Runnable
         return prizeOwn;
     }
 
-    private int canonPower = 50;
+    private int canonPower;
 
     static {
         try {
@@ -55,8 +55,10 @@ public class Tank implements Runnable
         }
     }
 
-    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes)
+    public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
+                int tankStamina,int canonPower)
     {
+        this.canonPower = canonPower;
         this.prizes = prizes;
         this.bullets = bullets;
         this.walls = walls;
@@ -81,7 +83,7 @@ public class Tank implements Runnable
             locY = new Random().nextInt(720 - 200) + 100;
 
         }while(!canMoveForward());
-        stamina = 100;
+        stamina = tankStamina;
 
         degree = 45;
 

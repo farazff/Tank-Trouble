@@ -8,7 +8,7 @@ public class Wall
     private boolean isOK;
     private int health;
 
-    public Wall(int x,int y,int length,String type,boolean destructible)
+    public Wall(int x,int y,int length,String type,boolean destructible,int health)
     {
         this.x = x;
         this.y = y;
@@ -16,7 +16,7 @@ public class Wall
         this.type = type;
         this.destructible = destructible;
         isOK = true;
-        health = 100;
+        this.health = health;
     }
 
     public int getX()

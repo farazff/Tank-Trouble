@@ -17,14 +17,16 @@ public class Maps
     private int vertical = 0; //amodi
     private int houseX;
     private int houseY;
+    private int wallStamina;
 
     public ArrayList<Wall> getWalls()
     {
         return walls;
     }
 
-    public Maps()
+    public Maps(int wallStamina)
     {
+        this.wallStamina = wallStamina;
         walls = new ArrayList<>();
         readFromFile();
         x = data.get(0).size();
@@ -59,11 +61,13 @@ public class Maps
                 {
                     if(data.get(j).get(i) == '1')
                     {
-                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",false));
+                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",
+                                false,wallStamina));
                     }
                     if(data.get(j).get(i) == '2')
                     {
-                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",true));
+                        walls.add(new Wall(horizontal * (i - 1)/2, vertical * (j)/2, horizontal, "H",
+                                true,wallStamina));
                     }
                 }
             }
@@ -74,12 +78,12 @@ public class Maps
                     if(data.get(j).get(i) == '1')
                     {
                         walls.add(new Wall(horizontal * (i)/2,
-                                vertical * (j-1)/2, vertical, "V",false));
+                                vertical * (j-1)/2, vertical, "V",false,wallStamina));
                     }
                     if(data.get(j).get(i) == '2')
                     {
                         walls.add(new Wall(horizontal * (i)/2,
-                                vertical * (j-1)/2, vertical, "V",true));
+                                vertical * (j-1)/2, vertical, "V",true,wallStamina));
                     }
                 }
             }

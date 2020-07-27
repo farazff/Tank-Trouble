@@ -19,9 +19,10 @@ public class IntelligentTank extends Tank
     private boolean timeToInterrupt;
     private boolean timeToAct;
 
-    public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks , Prizes prizes)
+    public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks
+            , Prizes prizes , int tankStamina,int canonPower)
     {
-        super (bullets, walls, tanks , prizes);
+        super (bullets, walls, tanks , prizes,tankStamina,canonPower);
         timeToSignal = true;
         timeToInterrupt = false;
         timeToAct = false;

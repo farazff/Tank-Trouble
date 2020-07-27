@@ -21,7 +21,8 @@ import java.util.concurrent.Executors;
  *
  * @author Seyed Mohammad Ghaffarian
  */
-public class GameState {
+public class GameState
+{
 
 	private ArrayList<Tank> tanks;
 	private ArrayList<Bullet> bullets;
@@ -34,19 +35,25 @@ public class GameState {
 		return maps;
 	}
 
-	public GameState()
+	public GameState(int level,int tankStamina,int canonPower,int wallStamina)
 	{
-		maps = new Maps();
+
+		maps = new Maps(wallStamina);
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
 		prizes = new Prizes(maps,tanks);
 
-		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes);
-		Tank tank2 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
-		//Tank tank3 = new IntelligentTank (bullets, maps.getWalls (),tanks,prizes);
+		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes ,
+				tankStamina,canonPower);
 		tanks.add (tank1);
-		//tanks.add (tank2);
-//		tanks.add (tank3);
+
+		for(int i=1;i<=level;i++)
+		{
+			Tank tank2 = new IntelligentTank(bullets, maps.getWalls(), tanks, prizes,
+					tankStamina,canonPower);
+			tanks.add (tank2);
+		}
+
 		gameOver = false;
 		Thread t1 = new Thread(prizes);
 		t1.start();

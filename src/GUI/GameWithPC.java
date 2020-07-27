@@ -1,4 +1,6 @@
 package GUI;
+import Game.Starting;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,6 +20,14 @@ public class GameWithPC extends JPanel
     private JPanel pre;
     private JFrame frame;
     private JLabel start;
+    private Selecting selecting;
+    private Selecting selecting2;
+
+
+    private JSlider sliderTank;
+    private JSlider sliderCanon;
+    private JSlider sliderWall;
+
 
     public GameWithPC(JFrame frame)
     {
@@ -64,7 +74,7 @@ public class GameWithPC extends JPanel
         ArrayList<String> data = new ArrayList<>();
         data.add("Death Match");
         data.add("League Match");
-        Selecting selecting = new Selecting(data,0,Color.WHITE,Color.GRAY,
+        selecting = new Selecting(data,0,Color.WHITE,Color.GRAY,
                 new Font("Arial",Font.BOLD,20));
 
         JLabel level = new JLabel("Level:");
@@ -73,26 +83,26 @@ public class GameWithPC extends JPanel
         levelData.add("EASY");
         levelData.add("MEDIUM");
         levelData.add("HARD");
-        Selecting selecting2 = new Selecting(levelData,0,Color.WHITE,Color.GRAY,
+        selecting2 = new Selecting(levelData,0,Color.WHITE,Color.GRAY,
                 new Font("Arial",Font.BOLD,20));
 
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderTank = new JSlider(10,100,100);
+        sliderTank = new JSlider(10,100,100);
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderCanon = new JSlider(10,100,100);
+        sliderCanon = new JSlider(10,100,100);
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        JSlider sliderWall = new JSlider(10,100,100);
+        sliderWall = new JSlider(10,100,100);
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);
@@ -173,6 +183,21 @@ public class GameWithPC extends JPanel
                 frame.setContentPane(pre);
                 frame.setVisible(false);
                 frame.setVisible(true);
+            }
+            if(e.getSource().equals(start))
+            {
+                Music music = new Music();
+                music.execute();
+                frame.setVisible(false);
+                int level = 1;
+                if(selecting2.getCurrentValue().equals("EASY"))
+                    level=1;
+                if(selecting2.getCurrentValue().equals("MEDIUM"))
+                    level=2;
+                if(selecting2.getCurrentValue().equals("HARD"))
+                    level=3;
+                Starting starting = new Starting(frame,level,sliderTank.getValue(),sliderCanon.getValue(),
+                        sliderWall.getValue());
             }
         }
 

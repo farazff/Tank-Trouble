@@ -1,6 +1,7 @@
 /*** In The Name of Allah ***/
 package Game;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -27,8 +28,17 @@ public class GameLoop implements Runnable {
 
 	private GameFrame canvas;
 	private GameState state;
+	private JFrame menuFrame;
+	private int level, tankStamina,canonPower, wallStamina;
 
-	public GameLoop(GameFrame frame) {
+	public GameLoop(GameFrame frame , JFrame menuFrame,
+					int level,int tankStamina,int canonPower,int wallStamina)
+	{
+		this.menuFrame = menuFrame;
+		this.level = level;
+		this.tankStamina = tankStamina;
+		this.canonPower = canonPower;
+		this.wallStamina = wallStamina;
 		canvas = frame;
 	}
 
@@ -37,7 +47,7 @@ public class GameLoop implements Runnable {
 	 */
 	public void init()
 	{
-		state = new GameState();
+		state = new GameState(level, tankStamina,canonPower, wallStamina);
 
 		for (Tank tank : state.getTanks ())
 		{
@@ -48,10 +58,13 @@ public class GameLoop implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		boolean gameOver = false;
-		while (!gameOver) {
-			try {
+		while (!gameOver)
+		{
+			try
+			{
 				long start = System.currentTimeMillis();
 				//
 				state.update();
@@ -61,12 +74,38 @@ public class GameLoop implements Runnable {
 				long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
 				if (delay > 0)
 					Thread.sleep(delay);
-			} catch (InterruptedException | IOException ex) {
+			}
+			catch (InterruptedException | IOException ex)
+			{
+				ex.printStackTrace();
 			}
 		}
-		try {
+
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					Thread.sleep(3000);
+					canvas.setVisible(false);
+					menuFrame.setVisible(true);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}).start();
+
+
+		try
+		{
 			canvas.render(state);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}

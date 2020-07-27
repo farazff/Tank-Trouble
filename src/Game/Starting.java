@@ -10,29 +10,35 @@ import javax.swing.JFrame;
  *
  * @author Seyed Mohammad Ghaffarian
  */
-public class Main {
+public class Starting
+{
 
-	public static void main(String[] args) {
+	public Starting(JFrame menuFrame,int level,int tankStamina,int canonPower,int wallStamina)
+	{
+
 		// Initialize the global thread-pool
 		ThreadPool.init();
 
 		// Show the game menu ...
 
 		// After the player clicks 'PLAY' ...
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				GameFrame frame = null;
 				frame = new GameFrame("Simple Ball !");
-				frame.setLocationRelativeTo(null); // put frame at center of screen
+				frame.setLocationRelativeTo(null);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 				frame.initBufferStrategy();
-				// Create and execute the game-loop
-				GameLoop game = new GameLoop(frame);
+
+
+				GameLoop game = new GameLoop(frame,menuFrame,level,tankStamina,canonPower,wallStamina);
 				game.init();
 				ThreadPool.execute(game);
-				// and the game starts ...
+
 			}
 		});
 
