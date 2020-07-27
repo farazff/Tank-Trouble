@@ -93,7 +93,8 @@ public class GameFrame extends JFrame
 	/**
 	 * Game rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state) throws IOException {
+	public void render(GameState state) throws IOException
+	{
 		// Render single frame
 		do
 		{
@@ -137,7 +138,6 @@ public class GameFrame extends JFrame
 
 		try
 		{
-
 			drawRoads(g2d);
 
 			for (Tank tank : state.getTanks ()) {
@@ -332,8 +332,6 @@ public class GameFrame extends JFrame
 		}
 
 
-
-
 		// Print FPS info
 		long currentRender = System.currentTimeMillis();
 		if (lastRender > 0)
@@ -358,16 +356,18 @@ public class GameFrame extends JFrame
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, strHeight+50);
 		}
 		lastRender = currentRender;
-//		// Print user guide
-//		String userGuide
-//				= "Use the MOUSE or ARROW KEYS to move the BALL. "
-//				+ "Press ESCAPE to end the game.";
-//		g2d.setFont(g2d.getFont().deriveFont(18.0f));
-//		g2d.drawString(userGuide, 10, GAME_HEIGHT - 10);
-		// Draw GAME OVER
-		if (state.gameOver)
+
+		if(state.gameOver == 1)
 		{
-			String str = "GAME OVER";
+			String str = "Winner";
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
+			int strWidth = g2d.getFontMetrics().stringWidth(str);
+			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+		}
+		if(state.gameOver == -1)
+		{
+			String str = "Looser";
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
 			int strWidth = g2d.getFontMetrics().stringWidth(str);

@@ -1,4 +1,3 @@
-/*** In The Name of Allah ***/
 package Game;
 
 import javax.swing.*;
@@ -18,7 +17,8 @@ import java.io.IOException;
  *
  * @author Seyed Mohammad Ghaffarian
  */
-public class GameLoop implements Runnable {
+public class GameLoop implements Runnable
+{
 
 	/**
 	 * Frame Per Second.
@@ -49,19 +49,17 @@ public class GameLoop implements Runnable {
 	{
 		state = new GameState(level, tankStamina,canonPower, wallStamina);
 
-		for (Tank tank : state.getTanks ())
+		for(Tank tank:state.getTanks ())
 		{
 			canvas.addKeyListener(tank.getKeyHandler());
-
 		}
-
 	}
 
 	@Override
 	public void run()
 	{
-		boolean gameOver = false;
-		while (!gameOver)
+		int gameOver = 0;
+		while(gameOver == 0)
 		{
 			try
 			{
@@ -98,7 +96,6 @@ public class GameLoop implements Runnable {
 				}
 			}
 		}).start();
-
 
 		try
 		{

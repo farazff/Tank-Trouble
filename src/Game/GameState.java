@@ -1,17 +1,7 @@
-/*** In The Name of Allah ***/
 package Game;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,18 +16,12 @@ public class GameState
 
 	private ArrayList<Tank> tanks;
 	private ArrayList<Bullet> bullets;
-
-	public boolean gameOver;
+	public int gameOver;
 	private Maps maps;
 	private Prizes prizes;
 
-	public Maps getMaps() {
-		return maps;
-	}
-
 	public GameState(int level,int tankStamina,int canonPower,int wallStamina)
 	{
-
 		maps = new Maps(wallStamina);
 		bullets = new ArrayList<> ();
 		tanks = new ArrayList<> ();
@@ -54,7 +38,7 @@ public class GameState
 			tanks.add (tank2);
 		}
 
-		gameOver = false;
+		gameOver = 0;
 		Thread t1 = new Thread(prizes);
 		t1.start();
 	}
@@ -64,11 +48,15 @@ public class GameState
 		return prizes;
 	}
 
-	public ArrayList<Tank> getTanks () {
+	public ArrayList<Tank> getTanks ()
+	{
 		return tanks;
 	}
 
-
+	public Maps getMaps()
+	{
+		return maps;
+	}
 
 	/**
 	 * The method which updates the game state.
@@ -104,8 +92,11 @@ public class GameState
 				executorService.execute (tank);
 		}
 		executorService.shutdown();
-		if (numberOfNormalTanks == 0 || numberOfIntelligentTanks == 0)
-			gameOver = true;
+		if (numberOfNormalTanks == 0 )
+			gameOver = -1;
+
+		if (numberOfIntelligentTanks == 0)
+			gameOver = 1;
 
 		try {
 			while (!executorService.isTerminated ())
