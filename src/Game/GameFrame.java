@@ -169,7 +169,7 @@ public class GameFrame extends JFrame
 					g2d.setPaint(Color.BLACK);
 
 
-					g2d.draw(new Rectangle2D.Double(tank.getLocX(),tank.getLocY()-12,55,6));
+					g2d.draw(new Rectangle2D.Double(tank.getLocX()+5,tank.getLocY()-12,55,6));
 
 					if(tank.getStamina()>=90)
 						g2d.setPaint(Color.GREEN);
@@ -180,8 +180,10 @@ public class GameFrame extends JFrame
 					if(tank.getStamina()<55)
 						g2d.setPaint(Color.RED);
 
-					g2d.fill(new Rectangle2D.Double(tank.getLocX(),tank.getLocY()-12,
+					g2d.fill(new Rectangle2D.Double(tank.getLocX()+5,tank.getLocY()-12,
 							tank.getStamina()/2,6));
+
+
 
 					if(tank.getPrizeOwn()!=null)
 					{
@@ -210,12 +212,20 @@ public class GameFrame extends JFrame
 							g2d.setStroke(new BasicStroke(6));
 							g2d.setPaint(Color.BLACK);
 						}
-						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,0,40,Arc2D.OPEN));
-						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,135,175,Arc2D.OPEN));
-						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,185,230,Arc2D.OPEN));
-						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,235,280,Arc2D.OPEN));
-						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,285,330,Arc2D.OPEN));
-						//g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,100,180,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+								0,30,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+								135,30,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+								180,30,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+								225,30,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+								270,30,Arc2D.OPEN));
+						g2d.draw(new Arc2D.Double(tank.getLocX()-11,tank.getLocY()-11,84,84,
+							315,30,Arc2D.OPEN));
+
+
 					}
 				}
 
