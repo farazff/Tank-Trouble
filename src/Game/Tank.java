@@ -18,6 +18,7 @@ public class Tank implements Runnable
     private static String imageAddress = "Images/Tanks/red315.png";
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
+    private boolean hasProtection;
     private String bulletType;
     private boolean fireDestroyed;
     private boolean destroyed;
@@ -65,6 +66,7 @@ public class Tank implements Runnable
         this.tanks = tanks;
         destroyed = false;
         fireDestroyed = false;
+        hasProtection = false;
         canShot = true;
         keyUP = false;
         keyDOWN = false;
@@ -97,6 +99,11 @@ public class Tank implements Runnable
 
     }
 
+    public void setProtection (boolean hasProtection) {
+        this.hasProtection = hasProtection;
+    }
+
+
 
     public void setBulletType (String bulletType) {
         this.bulletType = bulletType;
@@ -115,7 +122,8 @@ public class Tank implements Runnable
     }
 
     public void looseStamina (int damage) {
-        stamina -= damage;
+        if (!hasProtection)
+            stamina -= damage;
         if (stamina <= 0) {
             fireDestroyed = true;
             keyUP = false;
@@ -415,6 +423,10 @@ public class Tank implements Runnable
                             setBulletType ("Laser");
                         }
 
+                        if (prize.getType ().equals ("Protect")) {
+                            setProtection (true);
+                        }
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -426,6 +438,13 @@ public class Tank implements Runnable
                                     }
                                     if (prize.getType().equals("Power3")) {
                                         canonPower /= 3;
+                                    }
+                                    if (prize.getType ().equals ("Laser")) {
+                                        setBulletType ("Normal");
+                                    }
+                                    Thread.sleep (5000);
+                                    if (prize.getType ().equals ("Protect")) {
+                                        setProtection (false);
                                     }
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
