@@ -86,7 +86,7 @@ public class Tank implements Runnable
             locX = new Random().nextInt(((16 * 720) / 9) - 200) + 100;
             locY = new Random().nextInt(720 - 200) + 100;
 
-        }while(!canMoveForward() || !maps.canPut(locX,locY));
+        }while(!canMoveForward() || !maps.canPut(locX,locY) || !isEmpty(0,0,1));
 
 
         stamina = tankStamina;
