@@ -15,7 +15,7 @@ public class GameState
 {
 
 	private ArrayList<Tank> tanks;
-	private ArrayList<Bullet> bullets;
+	private InteractArrayList<Bullet> bullets;
 	public int gameOver;
 	private Maps maps;
 	private Prizes prizes;
@@ -24,7 +24,7 @@ public class GameState
 	public GameState(int level,int tankStamina,int canonPower,int wallStamina)
 	{
 		maps = new Maps(wallStamina);
-		bullets = new ArrayList<> ();
+		bullets = new InteractArrayList<> ();
 		tanks = new ArrayList<> ();
 		prizes = new Prizes(maps,tanks);
 
@@ -70,6 +70,7 @@ public class GameState
 		ExecutorService executorService = Executors.newCachedThreadPool ();
 
 		Iterator<Bullet> bulletIterator = bullets.iterator ();
+		bullets.setIterate (true);
 		while (bulletIterator.hasNext ())
 		{
 			Bullet bullet = bulletIterator.next ();
@@ -78,6 +79,7 @@ public class GameState
 			else
 				executorService.execute (bullet);
 		}
+		bullets.setIterate (false);
 
 		Iterator<Tank> tankIterator = tanks.iterator ();
 		while (tankIterator.hasNext ())
