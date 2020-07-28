@@ -103,7 +103,7 @@ public class Client implements Runnable
         }
         catch (ClassNotFoundException e)
         {
-            System.err.println ("Some Thing went Wrong while reading from Client");
+            System.err.println ("Some Thing went Wrong while reading from ClientPlayer");
         } catch (SocketException e)
         {
             System.err.println ("Server Not Responding");

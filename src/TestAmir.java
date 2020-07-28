@@ -1,18 +1,6 @@
 
-import GUI.GameWithPC;
-import GUI.Loading;
-import GUI.MainPage.Main;
-import GUI.MultiGame.CreateNewServer;
-import GUI.MultiGame.MultiGamePanel;
-import GUI.Setting.Setting;
-import GUI.SignInPanel;
-import GUI.SignUpPanel;
-import Game.Tank;
-import GameData.*;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Set;
+import SocketConnectionForTankServer.MultiGameFrame;
+import SocketConnectionForTankServer.MoveTranslator;
 
 
 public class TestAmir {
@@ -24,9 +12,9 @@ public class TestAmir {
 //            e.printStackTrace ();
 //        }
 //
-//        JFrame frame = new JFrame ();
-//        frame.setLocation (0, 0);
-//        frame.setSize ((720 * 16) / 9, 720);
+//        JFrame multiGameFrame = new JFrame ();
+//        multiGameFrame.setLocation (0, 0);
+//        multiGameFrame.setSize ((720 * 16) / 9, 720);
 //
 //
 //        ArrayList<MultiGame> multiGames = new ArrayList<> ();
@@ -60,13 +48,13 @@ public class TestAmir {
 //        servers.addNewServer (server1);
 //        servers.addNewServer (server1);
 //        servers.addNewServer (server1);
-//        Loading loading = new Loading(frame);
-//        SignInPanel signInPanel = new SignInPanel(frame);
-//        SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
-//        Main main = new Main (frame);
-//        GameWithPC gameWithPC = new GameWithPC(frame);
-//        MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
-//        Setting setting = new Setting(frame,servers);
+//        Loading loading = new Loading(multiGameFrame);
+//        SignInPanel signInPanel = new SignInPanel(multiGameFrame);
+//        SignUpPanel signUp = new SignUpPanel(multiGameFrame,signInPanel);
+//        Main main = new Main (multiGameFrame);
+//        GameWithPC gameWithPC = new GameWithPC(multiGameFrame);
+//        MultiGamePanel multiGamePanel = new MultiGamePanel (multiGameFrame,servers);
+//        Setting setting = new Setting(multiGameFrame,servers);
 //
 //
 //        loading.setNex(signInPanel);
@@ -80,11 +68,24 @@ public class TestAmir {
 //        setting.setPre(main);
 //
 //
-//        frame.setContentPane(setting);
-//        frame.setVisible(true);
+//        multiGameFrame.setContentPane(setting);
+//        multiGameFrame.setVisible(true);
 ////        loading.fill();
 
-
+        MoveTranslator moveTranslator = new MoveTranslator ();
+        MultiGameFrame multiGameFrame = new MultiGameFrame ();
+        multiGameFrame.setVisible (true);
+        multiGameFrame.addKeyListener (moveTranslator.getKeyListener ());
+        while (true)
+        {
+            try {
+                Thread.sleep (24);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace ();
+            }
+            System.out.println (moveTranslator.getCommandString ());
+        }
 
 
     }
