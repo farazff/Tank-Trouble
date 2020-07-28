@@ -65,8 +65,6 @@ public class Maps
 
         xx = (int) (Math.floor(x/horizontal) + 1);
         yy = (int) (Math.floor(y/vertical) + 1);
-//      System.out.println(x + " " + y + " " + xx + " " + yy);
-
         return isOk[yy][xx];
     }
 
@@ -85,28 +83,28 @@ public class Maps
 
                 //System.out.println(thisNum + "->");
 
-                if(data.get(j-1).get(i)=='0')
+                if(data.get(j-1).get(i)=='0' || data.get(j-1).get(i)=='2')
                 {
                     findNum = thisNum-(data.get(0).size()-1)/2;
                     graph.addEdge(thisNum,findNum);
                     t++;
                 }
 
-                if(data.get(j+1).get(i)=='0')
+                if(data.get(j+1).get(i)=='0' || data.get(j+1).get(i)=='2')
                 {
                     findNum = thisNum+(data.get(0).size()-1)/2;
                     graph.addEdge(thisNum,findNum);
                     t++;
                 }
 
-                if(data.get(j).get(i-1)=='0')
+                if(data.get(j).get(i-1)=='0' || data.get(j).get(i-1)=='2')
                 {
                     findNum = thisNum-1;
                     graph.addEdge(thisNum,findNum);
                     t++;
                 }
 
-                if(data.get(j).get(i+1)=='0')
+                if(data.get(j).get(i+1)=='0' || data.get(j).get(i+1)=='2')
                 {
                     findNum = thisNum + 1;
                     graph.addEdge(thisNum,findNum);
@@ -204,7 +202,11 @@ public class Maps
 
     public void readFromFile()
     {
+
+        MapGenerator mapGenerator = new MapGenerator();
+
         File directory = new File("Files/Maps/");
+
         int count = 0;
         for (File file : Objects.requireNonNull(directory.listFiles()))
         {
@@ -217,6 +219,7 @@ public class Maps
 
         Random random = new Random();
         Integer t = random.nextInt(count) + 1;
+        System.out.println(t);
 
         File map = new File("Files/Maps/map" + t.toString() + ".txt");
         try
