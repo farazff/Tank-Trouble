@@ -19,6 +19,7 @@ public class Client implements Runnable
     private String username;
     private char[] password;
     private String res;
+    private boolean finished = false;
 
 
     public Client (String ip, String username, char[] password, String request)
@@ -92,7 +93,7 @@ public class Client implements Runnable
                         port + ((port == 8083)? " (Load Server) " :
                         " (Save Server) "));
             }
-
+            finished = true;
         } catch (IllegalArgumentException e)
         {
             System.err.println ("Some went Wrong in start");
@@ -138,19 +139,32 @@ public class Client implements Runnable
 
     public User getLoginOrSignUpResult ()
     {
-        if (port == 8083)
-            return user;
+        if (finished)
+        {
+            if (port == 8083)
+                return user;
+            else
+                return null;
+        }
         else
             return null;
     }
 
     public String getLogoutResult ()
     {
-        if (port == 4787)
-            return res;
+        if (finished)
+        {
+            if (port == 4787)
+                return res;
+            else
+                return null;
+        }
         else
             return null;
+
     }
 
-
+    public boolean isFinished () {
+        return finished;
+    }
 }
