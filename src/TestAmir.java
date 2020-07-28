@@ -1,3 +1,11 @@
+import Game.GameFrame;
+import MultiGame.*;
+import Game.ThreadPool;
+import GameData.MultiGame;
+
+import javax.swing.*;
+import java.awt.*;
+
 public class TestAmir {
     public static void main (String[] args) {
 
@@ -68,6 +76,25 @@ public class TestAmir {
 ////        loading.fill();
 
 
+        ThreadPool.init();
+
+        EventQueue.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                MultiGameFrame frame = null;
+                frame = new MultiGameFrame ("Tank Trouble !");
+                frame.setLocationRelativeTo(null);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+                frame.initBufferStrategy();
+
+                MultiGameLoop game = new MultiGameLoop (frame,null);
+                game.init("127.0.0.1",8080);
+                ThreadPool.execute(game);
+            }
+        });
 
     }
 

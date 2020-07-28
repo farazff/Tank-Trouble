@@ -17,10 +17,13 @@ public class MultiGameFrame extends JFrame
     private BufferStrategy bufferStrategy;
 
 
-    public MultiGameFrame ()
+    public MultiGameFrame (String title)
     {
+        super(title);
         setResizable(false);
         setSize(GAME_WIDTH, GAME_HEIGHT);
+        lastRender = -1;
+        fpsHistory = new ArrayList<>(100);
     }
 
     /**
@@ -32,8 +35,7 @@ public class MultiGameFrame extends JFrame
         // Triple-buffering
         createBufferStrategy(3);
         bufferStrategy = getBufferStrategy();
-        lastRender = -1;
-        fpsHistory = new ArrayList<>(100);
+
     }
 
     /**
