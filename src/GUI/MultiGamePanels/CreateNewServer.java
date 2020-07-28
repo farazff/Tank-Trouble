@@ -1,9 +1,8 @@
-package GUI.MultiGame;
+package GUI.MultiGamePanels;
 
 import GUI.GridBagSetter;
 import GUI.Music;
 import GUI.PictureJLabel;
-import GUI.SignUpPanel;
 import GameData.*;
 
 import javax.imageio.ImageIO;
@@ -14,7 +13,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CreateNewServer extends JPanel

@@ -1,11 +1,10 @@
 package GUI.Setting;
 
-import GUI.MultiGame.CreateNewServer;
-import GUI.MultiGame.ServerButtonPanel;
-import GUI.MultiGame.ServerListPanel;
+import GUI.MultiGamePanels.CreateNewServer;
+import GUI.MultiGamePanels.ServerButtonPanel;
+import GUI.MultiGamePanels.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
-import GameData.Server;
 import GameData.ServerDataBase;
 
 import javax.swing.*;

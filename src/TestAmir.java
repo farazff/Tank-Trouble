@@ -1,8 +1,3 @@
-
-import SocketConnectionForTankServer.MultiGameFrame;
-import SocketConnectionForTankServer.MoveTranslator;
-
-
 public class TestAmir {
     public static void main (String[] args) {
 

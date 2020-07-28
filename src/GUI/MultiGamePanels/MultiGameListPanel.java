@@ -1,4 +1,4 @@
-package GUI.MultiGame;
+package GUI.MultiGamePanels;
 
 import GUI.Music;
 import GameData.MultiGame;

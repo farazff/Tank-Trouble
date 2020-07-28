@@ -1,6 +1,6 @@
 import GUI.*;
 import GUI.MainPage.Main;
-import GUI.MultiGame.MultiGamePanel;
+import GUI.MultiGamePanels.MultiGamePanel;
 import GUI.Setting.Setting;
 import GameData.*;
 

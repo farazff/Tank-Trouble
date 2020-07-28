@@ -1,11 +1,9 @@
-package GUI.MultiGame;
+package GUI.MultiGamePanels;
 
 
-import GUI.GameWithPC;
 import GUI.Music;
 import GUI.NullPanel;
 import GUI.PictureJLabel;
-import GameData.Server;
 import GameData.ServerDataBase;
 
 import javax.swing.*;
@@ -15,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 
 public class MultiGamePanel extends JPanel

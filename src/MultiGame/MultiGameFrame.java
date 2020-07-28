@@ -1,4 +1,4 @@
-package SocketConnectionForTankServer;
+package MultiGame;
 
 
 import javax.swing.*;

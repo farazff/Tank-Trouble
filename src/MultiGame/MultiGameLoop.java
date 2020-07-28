@@ -1,11 +1,7 @@
-package SocketConnectionForTankServer;
-
-import SocketConnectionForTankServer.MoveTranslator;
-import SocketConnectionForTankServer.MultiGameFrame;
+package MultiGame;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;

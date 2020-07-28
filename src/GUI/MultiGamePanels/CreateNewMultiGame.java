@@ -1,4 +1,4 @@
-package GUI.MultiGame;
+package GUI.MultiGamePanels;
 
 import GUI.GridBagSetter;
 import GUI.Music;
@@ -7,7 +7,6 @@ import GUI.Selecting;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
 import GameData.MultiGame;
-import GameData.Server;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
 
 /**
  * this class represents a new game panel in network game
