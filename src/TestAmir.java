@@ -72,20 +72,6 @@ public class TestAmir {
 //        multiGameFrame.setVisible(true);
 ////        loading.fill();
 
-        MoveTranslator moveTranslator = new MoveTranslator ();
-        MultiGameFrame multiGameFrame = new MultiGameFrame ();
-        multiGameFrame.setVisible (true);
-        multiGameFrame.addKeyListener (moveTranslator.getKeyListener ());
-        while (true)
-        {
-            try {
-                Thread.sleep (24);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace ();
-            }
-            System.out.println (moveTranslator.getCommandString ());
-        }
 
 
     }

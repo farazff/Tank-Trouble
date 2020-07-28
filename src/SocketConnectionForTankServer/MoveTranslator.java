@@ -37,20 +37,28 @@ public class MoveTranslator
         else
             stringBuilder.append ("0");
 
+        stringBuilder.append ("\n");
+
         if (keyDOWN)
             stringBuilder.append ("1");
         else
             stringBuilder.append ("0");
+
+        stringBuilder.append ("\n");
 
         if (keyLEFT)
             stringBuilder.append ("1");
         else
             stringBuilder.append ("0");
 
+        stringBuilder.append ("\n");
+
         if (keyRIGHT)
             stringBuilder.append ("1");
         else
             stringBuilder.append ("0");
+
+        stringBuilder.append ("\n");
 
         if (shot)
             stringBuilder.append ("1");
