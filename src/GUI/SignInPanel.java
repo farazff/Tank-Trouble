@@ -263,7 +263,7 @@ public class SignInPanel extends JPanel
                 music.execute ();
                 if (!checkData ())
                     return;
-                // sign in
+
                 frame.setContentPane (nex);
                 frame.setVisible (false);
                 frame.setVisible (true);
