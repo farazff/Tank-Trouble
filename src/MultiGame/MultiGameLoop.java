@@ -1,11 +1,9 @@
 package MultiGame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -40,7 +38,6 @@ public class MultiGameLoop implements Runnable
     private String ip;
     private int port;
 
-
     public MultiGameLoop(MultiGameFrame frame , JFrame menuFrame)
     {
         moveTranslator = new MoveTranslator ();
@@ -61,37 +58,31 @@ public class MultiGameLoop implements Runnable
     @Override
     public void run()
     {
-        DataOutputStream out = null;
-        ObjectInputStream in = null;
-//        while (true)
-//            System.out.println (moveTranslator.getCommandString ());
         try (Socket socket = new Socket (ip,port))
         {
-            OutputStream out1 = socket.getOutputStream();
-            //in = new ObjectInputStream (socket.getInputStream ());
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+
             while(true)
             {
                 long start = System.currentTimeMillis();
-                //
 
                 String temp = moveTranslator.getCommandString();
-                System.out.println(temp);
-                out1.write(temp.getBytes());
+                System.out.println("sending numbers");
+                outputStream.write(temp.getBytes());
+                System.out.println("numbers sent");
 
+                BufferedImage image;
+                System.out.println("ready to read image");
+                image = ImageIO.read(inputStream);
+                System.out.println("image received");
 
-//                bufferedImage = (BufferedImage) in.readObject ();
-//                canvas.render(bufferedImage);
+                canvas.render(image);
 
-                //
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);
-
             }
-
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace ();
         } catch (IllegalArgumentException e)
         {
             System.err.println ("Some went Wrong in start");
@@ -99,37 +90,11 @@ public class MultiGameLoop implements Runnable
         catch (ConnectException e)
         {
             System.err.println ("Couldn't connect to Server");
-        } catch (SocketException e)
-        {
-            System.err.println ("Server Not Responding");
-        } catch (IOException e)
-        {
-            System.err.println ("Some went Wrong");
-        } finally {
-            try {
-                if (out != null)
-                    out.close ();
-            }
-            catch (SocketException ignore)
-            {
-            }
-            catch (IOException e)
-            {
-                System.err.println ("Some thing went wrong in closing ServerOutputStream");
-            }
-            try {
-                if (in != null)
-                    in.close ();
-            }
-            catch (SocketException ignore)
-            {
-            }
-            catch (IOException e)
-            {
-                System.err.println ("Some thing went wrong in closing ServerInputStream");
-            }
         }
-
+        catch (InterruptedException | IOException e)
+        {
+            e.printStackTrace();
+        }
 
         new Thread(new Runnable()
         {
@@ -140,7 +105,7 @@ public class MultiGameLoop implements Runnable
                 {
                     Thread.sleep(3000);
                     canvas.setVisible(false);
-                    menuFrame.setVisible(true);
+                    //menuFrame.setVisible(true);
                 }
                 catch (InterruptedException e)
                 {
