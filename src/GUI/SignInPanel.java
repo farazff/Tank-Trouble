@@ -1,5 +1,6 @@
 package GUI;
 
+import GameData.NullUser;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -25,7 +26,7 @@ public class SignInPanel extends JPanel
         return this;
     }
 
-
+    private User user; // user who signIn
     private JTextField username; // user name
     private boolean usernameTyped;
     private JPasswordField password; // pass word
@@ -43,6 +44,7 @@ public class SignInPanel extends JPanel
     public SignInPanel (JFrame frame)
     {
         super();
+        user = null;
         this.frame = frame;
         setBorder (new EmptyBorder (10,10,10,10));
         setLayout (new FlowLayout (FlowLayout.CENTER));
@@ -61,7 +63,9 @@ public class SignInPanel extends JPanel
         this.nex = nex;
     }
 
-
+    public User getUser () {
+        return user;
+    }
 
     /**
      * creates base panel
@@ -217,7 +221,6 @@ public class SignInPanel extends JPanel
                 music.execute ();
                 // sign in
 
-                // sign up
                 frame.setContentPane (new SignUpPanel(frame,getSignIn()));
                 frame.setVisible (false);
                 frame.setVisible (true);
@@ -239,8 +242,13 @@ public class SignInPanel extends JPanel
                 music.execute ();
                 if (!checkData ())
                     return;
-                if (connect () == null)
+                if (!connect ())
+                {
+                    passwordTyped = false;
+                    usernameTyped = true;
+                    checkData ();
                     return;
+                }
                 frame.setVisible (false);
                 frame.setContentPane (nex);
                 frame.setVisible (true);
@@ -256,7 +264,7 @@ public class SignInPanel extends JPanel
         }
     }
 
-    private User connect ()
+    private boolean connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1",username.getText (),
                 password.getPassword (),"Login");
@@ -270,15 +278,10 @@ public class SignInPanel extends JPanel
                 ex.printStackTrace ();
             }
         }
-        User user;
-        if ((user = logConnector.getLoginOrSignUpResult ()) == null)
-        {
-            passwordTyped = false;
-            usernameTyped = false;
-            checkData ();
-            return null;
-        }
-        return user;
+        user = logConnector.getLoginOrSignUpResult ();
+        if (user instanceof NullUser)
+            user = null;
+        return user != null;
     }
 
     /**
@@ -291,10 +294,14 @@ public class SignInPanel extends JPanel
             if (e.getSource () == signIn) {
                 Music music = new Music ();
                 music.execute ();
-                if (!checkData ())
+                if (!connect ())
+                {
+                    passwordTyped = false;
+                    usernameTyped = true;
+                    checkData ();
                     return;
-                if (connect () == null)
-                    return;
+                }
+
 
                 frame.setContentPane (nex);
                 frame.setVisible (false);
