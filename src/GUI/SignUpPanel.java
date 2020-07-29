@@ -1,5 +1,8 @@
 package GUI;
 
+import GameData.User;
+import Login_SignUp_Logout.LogConnector;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -134,6 +137,34 @@ public class SignUpPanel extends JPanel
 
     }
 
+    private boolean connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1",username.getText (),
+                password1.getPassword (),"SignUp");
+        new Thread (logConnector).start ();
+        while (!logConnector.isFinished ())
+        {
+            try {
+                Thread.sleep (100);
+            } catch (InterruptedException ex)
+            {
+                ex.printStackTrace ();
+            }
+        }
+        if (logConnector.getLoginOrSignUpResult () == null)
+        {
+            JOptionPane.showMessageDialog (this,"Some Thing Went Wrong",
+                    "Result",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else
+        {
+            JOptionPane.showMessageDialog (this,"Your account Successfully " +
+                    "Created","Result",JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }
+    }
+
     /**
      * check if the given data for signing up is ok or nor
      * if it is ok it will save the users info
@@ -182,7 +213,8 @@ public class SignUpPanel extends JPanel
 
         if(ans)
         {
-            System.out.println("User saved");
+            if (connect ())
+                ShowSignIn ();
         }
     }
 

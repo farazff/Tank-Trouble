@@ -124,6 +124,7 @@ public class GameFrame extends JFrame
 	{
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
+
 		try
 		{
 			drawRoads(g2d);

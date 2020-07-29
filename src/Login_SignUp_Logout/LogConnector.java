@@ -1,6 +1,7 @@
-package SocketConnectionForUserInformation;
+package Login_SignUp_Logout;
 
 
+import GameData.NullUser;
 import GameData.User;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.InputMismatchException;
 
-public class Client implements Runnable
+public class LogConnector implements Runnable
 {
 
     private String ip;
@@ -22,7 +23,7 @@ public class Client implements Runnable
     private boolean finished = false;
 
 
-    public Client (String ip, String username, char[] password, String request)
+    public LogConnector (String ip, String username, char[] password, String request)
     {
         if (request == null || request.equals ("Logout"))
             throw new InputMismatchException ("you should use this only for login or signUp");
@@ -33,7 +34,7 @@ public class Client implements Runnable
         this.password = password;
     }
 
-    public Client (String ip, String request, User user)
+    public LogConnector (String ip, String request, User user)
     {
         if (request == null || request.equals ("SignIn") || request.equals ("Login"))
             throw new InputMismatchException ("you should use this only for logout");
@@ -56,7 +57,7 @@ public class Client implements Runnable
                 for (char c : password)
                     pass.append (c);
                 // send
-                String data = request + username + pass.toString ();
+                String data = request + " " + username + " " + pass.toString ();
                 out = new DataOutputStream (connection.getOutputStream ());
                 ((DataOutputStream) out).writeUTF (data);
                 out.flush ();
@@ -93,7 +94,7 @@ public class Client implements Runnable
                         port + ((port == 8083)? " (Load Server) " :
                         " (Save Server) "));
             }
-            finished = true;
+
         } catch (IllegalArgumentException e)
         {
             System.err.println ("Some went Wrong in start");
@@ -104,7 +105,7 @@ public class Client implements Runnable
         }
         catch (ClassNotFoundException e)
         {
-            System.err.println ("Some Thing went Wrong while reading from ClientPlayer");
+            e.printStackTrace ();
         } catch (SocketException e)
         {
             System.err.println ("Server Not Responding");
@@ -112,6 +113,7 @@ public class Client implements Runnable
         {
             System.err.println ("Some went Wrong");
         } finally {
+            finished = true;
             try {
                 if (in != null)
                     in.close ();
@@ -142,7 +144,12 @@ public class Client implements Runnable
         if (finished)
         {
             if (port == 8083)
-                return user;
+            {
+                if (user instanceof NullUser)
+                    return null;
+                else
+                    return user;
+            }
             else
                 return null;
         }

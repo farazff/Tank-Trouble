@@ -1,5 +1,4 @@
 package GameData;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
@@ -74,6 +73,13 @@ public class User implements Serializable
     {
         return Arrays.equals (password,this.password) &&
                 userName.equals (this.userName);
+    }
+
+    @Override
+    public String toString () {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                '}';
     }
 
     @Override

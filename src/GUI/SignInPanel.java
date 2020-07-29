@@ -1,5 +1,8 @@
 package GUI;
 
+import GameData.User;
+import Login_SignUp_Logout.LogConnector;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +24,7 @@ public class SignInPanel extends JPanel
     {
         return this;
     }
+
 
     private JTextField username; // user name
     private boolean usernameTyped;
@@ -235,9 +239,10 @@ public class SignInPanel extends JPanel
                 music.execute ();
                 if (!checkData ())
                     return;
-                // sign in
-                frame.setContentPane (nex);
+                if (connect () == null)
+                    return;
                 frame.setVisible (false);
+                frame.setContentPane (nex);
                 frame.setVisible (true);
             }
             else if (e.getSource () == username)
@@ -251,6 +256,31 @@ public class SignInPanel extends JPanel
         }
     }
 
+    private User connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1",username.getText (),
+                password.getPassword (),"Login");
+        new Thread (logConnector).start ();
+        while (!logConnector.isFinished ())
+        {
+            try {
+                Thread.sleep (100);
+            } catch (InterruptedException ex)
+            {
+                ex.printStackTrace ();
+            }
+        }
+        User user;
+        if ((user = logConnector.getLoginOrSignUpResult ()) == null)
+        {
+            passwordTyped = false;
+            usernameTyped = false;
+            checkData ();
+            return null;
+        }
+        return user;
+    }
+
     /**
      * this class handles actions
      */
@@ -262,6 +292,8 @@ public class SignInPanel extends JPanel
                 Music music = new Music ();
                 music.execute ();
                 if (!checkData ())
+                    return;
+                if (connect () == null)
                     return;
 
                 frame.setContentPane (nex);
