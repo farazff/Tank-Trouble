@@ -1,5 +1,6 @@
 package GUI;
 
+import GameData.NullUser;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -154,13 +155,19 @@ public class SignUpPanel extends JPanel
         if (logConnector.getLoginOrSignUpResult () == null)
         {
             JOptionPane.showMessageDialog (this,"Some Thing Went Wrong",
-                    "Result",JOptionPane.ERROR_MESSAGE);
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if (logConnector.getLoginOrSignUpResult () instanceof NullUser)
+        {
+            JOptionPane.showMessageDialog (this,"This userName already has taken",
+                    "Error",JOptionPane.ERROR_MESSAGE);
             return false;
         }
         else
         {
             JOptionPane.showMessageDialog (this,"Your account Successfully " +
-                    "Created","Result",JOptionPane.INFORMATION_MESSAGE);
+                    "Created","Success",JOptionPane.INFORMATION_MESSAGE);
             return true;
         }
     }

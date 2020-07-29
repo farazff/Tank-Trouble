@@ -145,10 +145,7 @@ public class LogConnector implements Runnable
         {
             if (port == 8083)
             {
-                if (user instanceof NullUser)
-                    return null;
-                else
-                    return user;
+                return user;
             }
             else
                 return null;
