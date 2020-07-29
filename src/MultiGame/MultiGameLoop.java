@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -62,99 +63,99 @@ public class MultiGameLoop implements Runnable
     {
         DataOutputStream out = null;
         ObjectInputStream in = null;
-        while (true)
-            System.out.println (moveTranslator.getCommandString ());
-//        try (Socket socket = new Socket (ip,port)){
-//            out = new DataOutputStream (socket.getOutputStream ());
-//            in = new ObjectInputStream (socket.getInputStream ());
-//
-//            while(true)
-//            {
-//                long start = System.currentTimeMillis();
-//                //
-//                out.writeUTF (moveTranslator.getCommandString ());
-//                out.flush ();
+//        while (true)
+//            System.out.println (moveTranslator.getCommandString ());
+        try (Socket socket = new Socket (ip,port))
+        {
+            OutputStream out1 = socket.getOutputStream();
+            //in = new ObjectInputStream (socket.getInputStream ());
+            while(true)
+            {
+                long start = System.currentTimeMillis();
+                //
+
+                String temp = moveTranslator.getCommandString();
+                System.out.println(temp);
+                out1.write(temp.getBytes());
+
+
 //                bufferedImage = (BufferedImage) in.readObject ();
 //                canvas.render(bufferedImage);
-//
-//                //
-//                long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
-//                if (delay > 0)
-//                    Thread.sleep(delay);
-//
-//            }
-//
-//        } catch (InterruptedException e)
-//        {
-//            e.printStackTrace ();
-//        } catch (IllegalArgumentException e)
-//        {
-//            System.err.println ("Some went Wrong in start");
-//        }
-//        catch (ConnectException e)
-//        {
-//            System.err.println ("Couldn't connect to Server");
-//        }
-//        catch (ClassNotFoundException e)
-//        {
-//            System.err.println ("Some Thing went Wrong while casting to bufferImage");
-//        } catch (SocketException e)
-//        {
-//            System.err.println ("Server Not Responding");
-//        } catch (IOException e)
-//        {
-//            System.err.println ("Some went Wrong");
-//        } finally {
-//            try {
-//                if (out != null)
-//                    out.close ();
-//            }
-//            catch (SocketException ignore)
-//            {
-//            }
-//            catch (IOException e)
-//            {
-//                System.err.println ("Some thing went wrong in closing ServerOutputStream");
-//            }
-//            try {
-//                if (in != null)
-//                    in.close ();
-//            }
-//            catch (SocketException ignore)
-//            {
-//            }
-//            catch (IOException e)
-//            {
-//                System.err.println ("Some thing went wrong in closing ServerInputStream");
-//            }
-//        }
-//
-//
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                try
-//                {
-//                    Thread.sleep(3000);
-//                    canvas.setVisible(false);
-//                    menuFrame.setVisible(true);
-//                }
-//                catch (InterruptedException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//
-//        try
-//        {
-//            canvas.render(bufferedImage);
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+
+                //
+                long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
+                if (delay > 0)
+                    Thread.sleep(delay);
+
+            }
+
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace ();
+        } catch (IllegalArgumentException e)
+        {
+            System.err.println ("Some went Wrong in start");
+        }
+        catch (ConnectException e)
+        {
+            System.err.println ("Couldn't connect to Server");
+        } catch (SocketException e)
+        {
+            System.err.println ("Server Not Responding");
+        } catch (IOException e)
+        {
+            System.err.println ("Some went Wrong");
+        } finally {
+            try {
+                if (out != null)
+                    out.close ();
+            }
+            catch (SocketException ignore)
+            {
+            }
+            catch (IOException e)
+            {
+                System.err.println ("Some thing went wrong in closing ServerOutputStream");
+            }
+            try {
+                if (in != null)
+                    in.close ();
+            }
+            catch (SocketException ignore)
+            {
+            }
+            catch (IOException e)
+            {
+                System.err.println ("Some thing went wrong in closing ServerInputStream");
+            }
+        }
+
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(3000);
+                    canvas.setVisible(false);
+                    menuFrame.setVisible(true);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        try
+        {
+            canvas.render(bufferedImage);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
