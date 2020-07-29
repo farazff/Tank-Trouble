@@ -160,7 +160,7 @@ public class SignUpPanel extends JPanel
         }
         else if (logConnector.getLoginOrSignUpResult () instanceof NullUser)
         {
-            JOptionPane.showMessageDialog (this,"This userName already has taken",
+            JOptionPane.showMessageDialog (this,"This username already has taken",
                     "Error",JOptionPane.ERROR_MESSAGE);
             return false;
         }

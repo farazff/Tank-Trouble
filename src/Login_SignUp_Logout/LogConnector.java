@@ -1,7 +1,7 @@
 package Login_SignUp_Logout;
 
 
-import GameData.NullUser;
+
 import GameData.User;
 
 import java.io.*;
@@ -69,8 +69,6 @@ public class LogConnector implements Runnable
 
                 in = new ObjectInputStream (connection.getInputStream ());
                 user = (User) ((ObjectInputStream) in).readObject ();
-
-                String[] split = request.split (" ");
 
                 System.out.println ("<- data received from Server : " +
                         port + ((port == 8083)? " (Load Server) " :

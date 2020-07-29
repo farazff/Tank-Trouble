@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
+
 public class User implements Serializable
 {
     private char[] password;
@@ -24,6 +25,9 @@ public class User implements Serializable
         rank = -1;
     }
 
+    public String getUserName () {
+        return userName;
+    }
 
     public void setDefaultWallStamina (int defaultWallStamina) {
         this.defaultWallStamina = defaultWallStamina;
@@ -69,30 +73,20 @@ public class User implements Serializable
         return rank;
     }
 
-    public boolean isSame (String userName, char[] password)
-    {
-        return Arrays.equals (password,this.password) &&
-                userName.equals (this.userName);
-    }
 
-    @Override
-    public String toString () {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals (Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return isSame (user.userName, user.password);
+        return Arrays.equals (password, user.password) &&
+                Objects.equals (getUserName (), user.getUserName ());
     }
 
     @Override
     public int hashCode () {
-        int result = Objects.hash (userName);
+        int result = Objects.hash (getUserName ());
         result = 31 * result + Arrays.hashCode (password);
         return result;
     }
