@@ -6,6 +6,7 @@ import GUI.MultiGamePanels.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
 import GameData.ServerDataBase;
+import GameData.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class Setting extends JPanel
 
     private JFrame frame;
     private JPanel pre;
+    private User user;
 
     public void setPre(JPanel pre)
     {
@@ -78,6 +80,10 @@ public class Setting extends JPanel
         readFile();
         createLeft();
         createMain();
+    }
+
+    public void setUser (User user) {
+        this.user = user;
     }
 
     public void readFile()

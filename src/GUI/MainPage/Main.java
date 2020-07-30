@@ -2,6 +2,9 @@ package GUI.MainPage;
 
 import GUI.Music;
 import GUI.Setting.Setting;
+import GameData.NullUser;
+import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,6 +21,7 @@ public class Main extends JPanel
     private JPanel sett;
     private JPanel sing;
     private JPanel mul;
+    private User user;
 
 
     public void setSett(JPanel sett)
@@ -43,6 +47,7 @@ public class Main extends JPanel
     private JPanel top;
     private JPanel middle;
     private JPanel DMiddle;
+    private JPanel pre;
     private MouseListener mouse = new MouseHandler();
 
     private ShapeLabel about;
@@ -56,6 +61,7 @@ public class Main extends JPanel
     public Main(JFrame frame)
     {
         super();
+        user = null;
         this.frame = frame;
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(900,530));
@@ -92,6 +98,14 @@ public class Main extends JPanel
         setMiddle();
     }
 
+    public void setPre (JPanel pre) {
+        this.pre = pre;
+    }
+
+    public void setUser (User user) {
+        this.user = user;
+    }
+
     public void setTop()
     {
         int[] x = {40 ,47, 52 ,59 ,77, 74, 79, 90, 98, 86, 86 ,98 ,90, 77, 74, 77, 59, 52, 49 ,40 ,22 ,26, 24, 10, 2, 14 ,14 ,2,9 ,23 ,26,22};
@@ -118,7 +132,7 @@ public class Main extends JPanel
         int[] x2 = {35,34,60,60,93,60,61};
         int[] y2 = {39,61,62,76,50,24,38};
 
-        exit = new ExitJLabel(" Exit",x1,y1,x2,y2);
+        exit = new ExitJLabel("     Logout",x1,y1,x2,y2);
         exit.setPreferredSize(new Dimension(100,100));
         exit.addMouseListener(mouse);
 
@@ -186,6 +200,7 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 setting.rePaintExited();
+                ((Setting)sett).setUser (user);
                 frame.setContentPane(sett);
                 frame.setVisible(false);
                 frame.setVisible(true);
@@ -214,7 +229,8 @@ public class Main extends JPanel
                 music.execute();
                 about.rePaintExited();
                 StringBuilder string = new StringBuilder();
-                string.append("Developers: \n 1) Amirreza Naziri     9726081\n  ##Email##\n2) Faraz Farangizadeh     9726060\n");
+                string.append("Developers: \n 1) Amirreza Naziri     9726081\n  naziriamirreza@gmail.com" +
+                        "\n2) Faraz Farangizadeh     9726060\n");
                 string.append("  f.farangizadeh@gmail.com");
                 JOptionPane.showMessageDialog(null,string.toString(),"About",JOptionPane.INFORMATION_MESSAGE);
             }
@@ -223,14 +239,48 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 exit.rePaintExited();
-                int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?",
+                int ans = JOptionPane.showConfirmDialog(null,"Are you sure you want to Logout?",
                         "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
-                System.out.println(ans);
                 if(ans == 0) //yes
                 {
-                    System.exit(0);
+                    if (!connect ())
+                    {
+                        int ans2 = JOptionPane.showConfirmDialog(null,"Some thing went wrong in " +
+                                        "Connection to Server , if you logout your data will lost!",
+                                "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+                        if (ans2 == 0)
+                        {
+                            frame.setContentPane (pre);
+                            frame.setVisible(false);
+                            frame.setVisible(true);
+                        }
+                    }
+                    else
+                    {
+                        frame.setContentPane (pre);
+                        frame.setVisible(false);
+                        frame.setVisible(true);
+                    }
+
                 }
             }
+        }
+
+        private boolean connect ()
+        {
+            LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+            new Thread (logConnector).start ();
+            while (!logConnector.isFinished ())
+            {
+                try{
+                    Thread.sleep (10);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace ();
+                }
+            }
+            String res = logConnector.getLogoutResult ();
+            return res.equals ("Successful");
         }
 
         @Override

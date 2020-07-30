@@ -19,7 +19,7 @@ public class LogConnector implements Runnable
     private User user;
     private String username;
     private char[] password;
-    private String res;
+    private String res = "Error";
     private boolean finished = false;
 
 

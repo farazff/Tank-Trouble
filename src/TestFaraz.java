@@ -65,6 +65,7 @@ public class TestFaraz
         SignInPanel signInPanel = new SignInPanel(frame);
         SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
         Main main = new Main (frame);
+        main.setPre (signInPanel);
         GameWithPC gameWithPC = new GameWithPC(frame);
         MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
         Setting setting = new Setting(frame,servers);
@@ -85,25 +86,25 @@ public class TestFaraz
         frame.setVisible(true);
         loading.fill();
 
-        ThreadPool.init();
+//        ThreadPool.init();
 
-        EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                MultiGameFrame frame = null;
-                frame = new MultiGameFrame("Tank Trouble !");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-                frame.initBufferStrategy();
-
-                MultiGameLoop game = new MultiGameLoop(frame,null);
-                game.init("127.0.0.1",8080);
-                ThreadPool.execute(game);
-            }
-        });
+//        EventQueue.invokeLater(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                MultiGameFrame frame = null;
+//                frame = new MultiGameFrame("Tank Trouble !");
+//                frame.setLocationRelativeTo(null);
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setVisible(true);
+//                frame.initBufferStrategy();
+//
+//                MultiGameLoop game = new MultiGameLoop(frame,null);
+//                game.init("127.0.0.1",8080);
+//                ThreadPool.execute(game);
+//            }
+//        });
 
 
     }

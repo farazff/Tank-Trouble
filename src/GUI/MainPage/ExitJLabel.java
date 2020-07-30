@@ -21,7 +21,7 @@ public class ExitJLabel extends JLabel
     {
         super(text);
         this.setHorizontalAlignment(JLabel.CENTER);
-        this.setFont(new Font("Arial",Font.BOLD,17));
+        this.setFont(new Font("Arial",Font.BOLD,14));
         this.x = x;
         this.y = y;
         this.x1 = x1;

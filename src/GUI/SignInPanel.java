@@ -1,5 +1,6 @@
 package GUI;
 
+import GUI.MainPage.Main;
 import GameData.NullUser;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
@@ -63,9 +64,7 @@ public class SignInPanel extends JPanel
         this.nex = nex;
     }
 
-    public User getUser () {
-        return user;
-    }
+
 
     /**
      * creates base panel
@@ -279,8 +278,11 @@ public class SignInPanel extends JPanel
             }
         }
         user = logConnector.getLoginOrSignUpResult ();
-        if (user instanceof NullUser)
+        if (user instanceof NullUser) {
             user = null;
+        }
+        if (user != null)
+            ((Main)nex).setUser (user);
         return user != null;
     }
 
