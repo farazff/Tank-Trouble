@@ -77,6 +77,7 @@ public class MultiGameLoop implements Runnable
                 System.out.println (temp);
                 out.writeUTF (temp);
                 out.flush ();
+
                 ImageIcon imageIcon = (ImageIcon) in.readObject ();
                 bufferedImage = new BufferedImage (imageIcon.getIconWidth (),imageIcon.getIconHeight (),
                         BufferedImage.TYPE_INT_ARGB);
@@ -85,14 +86,14 @@ public class MultiGameLoop implements Runnable
                 g.dispose ();
                 canvas.render(bufferedImage);
 
-                //
+
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);
 
             }
 
-        } catch (InterruptedException | ClassNotFoundException e)
+        } catch (InterruptedException e)
         {
             e.printStackTrace ();
         } catch (IllegalArgumentException e)
@@ -109,7 +110,9 @@ public class MultiGameLoop implements Runnable
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");
-        }  finally {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
             try {
                 if (out != null)
                     out.close ();
