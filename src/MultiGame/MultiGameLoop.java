@@ -2,6 +2,7 @@ package MultiGame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -63,18 +64,25 @@ public class MultiGameLoop implements Runnable
     public void run()
     {
         DataOutputStream out = null;
-        InputStream in = null;
+        ObjectInputStream in = null;
         try (Socket socket = new Socket (ip,port)){
             out = new DataOutputStream (socket.getOutputStream ());
-            in = socket.getInputStream ();
+            in = new ObjectInputStream (socket.getInputStream ());
 
             while(true)
             {
                 long start = System.currentTimeMillis();
                 //
-                out.writeUTF (moveTranslator.getCommandString ());
+                String temp = moveTranslator.getCommandString ();
+                System.out.println (temp);
+                out.writeUTF (temp);
                 out.flush ();
-                bufferedImage = ImageIO.read (in);
+                ImageIcon imageIcon = (ImageIcon) in.readObject ();
+                bufferedImage = new BufferedImage (imageIcon.getIconWidth (),imageIcon.getIconHeight (),
+                        BufferedImage.TYPE_INT_ARGB);
+                Graphics g = bufferedImage.getGraphics ();
+                imageIcon.paintIcon (null,g,0,0);
+                g.dispose ();
                 canvas.render(bufferedImage);
 
                 //
@@ -84,7 +92,7 @@ public class MultiGameLoop implements Runnable
 
             }
 
-        } catch (InterruptedException e)
+        } catch (InterruptedException | ClassNotFoundException e)
         {
             e.printStackTrace ();
         } catch (IllegalArgumentException e)
@@ -101,7 +109,7 @@ public class MultiGameLoop implements Runnable
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");
-        } finally {
+        }  finally {
             try {
                 if (out != null)
                     out.close ();
