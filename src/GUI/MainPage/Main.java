@@ -3,6 +3,7 @@ package GUI.MainPage;
 import GUI.Music;
 import GUI.Setting.Setting;
 import GameData.NullUser;
+import GameData.ServerDataBase;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -14,20 +15,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends JPanel
 {
 
-    private JPanel sett;
+
     private JPanel sing;
     private JPanel mul;
     private User user;
 
 
-    public void setSett(JPanel sett)
-    {
-        this.sett = sett;
-    }
+
 
     public void setSing(JPanel sing)
     {
@@ -200,8 +199,9 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 setting.rePaintExited();
-                ((Setting)sett).setUser (user);
-                frame.setContentPane(sett);
+                Setting setting = new Setting(frame,new ServerDataBase (new ArrayList<> ()),user);
+                setting.setPre (getPanel ());
+                frame.setContentPane(setting);
                 frame.setVisible(false);
                 frame.setVisible(true);
             }

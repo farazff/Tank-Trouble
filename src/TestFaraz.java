@@ -68,7 +68,7 @@ public class TestFaraz
         main.setPre (signInPanel);
         GameWithPC gameWithPC = new GameWithPC(frame);
         MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
-        Setting setting = new Setting(frame,servers);
+
 
 
         loading.setNex(signInPanel);
@@ -76,10 +76,10 @@ public class TestFaraz
 
         main.setSing(gameWithPC);
         main.setMul(multiGamePanel);
-        main.setSett(setting);
+
         gameWithPC.setPre(main);
         multiGamePanel.setPre(main);
-        setting.setPre(main);
+
 
 
         frame.setContentPane(loading);

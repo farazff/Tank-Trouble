@@ -9,6 +9,8 @@ import GameData.ServerDataBase;
 import GameData.User;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -56,14 +58,11 @@ public class Setting extends JPanel
     private JButton removeServer;
 
 
-    private int tank;
-    private int canon;
-    private int wallfirst;
 
 
     private MouseHandler mouse = new MouseHandler();
 
-    public Setting(JFrame frame, ServerDataBase serverDataBase)
+    public Setting(JFrame frame, ServerDataBase serverDataBase, User user)
     {
         this.frame = frame;
         this.serverListPanel = new ServerListPanel (serverDataBase,null);
@@ -77,42 +76,14 @@ public class Setting extends JPanel
 
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
-        readFile();
+        this.user = user;
         createLeft();
         createMain();
     }
 
-    public void setUser (User user) {
-        this.user = user;
-    }
 
-    public void readFile()
-    {
-        int i=1;
-        try
-        {
-            Scanner scanner = new Scanner (new File("Files/Setting.txt"));
-            while (scanner.hasNext ())
-            {
-                if (i == 1)
-                {
-                    tank = scanner.nextInt ();
-                } else if (i == 2)
-                {
-                    canon = scanner.nextInt ();
-                } else
-                {
-                    wallfirst = scanner.nextInt ();
-                }
-                i++;
-            }
 
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+
 
     public void createMain()
     {
@@ -121,9 +92,11 @@ public class Setting extends JPanel
         userInfoPanel.setBackground(Color.GRAY);
         userInfoPanel.setOpaque(true);
         userInfoPanel.add(new LeftPartLabel("User Name: ",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("Faraz",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(user.getUserName (),18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Playing Time:  ",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("528 minutes ",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(
+                ((System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60))
+                + "",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total Single Games:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel("25",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total multiPlayer Games:",18,Color.WHITE));
@@ -143,7 +116,7 @@ public class Setting extends JPanel
         defaultsPanel.setOpaque(true);
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        sliderTank = new JSlider(10,100,tank);
+        sliderTank = new JSlider(10,100,user.getDefaultTankStamina ());
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
@@ -153,7 +126,7 @@ public class Setting extends JPanel
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        sliderCanon = new JSlider(10,100,canon);
+        sliderCanon = new JSlider(10,100,user.getDefaultCanonPower ());
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
@@ -163,7 +136,7 @@ public class Setting extends JPanel
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        sliderWall = new JSlider(10,100,wallfirst);
+        sliderWall = new JSlider(10,100,user.getDefaultWallStamina ());
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);
@@ -308,30 +281,15 @@ public class Setting extends JPanel
             {
                 Music music = new Music();
                 music.execute();
-                sliderTank.setValue(100);
-                sliderCanon.setValue(100);
-                sliderWall.setValue(100);
+                sliderTank.setValue(user.getDefaultTankStamina ());
+                sliderCanon.setValue(user.getDefaultCanonPower ());
+                sliderWall.setValue(user.getDefaultWallStamina ());
             }
             if(e.getSource().equals(save))
             {
-                try
-                {
-                    Music music = new Music();
-                    music.execute();
-                    FileWriter writer = new FileWriter(new File("Files/Setting.txt"));
-                    writer.write(Integer.toString(sliderTank.getValue()));
-                    writer.write("\n");
-                    writer.write(Integer.toString(sliderCanon.getValue()));
-                    writer.write("\n");
-                    writer.write(Integer.toString(sliderWall.getValue()));
-                    writer.write("\n");
-                    writer.close();
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-
+                user.setDefaultTankStamina (sliderTank.getValue ());
+                user.setDefaultCanonPower (sliderCanon.getValue ());
+                user.setDefaultWallStamina (sliderWall.getValue ());
             }
             if(e.getSource().equals(back))
             {
@@ -466,4 +424,6 @@ public class Setting extends JPanel
 //            }
         }
     }
+
+
 }

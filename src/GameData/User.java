@@ -23,6 +23,9 @@ public class User implements Serializable
         signedUpTime = System.currentTimeMillis ();
         this.score = 0;
         rank = -1;
+        defaultCanonPower = 10;
+        defaultTankStamina = 10;
+        defaultWallStamina = 10;
     }
 
     public String getUserName () {
