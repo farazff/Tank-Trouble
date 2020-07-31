@@ -46,7 +46,7 @@ public class BulletMulti implements Runnable , Serializable
         BufferedImage image = null;
         try
         {
-            image = ImageIO.read (new File ("./Images/Bullet/bulletDark1_outline.png"));
+            image = ImageIO.read (new File ("./Images/FirstOpens/bulletDark1_outline.png"));
         }
         catch (IOException e) {
             e.printStackTrace ();

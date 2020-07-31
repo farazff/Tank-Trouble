@@ -58,7 +58,6 @@ public class MultiGameLoop implements Runnable
                 //System.out.println(temp);
                 outputStream.write(temp.getBytes());
                 GameStatus status = (GameStatus) objectInputStream.readObject();
-                System.out.println(status.getTanks().get(0).getDegree());
                 if(status.getTanks().size()>=1)
                     canvas.render(status);
 

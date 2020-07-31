@@ -550,7 +550,8 @@ public class Tank implements Runnable
                         keyRIGHT = false;
                         break;
                     case KeyEvent.VK_SPACE:
-                        if (canShot) {
+                        if (canShot)
+                        {
                             Music music = new Music ();
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();

@@ -55,13 +55,17 @@ public class TankMulti implements Runnable , Serializable
 
         stamina = tankStamina;
         degree = 45;
-        tankImageLoc =(getImageAddress ());
+        tankImageLoc = (getImageAddress ());
         try
         {
-            BufferedImage tankImage = ImageIO.read(new File(tankImageLoc));
+            File temp = new File("Images/FirstOpens/red315Multi.png");
+            BufferedImage tankImage = ImageIO.read(temp);
             height = tankImage.getHeight ();
-            width = tankImage.getWidth ();
-        } catch (IOException e) {
+            width = tankImage.getWidth();
+
+        }
+        catch (IOException e)
+        {
             e.printStackTrace ();
         }
     }
@@ -389,7 +393,7 @@ public class TankMulti implements Runnable , Serializable
 
     public String getImageAddress ()
     {
-        return "Images/Tanks/red315Multi.png";
+        return "Images/Tanks/red315.png";
     }
 
     public int getLocX ()

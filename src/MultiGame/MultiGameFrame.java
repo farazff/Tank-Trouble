@@ -14,26 +14,21 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-/**
- * The window on which the rendering is performed.
- * This example uses the modern BufferStrategy approach for double-buffering,
- * actually it performs triple-buffering!
- * For more information on BufferStrategy check out:
- *    http://docs.oracle.com/javase/tutorial/extra/fullscreen/bufferstrategy.html
- *    http://docs.oracle.com/javase/8/docs/api/java/awt/image/BufferStrategy.html
- *
- * @author Seyed Mohammad Ghaffarian
- */
-public class MultiGameFrame extends JFrame implements Serializable
+
+public class MultiGameFrame extends JFrame
 {
     public static final int GAME_HEIGHT = 720;                  // 720p game resolution
     public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
+
+    public BufferedImage tankRed;
+    public BufferedImage fireImg;
+
 
     private long lastRender;
     private ArrayList<Float> fpsHistory;
@@ -75,6 +70,10 @@ public class MultiGameFrame extends JFrame implements Serializable
             wallDH = ImageIO.read (new File("Images/Walls/YellowH.png"));
             wallNDV = ImageIO.read(new File("Images/Walls/RedV.png"));
             wallDV  = ImageIO.read(new File("Images/Walls/YellowV.png"));
+
+            tankRed = ImageIO.read(new File("Images/Tanks/red315.png"));
+            fireImg = ImageIO.read(new File("Images/Bullet/shotLarge.png"));
+
         }
         catch (IOException e)
         {
@@ -149,7 +148,7 @@ public class MultiGameFrame extends JFrame implements Serializable
                 }
                 else
                 {
-                    BufferedImage image = ImageIO.read(new File("C:\\Users\\ffara\\Desktop\\Tank Trouble\\Images\\Tanks\\red315Multi.png"));
+                    BufferedImage image = ImageIO.read(new File(tank.getImageAddress()));
 
                     g2d.drawImage (rotateImage (image, tank.getDegree () - 45),
                             tank.getLocX (), tank.getLocY (), null);
@@ -157,7 +156,7 @@ public class MultiGameFrame extends JFrame implements Serializable
                     if (tank.isShot ())
                     {
                         BufferedImage image1 = rotateImageBullet (
-                                ImageIO.read(new File(TankMulti.getFireImageLoc()))
+                               fireImg
                                 , tank.getDegree () - 90);
 
                         g2d.drawImage (image1,
