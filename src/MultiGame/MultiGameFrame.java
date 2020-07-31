@@ -148,7 +148,7 @@ public class MultiGameFrame extends JFrame
                 }
                 else
                 {
-                    BufferedImage image = ImageIO.read(new File(tank.getImageAddress()));
+                    BufferedImage image = tankRed;
 
                     g2d.drawImage (rotateImage (image, tank.getDegree () - 45),
                             tank.getLocX (), tank.getLocY (), null);
