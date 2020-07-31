@@ -45,7 +45,7 @@ public class MultiGameLoop implements Runnable
 
         try(Socket client = new Socket (ip,port))
         {
-
+            System.out.println("Connected to server.");
             OutputStream outputStream = client.getOutputStream();
             ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
 
@@ -53,14 +53,16 @@ public class MultiGameLoop implements Runnable
             {
                 long start = System.currentTimeMillis();
 
-                System.out.println("Connected to server.");
 
                 String temp = moveTranslator.getCommandString();
-                System.out.println(temp);
+                //System.out.println(temp);
                 outputStream.write(temp.getBytes());
                 GameStatus status = (GameStatus) objectInputStream.readObject();
+                System.out.println(status.getTanks().get(0).getDegree());
+                if(status.getTanks().size()>=1)
+                    canvas.render(status);
 
-                //canvas.render(bufferedImage);
+
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);

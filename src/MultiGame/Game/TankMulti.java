@@ -389,8 +389,7 @@ public class TankMulti implements Runnable , Serializable
 
     public String getImageAddress ()
     {
-        String imageAddress = "Images/Tanks/red315.png";
-        return imageAddress;
+        return "Images/Tanks/red315Multi.png";
     }
 
     public int getLocX ()
