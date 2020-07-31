@@ -4,9 +4,9 @@ import GUI.GridBagSetter;
 import GUI.Music;
 import GUI.PictureJLabel;
 import GUI.Selecting;
+import GameData.MultiGame;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
-import GameData.MultiGame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -160,7 +160,7 @@ public class CreateNewMultiGame extends JPanel
         GridBagConstraints constraintsR = new GridBagConstraints ();
         rightPanel.setLayout (layoutR);
 
-        JLabel multiPlayerGame = new JLabel("MultiPlayer Game");
+        JLabel multiPlayerGame = new JLabel("MultiPlayer MultiGame");
         multiPlayerGame.setBackground(null);
         multiPlayerGame.setHorizontalAlignment(JLabel.CENTER);
         multiPlayerGame.setOpaque(true);
@@ -191,7 +191,7 @@ public class CreateNewMultiGame extends JPanel
 
 
 
-        JLabel gameName = new JLabel ("Game's  Name*: ");
+        JLabel gameName = new JLabel ("MultiGame's  Name*: ");
         gameName.setFont (new Font ("arial",Font.PLAIN,15));
         gameNameTextField = new JTextField ();
         gameNameTextField.setFont (new Font ("arial",Font.PLAIN,14));

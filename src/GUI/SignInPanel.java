@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * this class represents the Login Panel of Game
+ * this class represents the Login Panel of MultiGame
  *
  * @author Amir Naziri
  */

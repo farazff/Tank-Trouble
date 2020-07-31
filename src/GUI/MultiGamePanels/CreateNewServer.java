@@ -67,7 +67,7 @@ public class CreateNewServer extends JPanel
 
         base.setLayout (layout);
 
-        JLabel server = new JLabel("Create New Server");
+        JLabel server = new JLabel("Create New ServerInformation");
         server.setHorizontalAlignment(JLabel.CENTER);
         server.setBackground(null);
         server.setFont(new Font("Arial",Font.BOLD,30));
@@ -283,8 +283,8 @@ public class CreateNewServer extends JPanel
                 if (!checkData ())
                     return;
 
-                Server server = new Server (url.getText (),null,password1.getPassword ());
-                serverListPanel.addNewServer (server);
+                ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
+                serverListPanel.addNewServer (serverInformation);
                 frame.setContentPane (pre);
 
             }

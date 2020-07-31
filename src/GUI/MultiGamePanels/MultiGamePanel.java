@@ -4,7 +4,7 @@ package GUI.MultiGamePanels;
 import GUI.Music;
 import GUI.NullPanel;
 import GUI.PictureJLabel;
-import GameData.ServerDataBase;
+import GameData.ServerInformationStorage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -36,7 +36,7 @@ public class MultiGamePanel extends JPanel
 
     private JLabel back;
 
-    public MultiGamePanel (JFrame frame, ServerDataBase serverDataBase)
+    public MultiGamePanel (JFrame frame, ServerInformationStorage serverInformationStorage)
     {
 
         main = new JPanel (new GridLayout (1,3));
@@ -46,7 +46,7 @@ public class MultiGamePanel extends JPanel
         // header part
 
 
-        JLabel multiPlayerGame = new JLabel("MultiPlayer Game");
+        JLabel multiPlayerGame = new JLabel("MultiPlayer MultiGame");
         multiPlayerGame.setBackground(null);
         multiPlayerGame.setHorizontalAlignment(JLabel.CENTER);
         multiPlayerGame.setOpaque(true);
@@ -78,7 +78,7 @@ public class MultiGamePanel extends JPanel
 
         setBorder (new LineBorder (Color.GRAY,8,true));
 
-        createNewGame = new JButton ("Create New Game");
+        createNewGame = new JButton ("Create New MultiGame");
         createNewGame.setFont (new Font ("Arial",Font.PLAIN,17));
         createNewGame.setMinimumSize (new Dimension (5,10));
         createNewGame.addActionListener (new ActionHandler ());
@@ -86,7 +86,7 @@ public class MultiGamePanel extends JPanel
 
         firstPanel = new JPanel (new BorderLayout ());
         firstPanel.setBackground (Color.WHITE);
-        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (serverDataBase,this),
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (serverInformationStorage,this),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));

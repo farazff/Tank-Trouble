@@ -5,18 +5,14 @@ import GUI.MultiGamePanels.ServerButtonPanel;
 import GUI.MultiGamePanels.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
-import GameData.ServerDataBase;
+import GameData.ServerInformationStorage;
 import GameData.User;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.*;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class Setting extends JPanel
 {
@@ -62,10 +58,10 @@ public class Setting extends JPanel
 
     private MouseHandler mouse = new MouseHandler();
 
-    public Setting(JFrame frame, ServerDataBase serverDataBase, User user)
+    public Setting(JFrame frame, ServerInformationStorage serverInformationStorage, User user)
     {
         this.frame = frame;
-        this.serverListPanel = new ServerListPanel (serverDataBase,null);
+        this.serverListPanel = new ServerListPanel (serverInformationStorage,null);
         JScrollPane scrollPane1 = new JScrollPane (serverListPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -174,8 +170,8 @@ public class Setting extends JPanel
 
 
         JPanel buttonsPanel = new JPanel (new GridLayout (1,2));
-        createNewServer = new JButton ("Create New Server");
-        removeServer = new JButton ("Remove Server");
+        createNewServer = new JButton ("Create New ServerInformation");
+        removeServer = new JButton ("Remove ServerInformation");
         buttonsPanel.add (createNewServer);
         buttonsPanel.add (removeServer);
         serversListPanelInSetting.add (buttonsPanel,BorderLayout.SOUTH);
@@ -201,10 +197,10 @@ public class Setting extends JPanel
         userInfo = new ColorJLabel("    User info");
         userInfo.addMouseListener(mouse);
 
-        defaults = new ColorJLabel("    Game Defaults");
+        defaults = new ColorJLabel("    MultiGame Defaults");
         defaults.addMouseListener(mouse);
 
-        server = new ColorJLabel("    Server");
+        server = new ColorJLabel("    ServerInformation");
         server.addMouseListener(mouse);
 
         left.add(back);
@@ -317,10 +313,10 @@ public class Setting extends JPanel
                 for (ServerButtonPanel serverButtonPanel : serverListPanel2.getServerButtonPanels ())
                     if (serverButtonPanel.isSelected ())
                     {
-                        String ans = JOptionPane.showInputDialog ("Enter Server Password");
+                        String ans = JOptionPane.showInputDialog ("Enter ServerInformation Password");
                         if (ans != null)
                         {
-                            if (Arrays.equals (serverButtonPanel.getServer ().getPassword (),
+                            if (Arrays.equals (serverButtonPanel.getServerInformation ().getPassword (),
                                     ans.toCharArray ()))
                             {
                                 serverListPanel2.removeServer (serverButtonPanel);

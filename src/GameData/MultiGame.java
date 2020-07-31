@@ -1,6 +1,7 @@
 package GameData;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MultiGame implements Serializable
 {
@@ -11,7 +12,8 @@ public class MultiGame implements Serializable
     private final int tankStamina;
     private final int wallStamina;
     private final int canonPower;
-    private int onlineUsers;
+    private int onlineUsersNumber;
+    private ArrayList<User> onlineUsers;
 
     public MultiGame (String name, GameFinishType gameFinishType,
                       GameMemberShipType gameMemberShipType, int numberOfPlayers,
@@ -24,21 +26,26 @@ public class MultiGame implements Serializable
         this.tankStamina = tankStamina;
         this.wallStamina = wallStamina;
         this.numberOfPlayers = numberOfPlayers;
-        this.onlineUsers = 0;
+        this.onlineUsersNumber = 0;
+        onlineUsers = new ArrayList<> ();
     }
 
     public String getName () {
         return name;
     }
 
-    public void addUser ()
+    public void addUser (User user)
     {
-        //TODO : add user
-        onlineUsers++;
+        onlineUsers.add (user);
+        onlineUsersNumber++;
     }
 
-    public int getOnlineUsers () {
+    public ArrayList<User> getOnlineUsers () {
         return onlineUsers;
+    }
+
+    public int getOnlineUsersNumber () {
+        return onlineUsersNumber;
     }
 
     public GameFinishType getGameFinishType () {

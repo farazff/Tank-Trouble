@@ -2,8 +2,7 @@ package GUI.MainPage;
 
 import GUI.Music;
 import GUI.Setting.Setting;
-import GameData.NullUser;
-import GameData.ServerDataBase;
+import GameData.ServerInformationStorage;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -199,7 +198,7 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 setting.rePaintExited();
-                Setting setting = new Setting(frame,new ServerDataBase (new ArrayList<> ()),user);
+                Setting setting = new Setting(frame,new ServerInformationStorage (new ArrayList<> ()),user);
                 setting.setPre (getPanel ());
                 frame.setContentPane(setting);
                 frame.setVisible(false);
@@ -246,7 +245,7 @@ public class Main extends JPanel
                     if (!connect ())
                     {
                         int ans2 = JOptionPane.showConfirmDialog(null,"Some thing went wrong in " +
-                                        "Connection to Server , if you logout your data will lost!",
+                                        "Connection to ServerInformation , if you logout your data will lost!",
                                 "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
                         if (ans2 == 0)
                         {

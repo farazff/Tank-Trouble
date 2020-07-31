@@ -39,7 +39,7 @@ public class MultiGameFrame extends JFrame
     }
 
     /**
-     * Game rendering with triple-buffering using BufferStrategy.
+     * MultiGame rendering with triple-buffering using BufferStrategy.
      */
     public void render(BufferedImage bufferedImage) throws IOException
     {

@@ -1,8 +1,8 @@
 package GameData;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
-
 
 public class User implements Serializable
 {
@@ -14,9 +14,13 @@ public class User implements Serializable
     private int defaultTankStamina;
     private int defaultWallStamina;
     private int defaultCanonPower;
+    private int numOfMultiGames;
+    private int numOfSingleGames;
+    private int numOfWinMultiGames;
+    private int numOfWinSingleGames;
+    private ServerInformationStorage serverInformationStorage;
 
-
-    public User (String userName, char[] password)
+    public User (String userName, char[] password, ServerInformationStorage serverInformationStorage)
     {
         this.password = password;
         this.userName = userName;
@@ -26,6 +30,11 @@ public class User implements Serializable
         defaultCanonPower = 10;
         defaultTankStamina = 10;
         defaultWallStamina = 10;
+        numOfMultiGames = 0;
+        numOfSingleGames = 0;
+        numOfWinMultiGames = 0;
+        numOfWinSingleGames = 0;
+        this.serverInformationStorage = serverInformationStorage;
     }
 
     public String getUserName () {
@@ -76,6 +85,41 @@ public class User implements Serializable
         return rank;
     }
 
+    public void setNumOfMultiGames (int numOfMultiGames) {
+        this.numOfMultiGames = numOfMultiGames;
+    }
+
+    public void setNumOfSingleGames (int numOfSingleGames) {
+        this.numOfSingleGames = numOfSingleGames;
+    }
+
+    public void setNumOfWinMultiGames (int numOfWinMultiGames) {
+        this.numOfWinMultiGames = numOfWinMultiGames;
+    }
+
+    public void setNumOfWinSingleGames (int numOfWinSingleGames) {
+        this.numOfWinSingleGames = numOfWinSingleGames;
+    }
+
+    public int getNumOfMultiGames () {
+        return numOfMultiGames;
+    }
+
+    public int getNumOfSingleGames () {
+        return numOfSingleGames;
+    }
+
+    public int getNumOfWinMultiGames () {
+        return numOfWinMultiGames;
+    }
+
+    public int getNumOfWinSingleGames () {
+        return numOfWinSingleGames;
+    }
+
+    public ServerInformationStorage getServerInformationStorage () {
+        return serverInformationStorage;
+    }
 
 
     @Override

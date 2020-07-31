@@ -3,7 +3,7 @@ package GameData;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Server implements Serializable
+public class ServerInformation implements Serializable
 {
     private final char[] password;
     private final String url;
@@ -12,7 +12,7 @@ public class Server implements Serializable
     private int numOfActiveGames;
     private final ArrayList<MultiGame> multiGames;
 
-    public Server (String url, ArrayList<MultiGame> multiGames, char[] password)
+    public ServerInformation (String url, ArrayList<MultiGame> multiGames, char[] password)
     {
         this.url = url;
         this.password = password;
@@ -45,9 +45,9 @@ public class Server implements Serializable
         return url;
     }
 
-    public void addGame (MultiGame multiGame)
+    public void addGame (MultiGame MultiGame)
     {
-        multiGames.add (multiGame);
+        multiGames.add (MultiGame);
         numOfActiveGames = multiGames.size ();
     }
 

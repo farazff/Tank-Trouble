@@ -69,7 +69,7 @@ public class GameWithPC extends JPanel
         topTop.add(back,BorderLayout.WEST);
 
 
-        JLabel mode = new JLabel("Game Mode:");
+        JLabel mode = new JLabel("MultiGame Mode:");
         mode.setFont(new Font("Arial",Font.BOLD,20));
         ArrayList<String> data = new ArrayList<>();
         data.add("Death Match");

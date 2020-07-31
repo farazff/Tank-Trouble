@@ -102,11 +102,11 @@ public class MultiGameLoop implements Runnable
         }
         catch (ConnectException e)
         {
-            System.err.println ("Couldn't connect to Server");
+            System.err.println ("Couldn't connect to ServerInformation");
         }
         catch (SocketException e)
         {
-            System.err.println ("Server Not Responding");
+            System.err.println ("ServerInformation Not Responding");
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");

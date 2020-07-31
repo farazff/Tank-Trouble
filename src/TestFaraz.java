@@ -1,13 +1,9 @@
 import GUI.*;
 import GUI.MainPage.Main;
 import GUI.MultiGamePanels.MultiGamePanel;
-import GUI.Setting.Setting;
-import Game.ThreadPool;
 import GameData.*;
-import MultiGame.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -37,7 +33,7 @@ public class TestFaraz
                 GameMemberShipType.SINGLE,22,30,30,30));
         multiGames.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        Server server1 = new Server ("Haasd",multiGames,new char[]{'1','0','x'});
+        ServerInformation server1 = new ServerInformation ("Haasd", multiGames,new char[]{'1','0','x'});
         ArrayList<MultiGame> multiGames2 = new ArrayList<> ();
         multiGames2.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
@@ -47,9 +43,9 @@ public class TestFaraz
                 GameMemberShipType.SINGLE,22,30,30,30));
         multiGames2.add (new MultiGame ("goasdfsadfasdfogle4",GameFinishType.DEATH_MATCH,
                 GameMemberShipType.SINGLE,22,30,30,30));
-        Server server2 = new Server ("Amsadfasdfsadfasdfafdad",multiGames2,new char[]{'1','0','y'});
+        ServerInformation server2 = new ServerInformation ("Amsadfasdfsadfasdfafdad",multiGames2,new char[]{'1','0','y'});
 
-        ServerDataBase servers = new ServerDataBase (null);
+        ServerInformationStorage servers = new ServerInformationStorage (null);
         servers.addNewServer (server1);
         servers.addNewServer (server1);
         servers.addNewServer (server1);

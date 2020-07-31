@@ -3,6 +3,7 @@ package GUI.MultiGamePanels;
 
 import GUI.Music;
 import GameData.MultiGame;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class MultiGameDataPanel extends JPanel
     public MultiGameDataPanel (MultiGame multiGame)
     {
         if (multiGame == null)
-            throw new InputMismatchException ("multi game is Null");
+            throw new InputMismatchException ("multi multiGame is Null");
 
         setLayout (new BorderLayout ());
         setBorder (new EmptyBorder (0,0,0,0));
@@ -56,7 +57,7 @@ public class MultiGameDataPanel extends JPanel
 
     private void createComponents ()
     {
-        JLabel gameName = new JLabel ("Game's  Name:");
+        JLabel gameName = new JLabel ("MultiGame's  Name:");
         gameName.setFont (new Font ("arial",Font.PLAIN,15));
         JLabel endType = new JLabel ("End Type of game:");
         endType.setFont (new Font ("arial",Font.PLAIN,15));

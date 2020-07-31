@@ -24,7 +24,7 @@ public class MultiGameButtonPanel extends JPanel
         setLayout (new FlowLayout (FlowLayout.LEFT));
         setBackground (Color.GRAY);
         if (multiGame == null)
-            throw new InputMismatchException ("multi game is Null");
+            throw new InputMismatchException ("multi multiGame is Null");
         this.mainPanel = mainPanel;
         setBackground (Color.WHITE);
         this.multiGame = multiGame;

@@ -81,7 +81,7 @@ public class GameFrame extends JFrame
 	}
 
 	/**
-	 * Game rendering with triple-buffering using BufferStrategy.
+	 * MultiGame rendering with triple-buffering using BufferStrategy.
 	 */
 	public void render(GameState state) throws IOException
 	{

@@ -2,7 +2,8 @@ package GUI.MultiGamePanels;
 
 
 import GameData.MultiGame;
-import GameData.Server;
+import GameData.ServerInformation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.InputMismatchException;
@@ -12,33 +13,33 @@ public class ServerButtonPanel extends JPanel {
     private JLabel url;
     private JLabel numOfActiveGames;
     private JLabel currentCapacity;
-    private Server server;
+    private ServerInformation serverInformation;
     private MultiGamePanel mainPanel;
     private JPanel multiGameListPanel;
     private boolean selected;
 
 
-    public ServerButtonPanel (Server server, MultiGamePanel mainPanel)
+    public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel)
     {
         super();
         selected = false;
         setLayout (new FlowLayout (FlowLayout.LEFT));
         setBackground (Color.GRAY);
-        if (server == null)
-            throw new InputMismatchException ("Server is Null");
+        if (serverInformation == null)
+            throw new InputMismatchException ("ServerInformation is Null");
         this.mainPanel = mainPanel;
         setBackground (Color.WHITE);
-        this.url = new JLabel ("Url : " + server.getUrl ());
+        this.url = new JLabel ("Url : " + serverInformation.getUrl ());
         this.url.setFont (new Font ("Arial",Font.PLAIN,14));
         this.url.setForeground (Color.DARK_GRAY);
-        this.server = server;
-        this.numOfActiveGames = new JLabel ("ActiveGames : " + server.getNumOfActiveGames ());
+        this.serverInformation = serverInformation;
+        this.numOfActiveGames = new JLabel ("ActiveGames : " + serverInformation.getNumOfActiveGames ());
         this.numOfActiveGames.setFont (new Font ("Arial",Font.PLAIN,14));
         this.numOfActiveGames.setForeground (Color.DARK_GRAY);
-        this.currentCapacity = new JLabel ("CurrentCapacity : " + server.getCurrentCapacity ());
+        this.currentCapacity = new JLabel ("CurrentCapacity : " + serverInformation.getCurrentCapacity ());
         currentCapacity.setFont (new Font ("Arial",Font.PLAIN,14));
         this.currentCapacity.setForeground (Color.DARK_GRAY);
-        multiGameListPanel = new MultiGameListPanel (server.getMultiGames (),mainPanel);
+        multiGameListPanel = new MultiGameListPanel (serverInformation.getGames (),mainPanel);
         createBasePanel ();
     }
 
@@ -52,13 +53,13 @@ public class ServerButtonPanel extends JPanel {
 
     public void addNewGame (MultiGame multiGame)
     {
-        getServer ().addGame (multiGame);
+        getServerInformation ().addGame (multiGame);
         MultiGameListPanel multiGameListPanel = (MultiGameListPanel)getMultiGameListPanel ();
         multiGameListPanel.addNewMultiGame (multiGame);
     }
 
-    public Server getServer () {
-        return server;
+    public ServerInformation getServerInformation () {
+        return serverInformation;
     }
 
     public void changeFontAndColor (Font font, Color color)

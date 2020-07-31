@@ -61,18 +61,18 @@ public class LogConnector implements Runnable
                 out = new DataOutputStream (connection.getOutputStream ());
                 ((DataOutputStream) out).writeUTF (data);
                 out.flush ();
-                System.out.println ("-> data sent to Server : " +
-                        port + ((port == 8083)? " (Load Server) " :
-                        " (Save Server) "));
+                System.out.println ("-> data sent to ServerInformation : " +
+                        port + ((port == 8083)? " (Load ServerInformation) " :
+                        " (Save ServerInformation) "));
 
                 // receive
 
                 in = new ObjectInputStream (connection.getInputStream ());
                 user = (User) ((ObjectInputStream) in).readObject ();
 
-                System.out.println ("<- data received from Server : " +
-                        port + ((port == 8083)? " (Load Server) " :
-                        " (Save Server) "));
+                System.out.println ("<- data received from ServerInformation : " +
+                        port + ((port == 8083)? " (Load ServerInformation) " :
+                        " (Save ServerInformation) "));
 
 
             } else if (port == 4787)
@@ -81,16 +81,16 @@ public class LogConnector implements Runnable
                 out = new ObjectOutputStream (connection.getOutputStream ());
                 ((ObjectOutputStream) out).writeObject (user);
                 out.flush ();
-                System.out.println ("-> data sent to Server : " +
-                        port + ((port == 8083)? " (Load Server) " :
-                        " (Save Server) "));
+                System.out.println ("-> data sent to ServerInformation : " +
+                        port + ((port == 8083)? " (Load ServerInformation) " :
+                        " (Save ServerInformation) "));
 
                 // receive
                 in = new DataInputStream (connection.getInputStream ());
                 res = ((DataInputStream) in).readUTF ();
-                System.out.println ("<- data received from Server : " +
-                        port + ((port == 8083)? " (Load Server) " :
-                        " (Save Server) "));
+                System.out.println ("<- data received from ServerInformation : " +
+                        port + ((port == 8083)? " (Load ServerInformation) " :
+                        " (Save ServerInformation) "));
             }
 
         } catch (IllegalArgumentException e)
@@ -99,14 +99,14 @@ public class LogConnector implements Runnable
         }
         catch (ConnectException e)
         {
-            System.err.println ("Couldn't connect to Server");
+            System.err.println ("Couldn't connect to ServerInformation");
         }
         catch (ClassNotFoundException e)
         {
             e.printStackTrace ();
         } catch (SocketException e)
         {
-            System.err.println ("Server Not Responding");
+            System.err.println ("ServerInformation Not Responding");
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");
