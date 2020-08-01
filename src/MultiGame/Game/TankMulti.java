@@ -296,7 +296,7 @@ public class TankMulti implements Runnable , Serializable
         keyRIGHT = data.get(3) == '1';
         shot = data.get(4) == '1';
 
-        if(isPressed && !shot)
+        if(!shot && isPressed)
         {
             if (canShot)
             {
