@@ -23,7 +23,7 @@ public class GameStateMulti implements Serializable
 
 
 	public GameStateMulti(int players,int tankStamina,int canonPower,int wallStamina,
-					 ArrayList<ClientHandler> clientHandlers)
+						  ArrayList<ClientHandler> clientHandlers)
 	{
 		////not ok to serialize
 		this.players = players;
@@ -32,19 +32,25 @@ public class GameStateMulti implements Serializable
 		tanks = new ArrayList<> ();
 		prizes = new PrizesMulti(maps,tanks);
 
+		status = new GameStatus(tanks,bullets,maps,prizes,players);
+
 		for(int i=1;i<=players;i++)
 		{
 			TankMulti tank1 = new TankMulti(bullets, maps.getWalls(), tanks, prizes,
-					tankStamina, canonPower, maps,clientHandlers.get(i-1).getData(),i);
+					tankStamina, canonPower, maps,clientHandlers.get(i-1).getData(),i,status);
 			tanks.add(tank1);
 		}
 
-		status = new GameStatus(tanks,bullets,maps,prizes,players);
+
 
 		gameOver = 0;
-		Thread t1 = new Thread(prizes);
-		t1.start();
 
+
+	}
+
+	public void addPrize()
+	{
+		prizes.putPrize();
 	}
 
 	public GameStatus getStatus()
@@ -85,6 +91,15 @@ public class GameStateMulti implements Serializable
 			else
 				executorService.execute(bullet);
 		}
+		if (!executorService.isTerminated ())
+		{
+			try {
+				Thread.sleep (1);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace ();
+			}
+		}
 		bullets.setIterate(false);
 
 
@@ -99,6 +114,7 @@ public class GameStateMulti implements Serializable
 				executorService.execute(tank);
 		}
 		executorService.shutdown();
+
 		while(true)
 		{
 			try
@@ -111,27 +127,16 @@ public class GameStateMulti implements Serializable
 			}
 
 			boolean done = true;
+
 			for (TankMulti tank : tanks)
 			{
-				if (!tank.done)
+				if(!tank.done)
 				{
 					done = false;
 					break;
 				}
 			}
 
-			Iterator<BulletMulti> bulletIt = bullets.iterator();
-			bullets.setIterate(true);
-			while(bulletIt.hasNext())
-			{
-				BulletMulti bulletMulti = bulletIt.next();
-				if(!bulletMulti.done)
-				{
-					done = false;
-					break;
-				}
-			}
-			bullets.setIterate(false);
 
 			if(done)
 				break;

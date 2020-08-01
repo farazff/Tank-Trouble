@@ -1,6 +1,7 @@
 package MultiGame.Game;
 
 import MultiGame.Server.ClientHandler;
+import MultiGame.Status.GameStatus;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,21 +19,19 @@ public class GameLoopMulti implements Runnable , Serializable
 	 */
 	public static final int FPS = 54;
 
-	private GameFrameMulti canvas;
 	private GameStateMulti state;
 	private int players,tankStamina,canonPower, wallStamina;
 	private ArrayList<ClientHandler> clientHandlers;
 
-	public GameLoopMulti(GameFrameMulti frame , int players,
-					int tankStamina, int canonPower, int wallStamina,
-					ArrayList<ClientHandler> clientHandlers)
+	public GameLoopMulti( int players,
+						 int tankStamina, int canonPower, int wallStamina,
+						 ArrayList<ClientHandler> clientHandlers)
 	{
 		this.clientHandlers = clientHandlers;
 		this.tankStamina = tankStamina;
 		this.canonPower = canonPower;
 		this.wallStamina = wallStamina;
 		this.players = players;
-		canvas = frame;
 	}
 
 	public GameStateMulti getState()
@@ -49,30 +48,39 @@ public class GameLoopMulti implements Runnable , Serializable
 	public void run()
 	{
 		int gameOver = 0;
+		int prizeTime = 0;
 		while(gameOver == 0)
 		{
 			try
 			{
-
+				prizeTime++;
+				if(prizeTime==4000)
+				{
+					state.addPrize();
+				}
 				long start = System.currentTimeMillis();
 				state.update();
-				canvas.render(state);
 
-				ExecutorService pool = Executors.newCachedThreadPool();
 				for(ClientHandler clientHandler : clientHandlers)
-					pool.execute(clientHandler);
-				pool.shutdown();
-
-				while(true)
 				{
-					boolean tasksEnded =
-							pool.awaitTermination(0, TimeUnit.MINUTES);
-
-					if(tasksEnded)
+					Thread test = new Thread(clientHandler);
+					test.start();
+					while(true)
 					{
-						break;
+						try
+						{
+							Thread.sleep (10);
+						}
+						catch (InterruptedException e)
+						{
+							e.printStackTrace ();
+						}
+
+						if(!clientHandler.isWait ())
+							break;
 					}
 				}
+
 
 				gameOver = state.gameOver;
 
@@ -80,19 +88,12 @@ public class GameLoopMulti implements Runnable , Serializable
 				if (delay > 0)
 					Thread.sleep(delay);
 			}
-			catch (InterruptedException | IOException ex)
+			catch (InterruptedException ex)
 			{
 				ex.printStackTrace();
 			}
 		}
 
-		try
-		{
-			canvas.render(state);
-		}
-		catch (IOException | InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+
 	}
 }
