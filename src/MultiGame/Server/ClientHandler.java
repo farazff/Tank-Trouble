@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class ClientHandler implements Runnable
 {
-    private Socket connectionSocket;
     private ArrayList<Character> data = new ArrayList<>();
     private GameLoopMulti game;
+    private boolean wait;
 
     public ArrayList<Character> getData()
     {
@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable
 
     public ClientHandler(Socket connectionSocket , GameLoopMulti game)
     {
-        this.connectionSocket = connectionSocket;
+        wait = false;
         try
         {
             inputStream = connectionSocket.getInputStream();
@@ -38,12 +38,14 @@ public class ClientHandler implements Runnable
     @Override
     public void run()
     {
+        wait = true;
         try
         {
             byte[] buff = new byte[6];
             int l = inputStream.read(buff);
 
             String temp = new String(buff,0,l);
+            System.out.println("*" + temp);
 
             data.clear();
             data.add(temp.charAt(0));
@@ -53,16 +55,19 @@ public class ClientHandler implements Runnable
             data.add(temp.charAt(4));
 
             GameStatus status = game.getState().getStatus();
-            System.out.println("In sending:" + status.getTanks().get(0).getDegree());
             outputStream.reset();
+            System.out.println("going to send object");
             outputStream.writeObject(status);
-
+            System.out.println("Done sending");
         }
         catch (IllegalArgumentException | IOException e)
         {
             e.printStackTrace();
         }
+        wait = false;
     }
 
-
+    public boolean isWait () {
+        return wait;
+    }
 }

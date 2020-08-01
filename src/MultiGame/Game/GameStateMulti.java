@@ -23,7 +23,7 @@ public class GameStateMulti implements Serializable
 
 
 	public GameStateMulti(int players,int tankStamina,int canonPower,int wallStamina,
-					 ArrayList<ClientHandler> clientHandlers)
+						  ArrayList<ClientHandler> clientHandlers)
 	{
 		////not ok to serialize
 		this.players = players;
@@ -42,9 +42,12 @@ public class GameStateMulti implements Serializable
 		status = new GameStatus(tanks,bullets,maps,prizes,players);
 
 		gameOver = 0;
-		Thread t1 = new Thread(prizes);
-		t1.start();
 
+	}
+
+	public void addPrize()
+	{
+		prizes.putPrize();
 	}
 
 	public GameStatus getStatus()
@@ -85,6 +88,15 @@ public class GameStateMulti implements Serializable
 			else
 				executorService.execute(bullet);
 		}
+		if (!executorService.isTerminated ())
+		{
+			try {
+				Thread.sleep (1);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace ();
+			}
+		}
 		bullets.setIterate(false);
 
 
@@ -99,6 +111,7 @@ public class GameStateMulti implements Serializable
 				executorService.execute(tank);
 		}
 		executorService.shutdown();
+
 		while(true)
 		{
 			try
@@ -111,33 +124,23 @@ public class GameStateMulti implements Serializable
 			}
 
 			boolean done = true;
+
 			for (TankMulti tank : tanks)
 			{
-				if (!tank.done)
+				if(!tank.done)
 				{
 					done = false;
 					break;
 				}
 			}
 
-			Iterator<BulletMulti> bulletIt = bullets.iterator();
-			bullets.setIterate(true);
-			while(bulletIt.hasNext())
-			{
-				BulletMulti bulletMulti = bulletIt.next();
-				if(!bulletMulti.done)
-				{
-					done = false;
-					break;
-				}
-			}
-			bullets.setIterate(false);
 
 			if(done)
 				break;
 		}
 
 		status.update(tanks,bullets,maps,prizes,players);
+
 	}
 
 	public ArrayList<BulletMulti> getBullets () {

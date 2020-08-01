@@ -20,7 +20,7 @@ public class Server
         {
             int players = 1;
             GameFrameMulti frame = new GameFrameMulti("MultiGame.Server side !");
-            GameLoopMulti game = new GameLoopMulti(frame, players,
+            GameLoopMulti game = new GameLoopMulti( players,
                     100,100,100,clientHandlers);
             System.out.print("MultiGame.Server started.\nWaiting for a client ... ");
             for(int i=1;i<=1;i++)
