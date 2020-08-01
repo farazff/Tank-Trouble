@@ -117,6 +117,7 @@ public class MoveTranslator
             translate ();
             }
 
-        }
+
+    }
 }
 
