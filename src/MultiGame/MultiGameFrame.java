@@ -115,6 +115,34 @@ public class MultiGameFrame extends JFrame implements Serializable
     private void doRendering(Graphics2D g3d, GameStatus state) throws IOException, InterruptedException
     {
 
+
+       if(state.isShot())
+       {
+           Music music = new Music();
+           music.setFilePath("Files/Sounds/Bullet.au",false);
+           music.execute();
+       }
+        if(state.isNewPrize())
+        {
+            Music music = new Music();
+            music.setFilePath("Files/Sounds/NewGift.au",false);
+            music.execute();
+        }
+        if(state.isUsePrize())
+        {
+            Music music = new Music();
+            music.setFilePath("Files/Sounds/GetPrize.au",false);
+            music.execute();
+        }
+//        if(state.isExplode())
+//        {
+//            Music music = new Music();
+//            music.setFilePath("Files/Sounds/Blast.au",false);
+//            music.execute();
+//        }
+
+
+
         Graphics2D g2d = img.createGraphics();
 
         g2d.setColor(Color.GRAY);
