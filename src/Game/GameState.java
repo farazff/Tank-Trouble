@@ -79,6 +79,15 @@ public class GameState
 			else
 				executorService.execute (bullet);
 		}
+		if (!executorService.isTerminated ())
+		{
+			try {
+				Thread.sleep (1);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace ();
+			}
+		}
 		bullets.setIterate (false);
 
 		Iterator<Tank> tankIterator = tanks.iterator ();
