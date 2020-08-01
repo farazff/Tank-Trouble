@@ -5,6 +5,7 @@ import GUI.Music;
 import GUI.NullPanel;
 import GUI.PictureJLabel;
 import GameData.ServerInformationStorage;
+import GameData.User;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -21,6 +22,7 @@ public class MultiGamePanel extends JPanel
     private JPanel pre;
     private JPanel nex;
     private JFrame frame;
+    private User user;
 
     private JPanel firstPanel;
     private JPanel secondPanel;
@@ -36,7 +38,7 @@ public class MultiGamePanel extends JPanel
 
     private JLabel back;
 
-    public MultiGamePanel (JFrame frame, ServerInformationStorage serverInformationStorage)
+    public MultiGamePanel (JFrame frame, User user)
     {
 
         main = new JPanel (new GridLayout (1,3));
@@ -44,7 +46,7 @@ public class MultiGamePanel extends JPanel
 
         this.frame = frame;
         // header part
-
+        this.user = user;
 
         JLabel multiPlayerGame = new JLabel("MultiPlayer MultiGame");
         multiPlayerGame.setBackground(null);
@@ -86,7 +88,7 @@ public class MultiGamePanel extends JPanel
 
         firstPanel = new JPanel (new BorderLayout ());
         firstPanel.setBackground (Color.WHITE);
-        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (serverInformationStorage,this),
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (user.getServerInformationStorage (),this),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
@@ -185,7 +187,7 @@ public class MultiGamePanel extends JPanel
             {
                 Music music = new Music ();
                 music.execute ();
-                frame.setContentPane (new CreateNewMultiGame (serverButtonPanel,frame,getThis ()));
+                frame.setContentPane (new CreateNewMultiGame (serverButtonPanel,frame,getThis (),user));
             }
         }
     }

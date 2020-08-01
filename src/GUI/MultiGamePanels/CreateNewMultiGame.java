@@ -7,6 +7,7 @@ import GUI.Selecting;
 import GameData.MultiGame;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
+import GameData.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -42,16 +43,17 @@ public class CreateNewMultiGame extends JPanel
     private JPanel pre;
     private boolean finishedProcessed;
     private boolean typeOfPlayingChanged;
-
+    private User user;
 
     /**
      * create a new game panel
      */
-    public CreateNewMultiGame (ServerButtonPanel owner, JFrame frame, JPanel pre)
+    public CreateNewMultiGame (ServerButtonPanel owner, JFrame frame, JPanel pre, User user)
     {
         super();
         finishedProcessed = false;
         typeOfPlayingChanged = false;
+        this.user = user;
         this.owner = owner;
         this.pre = pre;
         this.frame = frame;
@@ -105,36 +107,10 @@ public class CreateNewMultiGame extends JPanel
             }
 
         }).start ();
-        readFile ();
+
     }
 
-    public void readFile()
-    {
-        int i=1;
-        try
-        {
-            Scanner scanner = new Scanner (new File("Files/Setting.txt"));
-            while (scanner.hasNext ())
-            {
-                if (i == 1)
-                {
-                    tanksStamina.setValue (scanner.nextInt ());
-                } else if (i == 2)
-                {
-                    canonPower.setValue (scanner.nextInt ());
-                } else
-                {
-                    wallsStamina.setValue (scanner.nextInt ());
-                }
-                i++;
-            }
 
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
     /**
      * create base panel
      */
@@ -248,19 +224,22 @@ public class CreateNewMultiGame extends JPanel
 
         JLabel tanksStaminaLabel = new JLabel ("Tank Stamina");
         tanksStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
-        tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
+        tanksStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,
+                user.getDefaultTankStamina ());
         editSlider (tanksStamina);
 
 
         JLabel canonPowerLabel = new JLabel ("Bullet Power");
         canonPowerLabel.setFont (new Font ("arial",Font.PLAIN,15));
-        canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
+        canonPower = new JSlider (SwingConstants.HORIZONTAL,10,100,
+                user.getDefaultCanonPower ());
         editSlider (canonPower);
 
 
         JLabel wallsStaminaLabel = new JLabel ("Destroyable Walls Stamina");
         wallsStaminaLabel.setFont (new Font ("arial",Font.PLAIN,15));
-        wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,20);
+        wallsStamina = new JSlider (SwingConstants.HORIZONTAL,10,100,
+                user.getDefaultWallStamina ());
         editSlider (wallsStamina);
 
 

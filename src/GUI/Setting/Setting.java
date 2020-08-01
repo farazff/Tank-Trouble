@@ -58,10 +58,10 @@ public class Setting extends JPanel
 
     private MouseHandler mouse = new MouseHandler();
 
-    public Setting(JFrame frame, ServerInformationStorage serverInformationStorage, User user)
+    public Setting(JFrame frame, User user)
     {
         this.frame = frame;
-        this.serverListPanel = new ServerListPanel (serverInformationStorage,null);
+        this.serverListPanel = new ServerListPanel (user.getServerInformationStorage (),null);
         JScrollPane scrollPane1 = new JScrollPane (serverListPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -89,18 +89,18 @@ public class Setting extends JPanel
         userInfoPanel.setOpaque(true);
         userInfoPanel.add(new LeftPartLabel("User Name: ",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getUserName (),18,Color.CYAN));
-        userInfoPanel.add(new LeftPartLabel("Playing Time:  ",18,Color.WHITE));
+        userInfoPanel.add(new LeftPartLabel("Join Time:  ",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(
                 ((System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60))
-                + "",18,Color.CYAN));
+                + " Minutes",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total Single Games:",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("25",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(user.getNumOfSingleGames () + "",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total multiPlayer Games:",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("15",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(user.getNumOfMultiGames () + "",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("winning numbers of SinglePlayer mode:",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("10",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(user.getNumOfWinSingleGames () +"",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("winning numbers of MultiPlayer mode:",18,Color.WHITE));
-        userInfoPanel.add(new LeftPartLabel("3",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel(user.getNumOfWinMultiGames () +"",18,Color.CYAN));
 
 
         ////////////////////////////////////////
@@ -300,7 +300,7 @@ public class Setting extends JPanel
                 Music music = new Music();
                 music.execute();
                 frame.setContentPane (new CreateNewServer (frame, (ServerListPanel)serverListPanel,
-                        getPanel ()));
+                        getPanel (),user));
                 frame.setVisible(false);
                 frame.setVisible(true);
             }
@@ -320,6 +320,8 @@ public class Setting extends JPanel
                                     ans.toCharArray ()))
                             {
                                 serverListPanel2.removeServer (serverButtonPanel);
+                                user.getServerInformationStorage ().removeServer
+                                        (serverButtonPanel.getServerInformation ());
                                 return;
                             }
                         }

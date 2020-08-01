@@ -26,11 +26,12 @@ public class CreateNewServer extends JPanel
     private JLabel back;
     private JFrame frame;
     private JPanel pre;
+    private User user;
 
     /**
      * creates new sign up panel
      */
-    public CreateNewServer(JFrame frame, ServerListPanel serverListPanel, JPanel pre)
+    public CreateNewServer(JFrame frame, ServerListPanel serverListPanel, JPanel pre, User user)
     {
         super();
         this.serverListPanel = serverListPanel;
@@ -45,6 +46,7 @@ public class CreateNewServer extends JPanel
                 repaint ();
             }
         });
+        this.user = user;
     }
 
     public void setPre (JPanel pre) {
@@ -213,6 +215,7 @@ public class CreateNewServer extends JPanel
                     new EmptyBorder (0,2,0,2)));
         }
 
+
         return ans;
     }
 
@@ -264,7 +267,15 @@ public class CreateNewServer extends JPanel
         {
             if(e.getKeyCode() == KeyEvent.VK_ENTER)
                 if(e.getSource().equals(url) || e.getSource().equals(password1) || e.getSource().equals(password2))
-                    checkData();
+                {
+                    if (!checkData ())
+                        return;
+                    ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
+                    serverListPanel.addNewServer (serverInformation);
+                    user.getServerInformationStorage ().addNewServer (serverInformation);
+                }
+
+
         }
     }
 
@@ -285,6 +296,7 @@ public class CreateNewServer extends JPanel
 
                 ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
                 serverListPanel.addNewServer (serverInformation);
+                user.getServerInformationStorage ().addNewServer (serverInformation);
                 frame.setContentPane (pre);
 
             }

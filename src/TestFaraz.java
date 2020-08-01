@@ -24,37 +24,7 @@ public class TestFaraz
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        ArrayList<MultiGame> multiGames = new ArrayList<> ();
-        multiGames.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames.add (new MultiGame ("google2",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames.add (new MultiGame ("google3",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames.add (new MultiGame ("google4",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        ServerInformation server1 = new ServerInformation ("Haasd", multiGames,new char[]{'1','0','x'});
-        ArrayList<MultiGame> multiGames2 = new ArrayList<> ();
-        multiGames2.add (new MultiGame ("google",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames2.add (new MultiGame ("gooe2",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames2.add (new MultiGame ("ggle3",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        multiGames2.add (new MultiGame ("goasdfsadfasdfogle4",GameFinishType.DEATH_MATCH,
-                GameMemberShipType.SINGLE,22,30,30,30));
-        ServerInformation server2 = new ServerInformation ("Amsadfasdfsadfasdfafdad",multiGames2,new char[]{'1','0','y'});
 
-        ServerInformationStorage servers = new ServerInformationStorage (null);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
-        servers.addNewServer (server2);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
-        servers.addNewServer (server1);
 
 
         Loading loading = new Loading(frame);
@@ -63,7 +33,7 @@ public class TestFaraz
         Main main = new Main (frame);
         main.setPre (signInPanel);
         GameWithPC gameWithPC = new GameWithPC(frame);
-        MultiGamePanel multiGamePanel = new MultiGamePanel (frame,servers);
+
 
 
 
@@ -71,10 +41,10 @@ public class TestFaraz
         signInPanel.setNex(main);
 
         main.setSing(gameWithPC);
-        main.setMul(multiGamePanel);
+
 
         gameWithPC.setPre(main);
-        multiGamePanel.setPre(main);
+
 
 
 

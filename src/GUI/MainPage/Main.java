@@ -1,5 +1,6 @@
 package GUI.MainPage;
 
+import GUI.MultiGamePanels.MultiGamePanel;
 import GUI.Music;
 import GUI.Setting.Setting;
 import GameData.ServerInformationStorage;
@@ -198,7 +199,7 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 setting.rePaintExited();
-                Setting setting = new Setting(frame,new ServerInformationStorage (new ArrayList<> ()),user);
+                Setting setting = new Setting(frame,user);
                 setting.setPre (getPanel ());
                 frame.setContentPane(setting);
                 frame.setVisible(false);
@@ -218,7 +219,9 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 multi.rePaintExited();
-                frame.setContentPane(mul);
+                MultiGamePanel multiGamePanel = new MultiGamePanel (frame,user);
+                multiGamePanel.setPre (getPanel ());
+                frame.setContentPane(multiGamePanel);
                 frame.setVisible(false);
                 frame.setVisible(true);
             }

@@ -42,7 +42,7 @@ public class MultiGameDataPanel extends JPanel
         memberShip.setForeground (new Color (91, 131, 56));
 
 
-        remainPlayers = new JLabel (multiGame.getNumberOfPlayers () - multiGame.getOnlineUsers ()
+        remainPlayers = new JLabel (multiGame.getNumberOfPlayers () - multiGame.getOnlineUsers ().size ()
                 + "");
         remainPlayers.setFont (new Font ("arial",Font.PLAIN,15));
         remainPlayers.setForeground (new Color (91, 131, 56));
