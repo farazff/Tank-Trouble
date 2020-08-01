@@ -32,7 +32,7 @@ public class MultiGameButtonPanel extends JPanel
         gameName.setFont (new Font ("Arial",Font.PLAIN,14));
         gameName.setForeground (Color.DARK_GRAY);
         onlinePlayers = new JLabel ("Online Players : " +
-                multiGame.getOnlineUsers () + "");
+                multiGame.getOnlineUsers ().size () + "");
         onlinePlayers.setFont (new Font ("Arial",Font.PLAIN,14));
         onlinePlayers.setForeground (Color.DARK_GRAY);
         remainPlayers = new JLabel ("Remain Players : " +

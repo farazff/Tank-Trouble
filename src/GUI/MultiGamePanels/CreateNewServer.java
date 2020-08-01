@@ -265,14 +265,17 @@ public class CreateNewServer extends JPanel
         @Override
         public void keyPressed (KeyEvent e)
         {
+
             if(e.getKeyCode() == KeyEvent.VK_ENTER)
                 if(e.getSource().equals(url) || e.getSource().equals(password1) || e.getSource().equals(password2))
                 {
+                    Music music = new Music ();
+                    music.execute ();
                     if (!checkData ())
                         return;
                     ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
                     serverListPanel.addNewServer (serverInformation);
-                    user.getServerInformationStorage ().addNewServer (serverInformation);
+                    frame.setContentPane (pre);
                 }
 
 
@@ -296,7 +299,6 @@ public class CreateNewServer extends JPanel
 
                 ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
                 serverListPanel.addNewServer (serverInformation);
-                user.getServerInformationStorage ().addNewServer (serverInformation);
                 frame.setContentPane (pre);
 
             }

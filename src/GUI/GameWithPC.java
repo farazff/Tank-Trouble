@@ -1,5 +1,6 @@
 package GUI;
 import Game.Starting;
+import GameData.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,16 +23,17 @@ public class GameWithPC extends JPanel
     private JLabel start;
     private Selecting selecting;
     private Selecting selecting2;
-
+    private User user;
 
     private JSlider sliderTank;
     private JSlider sliderCanon;
     private JSlider sliderWall;
 
 
-    public GameWithPC(JFrame frame)
+    public GameWithPC(JFrame frame, User user)
     {
         this.frame = frame;
+        this.user = user;
         GridBagLayout layout = new GridBagLayout();
         JPanel base = new JPanel(layout);
         base.setBackground(Color.WHITE);
@@ -88,21 +90,21 @@ public class GameWithPC extends JPanel
 
         JLabel tankStamina = new JLabel("Tank Stamina:");
         tankStamina.setFont(new Font("Arial",Font.BOLD,20));
-        sliderTank = new JSlider(10,100,100);
+        sliderTank = new JSlider(10,100,user.getDefaultTankStamina ());
         sliderTank.setMajorTickSpacing(10);
         sliderTank.setPaintLabels(true);
         sliderTank.setSnapToTicks(true);
 
         JLabel canonPower = new JLabel("Canon Power:");
         canonPower.setFont(new Font("Arial",Font.BOLD,20));
-        sliderCanon = new JSlider(10,100,100);
+        sliderCanon = new JSlider(10,100,user.getDefaultCanonPower ());
         sliderCanon.setMajorTickSpacing(10);
         sliderCanon.setPaintLabels(true);
         sliderCanon.setSnapToTicks(true);
 
         JLabel wall = new JLabel("Destroyable Walls Stamina:");
         wall.setFont(new Font("Arial",Font.BOLD,20));
-        sliderWall = new JSlider(10,100,100);
+        sliderWall = new JSlider(10,100,user.getDefaultWallStamina ());
         sliderWall.setMajorTickSpacing(10);
         sliderWall.setPaintLabels(true);
         sliderWall.setSnapToTicks(true);

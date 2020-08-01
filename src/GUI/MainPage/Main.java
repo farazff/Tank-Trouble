@@ -1,5 +1,6 @@
 package GUI.MainPage;
 
+import GUI.GameWithPC;
 import GUI.MultiGamePanels.MultiGamePanel;
 import GUI.Music;
 import GUI.Setting.Setting;
@@ -209,8 +210,11 @@ public class Main extends JPanel
             {
                 Music music = new Music();
                 music.execute();
+                GameWithPC gameWithPC = new GameWithPC(frame,user);
+                gameWithPC.setPre (getPanel ());
+
                 single.rePaintExited();
-                frame.setContentPane(sing);
+                frame.setContentPane (gameWithPC);
                 frame.setVisible(false);
                 frame.setVisible(true);
             }

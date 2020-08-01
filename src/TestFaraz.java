@@ -32,7 +32,7 @@ public class TestFaraz
         SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
         Main main = new Main (frame);
         main.setPre (signInPanel);
-        GameWithPC gameWithPC = new GameWithPC(frame);
+
 
 
 
@@ -40,10 +40,6 @@ public class TestFaraz
         loading.setNex(signInPanel);
         signInPanel.setNex(main);
 
-        main.setSing(gameWithPC);
-
-
-        gameWithPC.setPre(main);
 
 
 

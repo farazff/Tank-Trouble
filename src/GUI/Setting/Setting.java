@@ -283,6 +283,8 @@ public class Setting extends JPanel
             }
             if(e.getSource().equals(save))
             {
+                Music music = new Music();
+                music.execute();
                 user.setDefaultTankStamina (sliderTank.getValue ());
                 user.setDefaultCanonPower (sliderCanon.getValue ());
                 user.setDefaultWallStamina (sliderWall.getValue ());
@@ -320,8 +322,6 @@ public class Setting extends JPanel
                                     ans.toCharArray ()))
                             {
                                 serverListPanel2.removeServer (serverButtonPanel);
-                                user.getServerInformationStorage ().removeServer
-                                        (serverButtonPanel.getServerInformation ());
                                 return;
                             }
                         }
