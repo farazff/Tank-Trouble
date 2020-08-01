@@ -39,9 +39,7 @@ public class GameStateMulti implements Serializable
 			tanks.add(tank1);
 		}
 
-
-		//status = new MultiGame.Status.GameStatus(tanks,bullets,maps,prizes,players);
-
+		status = new GameStatus(tanks,bullets,maps,prizes,players);
 
 		gameOver = 0;
 		Thread t1 = new Thread(prizes);
@@ -101,36 +99,45 @@ public class GameStateMulti implements Serializable
 				executorService.execute(tank);
 		}
 		executorService.shutdown();
-
-//		try
-//		{
-//			while(!executorService.isTerminated())
-//			{
-//				Thread.sleep(1);
-//			}
-//		}
-//		catch(InterruptedException e)
-//		{
-//			e.printStackTrace ();
-//		}
-
-		try
+		while(true)
 		{
-			while(true)
+			try
 			{
-				boolean isDone = executorService.awaitTermination(0, TimeUnit.MILLISECONDS);
-				if(isDone)
+				Thread.sleep (10);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace ();
+			}
+
+			boolean done = true;
+			for (TankMulti tank : tanks)
+			{
+				if (!tank.done)
 				{
-					System.out.println("Updating");
-					status = new GameStatus(tanks,bullets,maps,prizes,players);
+					done = false;
 					break;
 				}
 			}
+
+			Iterator<BulletMulti> bulletIt = bullets.iterator();
+			bullets.setIterate(true);
+			while(bulletIt.hasNext())
+			{
+				BulletMulti bulletMulti = bulletIt.next();
+				if(!bulletMulti.done)
+				{
+					done = false;
+					break;
+				}
+			}
+			bullets.setIterate(false);
+
+			if(done)
+				break;
 		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+
+		status.update(tanks,bullets,maps,prizes,players);
 	}
 
 	public ArrayList<BulletMulti> getBullets () {
