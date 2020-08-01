@@ -1,8 +1,5 @@
 package MultiGame;
 
-
-
-
 import MultiGame.Game.*;
 import MultiGame.Status.GameStatus;
 
@@ -12,34 +9,23 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
-public class MultiGameFrame extends JFrame
+public class MultiGameFrame extends JFrame implements Serializable
 {
     public static final int GAME_HEIGHT = 720;                  // 720p game resolution
     public static final int GAME_WIDTH = 16 * GAME_HEIGHT / 9;  // wide aspect ratio
-
-    public BufferedImage tankRed;
-    public BufferedImage fireImg;
-
 
     private long lastRender;
     private ArrayList<Float> fpsHistory;
     private BufferStrategy bufferStrategy;
     private int mapTheme;
-    private BufferedImage theme;
-    private BufferedImage wallNDH;
-    private BufferedImage wallDH;
-    private BufferedImage wallNDV;
-    private BufferedImage wallDV;
-    private BufferedImage img;
+    private BufferedImage theme,wallNDH,wallDH,wallNDV,wallDV,img;
+    private BufferedImage one,two,three,four,five,destroy,fire;
 
     public BufferedImage getImg() {
         return img;
@@ -71,9 +57,13 @@ public class MultiGameFrame extends JFrame
             wallNDV = ImageIO.read(new File("Images/Walls/RedV.png"));
             wallDV  = ImageIO.read(new File("Images/Walls/YellowV.png"));
 
-            tankRed = ImageIO.read(new File("Images/Tanks/red315.png"));
-            fireImg = ImageIO.read(new File("Images/Bullet/shotLarge.png"));
-
+            one = ImageIO.read (new File("Images/Tanks/1.png"));
+            two = ImageIO.read (new File("Images/Tanks/2.png"));
+            three = ImageIO.read(new File("Images/Tanks/3.png"));
+            four  = ImageIO.read(new File("Images/Tanks/4.png"));
+            five = ImageIO.read (new File("Images/Tanks/5.png"));
+            destroy = ImageIO.read (new File("Images/Explosion/explosion3.png"));
+            fire = ImageIO.read(new File("Images/Bullet/shotLarge.png"));
         }
         catch (IOException e)
         {
@@ -96,7 +86,7 @@ public class MultiGameFrame extends JFrame
     /**
      * MultiGame.Game rendering with triple-buffering using BufferStrategy.
      */
-    public void render(GameStatus state) throws IOException, InterruptedException
+    public void render(GameStatus status) throws IOException, InterruptedException
     {
         do
         {
@@ -105,7 +95,7 @@ public class MultiGameFrame extends JFrame
                 Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
                 try
                 {
-                    doRendering(graphics, state);
+                    doRendering(graphics, status);
                 }
                 finally
                 {
@@ -142,13 +132,23 @@ public class MultiGameFrame extends JFrame
                     music.execute();
 
 
-                    BufferedImage image1 = ImageIO.read(new File(TankMulti.getFireDestroyImageLoc()));
+                    BufferedImage image1 = destroy;
                     g2d.drawImage (image1, tank.getCenterX () - image1.getWidth () / 2 + 3,
                             tank.getCenterY () - image1.getHeight () / 2 + 2, null);
                 }
                 else
                 {
-                    BufferedImage image = tankRed;
+                    BufferedImage image = one;
+                    if(tank.getNumber()==1)
+                        image = one;
+                    if(tank.getNumber()==2)
+                        image = two;
+                    if(tank.getNumber()==3)
+                        image = three;
+                    if(tank.getNumber()==4)
+                        image = four;
+                    if(tank.getNumber()>=5)
+                        image = five;
 
                     g2d.drawImage (rotateImage (image, tank.getDegree () - 45),
                             tank.getLocX (), tank.getLocY (), null);
@@ -156,7 +156,7 @@ public class MultiGameFrame extends JFrame
                     if (tank.isShot ())
                     {
                         BufferedImage image1 = rotateImageBullet (
-                               fireImg
+                                fire
                                 , tank.getDegree () - 90);
 
                         g2d.drawImage (image1,
@@ -348,22 +348,7 @@ public class MultiGameFrame extends JFrame
         }
         lastRender = currentRender;
 
-//        if(state.gameOver == 1)
-//        {
-//            String str = "Winner";
-//            g2d.setColor(Color.WHITE);
-//            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-//            int strWidth = g2d.getFontMetrics().stringWidth(str);
-//            g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
-//        }
-//        if(state.gameOver == -1)
-//        {
-//            String str = "Looser";
-//            g2d.setColor(Color.WHITE);
-//            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-//            int strWidth = g2d.getFontMetrics().stringWidth(str);
-//            g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
-//        }
+
 
         g3d.drawImage(img,0,0,null);
 

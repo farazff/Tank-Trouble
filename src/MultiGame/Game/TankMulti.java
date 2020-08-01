@@ -7,34 +7,30 @@ import java.util.*;
 
 public class TankMulti implements Runnable , Serializable
 {
-    private int locX,locY,stamina,degree,height,width ,canonPower;  ////ok to serialize
+    private int locX,locY,stamina,degree,height,width ,canonPower,number;  ////ok to serialize
     private String bulletType;   ////ok to serialize
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT,shot,hasProtection,fireDestroyed,destroyed,canShot;  ////ok to serialize
     private ArrayList<BulletMulti> bullets;  ////ok to serialize
     private ArrayList<WallMulti> walls;  ////ok to serialize
     private ArrayList<TankMulti> tanks;////ok to serialize
-    private static String tankImageLoc;////ok to serialize
-    private static String fireImageLoc,fireDestroyImageLoc; ////ok to serialize
     private PrizeMulti prizeOwn;  ////ok to serialize
     private PrizesMulti prizes;  ////ok to serialize
     private ArrayList<Character> data;  ////ok to serialize
 
 
 
-
     public TankMulti (ArrayList<BulletMulti> bullets, ArrayList<WallMulti> walls, ArrayList<TankMulti> tanks,
-                 PrizesMulti prizes,
-                 int tankStamina, int canonPower , MapsMulti maps ,
-                 ArrayList<Character> data)
+                      PrizesMulti prizes,
+                      int tankStamina, int canonPower , MapsMulti maps ,
+                      ArrayList<Character> data,int number)
     {
+        this.number= number;
         this.data = data;
         this.canonPower = canonPower;
         this.prizes = prizes;
         this.bullets = bullets;
         this.walls = walls;
         this.tanks = tanks;
-        fireImageLoc = "./Images/Bullet/shotLarge.png";
-        fireDestroyImageLoc = "./Images/Explosion/explosion3.png";
         destroyed = false;
         fireDestroyed = false;
         hasProtection = false;
@@ -55,17 +51,13 @@ public class TankMulti implements Runnable , Serializable
 
         stamina = tankStamina;
         degree = 45;
-        tankImageLoc = (getImageAddress ());
+
         try
         {
-            File temp = new File("Images/FirstOpens/red315Multi.png");
-            BufferedImage tankImage = ImageIO.read(temp);
+            BufferedImage tankImage = ImageIO.read(new File("Images/Tanks/Test.png"));
             height = tankImage.getHeight ();
-            width = tankImage.getWidth();
-
-        }
-        catch (IOException e)
-        {
+            width = tankImage.getWidth ();
+        } catch (IOException e) {
             e.printStackTrace ();
         }
     }
@@ -292,12 +284,59 @@ public class TankMulti implements Runnable , Serializable
             data.add('0');
             data.add('0');
         }
+
+        boolean isPressed = shot;
+
         keyUP = data.get(0) == '1';
         keyDOWN = data.get(1) == '1';
         keyLEFT = data.get(2) == '1';
         keyRIGHT = data.get(3) == '1';
         shot = data.get(4) == '1';
 
+        if(isPressed && !shot)
+        {
+            if (canShot)
+            {
+                Music music = new Music ();
+                music.setFilePath ("Files/Sounds/Bullet.au", false);
+                music.execute ();
+                if (getBulletType ().equals ("Laser"))
+                {
+                    bullets.add (new LaserBulletMulti (getCanonStartX (), getCanonStartY (),
+                            getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                    setBulletType ("Normal");
+                } else
+                {
+                    bullets.add (new BulletMulti (getCanonStartX (), getCanonStartY (),
+                            getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                }
+
+                canShot = false;
+                shot = true;
+                new Thread (new Runnable () {
+                    @Override
+                    public void run () {
+                        try {
+                            Thread.sleep (100);
+                            shot = false;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace ();
+                        }
+                    }
+                }).start ();
+                new Thread (new Runnable () {
+                    @Override
+                    public void run () {
+                        try {
+                            Thread.sleep (500);
+                            canShot = true;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace ();
+                        }
+                    }
+                }).start ();
+            }
+        }
 
         int forX = (int) (6 * Math.cos (Math.toRadians (this.getDegree ())));
         int forY = (int) (6 * Math.sin (Math.toRadians (this.getDegree ())));
@@ -326,6 +365,7 @@ public class TankMulti implements Runnable , Serializable
         this.setLocX(Math.min(this.getLocX(), GameFrameMulti.GAME_WIDTH - 30));
         this.setLocY(Math.max(this.getLocY(), 0));
         this.setLocY(Math.min(this.getLocY(), GameFrameMulti.GAME_HEIGHT - 30));
+        System.out.println("done tank Update");
     }
 
     @Override
@@ -354,21 +394,6 @@ public class TankMulti implements Runnable , Serializable
         return canShot;
     }
 
-    public static String getTankImageLoc()
-    {
-        return tankImageLoc;
-    }
-
-    public static String getFireDestroyImageLoc()
-    {
-        return fireDestroyImageLoc;
-    }
-
-    public static String getFireImageLoc()
-    {
-        return fireImageLoc;
-    }
-
     public int getCenterX ()
     {
         return locX + width / 2 - 2;
@@ -389,11 +414,6 @@ public class TankMulti implements Runnable , Serializable
     {
         return getCenterY () +
                 ((int) (Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
-    }
-
-    public String getImageAddress ()
-    {
-        return "Images/Tanks/red315.png";
     }
 
     public int getLocX ()
@@ -492,6 +512,10 @@ public class TankMulti implements Runnable , Serializable
         return prizeOwn;
     }
 
+    public int getNumber()
+    {
+        return number;
+    }
 }
 
 
