@@ -82,7 +82,7 @@ public class TestAmir {
             public void run()
             {
                 MultiGameFrame frame = null;
-                frame = new MultiGameFrame ("Tank Trouble !");
+                frame = new MultiGameFrame ("Client Sideup!");
                 frame.setLocationRelativeTo(null);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);

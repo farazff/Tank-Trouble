@@ -14,7 +14,7 @@ public class Tank implements Runnable
 {
     private int locX,locY,stamina;
     private int degree;
-    private static String imageAddress = "Images/Tanks/red315.png";
+    private String imageAddress;
     private boolean keyUP, keyDOWN, keyRIGHT, keyLEFT;
     private boolean shot;
     private boolean hasProtection;
@@ -46,19 +46,23 @@ public class Tank implements Runnable
     private int canonPower;
     private Maps maps;
 
-    static {
-        try {
+    static
+    {
+        try
+        {
             fireImage = ImageIO.read (new File ("./Images/Bullet/shotLarge.png"));
             fireDestroyImage = ImageIO.read (new File ("./Images/Explosion/explosion3.png"));
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace ();
         }
     }
 
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
-                int tankStamina,int canonPower , Maps maps)
+                int tankStamina,int canonPower , Maps maps,String imageAddress)
     {
+        this.imageAddress = imageAddress;
         this.maps = maps;
         this.canonPower = canonPower;
         this.prizes = prizes;
@@ -485,8 +489,6 @@ public class Tank implements Runnable
         return canShot;
     }
 
-
-
     public void setDegree (int degree) {
         this.degree = degree;
     }
@@ -550,7 +552,8 @@ public class Tank implements Runnable
                         keyRIGHT = false;
                         break;
                     case KeyEvent.VK_SPACE:
-                        if (canShot) {
+                        if (canShot)
+                        {
                             Music music = new Music ();
                             music.setFilePath ("Files/Sounds/Bullet.au", false);
                             music.execute ();
