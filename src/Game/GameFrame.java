@@ -155,7 +155,12 @@ public class GameFrame extends JFrame
 
 					g2d.setStroke(new BasicStroke(1));
 					g2d.setPaint(Color.BLACK);
-
+					g2d.setFont(g2d.getFont().deriveFont(14.0f));
+					if (!(tank instanceof IntelligentTank))
+						g2d.drawString (tank.getUser ().getUserName ().length () <= 8 ?
+										tank.getUser ().getUserName () :
+										tank.getUser ().getUserName ().substring (0,8) + "...",
+								tank.getLocX () + 5,tank.getLocY () - 18);
 					g2d.draw(new Rectangle2D.Double(tank.getLocX()+5,tank.getLocY()-12,55,6));
 
 					if(tank.getStamina()>=90)

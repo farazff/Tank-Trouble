@@ -198,8 +198,12 @@ public class GameWithPC extends JPanel
                     level=2;
                 if(selecting2.getCurrentValue().equals("HARD"))
                     level=3;
+
+                ArrayList<User> users = new ArrayList<> ();
+                users.add (user);
                 Starting starting = new Starting(frame,level,sliderTank.getValue(),sliderCanon.getValue(),
-                        sliderWall.getValue());
+                        sliderWall.getValue(), users);
+                user.setNumOfSingleGames (user.getNumOfSingleGames () + 1);
             }
         }
 

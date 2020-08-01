@@ -1,5 +1,7 @@
 package Game;
 
+import GameData.User;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
@@ -21,7 +23,7 @@ public class GameState
 	private Prizes prizes;
 	private Thread t1;
 
-	public GameState(int level,int tankStamina,int canonPower,int wallStamina)
+	public GameState(int level, int tankStamina, int canonPower, int wallStamina, ArrayList<User> users)
 	{
 		maps = new Maps(wallStamina);
 		bullets = new InteractArrayList<> ();
@@ -29,13 +31,13 @@ public class GameState
 		prizes = new Prizes(maps,tanks);
 
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes ,
-				tankStamina,canonPower,maps,"Images/Tanks/"+"1"+".png");
+				tankStamina,canonPower,maps,"Images/Tanks/"+"1"+".png",users.get (0));
 		tanks.add (tank1);
 
 		for(int i=2;i<=level+1;i++)
 		{
 			Tank tank2 = new IntelligentTank(bullets, maps.getWalls(), tanks, prizes,
-					tankStamina,canonPower,maps,"Images/Tanks/"+(i)+".png");
+					tankStamina,canonPower,maps,"Images/Tanks/"+(i)+".png",null);
 			tanks.add (tank2);
 		}
 

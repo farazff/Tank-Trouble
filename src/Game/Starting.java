@@ -1,8 +1,11 @@
 /*** In The Name of Allah ***/
 package Game;
 
+import GameData.User;
+
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -13,7 +16,8 @@ import javax.swing.JFrame;
 public class Starting
 {
 
-	public Starting(JFrame menuFrame,int level,int tankStamina,int canonPower,int wallStamina)
+	public Starting(JFrame menuFrame, int level, int tankStamina, int canonPower, int wallStamina,
+					ArrayList<User> users)
 	{
 
 		// Initialize the global thread-pool
@@ -32,7 +36,7 @@ public class Starting
 				frame.initBufferStrategy();
 
 				GameLoop game = new GameLoop(frame,menuFrame,level,tankStamina,canonPower,wallStamina);
-				game.init();
+				game.init(users);
 				ThreadPool.execute(game);
 			}
 		});

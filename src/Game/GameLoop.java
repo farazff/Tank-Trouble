@@ -1,7 +1,10 @@
 package Game;
 
+import GameData.User;
+
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * A very simple structure for the main game loop.
@@ -45,9 +48,9 @@ public class GameLoop implements Runnable
 	/**
 	 * This must be called before the game loop starts.
 	 */
-	public void init()
+	public void init(ArrayList<User> users)
 	{
-		state = new GameState(level, tankStamina,canonPower, wallStamina);
+		state = new GameState(level, tankStamina,canonPower, wallStamina, users);
 
 		for(Tank tank:state.getTanks ())
 		{
@@ -78,6 +81,10 @@ public class GameLoop implements Runnable
 				ex.printStackTrace();
 			}
 		}
+		if (gameOver == 1)
+			for (Tank tank : state.getTanks ())
+				if (!(tank instanceof IntelligentTank))
+					tank.getUser ().setNumOfWinSingleGames (tank.getUser ().getNumOfWinSingleGames () + 1);
 
 		new Thread(new Runnable()
 		{

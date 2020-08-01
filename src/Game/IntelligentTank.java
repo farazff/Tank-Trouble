@@ -3,6 +3,7 @@ package Game;
 
 
 import GUI.Music;
+import GameData.User;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class IntelligentTank extends Tank
     private boolean timeToAct;
 
     public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks
-            , Prizes prizes , int tankStamina,int canonPower , Maps maps,String imageLoc)
+            , Prizes prizes , int tankStamina, int canonPower , Maps maps, String imageLoc, User user)
     {
-        super (bullets, walls, tanks , prizes,tankStamina,canonPower,maps,imageLoc);
+        super (bullets, walls, tanks , prizes,tankStamina,canonPower,maps,imageLoc,user);
         timeToSignal = true;
         timeToInterrupt = false;
         timeToAct = false;

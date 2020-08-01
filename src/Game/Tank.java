@@ -1,6 +1,8 @@
 package Game;
 
 import GUI.Music;
+import GameData.User;
+
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -34,7 +36,7 @@ public class Tank implements Runnable
     private  BufferedImage tankImage;
     private static BufferedImage fireImage;
     private static BufferedImage fireDestroyImage;
-
+    private User user;
     private Prize prizeOwn;
     private Prizes prizes;
 
@@ -60,7 +62,7 @@ public class Tank implements Runnable
     }
 
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
-                int tankStamina,int canonPower , Maps maps,String imageAddress)
+                int tankStamina,int canonPower , Maps maps,String imageAddress, User user)
     {
         this.imageAddress = imageAddress;
         this.maps = maps;
@@ -84,6 +86,7 @@ public class Tank implements Runnable
         keyHandler = new KeyHandler ();
         prizeOwn = null;
         bulletType = "Normal";
+        this.user = user;
 
         do
         {
@@ -105,6 +108,10 @@ public class Tank implements Runnable
             e.printStackTrace ();
         }
 
+    }
+
+    public User getUser () {
+        return user;
     }
 
     public void setProtection (boolean hasProtection) {
