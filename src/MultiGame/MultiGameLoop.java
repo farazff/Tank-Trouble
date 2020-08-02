@@ -59,7 +59,7 @@ public class MultiGameLoop implements Runnable
 
                 String temp = moveTranslator.getCommandString();
                 objectOutputStream.writeObject (new TransferData (temp,user));
-                objectOutputStream.flush ();
+
                 //System.out.println(temp);
 
                 GameStatus status = (GameStatus) objectInputStream.readObject();
@@ -74,7 +74,7 @@ public class MultiGameLoop implements Runnable
             }
 
         }
-        catch (ClassNotFoundException e)
+        catch (ClassNotFoundException | InterruptedException e)
         {
             e.printStackTrace ();
         } catch (IllegalArgumentException e)
@@ -91,8 +91,6 @@ public class MultiGameLoop implements Runnable
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
 
     }
