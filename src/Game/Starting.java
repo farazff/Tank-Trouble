@@ -17,7 +17,7 @@ public class Starting
 {
 
 	public Starting(JFrame menuFrame, int level, int tankStamina, int canonPower, int wallStamina,
-					ArrayList<User> users)
+					User user)
 	{
 
 		// Initialize the global thread-pool
@@ -36,7 +36,7 @@ public class Starting
 				frame.initBufferStrategy();
 
 				GameLoop game = new GameLoop(frame,menuFrame,level,tankStamina,canonPower,wallStamina);
-				game.init(users);
+				game.init(user);
 				ThreadPool.execute(game);
 			}
 		});

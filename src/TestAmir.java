@@ -1,3 +1,5 @@
+import GameData.ServerInformationStorage;
+import GameData.User;
 import MultiGame.*;
 import Game.ThreadPool;
 
@@ -87,9 +89,10 @@ public class TestAmir {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
                 frame.initBufferStrategy();
-
+                User user = new User ("Amir",new char[]{'A','0','1','2','3','2','1','1'},
+                        new ServerInformationStorage ());
                 MultiGameLoop game = new MultiGameLoop (frame,null);
-                game.init("127.0.0.1",8080);
+                game.init("127.0.0.1",8080, user);
                 ThreadPool.execute(game);
             }
         });

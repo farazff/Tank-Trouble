@@ -48,9 +48,9 @@ public class GameLoop implements Runnable
 	/**
 	 * This must be called before the game loop starts.
 	 */
-	public void init(ArrayList<User> users)
+	public void init(User user)
 	{
-		state = new GameState(level, tankStamina,canonPower, wallStamina, users);
+		state = new GameState(level, tankStamina,canonPower, wallStamina, user);
 
 		for(Tank tank:state.getTanks ())
 		{

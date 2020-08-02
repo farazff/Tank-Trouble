@@ -1,6 +1,7 @@
 package MultiGame;
 
 
+import GameData.User;
 import MultiGame.Status.GameStatus;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class MultiGameLoop implements Runnable
     private JFrame menuFrame;
     private String ip;
     private int port;
+    private User user;
 
 
     public MultiGameLoop(MultiGameFrame frame , JFrame menuFrame)
@@ -32,10 +34,11 @@ public class MultiGameLoop implements Runnable
     /**
      * This must be called before the game loop starts.
      */
-    public void init(String ip, int port)
+    public void init(String ip, int port, User user)
     {
         this.port = port;
         this.ip = ip;
+        this.user = user;
         canvas.addKeyListener (moveTranslator.getKeyListener ());
     }
 
@@ -46,7 +49,7 @@ public class MultiGameLoop implements Runnable
         try(Socket client = new Socket (ip,port))
         {
             System.out.println("Connected to server.");
-            OutputStream outputStream = client.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream (client.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
 
             while(true)
@@ -55,8 +58,10 @@ public class MultiGameLoop implements Runnable
 
 
                 String temp = moveTranslator.getCommandString();
+                objectOutputStream.writeObject (new TransferData (temp,user));
+                objectOutputStream.flush ();
                 //System.out.println(temp);
-                outputStream.write(temp.getBytes());
+
                 GameStatus status = (GameStatus) objectInputStream.readObject();
                 if(status.getTanks().size()>=1)
                     canvas.render(status);
