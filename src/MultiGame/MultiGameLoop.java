@@ -66,8 +66,7 @@ public class MultiGameLoop implements Runnable
                 GameStatus status = (GameStatus) objectInputStream.readObject();
                 if (!(status instanceof NullStatus))
                 {
-                    if(status.getTanks().size()>=1)
-                        canvas.render(status);
+                    canvas.render(status);
                 }
 
 

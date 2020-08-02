@@ -116,7 +116,6 @@ public class MultiGameFrame extends JFrame implements Serializable
     private void doRendering(Graphics2D g3d, GameStatus state) throws IOException, InterruptedException
     {
 
-
        if(state.isShot())
        {
            Music music = new Music();
@@ -135,14 +134,6 @@ public class MultiGameFrame extends JFrame implements Serializable
             music.setFilePath("Files/Sounds/GetPrize.au",false);
             music.execute();
         }
-//        if(state.isExplode())
-//        {
-//            Music music = new Music();
-//            music.setFilePath("Files/Sounds/Blast.au",false);
-//            music.execute();
-//        }
-
-
 
         Graphics2D g2d = img.createGraphics();
 
@@ -382,7 +373,24 @@ public class MultiGameFrame extends JFrame implements Serializable
         }
         lastRender = currentRender;
 
+        System.out.println(state.getTanks().size());
+        g2d.setPaint(new GradientPaint(300,150,Color.RED,600,450,Color.BLACK,
+                false));
+        g2d.setFont(new Font("Arial",Font.BOLD,26));
+        if(state.isGameOver())
+        {
+            g2d.fill(new Rectangle2D.Double(300,150,680,420));
+            g2d.setPaint(Color.WHITE);
 
+            g2d.drawString("Game Over",580,195);
+
+            int h=0;
+            for(int i=state.getWinners().size()-1;i>=0;i--)
+            {
+                g2d.drawString(String.valueOf(h+1) + ") " + state.getWinners().get(i) , 340, 260 + 70*(h));
+                h++;
+            }
+        }
 
         g3d.drawImage(img,0,0,null);
 
