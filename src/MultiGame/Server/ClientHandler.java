@@ -8,10 +8,12 @@ import MultiGame.TransferData;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class ClientHandler implements Runnable
 {
+    boolean active;
     private ArrayList<Character> data = new ArrayList<>();
     private GameLoopMulti game;
     private boolean wait;
@@ -22,7 +24,8 @@ public class ClientHandler implements Runnable
         return data;
     }
 
-    public User getUser () {
+    public User getUser ()
+    {
         return user;
     }
 
@@ -31,19 +34,17 @@ public class ClientHandler implements Runnable
 
     public ClientHandler(Socket connectionSocket , GameLoopMulti game)
     {
+        active = true;
         wait = true;
         try
         {
             inputStream = new ObjectInputStream (connectionSocket.getInputStream());
             outputStream = new ObjectOutputStream(connectionSocket.getOutputStream());
 
-
             TransferData transferData = (TransferData) inputStream.readObject ();
             user = transferData.getUser ();
             outputStream.reset();
-            System.out.println("going to send object");
             outputStream.writeObject(new NullStatus ());
-            System.out.println("Done sending");
 
         }
         catch (IllegalArgumentException | IOException | ClassNotFoundException e)
@@ -62,7 +63,6 @@ public class ClientHandler implements Runnable
         {
             TransferData transferData = (TransferData) inputStream.readObject ();
             String temp = transferData.getCommand ();
-            System.out.println("*" + temp);
             user = transferData.getUser ();
             data.clear();
             data.add(temp.charAt(0));
@@ -73,18 +73,32 @@ public class ClientHandler implements Runnable
 
             GameStatus status = game.getState().getStatus();
             outputStream.reset();
-            System.out.println("going to send object");
             outputStream.writeObject(status);
-            System.out.println("Done sending");
         }
-        catch (IllegalArgumentException | IOException | ClassNotFoundException e)
+        catch (SocketException e)
+        {
+            active = false;
+        }
+        catch(IllegalArgumentException | IOException | ClassNotFoundException e)
         {
             e.printStackTrace();
         }
         wait = false;
     }
 
-    public boolean isWait () {
+    public boolean isWait ()
+    {
         return wait;
     }
+
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public void setActive(boolean active)
+    {
+        this.active = active;
+    }
+
 }
