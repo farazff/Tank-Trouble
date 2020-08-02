@@ -3,6 +3,7 @@ package MultiGame;
 
 import GameData.User;
 import MultiGame.Status.GameStatus;
+import MultiGame.Status.NullStatus;
 
 import javax.swing.*;
 import java.io.*;
@@ -63,8 +64,11 @@ public class MultiGameLoop implements Runnable
                 //System.out.println(temp);
 
                 GameStatus status = (GameStatus) objectInputStream.readObject();
-                if(status.getTanks().size()>=1)
-                    canvas.render(status);
+                if (!(status instanceof NullStatus))
+                {
+                    if(status.getTanks().size()>=1)
+                        canvas.render(status);
+                }
 
 
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
@@ -83,11 +87,11 @@ public class MultiGameLoop implements Runnable
         }
         catch (ConnectException e)
         {
-            System.err.println ("Couldn't connect to ServerInformation");
+            System.err.println ("Couldn't connect to Server");
         }
         catch (SocketException e)
         {
-            System.err.println ("ServerInformation Not Responding");
+            System.err.println ("Server Not Responding");
         } catch (IOException e)
         {
             System.err.println ("Some went Wrong");
