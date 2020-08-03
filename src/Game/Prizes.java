@@ -10,9 +10,11 @@ public class Prizes implements Runnable
     private ArrayList<Prize> prizes;
     private ArrayList<Tank> tanks;
     private Maps maps;
+    private boolean active;
 
     public Prizes(Maps maps , ArrayList<Tank> tanks)
     {
+        active = true;
         prizes = new ArrayList<>();
         this.maps = maps;
         this.tanks = tanks;
@@ -22,7 +24,8 @@ public class Prizes implements Runnable
     {
         while(true)
         {
-            try {
+            try
+            {
                 Thread.sleep(4000);
                 Random random = new Random();
                 int r = random.nextInt(5) + 1;
@@ -41,7 +44,7 @@ public class Prizes implements Runnable
             }
             catch (InterruptedException e)
             {
-                e.printStackTrace();
+                break;
             }
         }
     }
@@ -95,6 +98,11 @@ public class Prizes implements Runnable
         }
 
         return true;
+    }
+
+    public void deActive()
+    {
+        active = false;
     }
 
     public ArrayList<Prize> getPrizes()

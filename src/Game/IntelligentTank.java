@@ -19,12 +19,15 @@ public class IntelligentTank extends Tank
     private boolean timeToSignal;
     private boolean timeToInterrupt;
     private boolean timeToAct;
+    private int[] kills;
 
     public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks
-            , Prizes prizes , int tankStamina, int canonPower , Maps maps, String imageLoc, User user)
+            , Prizes prizes , int tankStamina, int canonPower , Maps maps, String imageLoc, User user,int code
+    ,int[] kills)
     {
-        super (bullets, walls, tanks , prizes,tankStamina,canonPower,maps,imageLoc,user);
+        super (bullets, walls, tanks , prizes,tankStamina,canonPower,maps,imageLoc,user,code,kills);
         timeToSignal = true;
+        this.kills = kills;
         timeToInterrupt = false;
         timeToAct = false;
         target = null;
@@ -42,7 +45,7 @@ public class IntelligentTank extends Tank
         {
             signalBullets.add (new SignalBullet (getCenterX (),getCenterY (),
                     i, System.currentTimeMillis (),getWalls (),
-                    getTanks (),this,getCanonPower()));
+                    getTanks (),this,getCanonPower(),this.getCode(),kills));
             i += 10;
         }
     }
@@ -429,13 +432,14 @@ public class IntelligentTank extends Tank
                             {
                                 getBullets ().add (new LaserBullet (getCanonStartX (), getCanonStartY (),
                                         getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),
-                                        getCanonPower ()));
+                                        getCanonPower (),this.getCode(),kills));
                                 setBulletType ("Normal");
-                            } else
+                            }
+                            else
                             {
                                 getBullets ().add (new Bullet (getCanonStartX (), getCanonStartY (),
                                         getDegree (), System.currentTimeMillis (), getWalls (), getTanks (),
-                                        getCanonPower ()));
+                                        getCanonPower (),this.getCode(),kills));
                             }
                         setCanShot (false);
                         setShot (true);

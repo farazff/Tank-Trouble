@@ -22,22 +22,29 @@ public class GameState
 	private Maps maps;
 	private Prizes prizes;
 	private Thread t1;
+	private int[] kills;
 
-	public GameState(int level, int tankStamina, int canonPower, int wallStamina, User user)
+	public int[] getKills()
 	{
+		return kills;
+	}
+
+	public GameState(int level, int tankStamina, int canonPower, int wallStamina, User user,int[] kills)
+	{
+		this.kills = kills;
 		maps = new Maps(wallStamina);
 		bullets = new InteractArrayList<> ();
 		tanks = new ArrayList<> ();
 		prizes = new Prizes(maps,tanks);
 
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes ,
-				tankStamina,canonPower,maps,"Images/Tanks/"+"1"+".png",user);
+				tankStamina,canonPower,maps,"Images/Tanks/"+"1"+".png",user,1,kills);
 		tanks.add (tank1);
 
 		for(int i=2;i<=level+1;i++)
 		{
 			Tank tank2 = new IntelligentTank(bullets, maps.getWalls(), tanks, prizes,
-					tankStamina,canonPower,maps,"Images/Tanks/"+(i)+".png",null);
+					tankStamina,canonPower,maps,"Images/Tanks/"+(i)+".png",null,i,kills);
 			tanks.add (tank2);
 		}
 
@@ -92,6 +99,8 @@ public class GameState
 		}
 		bullets.setIterate (false);
 
+
+
 		Iterator<Tank> tankIterator = tanks.iterator ();
 		while (tankIterator.hasNext ())
 		{
@@ -106,16 +115,19 @@ public class GameState
 				executorService.execute (tank);
 		}
 		executorService.shutdown();
+
 		if(numberOfNormalTanks == 0 )
 		{
 			gameOver = -1;
-			t1.stop();
+			prizes.deActive();
+			t1.interrupt();
 		}
 
 		if(numberOfIntelligentTanks == 0)
 		{
 			gameOver = 1;
-			t1.stop();
+			prizes.deActive();
+			t1.interrupt();
 		}
 
 		try

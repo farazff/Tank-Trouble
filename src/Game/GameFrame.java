@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -83,7 +84,7 @@ public class GameFrame extends JFrame
 	/**
 	 * MultiGame rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state,int PCScore,int playerScore) throws IOException
+	public void render(GameState state,int[] kills) throws IOException
 	{
 		// Render single frame
 		do
@@ -97,7 +98,7 @@ public class GameFrame extends JFrame
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 				try
 				{
-					doRendering(graphics, state,PCScore,playerScore);
+					doRendering(graphics, state,kills);
 				}
 				finally
 				{
@@ -120,7 +121,7 @@ public class GameFrame extends JFrame
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state,int PCScore,int playerScore) throws IOException
+	private void doRendering(Graphics2D g2d, GameState state,int[] kills) throws IOException
 	{
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
@@ -230,6 +231,7 @@ public class GameFrame extends JFrame
 						,bullet.getY () - image2.getHeight () / 2 + 2,null);
 			}
 
+			if(state.getPrizes()!=null)
 			for(int i=0;i<state.getPrizes().getPrizes().size();i++)
 			{
 				Prize prize = state.getPrizes().getPrizes().get(i);
@@ -339,49 +341,50 @@ public class GameFrame extends JFrame
 		}
 		lastRender = currentRender;
 
-		if(state.gameOver == 1 || state.gameOver == -1)
-		{
-			String str = "PC = " + PCScore + " VS. " + "Player = " + playerScore;
-			g2d.setColor(Color.WHITE);
-			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-			int strWidth = g2d.getFontMetrics().stringWidth(str);
-			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, (GAME_HEIGHT / 2)-100);
-		}
+		g2d.setPaint(new GradientPaint(300,150,Color.RED,600,450,Color.BLACK, true));
 
-		if(state.gameOver == 1 && PCScore + playerScore<5)
+		if(state.gameOver != 0)
 		{
-			String str = "Winner";
-			g2d.setColor(Color.WHITE);
-			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-			int strWidth = g2d.getFontMetrics().stringWidth(str);
-			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
-		}
-		if(state.gameOver == -1 && PCScore + playerScore<5)
-		{
-			String str = "Looser";
-			g2d.setColor(Color.WHITE);
-			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-			int strWidth = g2d.getFontMetrics().stringWidth(str);
-			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
-		}
 
-		if(PCScore + playerScore == 5)
-		{
-			if(PCScore>playerScore)
+			g2d.fill(new RoundRectangle2D.Double(300,150,680,420,30,30));
+
+			g2d.setPaint(Color.WHITE);
+			g2d.setFont(new Font("Arial",Font.BOLD,28));
+			g2d.drawString("Round Over",565,195);
+
+			g2d.setFont(new Font("Arial",Font.BOLD,22));
+
+			String[] names = new String[kills.length];
+			int[] scores = new int[kills.length];
+
+			names[0] = "Player";
+			scores[0] = kills[0];
+			for(int i=1;i<kills.length;i++)
 			{
-				String str = "PC is the Winner!!!";
-				g2d.setColor(Color.WHITE);
-				g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-				int strWidth = g2d.getFontMetrics().stringWidth(str);
-				g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+				names[i] = "PC" + (i+1);
+				scores[i] = kills[i];
 			}
-			else
+
+			for(int i=0;i<kills.length;i++)
 			{
-				String str = "Player is the Winner!!!";
-				g2d.setColor(Color.WHITE);
-				g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
-				int strWidth = g2d.getFontMetrics().stringWidth(str);
-				g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+				for(int j=i+1;j<kills.length;j++)
+				{
+					if(scores[i]<scores[j])
+					{
+						String name = names[i];
+						int temp = kills[i];
+						names[i] = names[j];
+						scores[i] = scores[j];
+						names[j] = name;
+						scores[j] = temp;
+					}
+				}
+			}
+
+			for(int i=0;i<kills.length;i++)
+			{
+				String temp =  (i+1) + " ) " + names[i] + ": " + scores[i] + "\n";
+				g2d.drawString(temp, 340, 250 + 55*i);
 			}
 		}
 	}

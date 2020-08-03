@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Bullet implements Runnable
-
 {
+    private int code;
     private double x;
     private static final int WALL_ACCURACY = 4;
     private static final int TANK_ACCURACY = -10;
@@ -21,19 +21,23 @@ public class Bullet implements Runnable
     private double degree;
     private Direction direction;
     private BufferedImage image;
-
-
     private static final int STEP = 12;
     private int canonPower;
     private ArrayList<Wall> walls;
     private ArrayList<Tank> tanks;
-
     private boolean expired;
+    private int[] kills;
+
+    public int getCode()
+    {
+        return code;
+    }
 
     public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
-                   ArrayList<Tank> tanks , int canonPower)
+                   ArrayList<Tank> tanks , int canonPower,int code,int[] kills)
     {
-
+        this.kills = kills;
+        this.code = code;
         this.degree = degree;
         expired = false;
         findQuarterAndM (degree);
@@ -184,13 +188,15 @@ public class Bullet implements Runnable
                 if ((getCenterX () <= tank.getLocX () + tank.getHeight () + TANK_ACCURACY) &&
                         getCenterX () >= tank.getLocX () - TANK_ACCURACY) {
                     tank.looseStamina (canonPower);
-                    setExpired ();
+                    if(tank.getStamina()<=0 && tank.getCode()!=this.getCode())
+                    {
+                        kills[this.getCode()-1]++;
+                    }
+                    setExpired();
                     return;
                 }
             }
         }
-
-
     }
 
     public int getCanonPower () {
