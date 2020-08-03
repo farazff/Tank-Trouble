@@ -47,6 +47,14 @@ public class Tank implements Runnable
 
     private int canonPower;
     private Maps maps;
+    private int[] kills;
+    private int code;
+
+    public int getCode()
+    {
+        return code;
+    }
+
 
     static
     {
@@ -62,8 +70,10 @@ public class Tank implements Runnable
     }
 
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
-                int tankStamina,int canonPower , Maps maps,String imageAddress, User user)
+                int tankStamina,int canonPower , Maps maps,String imageAddress, User user,int code,int[] kills)
     {
+        this.kills = kills;
+        this.code = code;
         this.imageAddress = imageAddress;
         this.maps = maps;
         this.canonPower = canonPower;
@@ -567,12 +577,13 @@ public class Tank implements Runnable
                             if (getBulletType ().equals ("Laser"))
                             {
                                 bullets.add (new LaserBullet (getCanonStartX (), getCanonStartY (),
-                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower,1,kills));
                                 setBulletType ("Normal");
-                            } else
+                            }
+                            else
                             {
                                 bullets.add (new Bullet (getCanonStartX (), getCanonStartY (),
-                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower));
+                                        getDegree (), System.currentTimeMillis (), walls, tanks,canonPower,1,kills));
                             }
 
                             canShot = false;

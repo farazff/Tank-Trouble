@@ -10,8 +10,9 @@ import java.util.Iterator;
 public class LaserBullet extends Bullet
 {
 
-    public LaserBullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls, ArrayList<Tank> tanks, int canonPower) {
-        super (x, y, degree, startTime, walls, tanks, canonPower);
+    public LaserBullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
+                        ArrayList<Tank> tanks, int canonPower,int code,int[] kills) {
+        super (x, y, degree, startTime, walls, tanks, canonPower,code,kills);
         try {
             super.setImage (ImageIO.read (new File ("./Images/Bullet/bulletRed1_outline.png")));
         } catch (IOException e) {

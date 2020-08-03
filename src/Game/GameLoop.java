@@ -35,11 +35,13 @@ public class GameLoop implements Runnable
 	private int level, tankStamina,canonPower, wallStamina;
 	private User user;
 	private int PCScore = 0;
-	private  int playerScore = 0;
+	private int playerScore = 0;
+	private int[] kills;
 
 	public GameLoop(GameFrame frame , JFrame menuFrame,
 					int level,int tankStamina,int canonPower,int wallStamina,int type)
 	{
+		kills = new int[level+1];
 		this.type = type;
 		this.menuFrame = menuFrame;
 		this.level = level;
@@ -55,7 +57,7 @@ public class GameLoop implements Runnable
 	public void init(User user)
 	{
 		this.user = user;
-		state = new GameState(level, tankStamina,canonPower, wallStamina, user);
+		state = new GameState(level, tankStamina,canonPower, wallStamina, user,kills);
 
 		for(Tank tank:state.getTanks ())
 		{
@@ -68,9 +70,10 @@ public class GameLoop implements Runnable
 	{
 		for(int i=1;i<=type;i++)
 		{
-			init(user);
+			if(i!=1)
+				init(user);
 			int gameOver = 0;
-			while (gameOver == 0)
+			while(gameOver == 0)
 			{
 				try
 				{
@@ -78,16 +81,7 @@ public class GameLoop implements Runnable
 					//
 					state.update();
 					gameOver = state.gameOver;
-					if(gameOver == 1)
-					{
-						playerScore++;
-					}
-					if(gameOver == -1)
-					{
-						PCScore++;
-					}
-
-					canvas.render(state,PCScore,playerScore);
+					canvas.render(state,kills);
 
 					//
 					long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
@@ -109,7 +103,7 @@ public class GameLoop implements Runnable
 			{
 				try
 				{
-					canvas.render(state,PCScore,playerScore);
+					canvas.render(state,kills);
 					Thread.sleep(3000);
 				}
 				catch (InterruptedException | IOException e)
@@ -122,7 +116,7 @@ public class GameLoop implements Runnable
 
 		try
 		{
-			canvas.render(state,PCScore,playerScore);
+			canvas.render(state,kills);
 		}
 		catch (IOException e)
 		{
