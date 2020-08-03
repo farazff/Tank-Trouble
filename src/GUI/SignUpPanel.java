@@ -229,6 +229,8 @@ public class SignUpPanel extends JPanel
     {
         Music music = new Music();
         music.execute();
+        if (!((SignInPanel)signIn).isRememberMe ())
+            ((SignInPanel)signIn).clear ();
         frame.setContentPane(signIn);
         frame.setVisible(false);
         frame.setVisible(true);

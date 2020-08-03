@@ -2,6 +2,7 @@ package GUI;
 
 import GUI.MainPage.Main;
 import GameData.NullUser;
+import GameData.RememberMeData;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -11,8 +12,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * this class represents the Login Panel of MultiGame
@@ -38,6 +38,7 @@ public class SignInPanel extends JPanel
     private JLabel errorMessage;
     private JPanel nex;
     private JFrame frame;
+    private RememberMeData rememberMeData;
 
     /**
      * creates new SignInPanel
@@ -47,6 +48,7 @@ public class SignInPanel extends JPanel
         super();
         user = null;
         this.frame = frame;
+        frame.addWindowListener (new FrameHandler ());
         setBorder (new EmptyBorder (10,10,10,10));
         setLayout (new FlowLayout (FlowLayout.CENTER));
         createBasePanel ();
@@ -58,6 +60,20 @@ public class SignInPanel extends JPanel
                 repaint ();
             }
         });
+        loadDataForRemember ();
+        rememberMe.setSelected (rememberMeData.isTickOn ());
+        if (rememberMeData.getUserName () != null && rememberMeData.getPassword () != null)
+        {
+            if (rememberMeData.isTickOn ())
+            {
+                username.setText (rememberMeData.getUserName ());
+                username.setForeground (Color.BLACK);
+                StringBuilder stringBuilder = new StringBuilder ();
+                for (char c : rememberMeData.getPassword ())
+                    stringBuilder.append (c);
+                password.setText (stringBuilder.toString ());
+            }
+        }
     }
 
     public void setNex (JPanel nex) {
@@ -191,6 +207,18 @@ public class SignInPanel extends JPanel
     }
 
 
+    public boolean isRememberMe ()
+    {
+        return rememberMe.isSelected ();
+    }
+
+    public void clear ()
+    {
+        password.setText ("password");
+        username.setText ("username");
+        username.setForeground (Color.GRAY);
+    }
+
     /**
      * this class handles mouse
      */
@@ -223,7 +251,19 @@ public class SignInPanel extends JPanel
                 frame.setContentPane (new SignUpPanel(frame,getSignIn()));
                 frame.setVisible (false);
                 frame.setVisible (true);
+                rememberMeData.set (username.getText (),password.getPassword ());
+                saveDataForRemember ();
             }
+        }
+    }
+
+    private class FrameHandler extends WindowAdapter
+    {
+        @Override
+        public void windowClosing (WindowEvent e) {
+            rememberMeData.set (username.getText (),password.getPassword ());
+            saveDataForRemember ();
+            saveDataForRemember ();
         }
     }
 
@@ -251,6 +291,8 @@ public class SignInPanel extends JPanel
                 frame.setVisible (false);
                 frame.setContentPane (nex);
                 frame.setVisible (true);
+                rememberMeData.set (username.getText (),password.getPassword ());
+                saveDataForRemember ();
             }
             else if (e.getSource () == username)
             {
@@ -308,6 +350,8 @@ public class SignInPanel extends JPanel
                 frame.setContentPane (nex);
                 frame.setVisible (false);
                 frame.setVisible (true);
+                rememberMeData.set (username.getText (),password.getPassword ());
+                saveDataForRemember ();
             }
         }
 
@@ -315,6 +359,7 @@ public class SignInPanel extends JPanel
         public void itemStateChanged (ItemEvent e) {
             Music music = new Music ();
             music.execute ();
+            rememberMeData.setTickOn (rememberMe.isSelected ());
         }
     }
 
@@ -376,6 +421,29 @@ public class SignInPanel extends JPanel
                     ,0,0,this);
         } catch (IOException e) {
             e.printStackTrace ();
+        }
+    }
+
+    private void loadDataForRemember ()
+    {
+        try (ObjectInputStream in = new ObjectInputStream (new FileInputStream (
+                new File ("./Files/RememberMe/rememberMe.ser")))){
+            rememberMeData = (RememberMeData) in.readObject ();
+        }
+        catch (IOException | ClassNotFoundException e)
+        {
+            rememberMeData = new RememberMeData ();
+        }
+    }
+
+    private void saveDataForRemember ()
+    {
+        try (ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (
+                new File ("./Files/RememberMe/rememberMe.ser")))){
+            out.writeObject (rememberMeData);
+        } catch (IOException e)
+        {
+            System.out.println ("Some Thing went wrong in Save RememberMe");
         }
     }
 
