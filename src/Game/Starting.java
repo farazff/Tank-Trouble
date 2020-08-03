@@ -1,4 +1,3 @@
-/*** In The Name of Allah ***/
 package Game;
 
 import GameData.User;
@@ -17,28 +16,31 @@ public class Starting
 {
 
 	public Starting(JFrame menuFrame, int level, int tankStamina, int canonPower, int wallStamina,
-					User user)
+					User user , int type)
 	{
-
 		// Initialize the global thread-pool
-		ThreadPool.init();
 
-		EventQueue.invokeLater(new Runnable()
+		if(type==1 || type==5)
 		{
-			@Override
-			public void run()
-			{
-				GameFrame frame = null;
-				frame = new GameFrame("Simple Ball !");
-				frame.setLocationRelativeTo(null);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
-				frame.initBufferStrategy();
+			ThreadPool.init();
 
-				GameLoop game = new GameLoop(frame,menuFrame,level,tankStamina,canonPower,wallStamina);
-				game.init(user);
-				ThreadPool.execute(game);
-			}
-		});
+			EventQueue.invokeLater(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					GameFrame frame = null;
+					frame = new GameFrame("Simple Ball !");
+					frame.setLocationRelativeTo(null);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setVisible(true);
+					frame.initBufferStrategy();
+
+					GameLoop game = new GameLoop(frame, menuFrame, level, tankStamina, canonPower, wallStamina,type);
+					game.init(user);
+					ThreadPool.execute(game);
+				}
+			});
+		}
 	}
 }

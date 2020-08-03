@@ -28,15 +28,19 @@ public class GameLoop implements Runnable
 	 * Higher is better, but any value above 24 is fine.
 	 */
 	public static final int FPS = 54;
-
+	private int type;
 	private GameFrame canvas;
 	private GameState state;
 	private JFrame menuFrame;
 	private int level, tankStamina,canonPower, wallStamina;
+	private User user;
+	private int PCScore = 0;
+	private  int playerScore = 0;
 
 	public GameLoop(GameFrame frame , JFrame menuFrame,
-					int level,int tankStamina,int canonPower,int wallStamina)
+					int level,int tankStamina,int canonPower,int wallStamina,int type)
 	{
+		this.type = type;
 		this.menuFrame = menuFrame;
 		this.level = level;
 		this.tankStamina = tankStamina;
@@ -50,6 +54,7 @@ public class GameLoop implements Runnable
 	 */
 	public void init(User user)
 	{
+		this.user = user;
 		state = new GameState(level, tankStamina,canonPower, wallStamina, user);
 
 		for(Tank tank:state.getTanks ())
@@ -61,31 +66,68 @@ public class GameLoop implements Runnable
 	@Override
 	public void run()
 	{
-		int gameOver = 0;
-		while(gameOver == 0)
+		for(int i=1;i<=type;i++)
 		{
-			try
+			init(user);
+			int gameOver = 0;
+			while (gameOver == 0)
 			{
-				long start = System.currentTimeMillis();
-				//
-				state.update();
-				canvas.render(state);
-				gameOver = state.gameOver;
-				//
-				long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
-				if (delay > 0)
-					Thread.sleep(delay);
+				try
+				{
+					long start = System.currentTimeMillis();
+					//
+					state.update();
+					gameOver = state.gameOver;
+					if(gameOver == 1)
+					{
+						playerScore++;
+					}
+					if(gameOver == -1)
+					{
+						PCScore++;
+					}
+
+					canvas.render(state,PCScore,playerScore);
+
+					//
+					long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
+					if (delay > 0)
+						Thread.sleep(delay);
+				}
+				catch (InterruptedException | IOException ex)
+				{
+					ex.printStackTrace();
+				}
 			}
-			catch (InterruptedException | IOException ex)
+
+			if (gameOver == 1)
+				for (Tank tank : state.getTanks())
+					if (!(tank instanceof IntelligentTank))
+						tank.getUser().setNumOfWinSingleGames(tank.getUser().getNumOfWinSingleGames() + 1);
+
+			if(i!=type)
 			{
-				ex.printStackTrace();
+				try
+				{
+					canvas.render(state,PCScore,playerScore);
+					Thread.sleep(3000);
+				}
+				catch (InterruptedException | IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
-		if (gameOver == 1)
-			for (Tank tank : state.getTanks ())
-				if (!(tank instanceof IntelligentTank))
-					tank.getUser ().setNumOfWinSingleGames (tank.getUser ().getNumOfWinSingleGames () + 1);
 
+
+		try
+		{
+			canvas.render(state,PCScore,playerScore);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		new Thread(new Runnable()
 		{
 			@Override
@@ -104,13 +146,8 @@ public class GameLoop implements Runnable
 			}
 		}).start();
 
-		try
-		{
-			canvas.render(state);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+
 	}
 }
+
+

@@ -219,7 +219,6 @@ public class Maps
 
         Random random = new Random();
         Integer t = random.nextInt(count) + 1;
-        System.out.println(t);
 
         File map = new File("Files/Maps/map" + t.toString() + ".txt");
         try

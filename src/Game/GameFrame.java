@@ -83,7 +83,7 @@ public class GameFrame extends JFrame
 	/**
 	 * MultiGame rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state) throws IOException
+	public void render(GameState state,int PCScore,int playerScore) throws IOException
 	{
 		// Render single frame
 		do
@@ -97,7 +97,7 @@ public class GameFrame extends JFrame
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 				try
 				{
-					doRendering(graphics, state);
+					doRendering(graphics, state,PCScore,playerScore);
 				}
 				finally
 				{
@@ -120,7 +120,7 @@ public class GameFrame extends JFrame
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state) throws IOException
+	private void doRendering(Graphics2D g2d, GameState state,int PCScore,int playerScore) throws IOException
 	{
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
@@ -339,7 +339,16 @@ public class GameFrame extends JFrame
 		}
 		lastRender = currentRender;
 
-		if(state.gameOver == 1)
+		if(state.gameOver == 1 || state.gameOver == -1)
+		{
+			String str = "PC = " + PCScore + " VS. " + "Player = " + playerScore;
+			g2d.setColor(Color.WHITE);
+			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
+			int strWidth = g2d.getFontMetrics().stringWidth(str);
+			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, (GAME_HEIGHT / 2)-100);
+		}
+
+		if(state.gameOver == 1 && PCScore + playerScore<5)
 		{
 			String str = "Winner";
 			g2d.setColor(Color.WHITE);
@@ -347,13 +356,33 @@ public class GameFrame extends JFrame
 			int strWidth = g2d.getFontMetrics().stringWidth(str);
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
 		}
-		if(state.gameOver == -1)
+		if(state.gameOver == -1 && PCScore + playerScore<5)
 		{
 			String str = "Looser";
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
 			int strWidth = g2d.getFontMetrics().stringWidth(str);
 			g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+		}
+
+		if(PCScore + playerScore == 5)
+		{
+			if(PCScore>playerScore)
+			{
+				String str = "PC is the Winner!!!";
+				g2d.setColor(Color.WHITE);
+				g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
+				int strWidth = g2d.getFontMetrics().stringWidth(str);
+				g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+			}
+			else
+			{
+				String str = "Player is the Winner!!!";
+				g2d.setColor(Color.WHITE);
+				g2d.setFont(g2d.getFont().deriveFont(Font.BOLD).deriveFont(64.0f));
+				int strWidth = g2d.getFontMetrics().stringWidth(str);
+				g2d.drawString(str, (GAME_WIDTH - strWidth) / 2, GAME_HEIGHT / 2);
+			}
 		}
 	}
 

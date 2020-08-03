@@ -199,10 +199,21 @@ public class GameWithPC extends JPanel
                 if(selecting2.getCurrentValue().equals("HARD"))
                     level=3;
 
+                int type = 1;
+                if(selecting.getCurrentValue().equals("Death Match"))
+                {
+                    type = 1;
+                }
+
+                if(selecting.getCurrentValue().equals("League Match"))
+                {
+                    type = 5;
+                }
 
 
                 Starting starting = new Starting(frame,level,sliderTank.getValue(),sliderCanon.getValue(),
-                        sliderWall.getValue(), user);
+                        sliderWall.getValue(), user , type);
+
                 user.setNumOfSingleGames (user.getNumOfSingleGames () + 1);
             }
         }

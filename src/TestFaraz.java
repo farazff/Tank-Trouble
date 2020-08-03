@@ -22,8 +22,6 @@ public class TestFaraz
 
 
 
-
-
         Loading loading = new Loading(frame);
         SignInPanel signInPanel = new SignInPanel(frame);
         SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
@@ -31,40 +29,13 @@ public class TestFaraz
         main.setPre (signInPanel);
 
 
-
-
-
         loading.setNex(signInPanel);
         signInPanel.setNex(main);
-
-
-
 
 
         frame.setContentPane(loading);
         frame.setVisible(true);
         loading.fill();
-
-//        ThreadPool.init();
-
-//        EventQueue.invokeLater(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                MultiGameFrame frame = null;
-//                frame = new MultiGameFrame("Tank Trouble !");
-//                frame.setLocationRelativeTo(null);
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setVisible(true);
-//                frame.initBufferStrategy();
-//
-//                MultiGameLoop game = new MultiGameLoop(frame,null);
-//                game.init("127.0.0.1",8080);
-//                ThreadPool.execute(game);
-//            }
-//        });
-
 
     }
 }
