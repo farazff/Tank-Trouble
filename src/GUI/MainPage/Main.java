@@ -4,6 +4,7 @@ import GUI.GameWithPC;
 import GUI.MultiGamePanels.MultiGamePanel;
 import GUI.Music;
 import GUI.Setting.Setting;
+import GUI.SignInPanel;
 import GameData.ServerInformationStorage;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
@@ -14,6 +15,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,6 +66,7 @@ public class Main extends JPanel
         super();
         user = null;
         this.frame = frame;
+        frame.addWindowListener (new FrameHandler ());
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(900,530));
         this.setBorder(new EmptyBorder(5,18,18,18));
@@ -256,6 +260,8 @@ public class Main extends JPanel
                                 "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
                         if (ans2 == 0)
                         {
+                            if (!((SignInPanel)pre).isRememberMe ())
+                                ((SignInPanel)pre).clear ();
                             frame.setContentPane (pre);
                             frame.setVisible(false);
                             frame.setVisible(true);
@@ -263,6 +269,8 @@ public class Main extends JPanel
                     }
                     else
                     {
+                        if (!((SignInPanel)pre).isRememberMe ())
+                            ((SignInPanel)pre).clear ();
                         frame.setContentPane (pre);
                         frame.setVisible(false);
                         frame.setVisible(true);
@@ -272,22 +280,7 @@ public class Main extends JPanel
             }
         }
 
-        private boolean connect ()
-        {
-            LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
-            new Thread (logConnector).start ();
-            while (!logConnector.isFinished ())
-            {
-                try{
-                    Thread.sleep (10);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace ();
-                }
-            }
-            String res = logConnector.getLogoutResult ();
-            return res.equals ("Successful");
-        }
+
 
         @Override
         public void mouseEntered(MouseEvent e)
@@ -340,6 +333,23 @@ public class Main extends JPanel
         }
     }
 
+    private boolean connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
+        while (!logConnector.isFinished ())
+        {
+            try{
+                Thread.sleep (10);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace ();
+            }
+        }
+        String res = logConnector.getLogoutResult ();
+        return res.equals ("Successful");
+    }
+
     @Override
     protected void paintComponent (Graphics g)
     {
@@ -352,6 +362,14 @@ public class Main extends JPanel
         catch (IOException e)
         {
             e.printStackTrace ();
+        }
+    }
+
+    private class FrameHandler extends WindowAdapter
+    {
+        @Override
+        public void windowClosing (WindowEvent e) {
+            connect ();
         }
     }
 
