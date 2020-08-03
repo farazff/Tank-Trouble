@@ -104,7 +104,7 @@ public class GameLoop implements Runnable
 				try
 				{
 					canvas.render(state,kills);
-					Thread.sleep(3000);
+					Thread.sleep(4000);
 				}
 				catch (InterruptedException | IOException e)
 				{

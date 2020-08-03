@@ -44,7 +44,6 @@ public class Prizes implements Runnable
             }
             catch (InterruptedException e)
             {
-                System.err.println("Done putting prize");
                 break;
             }
         }

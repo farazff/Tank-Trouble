@@ -354,13 +354,36 @@ public class GameFrame extends JFrame
 
 			g2d.setFont(new Font("Arial",Font.BOLD,22));
 
-			String temp = ("1) Player : " + kills[0] + "\n");
-			g2d.drawString(temp , 340, 260);
+			String[] names = new String[kills.length];
+			int[] scores = new int[kills.length];
 
-
+			names[0] = "Player";
+			scores[0] = kills[0];
 			for(int i=1;i<kills.length;i++)
 			{
-				temp =  (i+1) + ") PC : " + kills[i] + "\n";
+				names[i] = "PC" + (i+1);
+				scores[i] = kills[i];
+			}
+
+			for(int i=0;i<kills.length;i++)
+			{
+				for(int j=i+1;j<kills.length;j++)
+				{
+					if(scores[i]<scores[j])
+					{
+						String name = names[i];
+						int temp = kills[i];
+						names[i] = names[j];
+						scores[i] = scores[j];
+						names[j] = name;
+						scores[j] = temp;
+					}
+				}
+			}
+
+			for(int i=0;i<kills.length;i++)
+			{
+				String temp =  (i+1) + " ) " + names[i] + ": " + scores[i] + "\n";
 				g2d.drawString(temp, 340, 250 + 55*i);
 			}
 		}
