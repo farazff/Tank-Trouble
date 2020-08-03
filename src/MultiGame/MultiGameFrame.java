@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -26,7 +27,7 @@ public class MultiGameFrame extends JFrame implements Serializable
     private BufferStrategy bufferStrategy;
     private int mapTheme;
     private BufferedImage theme,wallNDH,wallDH,wallNDV,wallDV,img;
-    private BufferedImage one,two,three,four,five,destroy,fire;
+    private BufferedImage one,two,three,four,five,destroy,fire,protect,laser,health,power2,power3;
 
     public BufferedImage getImg() {
         return img;
@@ -65,6 +66,12 @@ public class MultiGameFrame extends JFrame implements Serializable
             five = ImageIO.read (new File("Images/Tanks/5.png"));
             destroy = ImageIO.read (new File("Images/Explosion/explosion3.png"));
             fire = ImageIO.read(new File("Images/Bullet/shotLarge.png"));
+
+            protect = ImageIO.read(new File("Images/Prizes/Protect.png"));
+            laser = ImageIO.read(new File("Images/Prizes/Laser.png"));
+            health = ImageIO.read(new File("Images/Prizes/Health.png"));
+            power2 = ImageIO.read(new File("Images/Prizes/Power2.png"));
+            power3 = ImageIO.read(new File("Images/Prizes/Power3.png"));
         }
         catch (IOException e)
         {
@@ -116,7 +123,6 @@ public class MultiGameFrame extends JFrame implements Serializable
     private void doRendering(Graphics2D g3d, GameStatus state) throws IOException, InterruptedException
     {
 
-
        if(state.isShot())
        {
            Music music = new Music();
@@ -135,14 +141,6 @@ public class MultiGameFrame extends JFrame implements Serializable
             music.setFilePath("Files/Sounds/GetPrize.au",false);
             music.execute();
         }
-//        if(state.isExplode())
-//        {
-//            Music music = new Music();
-//            music.setFilePath("Files/Sounds/Blast.au",false);
-//            music.execute();
-//        }
-
-
 
         Graphics2D g2d = img.createGraphics();
 
@@ -275,7 +273,28 @@ public class MultiGameFrame extends JFrame implements Serializable
             for(int i=0;i<state.getPrizes().getPrizes().size();i++)
             {
                 PrizeMulti prize = state.getPrizes().getPrizes().get(i);
-                BufferedImage t = ImageIO.read(new File(prize.getImgLoc()));
+                BufferedImage t = null;
+                String rand = prize.getType();
+                if(rand.equals("Protect"))
+                {
+                    t = protect;
+                }
+                if(rand.equals("Laser"))
+                {
+                    t = laser;
+                }
+                if(rand.equals("Health"))
+                {
+                    t = health;
+                }
+                if(rand.equals("Power2"))
+                {
+                    t = power2;
+                }
+                if(rand.equals("Power3"))
+                {
+                    t = power3;
+                }
                 if(prize.isActive())
                     g2d.drawImage(t,prize.getX(),prize.getY(),null);
             }
@@ -382,7 +401,24 @@ public class MultiGameFrame extends JFrame implements Serializable
         }
         lastRender = currentRender;
 
+        g2d.setPaint(new GradientPaint(300,150,Color.RED,600,450,Color.BLACK, true));
 
+        if(state.isGameOver())
+        {
+            g2d.fill(new RoundRectangle2D.Double(300,150,680,420,30,30));
+
+            g2d.setPaint(Color.WHITE);
+            g2d.setFont(new Font("Arial",Font.BOLD,28));
+            g2d.drawString("Game Over",565,195);
+
+            g2d.setFont(new Font("Arial",Font.BOLD,22));
+            int h=0;
+            for(int i=state.getWinners().size()-1;i>=0;i--)
+            {
+                g2d.drawString((h+1) + ") " + state.getWinners().get(i) , 340, 260 + 55*(h));
+                h++;
+            }
+        }
 
         g3d.drawImage(img,0,0,null);
 

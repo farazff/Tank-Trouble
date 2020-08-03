@@ -49,6 +49,8 @@ public class MultiGameLoop implements Runnable
 
         try(Socket client = new Socket (ip,port))
         {
+            GameStatus status = null;
+            boolean gameOver = false;
             System.out.println("Connected to server.");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream (client.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
@@ -57,26 +59,25 @@ public class MultiGameLoop implements Runnable
             {
                 long start = System.currentTimeMillis();
 
-
                 String temp = moveTranslator.getCommandString();
                 objectOutputStream.writeObject (new TransferData (temp,user));
 
-                //System.out.println(temp);
-
-                GameStatus status = (GameStatus) objectInputStream.readObject();
+                status = (GameStatus) objectInputStream.readObject();
                 if (!(status instanceof NullStatus))
                 {
-                    if(status.getTanks().size()>=1)
-                        canvas.render(status);
+                    canvas.render(status);
                 }
-
 
                 long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
                 if (delay > 0)
                     Thread.sleep(delay);
 
+                if(status.isGameOver())
+                {
+                    gameOver = true;
+                }
             }
-
+            //canvas.render(status);
         }
         catch (ClassNotFoundException | InterruptedException e)
         {

@@ -1,15 +1,12 @@
 import GUI.*;
 import GUI.MainPage.Main;
-import GUI.MultiGamePanels.MultiGamePanel;
-import GameData.*;
-
 import javax.swing.*;
-import java.util.ArrayList;
 
 
 public class TestFaraz
 {
-    public static void main (String[] args) {
+    public static void main (String[] args)
+    {
 
         try { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
             UIManager.setLookAndFeel ("javax.swing.plaf.nimbus.NimbusLookAndFeel");
