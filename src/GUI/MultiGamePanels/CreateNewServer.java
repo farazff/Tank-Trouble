@@ -273,7 +273,7 @@ public class CreateNewServer extends JPanel
                     music.execute ();
                     if (!checkData ())
                         return;
-                    ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
+                    ServerInformation serverInformation = new ServerInformation (url.getText (),password1.getPassword ());
                     serverListPanel.addNewServer (serverInformation);
                     frame.setContentPane (pre);
                 }
@@ -297,7 +297,8 @@ public class CreateNewServer extends JPanel
                 if (!checkData ())
                     return;
 
-                ServerInformation serverInformation = new ServerInformation (url.getText (),null,password1.getPassword ());
+                ServerInformation serverInformation = new ServerInformation
+                        (url.getText (),password1.getPassword ());
                 serverListPanel.addNewServer (serverInformation);
                 frame.setContentPane (pre);
 
