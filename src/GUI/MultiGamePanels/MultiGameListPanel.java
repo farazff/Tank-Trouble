@@ -2,6 +2,7 @@ package GUI.MultiGamePanels;
 
 import GUI.Music;
 import GameData.MultiGame;
+import GameData.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,13 +16,18 @@ public class MultiGameListPanel extends JPanel
 {
     private MultiGamePanel mainPanel;
     private ArrayList<MultiGameButtonPanel> multiGameButtonPanels;
+    private User user;
+    private JFrame frame;
 
-    public MultiGameListPanel (ArrayList<MultiGame> multiGames, MultiGamePanel mainPanel)
+    public MultiGameListPanel (ArrayList<MultiGame> multiGames,MultiGamePanel mainPanel, JFrame frame,
+                               User user)
     {
         super();
-        if (multiGames == null)
-            throw new InputMismatchException ("servers in Null");
+        if (multiGames == null || frame == null || user == null)
+            throw new InputMismatchException ("input is Null");
         this.mainPanel = mainPanel;
+        this.frame = frame;
+        this.user = user;
         setBackground (Color.WHITE);
         multiGameButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
@@ -30,7 +36,8 @@ public class MultiGameListPanel extends JPanel
         MouseHandler mouseHandler = new MouseHandler ();
         for (MultiGame multiGame : multiGames)
         {
-            MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel);
+            MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel,
+                    frame,user);
             add(multiGameButtonPanel);
             multiGameButtonPanel.addMouseListener (mouseHandler);
             multiGameButtonPanels.add (multiGameButtonPanel);
@@ -40,7 +47,8 @@ public class MultiGameListPanel extends JPanel
     public void addNewMultiGame (MultiGame multiGame)
     {
         MouseHandler mouseHandler = new MouseHandler ();
-        MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel);
+        MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel,
+                frame,user);
         multiGameButtonPanels.add (multiGameButtonPanel);
         multiGameButtonPanel.addMouseListener (mouseHandler);
         this.setVisible (false);

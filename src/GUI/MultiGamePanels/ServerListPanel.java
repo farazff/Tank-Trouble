@@ -4,6 +4,7 @@ package GUI.MultiGamePanels;
 import GUI.Music;
 import GameData.ServerInformation;
 import GameData.ServerInformationStorage;
+import GameData.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,23 +21,27 @@ public class ServerListPanel extends JPanel
 
     private MultiGamePanel mainPanel;
     private ArrayList<ServerButtonPanel> serverButtonPanels;
-    private ServerInformationStorage serverInformationStorage;
+    private JFrame frame;
+    private User user;
 
-    public ServerListPanel (ServerInformationStorage serverInformationStorage, MultiGamePanel mainPanel)
+    public ServerListPanel (MultiGamePanel mainPanel,
+                            JFrame frame, User user)
     {
         super();
-        if (serverInformationStorage == null)
-            throw new InputMismatchException ("servers in Null");
+        if (user == null)
+            throw new InputMismatchException ("input is Null");
         this.mainPanel = mainPanel;
-        this.serverInformationStorage = serverInformationStorage;
+        this.frame = frame;
+        this.user = user;
         serverButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
         setBackground (Color.WHITE);
         setBorder (new EmptyBorder (5,5,5,5));
         MouseHandler mouseHandler = new MouseHandler ();
-        for (ServerInformation serverInformation : serverInformationStorage.getServerData ())
+        for (ServerInformation serverInformation : user.getServerInformationStorage ().getServerData ())
         {
-            ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel);
+            ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel,
+                    frame,user);
             add(serverButtonPanel);
             serverButtonPanel.addMouseListener (mouseHandler);
             serverButtonPanels.add (serverButtonPanel);
@@ -47,8 +52,9 @@ public class ServerListPanel extends JPanel
     public void addNewServer (ServerInformation serverInformation)
     {
         MouseHandler mouseHandler = new MouseHandler ();
-        serverInformationStorage.addNewServer (serverInformation);
-        ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel);
+        user.getServerInformationStorage ().addNewServer (serverInformation);
+        ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel,
+                frame,user);
         serverButtonPanels.add (serverButtonPanel);
         serverButtonPanel.addMouseListener (mouseHandler);
         this.setVisible (false);
@@ -61,7 +67,7 @@ public class ServerListPanel extends JPanel
 
         serverButtonPanel.setVisible (false);
         serverButtonPanel.remove (serverButtonPanel);
-        serverInformationStorage.removeServer (serverButtonPanel.getServerInformation ());
+        user.getServerInformationStorage ().removeServer (serverButtonPanel.getServerInformation ());
         this.setVisible (false);
         this.setVisible (true);
     }

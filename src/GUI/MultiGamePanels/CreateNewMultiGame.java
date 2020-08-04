@@ -64,7 +64,8 @@ public class CreateNewMultiGame extends JPanel
                 repaint ();
             }
         });
-        new Thread (new Runnable () {
+        new Thread (new Runnable ()
+        {
             @Override
             public void run () {
 
@@ -76,7 +77,7 @@ public class CreateNewMultiGame extends JPanel
                             typeOfPlaying.getCurrentValue ().equals ("Single Player"))
                     {
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-                                ,1,100,1));
+                                ,2,9,1));
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
@@ -88,10 +89,15 @@ public class CreateNewMultiGame extends JPanel
                             typeOfPlaying.getCurrentValue ().equals ("Team Player"))
                     {
                         if ((int)(numOfPlayers.getValue ()) % 2 == 1)
-                            numOfPlayers.setValue (numOfPlayers.getNextValue ());
+                        {
+                            if ((int)(numOfPlayers.getValue ()) == 9)
+                                numOfPlayers.setValue (numOfPlayers.getPreviousValue ());
+                            else
+                                numOfPlayers.setValue (numOfPlayers.getNextValue ());
+                        }
 
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
-                                ,1,100,2));
+                                ,2,9,2));
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
@@ -210,7 +216,7 @@ public class CreateNewMultiGame extends JPanel
         numberOfPlayers.setFont (new Font ("arial",Font.PLAIN,15));
         SpinnerModel spinnerModel;
 
-        spinnerModel = new SpinnerNumberModel (1,1,100,1);
+        spinnerModel = new SpinnerNumberModel (2,2,9,1);
         numOfPlayers = new JSpinner ();
         numOfPlayers.setModel (spinnerModel);
         numOfPlayers.addChangeListener (new ChangeListener () {

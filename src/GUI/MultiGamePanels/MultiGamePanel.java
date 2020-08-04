@@ -88,7 +88,7 @@ public class MultiGamePanel extends JPanel
 
         firstPanel = new JPanel (new BorderLayout ());
         firstPanel.setBackground (Color.WHITE);
-        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (user.getServerInformationStorage (),this),
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (this,frame,user),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));

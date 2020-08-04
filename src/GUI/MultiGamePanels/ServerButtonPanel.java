@@ -3,6 +3,7 @@ package GUI.MultiGamePanels;
 
 import GameData.MultiGame;
 import GameData.ServerInformation;
+import GameData.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,8 @@ public class ServerButtonPanel extends JPanel {
     private boolean selected;
 
 
-    public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel)
+    public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel,
+                              JFrame frame, User user)
     {
         super();
         selected = false;
@@ -39,7 +41,8 @@ public class ServerButtonPanel extends JPanel {
         this.currentCapacity = new JLabel ("CurrentCapacity : " + serverInformation.getCurrentCapacity ());
         currentCapacity.setFont (new Font ("Arial",Font.PLAIN,14));
         this.currentCapacity.setForeground (Color.DARK_GRAY);
-        multiGameListPanel = new MultiGameListPanel (serverInformation.getMultiGames (),mainPanel);
+        multiGameListPanel = new MultiGameListPanel (serverInformation.getMultiGames (),mainPanel
+                     ,frame,user);
         createBasePanel ();
     }
 
@@ -53,6 +56,8 @@ public class ServerButtonPanel extends JPanel {
 
     public void addNewGame (MultiGame multiGame)
     {
+        numOfActiveGames.setVisible (false);
+        numOfActiveGames.setVisible (true);
         getServerInformation ().addGame (multiGame);
         MultiGameListPanel multiGameListPanel = (MultiGameListPanel)getMultiGameListPanel ();
         multiGameListPanel.addNewMultiGame (multiGame);

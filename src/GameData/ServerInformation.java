@@ -69,7 +69,7 @@ public class ServerInformation implements Serializable
                 }
                 catch (ConnectException e)
                 {
-                    System.err.println ("Couldn't connect to ServerInformation");
+                    System.err.println ("Couldn't connect to Server");
                 }
                 catch (SocketException e)
                 {

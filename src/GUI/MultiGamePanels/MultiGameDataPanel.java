@@ -2,7 +2,9 @@ package GUI.MultiGamePanels;
 
 
 import GUI.Music;
+import Game.MultiGameStarting;
 import GameData.MultiGame;
+import GameData.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,14 +22,17 @@ public class MultiGameDataPanel extends JPanel
     private JLabel onlinePlayers;
     private JButton play;
     private MultiGame multiGame;
+    private JFrame frame;
+    private User user;
 
 
-
-    public MultiGameDataPanel (MultiGame multiGame)
+    public MultiGameDataPanel (MultiGame multiGame, JFrame frame, User user)
     {
-        if (multiGame == null)
-            throw new InputMismatchException ("multi multiGame is Null");
+        if (multiGame == null || frame == null || user == null)
+            throw new InputMismatchException ("input is Null");
 
+        this.frame = frame;
+        this.user = user;
         setLayout (new BorderLayout ());
         setBorder (new EmptyBorder (0,0,0,0));
         name = new JLabel (multiGame.getName ());
@@ -105,7 +110,10 @@ public class MultiGameDataPanel extends JPanel
             music.execute ();
             if (e.getSource () == play)
             {
-
+                frame.setVisible (false);
+                System.out.println (multiGame.getPort ());
+                MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);
+                user.setNumOfMultiGames (user.getNumOfMultiGames () + 1);
             }
         }
     }
