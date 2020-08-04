@@ -413,9 +413,9 @@ public class MultiGameFrame extends JFrame implements Serializable
 
             g2d.setFont(new Font("Arial",Font.BOLD,22));
             int h=0;
-            for(int i=state.getWinners().size()-1;i>=0;i--)
+            for(int i=0;i<state.getKills().length;i++)
             {
-                g2d.drawString((h+1) + ") " + state.getWinners().get(i) , 340, 260 + 55*(h));
+                g2d.drawString((h+1) + ") " + state.getKills()[i] , 340, 260 + 55*(h));
                 h++;
             }
         }

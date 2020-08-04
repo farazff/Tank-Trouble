@@ -24,11 +24,13 @@ public class GameLoopMulti implements Runnable , Serializable
 	private int players,tankStamina,canonPower, wallStamina;
 	private ArrayList<ClientHandler> clientHandlers;
 	private int t;
+	int[] kills;
 
 	public GameLoopMulti( int players,
 						  int tankStamina, int canonPower, int wallStamina,
 						  ArrayList<ClientHandler> clientHandlers , int t)
 	{
+		kills = new int[players];
 		this.t = t;
 		this.clientHandlers = clientHandlers;
 		this.tankStamina = tankStamina;
@@ -44,7 +46,7 @@ public class GameLoopMulti implements Runnable , Serializable
 
 	public void init()
 	{
-		state = new GameStateMulti(players,tankStamina,canonPower, wallStamina,clientHandlers);
+		state = new GameStateMulti(players,tankStamina,canonPower, wallStamina,clientHandlers,kills);
 	}
 
 	@Override
@@ -137,8 +139,39 @@ public class GameLoopMulti implements Runnable , Serializable
 				}
 			}
 
+			try
+			{
+				Thread.sleep(4000);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 
 
 		}
+
+		state.getStatus().setGameOverAll(true);
+		for (ClientHandler clientHandler : clientHandlers)
+		{
+			Thread test = new Thread(clientHandler);
+			test.start();
+			while(true)
+			{
+				try
+				{
+					Thread.sleep(10);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+
+				if(!clientHandler.isWait())
+					break;
+			}
+		}
+
+
 	}
 }
