@@ -19,14 +19,17 @@ public class GameLoopMulti implements Runnable , Serializable
 	 */
 	public static final int FPS = 54;
 
+	private GameFrameMulti canvas;
 	private GameStateMulti state;
 	private int players,tankStamina,canonPower, wallStamina;
 	private ArrayList<ClientHandler> clientHandlers;
+	private int t;
 
 	public GameLoopMulti( int players,
-						 int tankStamina, int canonPower, int wallStamina,
-						 ArrayList<ClientHandler> clientHandlers)
+						  int tankStamina, int canonPower, int wallStamina,
+						  ArrayList<ClientHandler> clientHandlers , int t)
 	{
+		this.t = t;
 		this.clientHandlers = clientHandlers;
 		this.tankStamina = tankStamina;
 		this.canonPower = canonPower;
@@ -47,53 +50,95 @@ public class GameLoopMulti implements Runnable , Serializable
 	@Override
 	public void run()
 	{
-		int gameOver = 0;
-		int prizeTime = 0;
-		while(gameOver == 0)
+		for(int i=1;i<=t;i++)
 		{
-			try
-			{
-				prizeTime++;
-				if(prizeTime==4000)
-				{
-					state.addPrize();
-				}
-				long start = System.currentTimeMillis();
-				state.update();
+			if(i!=1)
+				init();
 
-				for(ClientHandler clientHandler : clientHandlers)
+			boolean gameOver = false;
+			int prizeTime = 1;
+
+			while (!gameOver)
+			{
+				state.getStatus().setNewPrize(false);
+				state.getStatus().setUsePrize(false);
+				state.getStatus().setShot(false);
+				state.getStatus().setExplode(false);
+
+				try
 				{
-					Thread test = new Thread(clientHandler);
-					test.start();
-					while(true)
+					prizeTime++;
+					if(prizeTime % 75 == 0)
 					{
-						try
-						{
-							Thread.sleep (10);
-						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace ();
-						}
-
-						if(!clientHandler.isWait ())
-							break;
+						state.getStatus().setNewPrize(true);
+						state.addPrize();
 					}
+					if(prizeTime % 190 == 0)
+					{
+						state.getPrizes().getPrizes().get((prizeTime / 190) - 1).deActive();
+					}
+
+					long start = System.currentTimeMillis();
+					state.update();
+
+					for(ClientHandler clientHandler : clientHandlers)
+					{
+						if(clientHandler.isActive())
+						{
+							Thread test = new Thread(clientHandler);
+							test.start();
+							while(true)
+							{
+								try
+								{
+									Thread.sleep(9);
+								}
+								catch(InterruptedException e)
+								{
+									e.printStackTrace();
+								}
+
+								if(!clientHandler.isWait())
+									break;
+							}
+						}
+					}
+
+					gameOver = state.getStatus().isGameOver();
+
+					long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
+					if(delay > 0)
+						Thread.sleep(delay);
 				}
-
-
-				gameOver = state.gameOver;
-
-				long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
-				if (delay > 0)
-					Thread.sleep(delay);
+				catch(InterruptedException ex)
+				{
+					ex.printStackTrace();
+				}
 			}
-			catch (InterruptedException ex)
+
+			state.update();
+			for (ClientHandler clientHandler : clientHandlers)
 			{
-				ex.printStackTrace();
+				Thread test = new Thread(clientHandler);
+				test.start();
+				while(true)
+				{
+					try
+					{
+						Thread.sleep(10);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+
+					if(!clientHandler.isWait())
+						break;
+				}
 			}
+
+
+
 		}
-
-
 	}
 }
