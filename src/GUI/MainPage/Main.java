@@ -369,7 +369,8 @@ public class Main extends JPanel
     {
         @Override
         public void windowClosing (WindowEvent e) {
-            connect ();
+            if (user != null)
+                connect ();
         }
     }
 
