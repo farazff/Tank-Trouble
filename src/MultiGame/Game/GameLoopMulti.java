@@ -25,6 +25,7 @@ public class GameLoopMulti implements Runnable , Serializable
 	private ArrayList<ClientHandler> clientHandlers;
 	private int t;
 	int[] kills;
+	ArrayList<String> names;
 
 	public GameLoopMulti( int players,
 						  int tankStamina, int canonPower, int wallStamina,
@@ -46,7 +47,7 @@ public class GameLoopMulti implements Runnable , Serializable
 
 	public void init()
 	{
-		state = new GameStateMulti(players,tankStamina,canonPower, wallStamina,clientHandlers,kills);
+		state = new GameStateMulti(players,tankStamina,canonPower, wallStamina,clientHandlers,kills,names);
 	}
 
 	@Override
@@ -56,6 +57,12 @@ public class GameLoopMulti implements Runnable , Serializable
 		{
 			if(i!=1)
 				init();
+
+			names.clear();
+			for(ClientHandler clientHandler : clientHandlers)
+			{
+				names.add(clientHandler.getUser().getUserName());
+			}
 
 			boolean gameOver = false;
 			int prizeTime = 1;
