@@ -5,7 +5,7 @@ import GUI.MultiGamePanels.MultiGamePanel;
 import GUI.Music;
 import GUI.Setting.Setting;
 import GUI.SignInPanel;
-import GameData.ServerInformationStorage;
+import GameData.NullUser;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -19,7 +19,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main extends JPanel
 {
@@ -224,6 +223,7 @@ public class Main extends JPanel
             }
             if(e.getSource().equals(multi))
             {
+                connect ();
                 Music music = new Music();
                 music.execute();
                 multi.rePaintExited();
@@ -253,7 +253,7 @@ public class Main extends JPanel
                         "Exit",JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
                 if(ans == 0) //yes
                 {
-                    if (!connect ())
+                    if (!disConnect ())
                     {
                         int ans2 = JOptionPane.showConfirmDialog(null,"Some thing went wrong in " +
                                         "Connection to ServerInformation , if you logout your data will lost!",
@@ -333,7 +333,7 @@ public class Main extends JPanel
         }
     }
 
-    private boolean connect ()
+    private boolean disConnect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
         new Thread (logConnector).start ();
@@ -348,6 +348,28 @@ public class Main extends JPanel
         }
         String res = logConnector.getLogoutResult ();
         return res.equals ("Successful");
+    }
+
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1",user.getUserName (),
+                user.getPassword (),"Login");
+        new Thread (logConnector).start ();
+        while (!logConnector.isFinished ())
+        {
+            try {
+                Thread.sleep (100);
+            } catch (InterruptedException ex)
+            {
+                ex.printStackTrace ();
+            }
+        }
+        User user2 = logConnector.getLoginOrSignUpResult ();
+        if (user2 instanceof NullUser) {
+            user2 = null;
+        }
+        if (user2 != null)
+            user = user2;
     }
 
     @Override
@@ -370,7 +392,7 @@ public class Main extends JPanel
         @Override
         public void windowClosing (WindowEvent e) {
             if (user != null)
-                connect ();
+                disConnect ();
         }
     }
 

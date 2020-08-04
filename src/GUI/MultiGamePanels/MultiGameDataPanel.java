@@ -110,6 +110,7 @@ public class MultiGameDataPanel extends JPanel
             music.execute ();
             if (e.getSource () == play)
             {
+                multiGame.addUser (user);
                 frame.setVisible (false);
                 System.out.println (multiGame.getPort ());
                 MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);

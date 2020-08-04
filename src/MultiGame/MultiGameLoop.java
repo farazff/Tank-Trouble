@@ -55,7 +55,7 @@ public class MultiGameLoop implements Runnable
             ObjectOutputStream objectOutputStream = new ObjectOutputStream (client.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(client.getInputStream());
 
-            while(true)
+            while(!gameOver)
             {
                 long start = System.currentTimeMillis();
 
@@ -78,6 +78,24 @@ public class MultiGameLoop implements Runnable
                 }
             }
             //canvas.render(status);
+
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        Thread.sleep(3000);
+                        canvas.setVisible(false);
+                        menuFrame.setVisible(true);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
         catch (ClassNotFoundException | InterruptedException e)
         {

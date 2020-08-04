@@ -8,6 +8,7 @@ import GameData.MultiGame;
 import GameData.GameFinishType;
 import GameData.GameMemberShipType;
 import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -423,9 +424,28 @@ public class CreateNewMultiGame extends JPanel
 
 
                 frame.setContentPane (pre);
+                new Thread (new Runnable () {
+                    @Override
+                    public void run () {
+                        try {
+                            Thread.sleep (2000);
+                            connect ();
+                        } catch (InterruptedException ex)
+                        {
+                            ex.printStackTrace ();
+                        }
+                    }
+                }).start ();
+
 
             }
         }
+    }
+
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
     }
 
     /**

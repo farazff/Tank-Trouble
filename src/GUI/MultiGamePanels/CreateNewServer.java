@@ -4,6 +4,7 @@ import GUI.GridBagSetter;
 import GUI.Music;
 import GUI.PictureJLabel;
 import GameData.*;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -276,6 +277,7 @@ public class CreateNewServer extends JPanel
                     ServerInformation serverInformation = new ServerInformation (url.getText (),password1.getPassword ());
                     serverListPanel.addNewServer (serverInformation);
                     frame.setContentPane (pre);
+                    connect ();
                 }
 
 
@@ -301,11 +303,16 @@ public class CreateNewServer extends JPanel
                         (url.getText (),password1.getPassword ());
                 serverListPanel.addNewServer (serverInformation);
                 frame.setContentPane (pre);
-
+                connect ();
             }
         }
     }
 
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
+    }
 
     /**
      * this class handles Mouse
