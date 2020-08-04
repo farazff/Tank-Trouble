@@ -39,7 +39,7 @@ public class ServerButtonPanel extends JPanel {
         this.currentCapacity = new JLabel ("CurrentCapacity : " + serverInformation.getCurrentCapacity ());
         currentCapacity.setFont (new Font ("Arial",Font.PLAIN,14));
         this.currentCapacity.setForeground (Color.DARK_GRAY);
-        multiGameListPanel = new MultiGameListPanel (serverInformation.getMultiGamesValue (),mainPanel);
+        multiGameListPanel = new MultiGameListPanel (serverInformation.getMultiGames (),mainPanel);
         createBasePanel ();
     }
 

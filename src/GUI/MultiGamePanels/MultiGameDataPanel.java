@@ -19,6 +19,8 @@ public class MultiGameDataPanel extends JPanel
     private JLabel remainPlayers;
     private JLabel onlinePlayers;
     private JButton play;
+    private MultiGame multiGame;
+
 
 
     public MultiGameDataPanel (MultiGame multiGame)
@@ -32,7 +34,7 @@ public class MultiGameDataPanel extends JPanel
         setBackground (Color.WHITE);
         name.setFont (new Font ("arial",Font.PLAIN,15));
         name.setForeground (new Color (91, 131, 56));
-
+        this.multiGame = multiGame;
         typeOfFinish = new JLabel (multiGame.getGameFinishType ().toString ());
         typeOfFinish.setFont (new Font ("arial",Font.PLAIN,15));
         typeOfFinish.setForeground (new Color (91, 131, 56));
@@ -94,12 +96,17 @@ public class MultiGameDataPanel extends JPanel
 
     }
 
+
     private class ActionHandler implements ActionListener
     {
         @Override
         public void actionPerformed (ActionEvent e) {
             Music music = new Music ();
             music.execute ();
+            if (e.getSource () == play)
+            {
+
+            }
         }
     }
 

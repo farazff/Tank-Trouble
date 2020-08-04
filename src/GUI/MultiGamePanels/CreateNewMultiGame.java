@@ -42,7 +42,6 @@ public class CreateNewMultiGame extends JPanel
     private JFrame frame;
     private JPanel pre;
     private boolean finishedProcessed;
-    private boolean typeOfPlayingChanged;
     private User user;
 
     /**
@@ -52,7 +51,6 @@ public class CreateNewMultiGame extends JPanel
     {
         super();
         finishedProcessed = false;
-        typeOfPlayingChanged = false;
         this.user = user;
         this.owner = owner;
         this.pre = pre;
@@ -70,10 +68,12 @@ public class CreateNewMultiGame extends JPanel
             @Override
             public void run () {
 
+                int i = 0;
                 while (!finishedProcessed)
                 {
 
-                    if (typeOfPlaying.getCurrentValue ().equals ("Single Player"))
+                    if ((i == 0 || i == 2) &&
+                            typeOfPlaying.getCurrentValue ().equals ("Single Player"))
                     {
                         numOfPlayers.setModel (new SpinnerNumberModel ((int)(numOfPlayers.getValue ())
                                 ,1,100,1));
@@ -81,8 +81,11 @@ public class CreateNewMultiGame extends JPanel
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setFocusable (false);
+
+                        i = 1;
                     }
-                    else
+                    else if ((i == 0 || i == 1) &&
+                            typeOfPlaying.getCurrentValue ().equals ("Team Player"))
                     {
                         if ((int)(numOfPlayers.getValue ()) % 2 == 1)
                             numOfPlayers.setValue (numOfPlayers.getNextValue ());
@@ -93,11 +96,11 @@ public class CreateNewMultiGame extends JPanel
                                 getEditor ()).getTextField ().setEditable (false);
                         ((JSpinner.DefaultEditor)numOfPlayers.
                                 getEditor ()).getTextField ().setFocusable (false);
-
+                        i = 2;
                     }
 
                     try{
-                        Thread.sleep (250);
+                        Thread.sleep (300);
                     } catch (InterruptedException e)
                     {
                         System.out.println ("Interrupted");
