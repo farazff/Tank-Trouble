@@ -8,8 +8,17 @@ import MultiGame.MultiGameLoop;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * this class is multi game starter
+ */
 public class MultiGameStarting
 {
+    /**
+     * creates Multi game starting
+     * @param menuFrame menuFrame
+     * @param user user
+     * @param multiGame multiGame
+     */
     public MultiGameStarting (JFrame menuFrame, User user, MultiGame multiGame)
     {
         ThreadPool.init();

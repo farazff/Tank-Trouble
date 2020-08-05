@@ -12,6 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * this class represents AI tanks
+ */
 public class IntelligentTank extends Tank
 {
     private ArrayList<SignalBullet> signalBullets;
@@ -21,6 +24,20 @@ public class IntelligentTank extends Tank
     private boolean timeToAct;
     private int[] kills;
 
+    /**
+     * creates new AI Tank
+     * @param bullets bullets
+     * @param walls walls
+     * @param tanks tanks
+     * @param prizes prizes
+     * @param tankStamina tankStamina
+     * @param canonPower canonPower
+     * @param maps maps
+     * @param imageLoc imageLoc
+     * @param user user
+     * @param code code
+     * @param kills kills
+     */
     public IntelligentTank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks
             , Prizes prizes , int tankStamina, int canonPower , Maps maps, String imageLoc, User user,int code
     ,int[] kills)
@@ -34,10 +51,17 @@ public class IntelligentTank extends Tank
         signalBullets = new ArrayList<> ();
     }
 
+    /**
+     *
+     * @return get SignalBullets
+     */
     public ArrayList<SignalBullet> getSignalBullets () {
         return signalBullets;
     }
 
+    /**
+     * this will sent signal bullets to all degrees
+     */
     public void sendSignals ()
     {
         signalBullets.clear ();
@@ -50,40 +74,12 @@ public class IntelligentTank extends Tank
         }
     }
 
-//    private int[] findXAndY (Object object)
-//    {
-//        int[] coordinates = new int[4];
-//        coordinates[0] = getCenterX ();
-//        coordinates[1] = getCenterY ();
-//
-//        if (object instanceof Tank)
-//        {
-//            Tank enemyTank = (Tank) object;
-//
-//            coordinates[2] = enemyTank.getCenterX ();
-//            coordinates[3] = enemyTank.getCenterY ();
-//        } else if (object instanceof Wall)
-//        {
-//            Wall wall = (Wall) object;
-//
-//            coordinates[2] = wall.getCenterX ();
-//            coordinates[3] = wall.getCenterY ();
-//        } else if (object instanceof NullTarget)
-//        {
-//
-//            NullTarget nullTarget = (NullTarget) object;
-//
-//            coordinates[2] = nullTarget.getX ();
-//            coordinates[3] = nullTarget.getY ();
-//        } else
-//        {
-//            coordinates[2] = getCenterX ();
-//            coordinates[3] = getCenterY ();
-//        }
-//
-//        return coordinates;
-//    }
 
+    /**
+     * find degree from this and object
+     * @param object tank or walls or null
+     * @return degree
+     */
     private int findDegree (Object object)
     {
         if (object == null)
@@ -207,6 +203,11 @@ public class IntelligentTank extends Tank
         return 45;
     }
 
+    /**
+     * find distance from this and object
+     * @param object tank or walls or null
+     * @return distance
+     */
     private double findDistance (Object object)
     {
         if (object == null)
@@ -255,6 +256,9 @@ public class IntelligentTank extends Tank
         return Math.sqrt (Math.pow ((x2 - x1),2) + Math.pow ((y2 - y1),2));
     }
 
+    /**
+     * analyse all signals to react
+     */
     private void analyseReceivedData ()
     {
         ArrayList<Wall> normalWalls = new ArrayList<> ();
@@ -360,6 +364,7 @@ public class IntelligentTank extends Tank
             }
         }
     }
+
     @Override
     public void update ()  {
 
@@ -493,6 +498,9 @@ public class IntelligentTank extends Tank
         return new KeyHandler ();
     }
 
+    /**
+     * this class handles keyBoard
+     */
     protected class KeyHandler extends Tank.KeyHandler {
 
         @Override
@@ -506,6 +514,9 @@ public class IntelligentTank extends Tank
         }
     }
 
+    /**
+     * give to null , x and y
+     */
     private static class NullTarget
     {
         private int x;

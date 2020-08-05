@@ -7,9 +7,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * this class represents laser
+ */
 public class LaserBullet extends Bullet
 {
 
+    /**
+     * creates laser
+     * @param x x
+     * @param y y
+     * @param degree degree
+     * @param startTime startTime
+     * @param walls walls
+     * @param tanks tanks
+     * @param canonPower canonPower
+     * @param code code
+     * @param kills kills
+     */
     public LaserBullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
                         ArrayList<Tank> tanks, int canonPower,int code,int[] kills) {
         super (x, y, degree, startTime, walls, tanks, canonPower,code,kills);

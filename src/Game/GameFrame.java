@@ -41,6 +41,10 @@ public class GameFrame extends JFrame
 	private BufferedImage wallNDV;
 	private BufferedImage wallDV;
 
+	/**
+	 * creates new game frame
+	 * @param title title
+	 */
 	public GameFrame(String title)
 	{
 		super(title);
@@ -389,6 +393,12 @@ public class GameFrame extends JFrame
 		}
 	}
 
+	/**
+	 * rotate image from center of pic
+	 * @param sourceImage sourceImage
+	 * @param angle angle
+	 * @return rotated pic
+	 */
 	private static BufferedImage rotateImage(BufferedImage sourceImage, double angle)
 	{
 		int width = sourceImage.getWidth();
@@ -404,6 +414,12 @@ public class GameFrame extends JFrame
 		return destImage;
 	}
 
+	/**
+	 * rotate image from x , y  of edge of pic
+	 * @param img img
+	 * @param angle angle
+	 * @return rotated pic
+	 */
 	public BufferedImage rotateImageBullet(BufferedImage img, double angle) {
 
 		double rads = Math.toRadians(angle);
@@ -429,6 +445,11 @@ public class GameFrame extends JFrame
 		return rotated;
 	}
 
+	/**
+	 * draws roads
+	 * @param g2d g2d
+	 * @throws IOException IOException
+	 */
 	public void drawRoads(Graphics2D g2d) throws IOException
 	{
 		g2d.drawImage(theme,5,31,null);

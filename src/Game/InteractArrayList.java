@@ -2,6 +2,10 @@ package Game;
 
 import java.util.ArrayList;
 
+/**
+ * this class will reduce concurrent modification
+ * @param <E> any Thing
+ */
 public class InteractArrayList <E> extends ArrayList<E>
 {
 
@@ -23,6 +27,10 @@ public class InteractArrayList <E> extends ArrayList<E>
         return super.add (e);
     }
 
+    /**
+     * sets Iterate that means now the list is iterating
+     * @param iterate iterate
+     */
     public void setIterate (boolean iterate) {
         this.iterate = iterate;
     }

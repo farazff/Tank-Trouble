@@ -24,11 +24,24 @@ public class GameState
 	private Thread t1;
 	private int[] kills;
 
+	/**
+	 *
+	 * @return get number of Kills
+	 */
 	public int[] getKills()
 	{
 		return kills;
 	}
 
+	/**
+	 * creates new game state
+	 * @param level level
+	 * @param tankStamina tankStamina
+	 * @param canonPower canonPower
+	 * @param wallStamina wallStamina
+	 * @param user user
+	 * @param kills kills
+	 */
 	public GameState(int level, int tankStamina, int canonPower, int wallStamina, User user,int[] kills)
 	{
 		this.kills = kills;
@@ -53,16 +66,28 @@ public class GameState
 		t1.start();
 	}
 
+	/**
+	 *
+	 * @return get Prizes
+	 */
 	public Prizes getPrizes()
 	{
 		return prizes;
 	}
 
+	/**
+	 *
+	 * @return get Tanks
+	 */
 	public ArrayList<Tank> getTanks ()
 	{
 		return tanks;
 	}
 
+	/**
+	 *
+	 * @return get Maps
+	 */
 	public Maps getMaps()
 	{
 		return maps;
@@ -144,7 +169,10 @@ public class GameState
 	}
 
 
-
+	/**
+	 *
+	 * @return get Bullets
+	 */
 	public ArrayList<Bullet> getBullets () {
 		return bullets;
 	}

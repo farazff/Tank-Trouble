@@ -38,6 +38,16 @@ public class GameLoop implements Runnable
 	private int playerScore = 0;
 	private int[] kills;
 
+	/**
+	 * creates game loop
+	 * @param frame frame
+	 * @param menuFrame menuFrame
+	 * @param level level
+	 * @param tankStamina tankStamina
+	 * @param canonPower canonPower
+	 * @param wallStamina wallStamina
+	 * @param type type
+	 */
 	public GameLoop(GameFrame frame , JFrame menuFrame,
 					int level,int tankStamina,int canonPower,int wallStamina,int type)
 	{

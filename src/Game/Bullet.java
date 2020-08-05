@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * this class represents Bullet in game
+ */
 public class Bullet implements Runnable
 {
     private int code;  // the code of the owner of the bulet
@@ -414,6 +417,10 @@ public class Bullet implements Runnable
         return startTime;
     }
 
+    /**
+     *
+     * @return is bullet expired in hits
+     */
     public boolean getHandExpired ()
     {
         return expired;

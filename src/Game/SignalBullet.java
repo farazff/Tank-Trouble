@@ -4,11 +4,28 @@ package Game;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * this class represents signal bullets
+ */
 public class SignalBullet extends Bullet
 {
 
     private Object data;
     private Tank owner;
+
+    /**
+     * creates signal bullet
+     * @param x x
+     * @param y y
+     * @param degree degree
+     * @param startTime startTime
+     * @param walls walls
+     * @param tanks tanks
+     * @param owner owner
+     * @param canonPower canonPower
+     * @param code code
+     * @param kills kills
+     */
     public SignalBullet (int x, int y, double degree, long startTime,
                          ArrayList<Wall> walls, ArrayList<Tank> tanks, Tank owner , int canonPower,int code,
                          int[] kills) {
@@ -97,6 +114,10 @@ public class SignalBullet extends Bullet
 
     }
 
+    /**
+     *
+     * @return get a object which hit
+     */
     public Object receiveData ()
     {
         return data;
