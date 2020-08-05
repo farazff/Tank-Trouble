@@ -261,10 +261,18 @@ public class Bullet implements Runnable
         return walls;
     }
 
+    /**
+     *
+     * @return get WallAccuracy
+     */
     public static int getWallAccuracy () {
         return WALL_ACCURACY;
     }
 
+    /**
+     *
+     * @return get TankAccuracy
+     */
     public static int getTankAccuracy () {
         return TANK_ACCURACY;
     }

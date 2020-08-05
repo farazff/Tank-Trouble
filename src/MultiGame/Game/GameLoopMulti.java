@@ -27,6 +27,15 @@ public class GameLoopMulti implements Runnable , Serializable
 	int[] kills;
 	ArrayList<String> names;
 
+	/**
+	 * create a game loop
+	 * @param players players
+	 * @param tankStamina tankStamina
+	 * @param canonPower canonPower
+	 * @param wallStamina wallStamina
+	 * @param clientHandlers  clientHandlers
+	 * @param t time
+	 */
 	public GameLoopMulti( int players,
 						  int tankStamina, int canonPower, int wallStamina,
 						  ArrayList<ClientHandler> clientHandlers , int t)
@@ -40,11 +49,18 @@ public class GameLoopMulti implements Runnable , Serializable
 		this.players = players;
 	}
 
+	/**
+	 *
+	 * @return get State
+	 */
 	public GameStateMulti getState()
 	{
 		return state;
 	}
 
+	/**
+	 * This must be called before the game loop starts.
+	 */
 	public void init()
 	{
 		state = new GameStateMulti(players,tankStamina,canonPower, wallStamina,clientHandlers,kills,names);
