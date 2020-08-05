@@ -5,8 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * this class generates random map
+ */
 public class MapGenerator
 {
+    /**
+     * generate random map
+     */
    public MapGenerator()
     {
         try
