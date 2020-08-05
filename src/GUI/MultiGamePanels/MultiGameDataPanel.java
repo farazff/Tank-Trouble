@@ -1,6 +1,7 @@
 package GUI.MultiGamePanels;
 
 
+import GUI.MainPage.Main;
 import GUI.Music;
 import Game.MultiGameStarting;
 import GameData.MultiGame;
@@ -28,6 +29,7 @@ public class MultiGameDataPanel extends JPanel
     private MultiGame multiGame;
     private JFrame frame;
     private User user;
+    private JPanel main;
 
     /**
      * creates a new Multi game data panel
@@ -35,12 +37,13 @@ public class MultiGameDataPanel extends JPanel
      * @param frame frame
      * @param user user
      */
-    public MultiGameDataPanel (MultiGame multiGame, JFrame frame, User user)
+    public MultiGameDataPanel (MultiGame multiGame, JFrame frame, User user, JPanel main)
     {
         if (multiGame == null || frame == null || user == null)
             throw new InputMismatchException ("input is Null");
 
         this.frame = frame;
+        this.main = main;
         this.user = user;
         setLayout (new BorderLayout ());
         setBorder (new EmptyBorder (0,0,0,0));
@@ -123,7 +126,7 @@ public class MultiGameDataPanel extends JPanel
     /**
      * connects to server
      */
-    private void connect ()
+    private void disConnect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
         new Thread (logConnector).start ();
@@ -151,11 +154,12 @@ public class MultiGameDataPanel extends JPanel
                     multiGame.addUser ();
                     if (multiGame.getNumberOfPlayers () == multiGame.getOnlineUsersNumber ())
                         multiGame.setExpired (true);
-                    connect ();
+                    disConnect ();
                     frame.setVisible (false);
                     System.out.println (multiGame.getPort ());
                     MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);
                     user.setNumOfMultiGames (user.getNumOfMultiGames () + 1);
+                    frame.setContentPane (main);
                 }
 
             }

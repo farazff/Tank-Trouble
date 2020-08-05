@@ -21,6 +21,7 @@ public class MultiGameListPanel extends JPanel
     private ArrayList<MultiGameButtonPanel> multiGameButtonPanels;
     private User user;
     private JFrame frame;
+    private JPanel main;
 
     /**
      * creates new Multi game list panel
@@ -30,7 +31,7 @@ public class MultiGameListPanel extends JPanel
      * @param user user
      */
     public MultiGameListPanel (ArrayList<MultiGame> multiGames,MultiGamePanel mainPanel, JFrame frame,
-                               User user)
+                               User user, JPanel main)
     {
         super();
         if (multiGames == null || frame == null || user == null)
@@ -38,6 +39,7 @@ public class MultiGameListPanel extends JPanel
         this.mainPanel = mainPanel;
         this.frame = frame;
         this.user = user;
+        this.main = main;
         setBackground (Color.WHITE);
         multiGameButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
@@ -47,7 +49,7 @@ public class MultiGameListPanel extends JPanel
         for (MultiGame multiGame : multiGames)
         {
             MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel,
-                    frame,user);
+                    frame,user,main);
             add(multiGameButtonPanel);
             multiGameButtonPanel.addMouseListener (mouseHandler);
             multiGameButtonPanels.add (multiGameButtonPanel);
@@ -62,7 +64,7 @@ public class MultiGameListPanel extends JPanel
     {
         MouseHandler mouseHandler = new MouseHandler ();
         MultiGameButtonPanel multiGameButtonPanel = new MultiGameButtonPanel (multiGame,mainPanel,
-                frame,user);
+                frame,user,main);
         multiGameButtonPanels.add (multiGameButtonPanel);
         multiGameButtonPanel.addMouseListener (mouseHandler);
         this.setVisible (false);

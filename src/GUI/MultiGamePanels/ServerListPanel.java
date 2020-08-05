@@ -25,6 +25,7 @@ public class ServerListPanel extends JPanel
     private ArrayList<ServerButtonPanel> serverButtonPanels;
     private JFrame frame;
     private User user;
+    private JPanel main;
 
     /**
      * creates server list panel
@@ -33,13 +34,14 @@ public class ServerListPanel extends JPanel
      * @param user user
      */
     public ServerListPanel (MultiGamePanel mainPanel,
-                            JFrame frame, User user)
+                            JFrame frame, User user, JPanel main)
     {
         super();
         if (user == null)
             throw new InputMismatchException ("input is Null");
         this.mainPanel = mainPanel;
         this.frame = frame;
+        this.main = main;
         this.user = user;
         serverButtonPanels = new ArrayList<> ();
         setLayout (new BoxLayout (this,BoxLayout.Y_AXIS));
@@ -49,7 +51,7 @@ public class ServerListPanel extends JPanel
         for (ServerInformation serverInformation : user.getServerInformationStorage ().getServerData ())
         {
             ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel,
-                    frame,user);
+                    frame,user,main);
             add(serverButtonPanel);
             serverButtonPanel.addMouseListener (mouseHandler);
             serverButtonPanels.add (serverButtonPanel);
@@ -66,7 +68,7 @@ public class ServerListPanel extends JPanel
         MouseHandler mouseHandler = new MouseHandler ();
         user.getServerInformationStorage ().addNewServer (serverInformation);
         ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel,
-                frame,user);
+                frame,user,main);
         serverButtonPanels.add (serverButtonPanel);
         serverButtonPanel.addMouseListener (mouseHandler);
         this.setVisible (false);

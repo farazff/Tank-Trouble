@@ -29,7 +29,7 @@ public class ServerButtonPanel extends JPanel {
      * @param user user
      */
     public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel,
-                              JFrame frame, User user)
+                              JFrame frame, User user, JPanel main)
     {
         super();
         selected = false;
@@ -50,7 +50,7 @@ public class ServerButtonPanel extends JPanel {
         currentCapacity.setFont (new Font ("Arial",Font.PLAIN,14));
         this.currentCapacity.setForeground (Color.DARK_GRAY);
         multiGameListPanel = new MultiGameListPanel (serverInformation.getMultiGames (),mainPanel
-                     ,frame,user);
+                     ,frame,user,main);
         createBasePanel ();
     }
 

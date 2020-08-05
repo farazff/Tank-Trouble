@@ -1,5 +1,6 @@
 package GUI.MultiGamePanels;
 
+import GUI.MainPage.Main;
 import GameData.MultiGame;
 import GameData.User;
 
@@ -27,7 +28,8 @@ public class MultiGameButtonPanel extends JPanel
      * @param frame frame
      * @param user user
      */
-    public MultiGameButtonPanel (MultiGame multiGame, MultiGamePanel mainPanel, JFrame frame, User user)
+    public MultiGameButtonPanel (MultiGame multiGame, MultiGamePanel mainPanel, JFrame frame, User user,
+                                 JPanel main)
     {
         super();
         selected = false;
@@ -49,7 +51,7 @@ public class MultiGameButtonPanel extends JPanel
                 (-multiGame.getOnlineUsersNumber () + multiGame.getNumberOfPlayers ()));
         remainPlayers.setFont (new Font ("Arial",Font.PLAIN,14));
         remainPlayers.setForeground (Color.DARK_GRAY);
-        multiGameDataPanel = new MultiGameDataPanel (multiGame,frame,user);
+        multiGameDataPanel = new MultiGameDataPanel (multiGame,frame,user,main);
         createComponents ();
     }
 

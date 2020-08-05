@@ -255,8 +255,7 @@ public class Main extends JPanel
                 Music music = new Music();
                 music.execute();
                 multi.rePaintExited();
-                MultiGamePanel multiGamePanel = new MultiGamePanel (frame,user);
-                multiGamePanel.setPre (getPanel ());
+                MultiGamePanel multiGamePanel = new MultiGamePanel (frame,user,getPanel ());
                 frame.setContentPane(multiGamePanel);
                 frame.setVisible(false);
                 frame.setVisible(true);
@@ -363,7 +362,7 @@ public class Main extends JPanel
 
     /**
      * DisConnect from info server when user logs out
-     * @return
+     * @return res
      */
     private boolean disConnect ()
     {

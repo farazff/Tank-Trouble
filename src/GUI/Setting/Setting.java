@@ -71,7 +71,7 @@ public class Setting extends JPanel
     {
         this.frame = frame;
         this.serverListPanel = new ServerListPanel (null,
-                frame,user);
+                frame,user,pre);
         JScrollPane scrollPane1 = new JScrollPane (serverListPanel,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -45,7 +45,7 @@ public class MultiGamePanel extends JPanel
      * @param frame frame
      * @param user user
      */
-    public MultiGamePanel (JFrame frame, User user)
+    public MultiGamePanel (JFrame frame, User user, JPanel pre)
     {
 
         main = new JPanel (new GridLayout (1,3));
@@ -54,7 +54,7 @@ public class MultiGamePanel extends JPanel
         this.frame = frame;
         // header part
         this.user = user;
-
+        this.pre = pre;
         JLabel multiPlayerGame = new JLabel("MultiPlayer MultiGame");
         multiPlayerGame.setBackground(null);
         multiPlayerGame.setHorizontalAlignment(JLabel.CENTER);
@@ -95,7 +95,7 @@ public class MultiGamePanel extends JPanel
 
         firstPanel = new JPanel (new BorderLayout ());
         firstPanel.setBackground (Color.WHITE);
-        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (this,frame,user),
+        JScrollPane scrollPane1 = new JScrollPane (new ServerListPanel (this,frame,user,pre),
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane1.getHorizontalScrollBar ().setPreferredSize (new Dimension (10,8));
