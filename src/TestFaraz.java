@@ -19,7 +19,9 @@ public class TestFaraz
         frame.setSize ((720 * 16) / 9, 720);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        ImageIcon img = new ImageIcon("Images/Icon.png");
+        frame.setIconImage(img.getImage());
+        frame.setTitle("Tank Trouble");
 
 
         Loading loading = new Loading(frame);

@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * this class represents a single prize
+ */
+
 public class Prize
 {
     private int x;
@@ -14,6 +18,12 @@ public class Prize
     private BufferedImage img;
     private boolean active;
 
+    /**
+     * comstructor of the Prize class
+     * @param rand type of the prize
+     * @param x the x coordinate of the prize
+     * @param y the y coordinate of the prize
+     */
     public Prize(int rand , int x ,int y)
     {
         this.x = x;
@@ -98,31 +108,54 @@ public class Prize
         }).start();
     }
 
+    /**
+     * de active the prize
+     */
     public void deActive()
     {
         active = false;
     }
 
+    /**
+     * get active
+     * @return active field
+     */
     public boolean isActive()
     {
         return active;
     }
 
+    /**
+     * get the type of the prize
+     * @return type field
+     */
     public String getType()
     {
         return type;
     }
 
+    /**
+     * image of the prize
+     * @return ht img field
+     */
     public BufferedImage getImg()
     {
         return img;
     }
 
+    /**
+     * get the x coordinate of the prize
+     * @return x field
+     */
     public int getX()
     {
         return x;
     }
 
+    /**
+     * get the T coordinate of the prize
+     * @return y field
+     */
     public int getY()
     {
         return y;

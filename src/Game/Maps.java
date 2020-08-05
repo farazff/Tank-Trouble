@@ -8,6 +8,10 @@ import java.util.Objects;
 import java.util.Random;
 import Game.Graph.*;
 
+/**
+ * this class handles map creating
+ */
+
 public class Maps
 {
     private ArrayList<Wall> walls;
@@ -25,11 +29,19 @@ public class Maps
     private int houseY;
     private int wallStamina;
 
+    /**
+     * get the walls of the map
+     * @return
+     */
     public ArrayList<Wall> getWalls()
     {
         return walls;
     }
 
+    /**
+     * constructor of the Map class
+     * @param wallStamina the stamina of the walls
+     */
     public Maps(int wallStamina)
     {
         this.wallStamina = wallStamina;
@@ -69,6 +81,9 @@ public class Maps
     }
 
 
+    /**
+     * this class converts map to graph
+     */
     public void createGraph()
     {
         int vertexNum = (data.size()-1)/2 * (data.get(0).size()-1)/2;
@@ -160,6 +175,9 @@ public class Maps
 
     }
 
+    /**
+     * create the walls
+     */
     public void createWalls()
     {
         for(int j=0;j<data.size();j++)
@@ -200,6 +218,9 @@ public class Maps
     }
 
 
+    /**
+     * read a random map form files
+     */
     public void readFromFile()
     {
 

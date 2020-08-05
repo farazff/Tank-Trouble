@@ -2,15 +2,20 @@ package Game.Graph;
 
 import java.util.*;
 
+/**
+ * This class represents a directed graph using adjacency list
+ * representation
+ */
 
-// This class represents a directed graph using adjacency list
-// representation
 public class Graph
 {
     private int V;   // No. of vertices
     private LinkedList<Integer> adj[]; //Adjacency Lists
 
-    // Constructor
+    /**
+     *  Constructor
+     * @param v vertex of the graph
+     */
     public Graph(int v)
     {
         V = v;
@@ -19,14 +24,23 @@ public class Graph
             adj[i] = new LinkedList();
     }
 
-    // Function to add an edge into the graph
+    /**
+     * Function to add an edge into the graph
+     * @param v the start vertex of the edge
+     * @param w the end vertex of the edge
+     */
     public void addEdge(int v, int w) {
         adj[v].add(w);
         adj[w].add(v);
     }
 
     ArrayList<Integer> ans = new ArrayList<>();
-    // prints BFS traversal from a given source s
+
+    /**
+     * prints BFS traversal from a given source s
+     * @param s the starting vertex
+     * @return ArrayList of all vertexes that have a path to starting vertex
+     */
     public ArrayList<Integer> BFS(int s)
     {
         ans.clear();
