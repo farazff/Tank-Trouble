@@ -10,6 +10,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.InputMismatchException;
 
+/**
+ * this class is for login or logout or signUP
+ */
 public class LogConnector implements Runnable
 {
 
@@ -22,7 +25,13 @@ public class LogConnector implements Runnable
     private String res = "Error";
     private boolean finished = false;
 
-
+    /**
+     * creates a login or signUp process
+     * @param ip ip
+     * @param username username
+     * @param password password
+     * @param request request
+     */
     public LogConnector (String ip, String username, char[] password, String request)
     {
         if (request == null || request.equals ("Logout"))
@@ -34,6 +43,12 @@ public class LogConnector implements Runnable
         this.password = password;
     }
 
+    /**
+     * creates a logout process
+     * @param ip ip
+     * @param request request
+     * @param user user
+     */
     public LogConnector (String ip, String request, User user)
     {
         if (request == null || request.equals ("SignIn") || request.equals ("Login"))
@@ -137,6 +152,10 @@ public class LogConnector implements Runnable
         }
     }
 
+    /**
+     *
+     * @return get LoginOrSignUpResult
+     */
     public User getLoginOrSignUpResult ()
     {
         if (finished)
@@ -152,6 +171,10 @@ public class LogConnector implements Runnable
             return null;
     }
 
+    /**
+     *
+     * @return get LogoutResult
+     */
     public String getLogoutResult ()
     {
         if (finished)
@@ -166,6 +189,10 @@ public class LogConnector implements Runnable
 
     }
 
+    /**
+     *
+     * @return is Finished
+     */
     public boolean isFinished () {
         return finished;
     }
