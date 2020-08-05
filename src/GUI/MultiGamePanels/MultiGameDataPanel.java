@@ -5,6 +5,7 @@ import GUI.Music;
 import Game.MultiGameStarting;
 import GameData.MultiGame;
 import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -70,6 +71,14 @@ public class MultiGameDataPanel extends JPanel
     }
 
     /**
+     *
+     * @return get This panel
+     */
+    private JPanel getThis ()
+    {
+        return this;
+    }
+    /**
      * creates components
      */
     private void createComponents ()
@@ -112,6 +121,15 @@ public class MultiGameDataPanel extends JPanel
     }
 
     /**
+     * connects to server
+     */
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
+    }
+
+    /**
      * this class handles components
      */
     private class ActionHandler implements ActionListener
@@ -120,13 +138,26 @@ public class MultiGameDataPanel extends JPanel
         public void actionPerformed (ActionEvent e) {
             Music music = new Music ();
             music.execute ();
+
             if (e.getSource () == play)
             {
-                multiGame.addUser ();
-                frame.setVisible (false);
-                System.out.println (multiGame.getPort ());
-                MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);
-                user.setNumOfMultiGames (user.getNumOfMultiGames () + 1);
+                if (multiGame.isExpired ())
+                {
+                    JOptionPane.showMessageDialog (getThis (),"Game has been Expired",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    multiGame.addUser ();
+                    if (multiGame.getNumberOfPlayers () == multiGame.getOnlineUsersNumber ())
+                        multiGame.setExpired (true);
+                    connect ();
+                    frame.setVisible (false);
+                    System.out.println (multiGame.getPort ());
+                    MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);
+                    user.setNumOfMultiGames (user.getNumOfMultiGames () + 1);
+                }
+
             }
         }
     }
