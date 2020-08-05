@@ -107,11 +107,12 @@ public class Setting extends JPanel
         userInfoPanel.add(new LeftPartLabel(user.getNumOfSingleGames () + "",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total multiPlayer Games:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getNumOfMultiGames () + "",18,Color.CYAN));
-        userInfoPanel.add(new LeftPartLabel("winning numbers of SinglePlayer mode:",18,Color.WHITE));
+        userInfoPanel.add(new LeftPartLabel("Winning numbers of SinglePlayer mode:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getNumOfWinSingleGames () +"",18,Color.CYAN));
-        userInfoPanel.add(new LeftPartLabel("winning numbers of MultiPlayer mode:",18,Color.WHITE));
+        userInfoPanel.add(new LeftPartLabel("Winning numbers of MultiPlayer mode:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getNumOfWinMultiGames () +"",18,Color.CYAN));
-
+        userInfoPanel.add(new LeftPartLabel("Total number of kills:",18,Color.WHITE));
+        userInfoPanel.add(new LeftPartLabel(user.getScore () +"",18,Color.CYAN));
 
         ////////////////////////////////////////
         ////////////////////////////////////////

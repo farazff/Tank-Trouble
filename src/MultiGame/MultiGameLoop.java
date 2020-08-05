@@ -2,6 +2,7 @@ package MultiGame;
 
 
 import GameData.User;
+import MultiGame.Server.ClientHandler;
 import MultiGame.Status.GameStatus;
 import MultiGame.Status.NullStatus;
 
@@ -81,6 +82,38 @@ public class MultiGameLoop implements Runnable
                     gameOver = true;
                 }
             }
+
+            /////////////////////////////////////////////
+            ////////////////////////////////////////////
+
+            for(int i=0;i<status.getKills().length;i++)
+            {
+                if(status.getNames().get(i).equals(user.getUserName()))
+                {
+                    user.setScore(user.getScore() + status.getKills()[i]);
+                    break;
+                }
+            }
+
+            int flag = 0;
+            int max=0;
+            for(int i=0;i<status.getKills().length;i++)
+            {
+                if(status.getKills()[i]>max)
+                {
+                    max = status.getKills()[i];
+                    flag = i;
+                }
+            }
+
+            if(status.getNames().get(flag).equals(user.getUserName()))
+            {
+                user.setNumOfWinMultiGames(user.getNumOfWinMultiGames() + 1);
+                System.out.println(user.getNumOfWinMultiGames());
+            }
+
+            /////////////////////////////////////////////
+            ////////////////////////////////////////////
 
             new Thread(new Runnable()
             {
