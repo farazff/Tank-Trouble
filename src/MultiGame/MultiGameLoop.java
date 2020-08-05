@@ -5,7 +5,10 @@ import GameData.User;
 import MultiGame.Status.GameStatus;
 import MultiGame.Status.NullStatus;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -27,9 +30,11 @@ public class MultiGameLoop implements Runnable
 
     public MultiGameLoop(MultiGameFrame frame , JFrame menuFrame)
     {
-        moveTranslator = new MoveTranslator ();
+        moveTranslator = new MoveTranslator();
         this.menuFrame = menuFrame;
         canvas = frame;
+        WaitingPanel waitingPanel = new WaitingPanel();
+        canvas.setContentPane(waitingPanel);
     }
 
     /**
@@ -46,7 +51,6 @@ public class MultiGameLoop implements Runnable
     @Override
     public void run()
     {
-
         try(Socket client = new Socket (ip,port))
         {
             GameStatus status = null;
@@ -77,11 +81,6 @@ public class MultiGameLoop implements Runnable
                     gameOver = true;
                 }
             }
-
-
-
-
-
 
             new Thread(new Runnable()
             {
