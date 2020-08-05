@@ -7,6 +7,7 @@ import GUI.Music;
 import GUI.PictureJLabel;
 import GameData.ServerInformationStorage;
 import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -323,6 +324,7 @@ public class Setting extends JPanel
                                     ans.toCharArray ()))
                             {
                                 serverListPanel2.removeServer (serverButtonPanel);
+                                connect ();
                                 return;
                             }
                         }
@@ -422,6 +424,12 @@ public class Setting extends JPanel
 //                a.start();
 //            }
         }
+    }
+
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
     }
 
 

@@ -49,12 +49,12 @@ public class MultiGameDataPanel extends JPanel
         memberShip.setForeground (new Color (91, 131, 56));
 
 
-        remainPlayers = new JLabel (multiGame.getNumberOfPlayers () - multiGame.getOnlineUsers ().size ()
+        remainPlayers = new JLabel (multiGame.getNumberOfPlayers () - multiGame.getOnlineUsersNumber ()
                 + "");
         remainPlayers.setFont (new Font ("arial",Font.PLAIN,15));
         remainPlayers.setForeground (new Color (91, 131, 56));
 
-        onlinePlayers = new JLabel (multiGame.getOnlineUsers ().size () + "");
+        onlinePlayers = new JLabel (multiGame.getOnlineUsersNumber () + "");
         onlinePlayers.setFont (new Font ("arial",Font.PLAIN,15));
         onlinePlayers.setForeground (new Color (91, 131, 56));
 
@@ -110,7 +110,7 @@ public class MultiGameDataPanel extends JPanel
             music.execute ();
             if (e.getSource () == play)
             {
-                multiGame.addUser (user);
+                multiGame.addUser ();
                 frame.setVisible (false);
                 System.out.println (multiGame.getPort ());
                 MultiGameStarting multiGameStarting = new MultiGameStarting (frame,user,multiGame);
