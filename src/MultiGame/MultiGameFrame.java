@@ -37,6 +37,10 @@ public class MultiGameFrame extends JFrame implements Serializable
     public MultiGameFrame(String title)
     {
         super(title);
+
+        ImageIcon img1 = new ImageIcon("Images/Icon.png");
+        this.setIconImage(img1.getImage());
+
         img = new BufferedImage(1280, 720,
                 BufferedImage.TYPE_INT_ARGB);
         setResizable(false);
