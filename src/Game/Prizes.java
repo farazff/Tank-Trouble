@@ -5,6 +5,10 @@ import GUI.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * this class handles all of the prizes
+ */
+
 public class Prizes implements Runnable
 {
     private ArrayList<Prize> prizes;
@@ -12,6 +16,11 @@ public class Prizes implements Runnable
     private Maps maps;
     private boolean active;
 
+    /**
+     * constructor  the prize class
+     * @param maps
+     * @param tanks
+     */
     public Prizes(Maps maps , ArrayList<Tank> tanks)
     {
         active = true;
@@ -20,6 +29,9 @@ public class Prizes implements Runnable
         this.tanks = tanks;
     }
 
+    /**
+     * put the prize of the map
+     */
     public void putPrize()
     {
         while(true)
@@ -49,6 +61,12 @@ public class Prizes implements Runnable
         }
     }
 
+    /**
+     * check if the place is empty of tge map
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return true if it is empty and false otherwise
+     */
     public boolean isEmpty(int x ,int y)
     {
         for(int i=0;i<tanks.size();i++)
@@ -100,11 +118,18 @@ public class Prizes implements Runnable
         return true;
     }
 
+    /**
+     * deActive putting prize
+     */
     public void deActive()
     {
         active = false;
     }
 
+    /**
+     * get list of all prizes
+     * @return the prizes field
+     */
     public ArrayList<Prize> getPrizes()
     {
         return prizes;

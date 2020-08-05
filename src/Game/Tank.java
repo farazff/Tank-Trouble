@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * this class have al of the info of a tank and updates it in every frame
+ */
+
 public class Tank implements Runnable
 {
     private int locX,locY,stamina;
@@ -40,6 +44,10 @@ public class Tank implements Runnable
     private Prize prizeOwn;
     private Prizes prizes;
 
+    /**
+     * get the prize that the tank own
+     * @return the prizeOwn field
+     */
     public Prize getPrizeOwn()
     {
         return prizeOwn;
@@ -50,6 +58,10 @@ public class Tank implements Runnable
     private int[] kills;
     private int code;
 
+    /**
+     * get the code of the tank
+     * @return the code Field
+     */
     public int getCode()
     {
         return code;
@@ -69,6 +81,20 @@ public class Tank implements Runnable
         }
     }
 
+    /**
+     * constructor of the tank class
+     * @param bullets list of all bullets
+     * @param walls list of all walls
+     * @param tanks list of all tanks
+     * @param prizes list of all prizes
+     * @param tankStamina stamina of the tank
+     * @param canonPower power of the canon
+     * @param maps map of the game
+     * @param imageAddress image address of the tank
+     * @param user user who signed in
+     * @param code the code of the tank
+     * @param kills array of the kills of every tank
+     */
     public Tank (ArrayList<Bullet> bullets, ArrayList<Wall> walls, ArrayList<Tank> tanks, Prizes prizes,
                 int tankStamina,int canonPower , Maps maps,String imageAddress, User user,int code,int[] kills)
     {
@@ -120,28 +146,52 @@ public class Tank implements Runnable
 
     }
 
-    public User getUser () {
+    /**
+     * get the user
+     * @return the user
+     */
+    public User getUser ()
+    {
         return user;
     }
 
-    public void setProtection (boolean hasProtection) {
+    /**
+     * set the tank protection prize
+     * @param hasProtection boolean hasProtection
+     */
+    public void setProtection (boolean hasProtection)
+    {
         this.hasProtection = hasProtection;
     }
 
-
-
+    /**
+     * set the bullet type laser or simple
+     * @param bulletType the type of the bullet
+     */
     public void setBulletType (String bulletType) {
         this.bulletType = bulletType;
     }
 
+    /**
+     * get bullet type
+     * @return bulletType filed
+     */
     public String getBulletType () {
         return bulletType;
     }
 
+    /**
+     * get tanks image height
+     * @return height field
+     */
     public int getHeight () {
         return height;
     }
 
+    /**
+     * get tanks image width
+     * @return width field
+     */
     public int getWidth () {
         return width;
     }
@@ -170,15 +220,27 @@ public class Tank implements Runnable
 
     }
 
+    /**
+     * get keyHandler
+     * @return keyHandler field
+     */
     public KeyHandler getKeyHandler () {
         return keyHandler;
     }
 
 
+    /**
+     * get centerX
+     * @return centerX filed
+     */
     public int getCenterX () {
         return locX + width / 2 - 2;
     }
 
+    /**
+     * get centerY
+     * @return centerY filed
+     */
     public int getCenterY () {
         return locY + height / 2 - 2;
     }
@@ -199,26 +261,50 @@ public class Tank implements Runnable
         return imageAddress;
     }
 
+    /**
+     * get locx
+     * @return locX field
+     */
     public int getLocX () {
         return locX;
     }
 
+    /**
+     * set locX
+     * @param locX locX new value
+     */
     public void setLocX (int locX) {
         this.locX = locX;
     }
 
+    /**
+     * add to loc X
+     * @param adder the value to add
+     */
     public void addLocX (int adder) {
         locX += adder;
     }
 
+    /**
+     * get locY
+     * @return locY field
+     */
     public int getLocY () {
         return locY;
     }
 
+    /**
+     * set locY
+     * @param locY locY new value
+     */
     public void setLocY (int locY) {
         this.locY = locY;
     }
 
+    /**
+     * add to loc Y
+     * @param adder the value to add
+     */
     public void addLocY (int adder) {
         locY += adder;
     }
@@ -227,28 +313,50 @@ public class Tank implements Runnable
         return stamina;
     }
 
+    /**
+     * get tanks
+     * @return the tanks field
+     */
     public ArrayList<Tank> getTanks () {
         return tanks;
     }
 
+    /**
+     * get bullets
+     * @return bullets method
+     */
     public ArrayList<Bullet> getBullets () {
         return bullets;
     }
 
+    /**
+     * get walls
+     * @return walls filed
+     */
     public ArrayList<Wall> getWalls () {
         return walls;
     }
 
+    /**
+     * get degree
+     * @return degree field
+     */
     public int getDegree () {
         return degree;
     }
 
+    /**
+     * increase the degree of the tank
+     */
     public void increaseDegree () {
         degree += 10;
         if (degree >= 360)
             degree = 0;
     }
 
+    /**
+     * decrease the degree of the tank
+     */
     public void decreaseDegree () {
         degree -= 10;
         if (degree <= 0) {
@@ -256,6 +364,10 @@ public class Tank implements Runnable
         }
     }
 
+    /**
+     * check if the tank can move forward
+     * @return true if it can and false otherwise
+     */
     public boolean canMoveForward()
     {
         boolean ans = true;
@@ -303,7 +415,10 @@ public class Tank implements Runnable
         return ans;
     }
 
-
+    /**
+     * check if the tank can move backward
+     * @return true if it can and false otherwise
+     */
     public boolean canMoveBackward()
     {
         boolean ans = true;
@@ -354,6 +469,13 @@ public class Tank implements Runnable
         return ans;
     }
 
+    /**
+     * check if the place is empty
+     * @param forX the movement of tank in x
+     * @param forY the movement of the tank in y
+     * @param dir the direction of the tank 1 means forward and -1 otherwise
+     * @return true if the new place is empty and false otherwise
+     */
     public boolean isEmpty(int forX , int forY , int dir)
     {
         boolean ans = true;
@@ -381,6 +503,13 @@ public class Tank implements Runnable
 
         return ans;
     }
+
+    /**
+     * check if the tank can move
+     * @param forX the distance of x
+     * @param forY the distance of y
+     * @return true it the tank can move
+     */
     public boolean canMove(int forX , int forY)
     {
 
@@ -478,6 +607,9 @@ public class Tank implements Runnable
     }
 
 
+    /**
+     * update the tank in every frame
+     */
     public void update()
     {
         if(mousePress)
@@ -514,6 +646,9 @@ public class Tank implements Runnable
         this.setLocY(Math.min(this.getLocY(), GameFrame.GAME_HEIGHT - 30));
     }
 
+    /**
+     * check if the tank get any prize
+     */
     public void checkPrize()
     {
         for(Prize prize : prizes.getPrizes())
@@ -584,6 +719,10 @@ public class Tank implements Runnable
         this.update();
     }
 
+    /**
+     * check if FireDestroyed
+     * @return fireDestroyed field
+     */
     public boolean isFireDestroyed () {
         return fireDestroyed;
     }
@@ -596,14 +735,26 @@ public class Tank implements Runnable
         return shot;
     }
 
+    /**
+     * get canShot
+     * @return chanShot filed
+     */
     public boolean isCanShot () {
         return canShot;
     }
 
+    /**
+     * set degree of the tank
+     * @param degree the degree field
+     */
     public void setDegree (int degree) {
         this.degree = degree;
     }
 
+    /**
+     *
+     * @param canShot canShot field
+     */
     public void setCanShot (boolean canShot) {
         this.canShot = canShot;
     }
@@ -620,6 +771,10 @@ public class Tank implements Runnable
         return fireDestroyImage;
     }
 
+    /**
+     * get the fire image
+     * @return fireImage field
+     */
     public static BufferedImage getFireImage () {
         return fireImage;
     }
