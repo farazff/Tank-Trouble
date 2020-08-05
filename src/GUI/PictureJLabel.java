@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 /**
  * put image on  a JPanel
+ *
  */
 public class PictureJLabel extends JPanel
 {

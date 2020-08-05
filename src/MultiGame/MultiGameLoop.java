@@ -72,12 +72,16 @@ public class MultiGameLoop implements Runnable
                 if (delay > 0)
                     Thread.sleep(delay);
 
-                if(status.isGameOver())
+                if(status.isGameOverAll())
                 {
                     gameOver = true;
                 }
             }
-            //canvas.render(status);
+
+
+
+
+
 
             new Thread(new Runnable()
             {
@@ -86,7 +90,7 @@ public class MultiGameLoop implements Runnable
                 {
                     try
                     {
-                        Thread.sleep(3000);
+                        Thread.sleep(4000);
                         canvas.setVisible(false);
                         menuFrame.setVisible(true);
                     }

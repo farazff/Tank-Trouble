@@ -5,7 +5,6 @@ import GUI.MultiGamePanels.ServerButtonPanel;
 import GUI.MultiGamePanels.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
-import GameData.ServerInformationStorage;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
 
@@ -14,6 +13,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+
+/**
+ * the setting panel of the game
+ */
 
 public class Setting extends JPanel
 {
@@ -28,6 +31,10 @@ public class Setting extends JPanel
     private JPanel pre;
     private User user;
 
+    /**
+     * set the pre Panel , the panel before Setting
+     * @param pre the JPanel before setting
+     */
     public void setPre(JPanel pre)
     {
         this.pre = pre;
@@ -53,12 +60,13 @@ public class Setting extends JPanel
     private JLabel back;
     private JButton createNewServer;
     private JButton removeServer;
-
-
-
-
     private MouseHandler mouse = new MouseHandler();
 
+    /**
+     * the constructor of the setting
+     * @param frame the miaint frame of the game the the setting panel will be shown on it
+     * @param user the user info
+     */
     public Setting(JFrame frame, User user)
     {
         this.frame = frame;
@@ -80,9 +88,9 @@ public class Setting extends JPanel
     }
 
 
-
-
-
+    /**
+     * creating different panels if the setting
+     */
     public void createMain()
     {
         userInfoPanel = new JPanel(new GridLayout(9,2,5,5));
@@ -183,6 +191,9 @@ public class Setting extends JPanel
         this.add(pictureJLabel,BorderLayout.CENTER);
     }
 
+    /**
+     * creating the menu of the setting that user can select each of them
+     */
     private void createLeft()
     {
         JPanel left = new JPanel(new GridLayout(10,1,10,10));
@@ -335,6 +346,10 @@ public class Setting extends JPanel
 
         }
 
+        /**
+         * Mouse handler of the setting panel
+         * @param e Mouse event
+         */
         @Override
         public void mouseEntered(MouseEvent e)
         {

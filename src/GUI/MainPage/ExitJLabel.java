@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 
+/**
+ * create the logout button
+ */
+
 public class ExitJLabel extends JLabel
 {
 
@@ -17,6 +21,14 @@ public class ExitJLabel extends JLabel
     private  int[] x1;
     private  int[] y1;
 
+    /**
+     * the constructor of the xit button
+     * @param text
+     * @param x
+     * @param y
+     * @param x1
+     * @param y1
+     */
     public ExitJLabel(String text,int[] x,int []y , int x1[] , int[] y1)
     {
         super(text);
@@ -65,6 +77,9 @@ public class ExitJLabel extends JLabel
         super.paintComponent(g);
     }
 
+    /**
+     * repaint the component when mouse entered
+     */
     public void rePaintEntered()
     {
         inside = Color.CYAN;
@@ -72,6 +87,9 @@ public class ExitJLabel extends JLabel
         this.repaint();
     }
 
+    /**
+     * repaint the component when mouse exited
+     */
     public void rePaintExited()
     {
         inside = Color.RED;
@@ -79,6 +97,9 @@ public class ExitJLabel extends JLabel
         this.repaint();
     }
 
+    /**
+     * repaint the component when mouse pressed
+     */
     public void rePaintHolding()
     {
         inside = Color.GRAY;

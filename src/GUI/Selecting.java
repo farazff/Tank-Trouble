@@ -90,6 +90,7 @@ public class Selecting extends JPanel
 
     /**
      * handles mouse events
+     *
      */
     private class MouseHandler implements MouseMotionListener, MouseListener
     {

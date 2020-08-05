@@ -1,5 +1,7 @@
 package MultiGame.Server;
 
+import GameData.GameFinishType;
+import GameData.MultiGame;
 import MultiGame.Game.*;
 
 
@@ -9,27 +11,41 @@ import java.net.ServerSocket;
 import java.net.*;
 import java.util.ArrayList;
 
-public class Server
+public class Server implements Runnable
 {
 
-    private static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
-
-    public static void main(String[] args)
+    private ArrayList<ClientHandler> clientHandlers;
+    private MultiGame multiGame;
+    private int port;
+    public Server (MultiGame multiGame, int port)
     {
-        try(ServerSocket welcomingSocket = new ServerSocket(8080))
+        clientHandlers = new ArrayList<> ();
+        this.multiGame = multiGame;
+        this.port = port;
+    }
+
+
+    @Override
+    public void run ()
+    {
+        try(ServerSocket welcomingSocket = new ServerSocket(port))
         {
-            int players = 1;
-            GameFrameMulti frame = new GameFrameMulti("MultiGame.Server side !");
-            GameLoopMulti game = new GameLoopMulti( players,
-                    100,100,100,clientHandlers);
-            System.out.print("MultiGame.Server started.\nWaiting for a client ... ");
-            for(int i=1;i<=1;i++)
+
+            int type = 5;
+            if(multiGame.getGameFinishType() == GameFinishType.DEATH_MATCH)
+                type = 1;
+
+            GameLoopMulti game = new GameLoopMulti( multiGame.getNumberOfPlayers (),
+                    multiGame.getTankStamina (),multiGame.getCanonPower ()
+                    ,multiGame.getWallStamina (),clientHandlers,type);
+            System.out.println("MultiGame.Server started with port " + port);
+            for(int i=1;i<=multiGame.getNumberOfPlayers ();i++)
             {
                 Socket connectionSocket = welcomingSocket.accept();
-                System.out.println("client accepted!");
+                System.out.println("client accepted! with port " + port);
                 ClientHandler clientHandler = new ClientHandler(connectionSocket,game);
-                players++;
                 clientHandlers.add(clientHandler);
+                multiGame.addUser (clientHandler.getUser ());
             }
 
             ThreadPoolMulti.init();
@@ -38,11 +54,6 @@ public class Server
                 @Override
                 public void run()
                 {
-                    frame.setLocationRelativeTo(null);
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.setVisible(true);
-                    frame.initBufferStrategy();
-
                     game.init();
                     ThreadPoolMulti.execute(game);
                 }

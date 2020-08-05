@@ -14,10 +14,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+/**
+ * this class handles the data of game with pc
+ * you can choose the setting of a single playing mode
+ */
+
 public class GameWithPC extends JPanel
 {
 
-    private PictureJLabel picture;
+    private PictureJLabel picture; // the background of the panel
     private JPanel pre;
     private JFrame frame;
     private JLabel start;
@@ -30,6 +36,11 @@ public class GameWithPC extends JPanel
     private JSlider sliderWall;
 
 
+    /**
+     * the constructor for this class
+     * @param frame the frame of the game
+     * @param user the info of the use
+     */
     public GameWithPC(JFrame frame, User user)
     {
         this.frame = frame;
@@ -142,6 +153,11 @@ public class GameWithPC extends JPanel
         GridBagSetter.addComponent(startPanel,  17,0,2,2,layout,c,base);
     }
 
+    /**
+     * set the rpe frame by this method
+     * if you push back button this panel will be shown of the frame
+     * @param pre the pre JPanel before game with pc
+     */
     public void setPre(JPanel pre)
     {
        this.pre = pre;

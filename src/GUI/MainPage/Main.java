@@ -20,15 +20,17 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ *
+ * this class creates the main page of the game including different buttons
+ *
+ */
 public class Main extends JPanel
 {
-
 
     private JPanel sing;
     private JPanel mul;
     private User user;
-
-
 
 
     public void setSing(JPanel sing)
@@ -41,6 +43,10 @@ public class Main extends JPanel
         this.mul = mul;
     }
 
+    /**
+     * get the panel
+     * @return return this
+     */
     public JPanel getPanel()
     {
         return this;
@@ -60,6 +66,10 @@ public class Main extends JPanel
 
     private JFrame frame;
 
+    /**
+     * the constructor of the main page
+     * @param frame the main frame of the game
+     */
     public Main(JFrame frame)
     {
         super();
@@ -101,14 +111,26 @@ public class Main extends JPanel
         setMiddle();
     }
 
+    /**
+     * set the pre page to be shown beffore this page
+     * @param pre the pre JPanel
+     */
     public void setPre (JPanel pre) {
         this.pre = pre;
     }
 
-    public void setUser (User user) {
+    /**
+     * set the use
+     * @param user the user who logged in
+     */
+    public void setUser (User user)
+    {
         this.user = user;
     }
 
+    /**
+     * set the top of the main panel
+     */
     public void setTop()
     {
         int[] x = {40 ,47, 52 ,59 ,77, 74, 79, 90, 98, 86, 86 ,98 ,90, 77, 74, 77, 59, 52, 49 ,40 ,22 ,26, 24, 10, 2, 14 ,14 ,2,9 ,23 ,26,22};
@@ -120,6 +142,9 @@ public class Main extends JPanel
         top.add(setting,BorderLayout.EAST);
     }
 
+    /**
+     * create the down of the main panel
+     */
     public void setDown()
     {
         int[] x = {40 ,47, 52 ,59 ,77, 74, 79, 90, 98, 86, 86 ,98 ,90, 77, 74, 77, 59, 52, 49 ,40 ,22 ,26, 24, 10, 2, 14 ,14 ,2,9 ,23 ,26,22};
@@ -143,6 +168,9 @@ public class Main extends JPanel
         down.add(exit,BorderLayout.EAST);
     }
 
+    /**
+     * create the middle of the main panel
+     */
     public void setMiddle()
     {
         int[] x = {8,192,198,0};
@@ -333,6 +361,10 @@ public class Main extends JPanel
         }
     }
 
+    /**
+     * DisConnect from info server when user logs out
+     * @return
+     */
     private boolean disConnect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
@@ -350,6 +382,9 @@ public class Main extends JPanel
         return res.equals ("Successful");
     }
 
+    /**
+     * connect to the information server
+     */
     private void connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1",user.getUserName (),

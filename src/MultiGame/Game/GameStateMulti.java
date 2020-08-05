@@ -20,12 +20,16 @@ public class GameStateMulti implements Serializable
 	private MapsMulti maps;								 ////ok to serialize
 	private PrizesMulti prizes;							 ////ok to serialize
 	private GameStatus status;
+	int[] kills;
+	private ArrayList<String> names;
 
 
 	public GameStateMulti(int players,int tankStamina,int canonPower,int wallStamina,
-						  ArrayList<ClientHandler> clientHandlers)
+						  ArrayList<ClientHandler> clientHandlers,int[] kills,ArrayList<String> names)
 	{
 		////not ok to serialize
+		this.names = names;
+		this.kills = kills;
 		this.players = players;
 		maps = new MapsMulti(wallStamina);
 		bullets = new InteractArrayListMulti<> ();
@@ -38,15 +42,11 @@ public class GameStateMulti implements Serializable
 		{
 			TankMulti tank1 = new TankMulti(bullets, maps.getWalls(), tanks, prizes,
 					tankStamina, canonPower, maps,clientHandlers.get(i-1).getData(),i,status,
-					clientHandlers.get (i-1).getUser ());
+					clientHandlers.get (i-1).getUser (),i,kills);
 			tanks.add(tank1);
 		}
 
-
-
 		gameOver = 0;
-
-
 	}
 
 	public void addPrize()
@@ -143,7 +143,14 @@ public class GameStateMulti implements Serializable
 				break;
 		}
 
-		status.update(tanks,bullets,maps,prizes,players);
+		if(tanks.size()==1)
+		{
+			status.addWinners(tanks.get(0).getUser().getUserName());
+			tanks.clear();
+			status.setGameOver(true);
+		}
+
+		status.update(tanks,bullets,maps,prizes,players,kills,names);
 	}
 
 	public ArrayList<BulletMulti> getBullets () {
