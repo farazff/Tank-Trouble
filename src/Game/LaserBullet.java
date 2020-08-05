@@ -127,6 +127,7 @@ public class LaserBullet extends Bullet
                     {
                         kills[this.getCode()-1]++;
                     }
+                    setExpired();
                     return;
                 }
             }
