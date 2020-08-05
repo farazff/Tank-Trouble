@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.InputMismatchException;
 
+/**
+ * this class represents multi game item in list
+ */
 public class MultiGameButtonPanel extends JPanel
 {
     private JLabel gameName;
@@ -17,7 +20,13 @@ public class MultiGameButtonPanel extends JPanel
     private JPanel multiGameDataPanel;
     private boolean selected;
 
-
+    /**
+     * creates new multi game button panel
+     * @param multiGame multiGame
+     * @param mainPanel mainPanel
+     * @param frame frame
+     * @param user user
+     */
     public MultiGameButtonPanel (MultiGame multiGame, MultiGamePanel mainPanel, JFrame frame, User user)
     {
         super();
@@ -44,18 +53,33 @@ public class MultiGameButtonPanel extends JPanel
         createComponents ();
     }
 
+    /**
+     * set selected
+     * @param selected selected
+     */
     public void setSelected (boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     * @return isSelected
+     */
     public boolean isSelected () {
         return selected;
     }
 
+    /**
+     *
+     * @return get MultiGameDataPanel
+     */
     public JPanel getMultiGameDataPanel () {
         return multiGameDataPanel;
     }
 
+    /**
+     * creates components
+     */
     private void createComponents ()
     {
         add (gameName);
@@ -65,6 +89,11 @@ public class MultiGameButtonPanel extends JPanel
         add(remainPlayers);
     }
 
+    /**
+     * change font and color
+     * @param font font
+     * @param color color
+     */
     public void changeFontAndColor (Font font, Color color)
     {
         gameName.setFont (font);

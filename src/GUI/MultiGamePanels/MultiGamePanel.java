@@ -15,7 +15,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+/**
+ * this panel is Multi game part in game
+ */
 public class MultiGamePanel extends JPanel
 {
 
@@ -38,6 +40,11 @@ public class MultiGamePanel extends JPanel
 
     private JLabel back;
 
+    /**
+     * creates a new MultiGame panel
+     * @param frame frame
+     * @param user user
+     */
     public MultiGamePanel (JFrame frame, User user)
     {
 
@@ -127,22 +134,37 @@ public class MultiGamePanel extends JPanel
 
     }
 
+    /**
+     *
+     * @return get this panel
+     */
     private JPanel getThis ()
     {
         return this;
     }
 
 
-
-
+    /**
+     * set pre
+     * @param pre pre
+     */
     public void setPre (JPanel pre) {
         this.pre = pre;
     }
 
+    /**
+     * set next
+     * @param nex nex
+     */
     public void setNex (JPanel nex) {
         this.nex = nex;
     }
 
+    /**
+     * sets second panel
+     * @param newSecondPanel newSecondPanel
+     * @param serverButtonPanel serverButtonPanel
+     */
     public void setSecondPanel (JPanel newSecondPanel, ServerButtonPanel serverButtonPanel) {
         main.setVisible (false);
         this.serverButtonPanel = serverButtonPanel;
@@ -161,6 +183,11 @@ public class MultiGamePanel extends JPanel
         setThirdPanel (new NullPanel (),null);
     }
 
+    /**
+     * sets third panel
+     * @param newThirdPanel newThirdPanel
+     * @param multiGameButtonPanel multiGameButtonPanel
+     */
     public void setThirdPanel (JPanel newThirdPanel, MultiGameButtonPanel multiGameButtonPanel) {
 
         main.setVisible (false);
@@ -179,6 +206,9 @@ public class MultiGamePanel extends JPanel
 
     }
 
+    /**
+     * this class handles components
+     */
     private class ActionHandler implements ActionListener
     {
         @Override
@@ -192,6 +222,9 @@ public class MultiGamePanel extends JPanel
         }
     }
 
+    /**
+     * this class handles components
+     */
     private class MouseHandler extends MouseAdapter
     {
         @Override

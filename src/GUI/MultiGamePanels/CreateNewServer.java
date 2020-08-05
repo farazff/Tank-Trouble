@@ -16,6 +16,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * this panel is for creating new Server
+ */
 public class CreateNewServer extends JPanel
 {
     private JTextField url; // user name
@@ -162,8 +165,8 @@ public class CreateNewServer extends JPanel
 
         GridBagSetter.addComponent(create,7,0,4,1,layout,constraints,base);
 
-        constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(5,1 ,0 ,0);
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         GridBagSetter.addComponent(hint,8,0,4,1,layout,constraints,base);
 
 
@@ -308,6 +311,9 @@ public class CreateNewServer extends JPanel
         }
     }
 
+    /**
+     * connects to server
+     */
     private void connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);

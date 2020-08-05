@@ -12,6 +12,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+/**
+ * this panel is list of multiGames
+ */
 public class MultiGameListPanel extends JPanel
 {
     private MultiGamePanel mainPanel;
@@ -19,6 +22,13 @@ public class MultiGameListPanel extends JPanel
     private User user;
     private JFrame frame;
 
+    /**
+     * creates new Multi game list panel
+     * @param multiGames multiGames
+     * @param mainPanel mainPanel
+     * @param frame frame
+     * @param user user
+     */
     public MultiGameListPanel (ArrayList<MultiGame> multiGames,MultiGamePanel mainPanel, JFrame frame,
                                User user)
     {
@@ -44,6 +54,10 @@ public class MultiGameListPanel extends JPanel
         }
     }
 
+    /**
+     * add new game
+     * @param multiGame multiGame
+     */
     public void addNewMultiGame (MultiGame multiGame)
     {
         MouseHandler mouseHandler = new MouseHandler ();
@@ -56,10 +70,17 @@ public class MultiGameListPanel extends JPanel
         this.setVisible (true);
     }
 
+    /**
+     *
+     * @return get MultiGameButtonPanels
+     */
     public ArrayList<MultiGameButtonPanel> getMultiGameButtonPanels () {
         return multiGameButtonPanels;
     }
 
+    /**
+     * this class handles components
+     */
     private class MouseHandler extends MouseAdapter
     {
 

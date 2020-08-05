@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.InputMismatchException;
 
+/**
+ * this panel is game details panel
+ */
 public class MultiGameDataPanel extends JPanel
 {
     private JLabel name;
@@ -25,7 +28,12 @@ public class MultiGameDataPanel extends JPanel
     private JFrame frame;
     private User user;
 
-
+    /**
+     * creates a new Multi game data panel
+     * @param multiGame multiGame
+     * @param frame frame
+     * @param user user
+     */
     public MultiGameDataPanel (MultiGame multiGame, JFrame frame, User user)
     {
         if (multiGame == null || frame == null || user == null)
@@ -61,7 +69,9 @@ public class MultiGameDataPanel extends JPanel
         createComponents ();
     }
 
-
+    /**
+     * creates components
+     */
     private void createComponents ()
     {
         JLabel gameName = new JLabel ("MultiGame's  Name:");
@@ -101,7 +111,9 @@ public class MultiGameDataPanel extends JPanel
 
     }
 
-
+    /**
+     * this class handles components
+     */
     private class ActionHandler implements ActionListener
     {
         @Override

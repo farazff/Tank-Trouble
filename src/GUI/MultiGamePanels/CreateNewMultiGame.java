@@ -26,7 +26,7 @@ import java.util.Scanner;
 /**
  * this class represents a new game panel in network game
  *
- * @author Amir Naziri
+ *
  */
 public class CreateNewMultiGame extends JPanel
 {
@@ -442,6 +442,9 @@ public class CreateNewMultiGame extends JPanel
         }
     }
 
+    /**
+     * connects to server
+     */
     private void connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);

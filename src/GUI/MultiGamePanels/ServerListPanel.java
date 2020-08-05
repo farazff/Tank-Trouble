@@ -14,7 +14,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-
+/**
+ * this panel is list of servers
+ */
 public class ServerListPanel extends JPanel
 {
 
@@ -24,6 +26,12 @@ public class ServerListPanel extends JPanel
     private JFrame frame;
     private User user;
 
+    /**
+     * creates server list panel
+     * @param mainPanel mainPanel
+     * @param frame frame
+     * @param user user
+     */
     public ServerListPanel (MultiGamePanel mainPanel,
                             JFrame frame, User user)
     {
@@ -49,6 +57,10 @@ public class ServerListPanel extends JPanel
 
     }
 
+    /**
+     * add new server
+     * @param serverInformation serverInformation
+     */
     public void addNewServer (ServerInformation serverInformation)
     {
         MouseHandler mouseHandler = new MouseHandler ();
@@ -62,6 +74,10 @@ public class ServerListPanel extends JPanel
         this.setVisible (true);
     }
 
+    /**
+     * remove server
+     * @param serverButtonPanel serverButtonPanel
+     */
     public void removeServer (ServerButtonPanel serverButtonPanel)
     {
 
@@ -73,14 +89,25 @@ public class ServerListPanel extends JPanel
     }
 
 
+    /**
+     *
+     * @return get ServerButtonPanels
+     */
     public ArrayList<ServerButtonPanel> getServerButtonPanels () {
         return serverButtonPanels;
     }
 
+    /**
+     *
+     * @return get MainPanel
+     */
     public MultiGamePanel getMainPanel () {
         return mainPanel;
     }
 
+    /**
+     * this class handles components
+     */
     private class MouseHandler extends MouseAdapter
     {
 

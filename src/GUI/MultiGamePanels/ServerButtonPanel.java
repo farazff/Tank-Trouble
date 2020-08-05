@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.InputMismatchException;
 
-
+/**
+ * this class represents server item in list
+ */
 public class ServerButtonPanel extends JPanel {
     private JLabel url;
     private JLabel numOfActiveGames;
@@ -19,7 +21,13 @@ public class ServerButtonPanel extends JPanel {
     private JPanel multiGameListPanel;
     private boolean selected;
 
-
+    /**
+     * creates new Server button panel
+     * @param serverInformation serverInformation
+     * @param mainPanel mainPanel
+     * @param frame frame
+     * @param user user
+     */
     public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel,
                               JFrame frame, User user)
     {
@@ -46,14 +54,26 @@ public class ServerButtonPanel extends JPanel {
         createBasePanel ();
     }
 
+    /**
+     * set selected
+     * @param selected selected
+     */
     public void setSelected (boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     * @return is selected
+     */
     public boolean isSelected () {
         return selected;
     }
 
+    /**
+     * adds new game
+     * @param multiGame multiGame
+     */
     public void addNewGame (MultiGame multiGame)
     {
         numOfActiveGames.setVisible (false);
@@ -63,10 +83,19 @@ public class ServerButtonPanel extends JPanel {
         multiGameListPanel.addNewMultiGame (multiGame);
     }
 
+    /**
+     *
+     * @return get ServerInformation
+     */
     public ServerInformation getServerInformation () {
         return serverInformation;
     }
 
+    /**
+     * change font and color
+     * @param font font
+     * @param color color
+     */
     public void changeFontAndColor (Font font, Color color)
     {
         url.setFont (font);
@@ -78,7 +107,9 @@ public class ServerButtonPanel extends JPanel {
 
     }
 
-
+    /**
+     * creates base panel
+     */
     private void createBasePanel ()
     {
         add (url);
@@ -88,6 +119,10 @@ public class ServerButtonPanel extends JPanel {
         add(currentCapacity);
     }
 
+    /**
+     *
+     * @return get MultiGameListPanel
+     */
     public JPanel getMultiGameListPanel () {
         return multiGameListPanel;
     }
