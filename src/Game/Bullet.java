@@ -29,7 +29,7 @@ public class Bullet implements Runnable
     private ArrayList<Wall> walls;
     private ArrayList<Tank> tanks;
     private boolean expired;
-    private int[] kills;
+    int[] kills;
 
     /**
      * get the code of the bullet
