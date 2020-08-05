@@ -18,6 +18,7 @@ import java.io.*;
  * this class represents the Login Panel of MultiGame
  *
  * @author Amir Naziri
+ *
  */
 public class SignInPanel extends JPanel
 {

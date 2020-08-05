@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 
+/**
+ * with this class we can make JLabels that have a Blue rectangle  the left side of them
+ */
+
 public class ColorJLabel extends JLabel
 {
     public ColorJLabel(String text)
@@ -14,6 +18,10 @@ public class ColorJLabel extends JLabel
         this.setFont(new Font("Arial",Font.BOLD,20));
     }
 
+    /**
+     * paint the component
+     * @param g the Graphic of the component
+     */
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);

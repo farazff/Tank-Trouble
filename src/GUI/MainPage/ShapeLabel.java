@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.GeneralPath;
 
+/**
+ * we can create different shapes of JPanel with this class
+ */
+
 public class ShapeLabel extends JLabel
 {
     private Color inside = new Color(1,114,23 );
@@ -13,6 +17,12 @@ public class ShapeLabel extends JLabel
     private  int[] y;
 
 
+    /**
+     * the constructor of the ShapeJLabel
+     * @param text the text of the JPanel
+     * @param x the x coordinate of it
+     * @param y the Y coordinate of it
+     */
     public ShapeLabel(String text,int[] x,int []y)
     {
         super(text);
@@ -23,6 +33,10 @@ public class ShapeLabel extends JLabel
         this.y = y;
     }
 
+    /**
+     * paint the component
+     * @param g the Graphic of the component
+     */
     public void paintComponent(Graphics g)
     {
 
@@ -44,6 +58,9 @@ public class ShapeLabel extends JLabel
         super.paintComponent(g);
     }
 
+    /**
+     * paint the component if muse entered it
+     */
     public void rePaintEntered()
     {
         inside = Color.CYAN;
@@ -51,6 +68,9 @@ public class ShapeLabel extends JLabel
         this.repaint();
     }
 
+    /**
+     * paint the component if mouse exited
+     */
     public void rePaintExited()
     {
         inside = new Color(1,114,23 );
@@ -58,6 +78,9 @@ public class ShapeLabel extends JLabel
         this.repaint();
     }
 
+    /**
+     * paint component if mouse is holding the panel
+     */
     public void rePaintHolding()
     {
         inside = Color.GRAY;

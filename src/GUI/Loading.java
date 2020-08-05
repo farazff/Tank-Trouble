@@ -8,6 +8,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * the loading page of the game
+ * it will be shown when the game is staring
+ */
+
 public class Loading extends JPanel
 {
     private JFrame frame;
@@ -15,6 +20,10 @@ public class Loading extends JPanel
     private JProgressBar progress;
     private Clip clip;
 
+    /**
+     * the constructor of the Loading cldss
+     * @param frame the mai  frame of the game
+     */
     public Loading(JFrame frame)
     {
         this.frame = frame;
@@ -36,14 +45,18 @@ public class Loading extends JPanel
         music.execute();
     }
 
-
-
-
+    /**
+     * set the next page after loading finishes
+     * @param nex the nex JPanel that will be shown on the main frame
+     */
     public void setNex(JPanel nex)
     {
         this.nex = nex;
     }
 
+    /**
+     * the JProgressBar on the loading will b filled by this method
+     */
     public void fill()
     {
         int i = 0;
@@ -53,7 +66,7 @@ public class Loading extends JPanel
             {
                 // fill the menu bar
                 progress.setValue(i);
-                Thread.sleep(15);
+                Thread.sleep(13);
                 i += 1;
             }
             frame.setContentPane(nex);

@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class Bullet implements Runnable
 {
-    private int code;
+    private int code;  // the code of the owner of the bulet
     private double x;
     private static final int WALL_ACCURACY = 4;
     private static final int TANK_ACCURACY = -10;
@@ -18,7 +18,7 @@ public class Bullet implements Runnable
     private int height;
     private int width;
     private String m;
-    private double degree;
+    private double degree; //the degree of the bullet
     private Direction direction;
     private BufferedImage image;
     private static final int STEP = 12;
@@ -28,11 +28,27 @@ public class Bullet implements Runnable
     private boolean expired;
     private int[] kills;
 
+    /**
+     * get the code of the bullet
+     * @return the code field
+     */
     public int getCode()
     {
         return code;
     }
 
+    /**
+     * creating new bullet
+     * @param x the x coordinate of the bullet
+     * @param y the y coordinate of the bullet
+     * @param degree the degree of the bullet
+     * @param startTime starting time of the bullet
+     * @param walls list of all walls
+     * @param tanks the list of all tanks
+     * @param canonPower the power of every bullet
+     * @param code the code of the bullet
+     * @param kills kills array
+     */
     public Bullet (int x, int y, double degree, long startTime, ArrayList<Wall> walls,
                    ArrayList<Tank> tanks , int canonPower,int code,int[] kills)
     {
@@ -57,10 +73,18 @@ public class Bullet implements Runnable
         height = image.getHeight ();
     }
 
+    /**
+     * set image of the bullet
+     * @param image image of te tank
+     */
     public void setImage (BufferedImage image) {
         this.image = image;
     }
 
+    /**
+     * find the quarter of the bullet
+     * @param degree the degree of the bullet
+     */
     private void findQuarterAndM (double degree)
     {
         degree = Math.abs (degree);
@@ -86,15 +110,26 @@ public class Bullet implements Runnable
             this.m = "" + Math.abs (Math.tan (Math.toRadians (degree)));
     }
 
+    /**
+     * get the x center of the bullet
+     * @return the x center of the bullet
+     */
     public int getCenterX ()  {
 
         return (int)x + width/2;
     }
 
+    /**
+     * get the y center of the bullet
+     * @return the y center of the bullet
+     */
     public int getCenterY () {
         return (int)y + height/2;
     }
 
+    /**
+     * check if the bullet reflects from wall or it destroys any tank
+     */
     protected void checkCoincidence ()
     {
         Iterator<Wall> walls = this.walls.iterator ();
@@ -199,14 +234,26 @@ public class Bullet implements Runnable
         }
     }
 
+    /**
+     * get the canon power
+     * @return canonPower Filed
+     */
     public int getCanonPower () {
         return canonPower;
     }
 
+    /**
+     * get the list of all tanks
+     * @return tanks field
+     */
     public ArrayList<Tank> getTanks () {
         return tanks;
     }
 
+    /**
+     * get the list of all walls
+     * @return thw walls field
+     */
     public ArrayList<Wall> getWalls () {
         return walls;
     }
@@ -219,11 +266,18 @@ public class Bullet implements Runnable
         return TANK_ACCURACY;
     }
 
+    /**
+     * set expired true means the bullet is not active any more
+     */
     protected void setExpired ()
     {
         expired = true;
     }
 
+    /**
+     * reflecting the bullet when it hits any wall
+     * @param axis the axis of the bullet
+     */
     protected void mirrorBack (String axis)
     {
         if (axis == null)
@@ -243,6 +297,9 @@ public class Bullet implements Runnable
         }
     }
 
+    /**
+     * updating the bullet by checking if it hits any wall or tank
+     */
     private void update ()
     {
         try {
@@ -339,12 +396,20 @@ public class Bullet implements Runnable
         }
     }
 
+    /**
+     * give Expired info about the bullet
+     * @return true if it is expired and false otherwise
+     */
     public boolean hasExpired ()
     {
         return System.currentTimeMillis () - startTime >= 3500 ||
                 expired;
     }
 
+    /**
+     * get the star time of the tank
+     * @return the startTime filed
+     */
     public long getStartTime () {
         return startTime;
     }
@@ -359,18 +424,32 @@ public class Bullet implements Runnable
         update ();
     }
 
+    /**
+     * get the x coordinate of the bullet
+     * @return the X filed
+     */
     public int getX () {
         return ((int)x);
     }
 
+    /**
+     * get the Y coordinate of the bullet
+     * @return the Y filed
+     */
     public int getY () {
         return ((int)y);
     }
-
+    /**
+     * get the degree of the bullet
+     * @return the degree filed
+     */
     public double getDegree () {
         return degree;
     }
-
+    /**
+     * get the image of the bullet
+     * @return the image filed
+     */
     public BufferedImage getImage () {
         return image;
     }
