@@ -16,11 +16,11 @@ public class PictureJLabel extends JPanel
 
     private BufferedImage image;
 
-    public PictureJLabel(String adress)
+    public PictureJLabel(String address)
     {
         try
         {
-            image = ImageIO.read(new File(adress));
+            image = ImageIO.read(new File(address));
         }
         catch (IOException ex)
         {
@@ -30,13 +30,13 @@ public class PictureJLabel extends JPanel
 
     /**
      * change the image of a JPanel
-     * @param adress the address of the image
+     * @param address the address of the image
      */
-    public void changeImage(String adress)
+    public void changeImage(String address)
     {
         try
         {
-            image = ImageIO.read(new File(adress));
+            image = ImageIO.read(new File(address));
         }
         catch (IOException ex)
         {

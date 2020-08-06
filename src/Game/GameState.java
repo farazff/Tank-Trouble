@@ -51,7 +51,7 @@ public class GameState
 		prizes = new Prizes(maps,tanks);
 
 		Tank tank1 = new Tank(bullets, maps.getWalls (), tanks,prizes ,
-				tankStamina,canonPower,maps,"Images/Tanks/"+"1"+".png",user,1,kills);
+				tankStamina,canonPower,maps,"Images/Tanks/"+ user.getTankCode()+".png",user,1,kills);
 		tanks.add (tank1);
 
 		for(int i=2;i<=level+1;i++)
