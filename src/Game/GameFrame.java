@@ -1,6 +1,7 @@
 package Game;
 
 import GUI.Music;
+import GameData.User;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -88,7 +89,7 @@ public class GameFrame extends JFrame
 	/**
 	 * MultiGame rendering with triple-buffering using BufferStrategy.
 	 */
-	public void render(GameState state,int[] kills) throws IOException
+	public void render(GameState state,int[] kills, User user) throws IOException
 	{
 		// Render single frame
 		do
@@ -102,7 +103,7 @@ public class GameFrame extends JFrame
 				Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 				try
 				{
-					doRendering(graphics, state,kills);
+					doRendering(graphics, state,kills,user);
 				}
 				finally
 				{
@@ -125,7 +126,7 @@ public class GameFrame extends JFrame
 	/**
 	 * Rendering all game elements based on the game state.
 	 */
-	private void doRendering(Graphics2D g2d, GameState state,int[] kills) throws IOException
+	private void doRendering(Graphics2D g2d, GameState state, int[] kills, User user) throws IOException
 	{
 		g2d.setColor(Color.GRAY);
 		g2d.fillRect(0,0,GAME_WIDTH, GAME_HEIGHT);
@@ -361,7 +362,7 @@ public class GameFrame extends JFrame
 			String[] names = new String[kills.length];
 			int[] scores = new int[kills.length];
 
-			names[0] = "Player";
+			names[0] = user.getUserName ();
 			scores[0] = kills[0];
 			for(int i=1;i<kills.length;i++)
 			{

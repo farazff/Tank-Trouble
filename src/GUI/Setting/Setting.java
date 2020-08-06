@@ -87,13 +87,42 @@ public class Setting extends JPanel
         createMain();
     }
 
+    /**
+     * finds players' Level
+     * @return Level
+     */
+    private String findLevel ()
+    {
+        String level;
+        if (user.getScore () < 10)
+            level = "Private";
+        else if (user.getScore () < 20)
+            level = "Specialist";
+        else if (user.getScore () < 30)
+            level = "Corporal";
+        else if (user.getScore () < 40)
+            level = "Sergeant";
+        else if (user.getScore () < 50)
+            level = "Commander";
+        else if (user.getScore () < 60)
+            level = "Officer";
+        else if (user.getScore () < 70)
+            level = "Chief";
+        else if (user.getScore () < 80)
+            level = "Captain";
+        else if (user.getScore () < 90)
+            level = "Colonel";
+        else
+            level = "General";
+        return  level;
+    }
 
     /**
      * creating different panels if the setting
      */
     public void createMain()
     {
-        userInfoPanel = new JPanel(new GridLayout(9,2,5,5));
+        userInfoPanel = new JPanel(new GridLayout(11,2,5,5));
         userInfoPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,7));
         userInfoPanel.setBackground(Color.GRAY);
         userInfoPanel.setOpaque(true);
@@ -101,8 +130,10 @@ public class Setting extends JPanel
         userInfoPanel.add(new LeftPartLabel(user.getUserName (),18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Join Time:  ",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(
-                ((System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60))
-                + " Minutes",18,Color.CYAN));
+                ((System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60) > 100 ?
+                        (System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60*60)
+                + "  Hours" : (System.currentTimeMillis () - user.getSignedUpTime ()) / (1000L*60)
+                        + "  Minutes"),18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total Single Games:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getNumOfSingleGames () + "",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total multiPlayer Games:",18,Color.WHITE));
@@ -113,6 +144,8 @@ public class Setting extends JPanel
         userInfoPanel.add(new LeftPartLabel(user.getNumOfWinMultiGames () +"",18,Color.CYAN));
         userInfoPanel.add(new LeftPartLabel("Total number of kills:",18,Color.WHITE));
         userInfoPanel.add(new LeftPartLabel(user.getScore () +"",18,Color.CYAN));
+        userInfoPanel.add(new LeftPartLabel("Level:",18,Color.WHITE));
+        userInfoPanel.add(new LeftPartLabel(findLevel (),18,Color.CYAN));
 
         ////////////////////////////////////////
         ////////////////////////////////////////

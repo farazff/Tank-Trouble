@@ -78,6 +78,7 @@ public class GameLoop implements Runnable
 	@Override
 	public void run()
 	{
+		int win = 0;
 		for(int i=1;i<=type;i++)
 		{
 			if(i!=1)
@@ -91,7 +92,7 @@ public class GameLoop implements Runnable
 					//
 					state.update();
 					gameOver = state.gameOver;
-					canvas.render(state,kills);
+					canvas.render(state,kills,user);
 
 					//
 					long delay = (1000 / FPS) - (System.currentTimeMillis() - start);
@@ -103,17 +104,14 @@ public class GameLoop implements Runnable
 					ex.printStackTrace();
 				}
 			}
-
 			if (gameOver == 1)
-				for (Tank tank : state.getTanks())
-					if (!(tank instanceof IntelligentTank))
-						tank.getUser().setNumOfWinSingleGames(tank.getUser().getNumOfWinSingleGames() + 1);
+				win++;
 
 			if(i!=type)
 			{
 				try
 				{
-					canvas.render(state,kills);
+					canvas.render(state,kills,user);
 					Thread.sleep(4000);
 				}
 				catch (InterruptedException | IOException e)
@@ -123,10 +121,16 @@ public class GameLoop implements Runnable
 			}
 		}
 
+		if (type == 1 && win > 0)
+			user.setNumOfWinSingleGames (user.getNumOfWinSingleGames () + 1);
+		else if (type == 5 && win > 2)
+			user.setNumOfWinSingleGames (user.getNumOfWinSingleGames () + 1);
+
+		user.setScore (user.getScore () + kills[0]);
 
 		try
 		{
-			canvas.render(state,kills);
+			canvas.render(state,kills,user);
 		}
 		catch (IOException e)
 		{
