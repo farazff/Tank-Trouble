@@ -31,7 +31,7 @@ public class Maps
 
     /**
      * get the walls of the map
-     * @return
+     * @return list of walls
      */
     public ArrayList<Wall> getWalls()
     {
@@ -70,7 +70,12 @@ public class Maps
 
     }
 
-
+    /**
+     * can put there
+     * @param x x
+     * @param y y
+     * @return result
+     */
     public boolean canPut(int x,int y)
     {
         int xx = 0 , yy = 0;

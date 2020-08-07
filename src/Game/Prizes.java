@@ -18,8 +18,8 @@ public class Prizes implements Runnable
 
     /**
      * constructor  the prize class
-     * @param maps
-     * @param tanks
+     * @param maps maps
+     * @param tanks tanks
      */
     public Prizes(Maps maps , ArrayList<Tank> tanks)
     {

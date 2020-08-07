@@ -19,7 +19,7 @@ public class Prize
     private boolean active;
 
     /**
-     * comstructor of the Prize class
+     * constructor of the Prize class
      * @param rand type of the prize
      * @param x the x coordinate of the prize
      * @param y the y coordinate of the prize

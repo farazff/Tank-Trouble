@@ -139,6 +139,10 @@ public class SignUpPanel extends JPanel
 
     }
 
+    /**
+     * connect to login server
+     * @return res
+     */
     private boolean connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1",username.getText (),
@@ -226,6 +230,9 @@ public class SignUpPanel extends JPanel
         }
     }
 
+    /**
+     * show sign in panel
+     */
     public void ShowSignIn()
     {
         Music music = new Music();

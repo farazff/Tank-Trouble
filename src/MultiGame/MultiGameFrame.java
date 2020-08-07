@@ -1,9 +1,8 @@
 package MultiGame;
 
-import Game.IntelligentTank;
+
 import MultiGame.Game.*;
 import MultiGame.Status.GameStatus;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
@@ -17,6 +16,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * this class is frame for multi game
+ */
 public class MultiGameFrame extends JFrame implements Serializable
 {
     public static final int GAME_HEIGHT = 720;                  // 720p game resolution
@@ -29,11 +31,19 @@ public class MultiGameFrame extends JFrame implements Serializable
     private BufferedImage theme,wallNDH,wallDH,wallNDV,wallDV,img;
     private BufferedImage one,two,three,four,five,destroy,fire,protect,laser,health,power2,power3;
 
+    /**
+     *
+     * @return get image
+     */
     public BufferedImage getImg() {
         return img;
     }
 
 
+    /**
+     * creates a new MultiGame Frame
+     * @param title title
+     */
     public MultiGameFrame(String title)
     {
         super(title);
@@ -97,6 +107,7 @@ public class MultiGameFrame extends JFrame implements Serializable
 
     /**
      * MultiGame.Game rendering with triple-buffering using BufferStrategy.
+     * @param status status
      */
     public void render(GameStatus status) throws IOException, InterruptedException
     {
@@ -123,6 +134,8 @@ public class MultiGameFrame extends JFrame implements Serializable
 
     /**
      * Rendering all game elements based on the game state.
+     * @param g3d g3d
+     * @param state state
      */
     private void doRendering(Graphics2D g3d, GameStatus state) throws IOException, InterruptedException
     {
@@ -453,6 +466,12 @@ public class MultiGameFrame extends JFrame implements Serializable
 
     }
 
+    /**
+     * rotate image from center of pic
+     * @param sourceImage sourceImage
+     * @param angle angle
+     * @return rotated pic
+     */
     private BufferedImage rotateImage(BufferedImage sourceImage, double angle)
     {
         int width = sourceImage.getWidth();
@@ -468,6 +487,12 @@ public class MultiGameFrame extends JFrame implements Serializable
         return destImage;
     }
 
+    /**
+     * rotate image from x , y  of edge of pic
+     * @param img img
+     * @param angle angle
+     * @return rotated pic
+     */
     public BufferedImage rotateImageBullet(BufferedImage img, double angle) {
 
         double rads = Math.toRadians(angle);
@@ -493,6 +518,11 @@ public class MultiGameFrame extends JFrame implements Serializable
         return rotated;
     }
 
+    /**
+     * draws roads
+     * @param g2d g2d
+     * @throws IOException IOException
+     */
     public void drawRoads(Graphics2D g2d) throws IOException
     {
         g2d.drawImage(theme,5,31,null);

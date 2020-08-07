@@ -32,12 +32,19 @@ public class Main extends JPanel
     private JPanel mul;
     private User user;
 
-
+    /**
+     * set single
+     * @param sing single
+     */
     public void setSing(JPanel sing)
     {
         this.sing = sing;
     }
 
+    /**
+     * set multi
+     * @param mul multi
+     */
     public void setMul(JPanel mul)
     {
         this.mul = mul;
@@ -189,6 +196,9 @@ public class Main extends JPanel
         DMiddle.add(multi);
     }
 
+    /**
+     * this class handles components
+     */
     private class MouseHandler implements MouseListener
     {
 
@@ -421,6 +431,9 @@ public class Main extends JPanel
         }
     }
 
+    /**
+     * this class handles frame
+     */
     private class FrameHandler extends WindowAdapter
     {
         @Override

@@ -29,7 +29,7 @@ public class MapsMulti implements Serializable
 
     /**
      * get the walls of the map
-     * @return
+     * @return walls
      */
     public ArrayList<WallMulti> getWalls()
     {
@@ -68,7 +68,12 @@ public class MapsMulti implements Serializable
 
     }
 
-
+    /**
+     * can put
+     * @param x x
+     * @param y y
+     * @return result
+     */
     public boolean canPut(int x,int y)
     {
         int xx = 0 , yy = 0;

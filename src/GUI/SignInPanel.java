@@ -77,6 +77,10 @@ public class SignInPanel extends JPanel
         }
     }
 
+    /**
+     * sets next panel
+     * @param nex next panel
+     */
     public void setNex (JPanel nex) {
         this.nex = nex;
     }
@@ -207,16 +211,24 @@ public class SignInPanel extends JPanel
         }
     }
 
-
+    /**
+     *
+     * @return isRememberMe selected
+     */
     public boolean isRememberMe ()
     {
         return rememberMe.isSelected ();
     }
 
+    /**
+     * clear username and password
+     */
     public void clear ()
     {
         password.setText ("password");
         username.setText ("username");
+        passwordTyped = false;
+        usernameTyped = false;
         username.setForeground (Color.GRAY);
     }
 
@@ -258,6 +270,9 @@ public class SignInPanel extends JPanel
         }
     }
 
+    /**
+     * this class handles frame
+     */
     private class FrameHandler extends WindowAdapter
     {
         @Override
@@ -306,6 +321,10 @@ public class SignInPanel extends JPanel
         }
     }
 
+    /**
+     * login
+     * @return res
+     */
     private boolean connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1",username.getText (),
@@ -425,6 +444,9 @@ public class SignInPanel extends JPanel
         }
     }
 
+    /**
+     * load remember data
+     */
     private void loadDataForRemember ()
     {
         try (ObjectInputStream in = new ObjectInputStream (new FileInputStream (
@@ -437,6 +459,9 @@ public class SignInPanel extends JPanel
         }
     }
 
+    /**
+     * save remember data
+     */
     private void saveDataForRemember ()
     {
         try (ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (

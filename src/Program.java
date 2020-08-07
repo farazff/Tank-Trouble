@@ -1,20 +1,22 @@
-import GUI.*;
+import GUI.Loading;
 import GUI.MainPage.Main;
+import GUI.SignInPanel;
 import javax.swing.*;
 
-
-public class TestFaraz
+/**
+ * this class connect panel together
+ */
+public class Program
 {
-    public static void main (String[] args)
+    private JFrame frame;
+    private Loading loading;
+
+    /**
+     * creates new Program
+     */
+    public Program ()
     {
-
-        try { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
-            UIManager.setLookAndFeel ("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace ();
-        }
-
-        JFrame frame = new JFrame ();
+        frame = new JFrame ();
         frame.setLocation (40, 40);
         frame.setSize ((720 * 16) / 9, 720);
         frame.setResizable(false);
@@ -24,20 +26,24 @@ public class TestFaraz
         frame.setTitle("Tank Trouble");
 
 
-        Loading loading = new Loading(frame);
+        loading = new Loading(frame);
         SignInPanel signInPanel = new SignInPanel(frame);
-        SignUpPanel signUp = new SignUpPanel(frame,signInPanel);
         Main main = new Main (frame);
         main.setPre (signInPanel);
-
-
         loading.setNex(signInPanel);
         signInPanel.setNex(main);
 
 
         frame.setContentPane(loading);
-        frame.setVisible(true);
-        loading.fill();
 
+    }
+
+    /**
+     * starts program
+     */
+    public void start ()
+    {
+        frame.setVisible (true);
+        loading.fill ();
     }
 }

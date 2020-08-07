@@ -14,7 +14,16 @@ import javax.swing.JFrame;
  */
 public class Starting
 {
-
+	/**
+	 * creates single game starting
+	 * @param menuFrame menuFrame
+	 * @param level level
+	 * @param tankStamina tankStamina
+	 * @param canonPower canonPower
+	 * @param wallStamina wallStamina
+	 * @param user user
+	 * @param type type
+	 */
 	public Starting(JFrame menuFrame, int level, int tankStamina, int canonPower, int wallStamina,
 					User user , int type)
 	{

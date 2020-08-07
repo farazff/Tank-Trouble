@@ -1,19 +1,22 @@
 package GUI;
 
 import GameData.User;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 
-
+/**
+ * this panel is for ranking of players
+ */
 public class ListOfUsers extends JPanel
 {
 
 
-
+    /**
+     * creates list of players
+     * @param users users
+     */
     public ListOfUsers (ArrayList<User> users)
     {
         setBackground (Color.GRAY);
@@ -61,6 +64,13 @@ public class ListOfUsers extends JPanel
         }
     }
 
+    /**
+     * change elements in quick sort Algorithm
+     * @param arr arr
+     * @param low low
+     * @param high high
+     * @return last index
+     */
     private int part(User[] arr, int low,int high)
     {
         int pivot = arr[high].getNumOfWinMultiGames (), i = (low-1);
@@ -82,6 +92,12 @@ public class ListOfUsers extends JPanel
         return i;
     }
 
+    /**
+     * quick sort Algorithm
+     * @param arr arr
+     * @param low low
+     * @param high high
+     */
     private void sort(User[] arr, int low,int high)
     {
         if (low < high)

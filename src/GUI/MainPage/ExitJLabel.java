@@ -23,11 +23,11 @@ public class ExitJLabel extends JLabel
 
     /**
      * the constructor of the xit button
-     * @param text
-     * @param x
-     * @param y
-     * @param x1
-     * @param y1
+     * @param text text
+     * @param x x
+     * @param y y
+     * @param x1 x1
+     * @param y1 y1
      */
     public ExitJLabel(String text,int[] x,int []y , int x1[] , int[] y1)
     {
@@ -40,6 +40,7 @@ public class ExitJLabel extends JLabel
         this.y1 = y1;
     }
 
+    @Override
     public void paintComponent(Graphics g)
     {
 

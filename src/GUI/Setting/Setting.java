@@ -324,7 +324,9 @@ public class Setting extends JPanel
         left.add(server);
     }
 
-
+    /**
+     * this class handles Components
+     */
     private class MouseHandler implements MouseListener
     {
 
@@ -631,13 +633,19 @@ public class Setting extends JPanel
         }
     }
 
+    /**
+     * connect to save server
+     */
     private void connect ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
         new Thread (logConnector).start ();
     }
 
-
+    /**
+     * connect to list Server
+     * @return list of Users
+     */
     private UsersStorage connectForUserStorage ()
     {
         LogConnector logConnector = new LogConnector ("127.0.0.1");

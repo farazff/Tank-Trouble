@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * this class have al of the info of a tank and updates it in every frame
+ * this class have all of the info of a tank and updates it in every frame
  */
 
 public class Tank implements Runnable
@@ -196,6 +196,10 @@ public class Tank implements Runnable
         return width;
     }
 
+    /**
+     * loose stamina
+     * @param damage damage
+     */
     public void looseStamina (int damage) {
         if (!hasProtection)
             stamina -= damage;
@@ -245,18 +249,30 @@ public class Tank implements Runnable
         return locY + height / 2 - 2;
     }
 
+    /**
+     *
+     * @return get CanonStartX
+     */
     public int getCanonStartX () {
 
         return getCenterX () +
                 ((int) (Math.sqrt (968) * Math.cos (Math.toRadians (degree))));
     }
 
+    /**
+     *
+     * @return get CanonStartY
+     */
     public int getCanonStartY () {
         return getCenterY () +
                 ((int) (Math.sqrt (968) * Math.sin (Math.toRadians (degree))));
     }
 
 
+    /**
+     *
+     * @return get ImageAddress
+     */
     public String getImageAddress () {
         return imageAddress;
     }
@@ -309,6 +325,10 @@ public class Tank implements Runnable
         locY += adder;
     }
 
+    /**
+     *
+     * @return get Stamina
+     */
     public int getStamina () {
         return stamina;
     }
@@ -727,10 +747,18 @@ public class Tank implements Runnable
         return fireDestroyed;
     }
 
+    /**
+     *
+     * @return is Destroyed
+     */
     public boolean isDestroyed () {
         return destroyed;
     }
 
+    /**
+     *
+     * @return is Shot
+     */
     public boolean isShot () {
         return shot;
     }
@@ -759,14 +787,26 @@ public class Tank implements Runnable
         this.canShot = canShot;
     }
 
+    /**
+     * set shot
+     * @param shot shot
+     */
     public void setShot (boolean shot) {
         this.shot = shot;
     }
 
+    /**
+     *
+     * @return get TankImage
+     */
     public  BufferedImage getTankImage () {
         return tankImage;
     }
 
+    /**
+     *
+     * @return get FireDestroyImage
+     */
     public static BufferedImage getFireDestroyImage () {
         return fireDestroyImage;
     }
@@ -779,6 +819,9 @@ public class Tank implements Runnable
         return fireImage;
     }
 
+    /**
+     * this class handles components
+     */
     protected class KeyHandler extends KeyAdapter {
 
         @Override
@@ -866,6 +909,10 @@ public class Tank implements Runnable
         }
     }
 
+    /**
+     *
+     * @return get CanonPower
+     */
     public int getCanonPower() {
         return canonPower;
     }

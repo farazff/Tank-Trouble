@@ -16,6 +16,10 @@ public class PictureJLabel extends JPanel
 
     private BufferedImage image;
 
+    /**
+     * creates a picture JLabel
+     * @param address address
+     */
     public PictureJLabel(String address)
     {
         try

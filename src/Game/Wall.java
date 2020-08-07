@@ -88,6 +88,10 @@ public class Wall
     }
 
 
+    /**
+     *
+     * @return get Thick
+     */
     public int getThick ()
     {
         return 10;
@@ -111,6 +115,10 @@ public class Wall
         return destructible;
     }
 
+    /**
+     *
+     * @return is wall OK ?
+     */
     public boolean isOK()
     {
         return isOK;

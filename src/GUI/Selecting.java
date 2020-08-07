@@ -1,13 +1,11 @@
 package GUI;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -83,6 +81,10 @@ public class Selecting extends JPanel
         add(up);
     }
 
+    /**
+     *
+     * @return current value
+     */
     public String getCurrentValue()
     {
         return currentValue;

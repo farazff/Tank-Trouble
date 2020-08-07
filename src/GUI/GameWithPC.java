@@ -178,6 +178,9 @@ public class GameWithPC extends JPanel
         }
     }
 
+    /**
+     * this class handles Components
+     */
     public class MouseHandler implements MouseMotionListener , MouseListener
     {
 

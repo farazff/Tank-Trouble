@@ -88,6 +88,10 @@ public class GameFrame extends JFrame
 
 	/**
 	 * MultiGame rendering with triple-buffering using BufferStrategy.
+	 * @param kills kills
+	 * @param state state
+	 * @param user user
+	 * @throws IOException IOException
 	 */
 	public void render(GameState state,int[] kills, User user) throws IOException
 	{
@@ -125,6 +129,11 @@ public class GameFrame extends JFrame
 
 	/**
 	 * Rendering all game elements based on the game state.
+	 * @param user user
+	 * @param state state
+	 * @param kills kills
+	 * @param g2d g2d
+	 * @throws IOException IOException
 	 */
 	private void doRendering(Graphics2D g2d, GameState state, int[] kills, User user) throws IOException
 	{

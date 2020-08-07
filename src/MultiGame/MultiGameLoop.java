@@ -15,7 +15,9 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 
-
+/**
+ * this is Multi Game Loop
+ */
 public class MultiGameLoop implements Runnable
 {
 
@@ -29,6 +31,11 @@ public class MultiGameLoop implements Runnable
     private User user;
 
 
+    /**
+     * creates new Multi game loop
+     * @param frame frame
+     * @param menuFrame menuFrame
+     */
     public MultiGameLoop(MultiGameFrame frame , JFrame menuFrame)
     {
         moveTranslator = new MoveTranslator();
@@ -40,6 +47,9 @@ public class MultiGameLoop implements Runnable
 
     /**
      * This must be called before the game loop starts.
+     * @param user user
+     * @param port port
+     * @param ip ip
      */
     public void init(String ip, int port, User user)
     {

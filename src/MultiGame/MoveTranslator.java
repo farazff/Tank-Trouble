@@ -4,6 +4,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import MultiGame.*;
 
+/**
+ * this class is for change keyBoard to a String like "00100"
+ * first bit is KeyUp
+ * second bit is keyDown
+ * third bit is left
+ * 4th bit is right
+ * 5th bit is shot
+ */
 public class MoveTranslator
 {
     private String commandString;
@@ -11,6 +19,9 @@ public class MoveTranslator
     private boolean shot;
     private KeyListener keyListener;
 
+    /**
+     * creates a new MoveTranslator
+     */
     public MoveTranslator ()
     {
         commandString = "00000";
@@ -22,14 +33,25 @@ public class MoveTranslator
         keyListener = new KeyHandler ();
     }
 
+    /**
+     *
+     * @return KeyListener
+     */
     public KeyListener getKeyListener () {
         return keyListener;
     }
 
+    /**
+     *
+     * @return CommandString
+     */
     public String getCommandString () {
         return commandString;
     }
 
+    /**
+     * translate key board to String
+     */
     private void translate ()
     {
         StringBuilder stringBuilder = new StringBuilder ();
@@ -70,7 +92,9 @@ public class MoveTranslator
         commandString = stringBuilder.toString ();
     }
 
-
+    /**
+     * this class catch keyboard
+     */
     private class KeyHandler extends KeyAdapter {
 
         @Override

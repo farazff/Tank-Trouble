@@ -10,6 +10,10 @@ import java.awt.geom.Line2D;
 
 public class ColorJLabel extends JLabel
 {
+    /**
+     * creates color JLabel
+     * @param text text
+     */
     public ColorJLabel(String text)
     {
         super(text);

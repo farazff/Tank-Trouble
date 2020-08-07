@@ -63,6 +63,7 @@ public class GameLoop implements Runnable
 
 	/**
 	 * This must be called before the game loop starts.
+	 * @param user user
 	 */
 	public void init(User user)
 	{
