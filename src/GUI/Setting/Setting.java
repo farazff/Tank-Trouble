@@ -7,15 +7,11 @@ import GUI.Music;
 import GUI.PictureJLabel;
 import GameData.User;
 import Login_SignUp_Logout.LogConnector;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -46,6 +42,7 @@ public class Setting extends JPanel
     private PictureJLabel pictureJLabel = new PictureJLabel("Images/Setting.jpg");
     private ColorJLabel userInfo;
     private ColorJLabel tank;
+    private ColorJLabel rank;
     private ColorJLabel defaults;
     private ColorJLabel server;
     private JPanel userInfoPanel;
@@ -90,19 +87,7 @@ public class Setting extends JPanel
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
         this.user = user;
-        File file = new File("Files/Code/Code.txt");
-        try
-        {
-            FileReader fileReader = new FileReader(file);
-            code = fileReader.read()-48;
-            System.out.println("code: " + code);
-            user.setTankCode(code);
-            fileReader.close();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
+        code = user.getTankCode();
         createLeft();
         createMain();
     }
@@ -300,6 +285,9 @@ public class Setting extends JPanel
         defaults = new ColorJLabel("    Defaults");
         defaults.addMouseListener(mouse);
 
+        rank = new ColorJLabel("    Rankings");
+        rank.addMouseListener(mouse);
+
         server = new ColorJLabel("    ServerInformation");
         server.addMouseListener(mouse);
 
@@ -307,6 +295,7 @@ public class Setting extends JPanel
         left.add(userInfo);
         left.add(tank);
         left.add(defaults);
+        left.add(rank);
         left.add(server);
     }
 
@@ -332,17 +321,8 @@ public class Setting extends JPanel
             if(e.getSource().equals(s))
             {
                 user.setTankCode(code);
-                File file = new File("Files/Code/Code.txt");
-                try
-                {
-                    FileWriter fileWriter = new FileWriter(file);
-                    fileWriter.write(code+48);
-                    fileWriter.close();
-                }
-                catch(IOException e1)
-                {
-                    e1.printStackTrace();
-                }
+                System.out.println(user.getTankCode());
+                connect();
             }
 
             if(e.getSource().equals(back1))
@@ -362,8 +342,31 @@ public class Setting extends JPanel
                 pictureJLabel1.changeImage("Images/Tanks/"+ code +".png");
             }
 
+
+            if(e.getSource().equals(rank))
+            {
+                rank.setBackground(new Color(78,35,78));
+                userInfo.setBackground(new Color(163,73,164));
+                tank.setBackground(new Color(163,73,164));
+                defaults.setBackground(new Color(163,73,164));
+                server.setBackground(new Color(163,73,164));
+                Music music = new Music();
+                music.execute();
+                getPanel().remove(pictureJLabel);
+                getPanel().remove(defaultsPanel);
+                getPanel().remove(userInfoPanel);
+                getPanel().remove(tankPanel);
+                getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next 2 lines
+                //getPanel().remove(your panel);
+                //getPanel().add(your panel , BorderLayout.CENTER);
+                getPanel().setVisible(false);
+                getPanel().setVisible(true);
+            }
+
             if(e.getSource().equals(tank))
             {
+                rank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(163,73,164));
                 tank.setBackground(new Color(78,35,78));
                 defaults.setBackground(new Color(163,73,164));
@@ -375,12 +378,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(tankPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(userInfo))
             {
+                rank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(163,73,164));
@@ -392,12 +398,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(defaults))
             {
+                rank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(163,73,164));
@@ -409,12 +418,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(server))
             {
+                rank.setBackground(new Color(163,73,164));
                 server.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(163,73,164));
@@ -426,6 +438,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(serversListPanelInSetting,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);

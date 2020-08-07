@@ -14,6 +14,7 @@ public class ColorJLabel extends JLabel
     {
         super(text);
         this.setBackground(new Color(163,73,164));
+        this.setForeground(Color.WHITE);
         this.setOpaque(true);
         this.setFont(new Font("Arial",Font.BOLD,20));
     }
