@@ -34,6 +34,10 @@ public class CreateNewServer extends JPanel
 
     /**
      * creates new sign up panel
+     * @param pre pre
+     * @param user user
+     * @param frame frame
+     * @param serverListPanel serverListPanel
      */
     public CreateNewServer(JFrame frame, ServerListPanel serverListPanel, JPanel pre, User user)
     {

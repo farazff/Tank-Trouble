@@ -44,6 +44,7 @@ public class MultiGamePanel extends JPanel
      * creates a new MultiGame panel
      * @param frame frame
      * @param user user
+     * @param pre pre
      */
     public MultiGamePanel (JFrame frame, User user, JPanel pre)
     {

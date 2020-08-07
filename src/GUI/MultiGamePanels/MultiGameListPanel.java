@@ -29,6 +29,7 @@ public class MultiGameListPanel extends JPanel
      * @param mainPanel mainPanel
      * @param frame frame
      * @param user user
+     * @param main main
      */
     public MultiGameListPanel (ArrayList<MultiGame> multiGames,MultiGamePanel mainPanel, JFrame frame,
                                User user, JPanel main)

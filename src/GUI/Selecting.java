@@ -33,6 +33,10 @@ public class Selecting extends JPanel
     /**
      * constructor of the class
      * @param data the array list containing the choices of that data
+     * @param backGround backGround
+     * @param dataCounter dataCounter
+     * @param font font
+     * @param middlePart middlePart
      */
     public Selecting(ArrayList<String> data , int dataCounter , Color backGround , Color middlePart , Font font)
     {

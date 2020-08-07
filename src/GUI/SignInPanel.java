@@ -43,6 +43,7 @@ public class SignInPanel extends JPanel
 
     /**
      * creates new SignInPanel
+     * @param frame frame
      */
     public SignInPanel (JFrame frame)
     {

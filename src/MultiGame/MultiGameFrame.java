@@ -108,6 +108,8 @@ public class MultiGameFrame extends JFrame implements Serializable
     /**
      * MultiGame.Game rendering with triple-buffering using BufferStrategy.
      * @param status status
+     * @throws IOException IOException
+     * @throws  InterruptedException InterruptedException
      */
     public void render(GameStatus status) throws IOException, InterruptedException
     {

@@ -27,6 +27,7 @@ public class MultiGameButtonPanel extends JPanel
      * @param mainPanel mainPanel
      * @param frame frame
      * @param user user
+     * @param main main
      */
     public MultiGameButtonPanel (MultiGame multiGame, MultiGamePanel mainPanel, JFrame frame, User user,
                                  JPanel main)

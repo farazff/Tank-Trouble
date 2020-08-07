@@ -32,6 +32,7 @@ public class ServerListPanel extends JPanel
      * @param mainPanel mainPanel
      * @param frame frame
      * @param user user
+     * @param main main
      */
     public ServerListPanel (MultiGamePanel mainPanel,
                             JFrame frame, User user, JPanel main)

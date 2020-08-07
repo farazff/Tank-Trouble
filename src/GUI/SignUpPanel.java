@@ -36,6 +36,8 @@ public class SignUpPanel extends JPanel
 
     /**
      * creates new sign up panel
+     * @param frame frame
+     * @param signIn signIn
      */
     public SignUpPanel(JFrame frame,JPanel signIn)
     {

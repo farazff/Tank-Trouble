@@ -27,6 +27,7 @@ public class ServerButtonPanel extends JPanel {
      * @param mainPanel mainPanel
      * @param frame frame
      * @param user user
+     * @param main main
      */
     public ServerButtonPanel (ServerInformation serverInformation, MultiGamePanel mainPanel,
                               JFrame frame, User user, JPanel main)

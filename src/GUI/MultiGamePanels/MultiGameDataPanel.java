@@ -36,6 +36,7 @@ public class MultiGameDataPanel extends JPanel
      * @param multiGame multiGame
      * @param frame frame
      * @param user user
+     * @param main main
      */
     public MultiGameDataPanel (MultiGame multiGame, JFrame frame, User user, JPanel main)
     {

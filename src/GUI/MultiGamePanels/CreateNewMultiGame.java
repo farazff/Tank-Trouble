@@ -47,6 +47,10 @@ public class CreateNewMultiGame extends JPanel
 
     /**
      * create a new game panel
+     * @param frame frame
+     * @param user user
+     * @param pre pre
+     * @param owner owner
      */
     public CreateNewMultiGame (ServerButtonPanel owner, JFrame frame, JPanel pre, User user)
     {
