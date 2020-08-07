@@ -1,5 +1,6 @@
 package GUI.Setting;
 
+import GUI.ListOfUsers;
 import GUI.MultiGamePanels.CreateNewServer;
 import GUI.MultiGamePanels.ServerButtonPanel;
 import GUI.MultiGamePanels.ServerListPanel;
@@ -9,9 +10,12 @@ import GameData.User;
 import GameData.UsersStorage;
 import Login_SignUp_Logout.LogConnector;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -48,7 +52,7 @@ public class Setting extends JPanel
     private JPanel userInfoPanel;
     private JPanel tankPanel;
     private JPanel defaultsPanel;
-    private JPanel ListOfUsers;
+    private JScrollPane listOfUsers;
     private JPanel serversListPanelInSetting;
     private JPanel serverListPanel;
     private JLabel next1;
@@ -387,9 +391,16 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
-                //Todo uncomment next 2 lines
-                //getPanel().remove(your panel);
-                //getPanel().add(your panel , BorderLayout.CENTER);
+                if (listOfUsers != null)
+                    getPanel ().remove (listOfUsers);
+                listOfUsers = new JScrollPane
+                        (new ListOfUsers (connectForUserStorage ().getUsers ()),
+                                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                listOfUsers.getVerticalScrollBar ().setPreferredSize (new Dimension (3,5));
+                listOfUsers.setBackground (Color.GRAY);
+                listOfUsers.setBorder (new LineBorder (Color.GRAY,2,true));
+                getPanel().add(listOfUsers, BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
@@ -408,8 +419,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
-                //Todo uncomment next line
-                //getPanel().remove(your panel);
+                if (listOfUsers != null)
+                    getPanel ().remove (listOfUsers);
                 getPanel().add(tankPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -428,8 +439,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
-                //Todo uncomment next line
-                //getPanel().remove(your panel);
+                if (listOfUsers != null)
+                    getPanel ().remove (listOfUsers);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -448,8 +459,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
-                //Todo uncomment next line
-                //getPanel().remove(your panel);
+                if (listOfUsers != null)
+                    getPanel ().remove (listOfUsers);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -468,8 +479,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
-                //Todo uncomment next line
-                //getPanel().remove(your panel);
+                if (listOfUsers != null)
+                    getPanel ().remove (listOfUsers);
                 getPanel().add(serversListPanelInSetting,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -489,6 +500,7 @@ public class Setting extends JPanel
                 user.setDefaultTankStamina (sliderTank.getValue ());
                 user.setDefaultCanonPower (sliderCanon.getValue ());
                 user.setDefaultWallStamina (sliderWall.getValue ());
+                connect ();
             }
             if(e.getSource().equals(back))
             {
