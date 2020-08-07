@@ -159,7 +159,7 @@ public class Setting extends JPanel
         tankPanel.setBackground(Color.GRAY);
         tankPanel.setOpaque(true);
 
-        JLabel text1 = new JLabel("Select you Tank : ",JLabel.CENTER);
+        JLabel text1 = new JLabel("Select your Tank : ",JLabel.CENTER);
         text1.setFont(new Font("Arial",Font.BOLD,30));
         tankPanel.add(text1);
 
