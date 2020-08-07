@@ -4,9 +4,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
-
+/**
+ * this class generates random map
+ */
 public class MapGeneratorMulti
 {
+    /**
+     * generate random map
+     */
    public MapGeneratorMulti()
     {
         try
