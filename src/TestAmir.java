@@ -1,3 +1,4 @@
+import GUI.ListOfUsers;
 import GameData.ServerInformationStorage;
 import GameData.User;
 import MultiGame.*;
@@ -5,19 +6,24 @@ import Game.ThreadPool;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class TestAmir {
     public static void main (String[] args) {
 
-//        try { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
-//            UIManager.setLookAndFeel ("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//        } catch (Exception e) {
-//            e.printStackTrace ();
-//        }
-//
-//        JFrame multiGameFrame = new JFrame ();
-//        multiGameFrame.setLocation (0, 0);
-//        multiGameFrame.setSize ((720 * 16) / 9, 720);
+        try { // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
+            UIManager.setLookAndFeel ("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
+
+        JFrame multiGameFrame = new JFrame ();
+        multiGameFrame.setLocation (0, 0);
+        multiGameFrame.setSize ((720 * 16) / 9, 720);
 //
 //
 //        ArrayList<MultiGame> multiGames = new ArrayList<> ();
@@ -75,29 +81,52 @@ public class TestAmir {
 //        multiGameFrame.setVisible(true);
 ////        loading.fill();
 
+//
+//        ThreadPool.init();
+//
+//        EventQueue.invokeLater(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                MultiGameFrame frame = null;
+//                frame = new MultiGameFrame ("Client Sideup!");
+//                frame.setLocationRelativeTo(null);
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setVisible(true);
+//                frame.initBufferStrategy();
+//                User user = new User ("Amir",new char[]{'A','0','1','2','3','2','1','1'},
+//                        new ServerInformationStorage ());
+//                MultiGameLoop game = new MultiGameLoop (frame,null);
+//                game.init("127.0.0.1",8080, user);
+//                ThreadPool.execute(game);
+//            }
+//        });
+//
+//    }
 
-        ThreadPool.init();
 
-        EventQueue.invokeLater(new Runnable()
+
+
+        ServerInformationStorage serverInformationStorage = new ServerInformationStorage ();
+        ArrayList<User> users = new ArrayList<> ();
+
+        for (int i = 0; i < 32; i++)
         {
-            @Override
-            public void run()
-            {
-                MultiGameFrame frame = null;
-                frame = new MultiGameFrame ("Client Sideup!");
-                frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-                frame.initBufferStrategy();
-                User user = new User ("Amir",new char[]{'A','0','1','2','3','2','1','1'},
-                        new ServerInformationStorage ());
-                MultiGameLoop game = new MultiGameLoop (frame,null);
-                game.init("127.0.0.1",8080, user);
-                ThreadPool.execute(game);
-            }
-        });
+            User user = new User ("Amir" + i * i,
+                    new char[]{'1'},serverInformationStorage);
+            user.setNumOfWinMultiGames (new SecureRandom ().nextInt (200));
+            users.add (user);
+        }
+
+
+        ListOfUsers listOfUsers = new ListOfUsers (users);
+
+        JPanel panel = new JPanel (new BorderLayout ());
+        panel.add (listOfUsers,BorderLayout.CENTER);
+        multiGameFrame.setContentPane (new JScrollPane (panel));
+        multiGameFrame.setVisible (true);
 
     }
-
 
 }

@@ -3,6 +3,7 @@ package Login_SignUp_Logout;
 
 
 import GameData.User;
+import GameData.UsersStorage;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -23,7 +24,18 @@ public class LogConnector implements Runnable
     private String username;
     private char[] password;
     private String res = "Error";
+    private UsersStorage usersStorage;
     private boolean finished = false;
+
+    /**
+     * create a UserStorage process
+     * @param ip ip
+     */
+    public LogConnector (String ip)
+    {
+        this.ip = ip;
+        this.port = 6050;
+    }
 
     /**
      * creates a login or signUp process
@@ -77,8 +89,7 @@ public class LogConnector implements Runnable
                 ((DataOutputStream) out).writeUTF (data);
                 out.flush ();
                 System.out.println ("-> data sent to ServerInformation : " +
-                        port + ((port == 8083)? " (Load ServerInformation) " :
-                        " (Save ServerInformation) "));
+                        port + getServerName (port));
 
                 // receive
 
@@ -86,8 +97,7 @@ public class LogConnector implements Runnable
                 user = (User) ((ObjectInputStream) in).readObject ();
 
                 System.out.println ("<- data received from ServerInformation : " +
-                        port + ((port == 8083)? " (Load ServerInformation) " :
-                        " (Save ServerInformation) "));
+                        port + getServerName (port));
 
 
             } else if (port == 4787)
@@ -97,15 +107,27 @@ public class LogConnector implements Runnable
                 ((ObjectOutputStream) out).writeObject (user);
                 out.flush ();
                 System.out.println ("-> data sent to ServerInformation : " +
-                        port + ((port == 8083)? " (Load ServerInformation) " :
-                        " (Save ServerInformation) "));
+                        port + getServerName (port));
 
                 // receive
                 in = new DataInputStream (connection.getInputStream ());
                 res = ((DataInputStream) in).readUTF ();
                 System.out.println ("<- data received from ServerInformation : " +
-                        port + ((port == 8083)? " (Load ServerInformation) " :
-                        " (Save ServerInformation) "));
+                        port + getServerName (port));
+            } else if (port == 6050)
+            {
+                // send
+                out = new DataOutputStream (connection.getOutputStream ());
+                ((DataOutputStream) out).writeUTF ("list");
+                out.flush ();
+                System.out.println ("-> data sent to ServerInformation : " +
+                        port + getServerName (port));
+
+                // receive
+                in = new ObjectInputStream (connection.getInputStream ());
+                usersStorage = (UsersStorage) ((ObjectInputStream) in).readObject ();
+                System.out.println ("<- data received from ServerInformation : " +
+                        port + getServerName (port));
             }
 
         } catch (IllegalArgumentException e)
@@ -191,9 +213,41 @@ public class LogConnector implements Runnable
 
     /**
      *
+     * @return userStorage
+     */
+    public UsersStorage getUsersStorage ()
+    {
+        if (finished)
+        {
+            if (port == 6050)
+                return usersStorage;
+            else
+                return null;
+        }
+        return null;
+    }
+
+    /**
+     *
      * @return is Finished
      */
     public boolean isFinished () {
         return finished;
+    }
+
+    /**
+     * gets server's name depend on port
+     * @param port port
+     * @return name of server
+     */
+    private String getServerName (int port)
+    {
+        switch (port)
+        {
+            case 8083 : return " (Load Server) ";
+            case 4787 : return " (Save Server) ";
+            case 6050 : return " (List Server) ";
+        }
+        return "";
     }
 }

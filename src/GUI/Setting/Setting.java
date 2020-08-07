@@ -6,6 +6,7 @@ import GUI.MultiGamePanels.ServerListPanel;
 import GUI.Music;
 import GUI.PictureJLabel;
 import GameData.User;
+import GameData.UsersStorage;
 import Login_SignUp_Logout.LogConnector;
 
 import javax.swing.*;
@@ -51,6 +52,7 @@ public class Setting extends JPanel
     private JPanel userInfoPanel;
     private JPanel tankPanel;
     private JPanel defaultsPanel;
+    private JPanel ListOfUsers;
     private JPanel serversListPanelInSetting;
     private JPanel serverListPanel;
     private JButton next1;
@@ -592,4 +594,10 @@ public class Setting extends JPanel
     }
 
 
+    private UsersStorage connectForUserStorage ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1");
+        logConnector.run ();
+        return logConnector.getUsersStorage ();
+    }
 }
