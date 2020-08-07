@@ -14,6 +14,7 @@ public class ColorJLabel extends JLabel
     {
         super(text);
         this.setBackground(new Color(163,73,164));
+        this.setForeground(Color.WHITE);
         this.setOpaque(true);
         this.setFont(new Font("Arial",Font.BOLD,20));
     }
@@ -27,8 +28,8 @@ public class ColorJLabel extends JLabel
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(4));
-        g2d.setPaint(Color.BLUE);
+        g2d.setStroke(new BasicStroke(10));
+        g2d.setPaint(new Color(90,90,90));
         g2d.draw(new Line2D.Double(2,0,2,this.getHeight()));
     }
 }

@@ -8,15 +8,10 @@ import GUI.PictureJLabel;
 import GameData.User;
 import GameData.UsersStorage;
 import Login_SignUp_Logout.LogConnector;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -25,7 +20,7 @@ import java.util.Arrays;
 
 public class Setting extends JPanel
 {
-    private ColorJLabel temp = null;
+    private JLabel temp = null;
     private int code;
     public JPanel getPanel()
     {
@@ -47,6 +42,7 @@ public class Setting extends JPanel
     private PictureJLabel pictureJLabel = new PictureJLabel("Images/Setting.jpg");
     private ColorJLabel userInfo;
     private ColorJLabel tank;
+    private ColorJLabel rank;
     private ColorJLabel defaults;
     private ColorJLabel server;
     private JPanel userInfoPanel;
@@ -55,7 +51,7 @@ public class Setting extends JPanel
     private JPanel ListOfUsers;
     private JPanel serversListPanelInSetting;
     private JPanel serverListPanel;
-    private JButton next1;
+    private JLabel next1;
     private JLabel back1;
     private JSlider sliderTank = new JSlider(10,100,100);
     private JPanel tempTank;
@@ -70,7 +66,7 @@ public class Setting extends JPanel
     private JButton removeServer;
     private MouseHandler mouse = new MouseHandler();
     private PictureJLabel pictureJLabel1;
-    private JButton s;
+    private JLabel s;
 
     /**
      * the constructor of the setting
@@ -92,19 +88,7 @@ public class Setting extends JPanel
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(800,600));
         this.user = user;
-        File file = new File("Files/Code/Code.txt");
-        try
-        {
-            FileReader fileReader = new FileReader(file);
-            code = fileReader.read()-48;
-            System.out.println("code: " + code);
-            user.setTankCode(code);
-            fileReader.close();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
+        code = user.getTankCode();
         createLeft();
         createMain();
     }
@@ -172,31 +156,51 @@ public class Setting extends JPanel
         ////////////////////////////////////////
         ////////////////////////////////////////
 
-        tankPanel = new JPanel(new BorderLayout());
+        tankPanel = new JPanel(new GridLayout(3,1,5,100));
         tankPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,7));
         tankPanel.setBackground(Color.GRAY);
         tankPanel.setOpaque(true);
 
-        JLabel text1 = new JLabel("Select you Tank : ");
-        tankPanel.add(text1,BorderLayout.NORTH);
+        JLabel text1 = new JLabel("Select your Tank : ",JLabel.CENTER);
+        text1.setFont(new Font("Arial",Font.BOLD,30));
+        tankPanel.add(text1);
 
-        s = new JButton("Save");
-        tankPanel.add(s,BorderLayout.SOUTH);
-        s.addMouseListener(mouse);
 
-        JPanel center1 = new JPanel(new GridLayout(1,3,5,5));
-        back1 = new JLabel("<");
+        JPanel center1 = new JPanel(new FlowLayout(FlowLayout.CENTER,50,5));
+        center1.setOpaque(false);
+        back1 = new JLabel("<",JLabel.CENTER);
+        back1.setFont(new Font("Arial",Font.BOLD,25));
+        back1.setPreferredSize(new Dimension(100,50));
         back1.setOpaque(true);
-        back1.setBackground(Color.RED);
-        next1 = new JButton(">");
+        back1.setBackground(Color.GREEN);
+
+        next1 = new JLabel(">",JLabel.CENTER);
+        next1.setFont(new Font("Arial",Font.BOLD,25));
+        next1.setPreferredSize(new Dimension(100,50));
+        next1.setOpaque(true);
+        next1.setBackground(Color.GREEN);
+
         back1.addMouseListener(mouse);
         next1.addMouseListener(mouse);
-        tankPanel.add(center1,BorderLayout.CENTER);
+        tankPanel.add(center1);
         center1.add(back1);
         pictureJLabel1 = new PictureJLabel("Images/Tanks/"+ code +".png");
+        pictureJLabel1.setPreferredSize(new Dimension(150,150));
         center1.add(pictureJLabel1);
         center1.add(next1);
 
+
+        s = new JLabel("Save",JLabel.CENTER);
+        s.setOpaque(true);
+        s.setPreferredSize(new Dimension(280,80));
+        s.setBackground(new Color(141,63,141));
+        s.setFont(new Font("Arial",Font.PLAIN,30));
+        s.setForeground(Color.WHITE);
+        JPanel temp1 = new JPanel(new FlowLayout());
+        temp1.add(s);
+        temp1.setOpaque(false);
+        tankPanel.add(temp1);
+        s.addMouseListener(mouse);
 
 
         ////////////////////////////////////////
@@ -302,6 +306,9 @@ public class Setting extends JPanel
         defaults = new ColorJLabel("    Defaults");
         defaults.addMouseListener(mouse);
 
+        rank = new ColorJLabel("    Rankings");
+        rank.addMouseListener(mouse);
+
         server = new ColorJLabel("    ServerInformation");
         server.addMouseListener(mouse);
 
@@ -309,6 +316,7 @@ public class Setting extends JPanel
         left.add(userInfo);
         left.add(tank);
         left.add(defaults);
+        left.add(rank);
         left.add(server);
     }
 
@@ -325,7 +333,10 @@ public class Setting extends JPanel
         @Override
         public void mousePressed(MouseEvent e)
         {
-
+            if(e.getSource().equals(s))
+            {
+                s.setBackground(new Color(90,90,90));
+            }
         }
 
         @Override
@@ -333,22 +344,18 @@ public class Setting extends JPanel
         {
             if(e.getSource().equals(s))
             {
+                Music music = new Music();
+                music.execute();
+                s.setBackground(new Color(63,29,63));
                 user.setTankCode(code);
-                File file = new File("Files/Code/Code.txt");
-                try
-                {
-                    FileWriter fileWriter = new FileWriter(file);
-                    fileWriter.write(code+48);
-                    fileWriter.close();
-                }
-                catch(IOException e1)
-                {
-                    e1.printStackTrace();
-                }
+                System.out.println(user.getTankCode());
+                connect();
             }
 
             if(e.getSource().equals(back1))
             {
+                Music music = new Music();
+                music.execute();
                 code--;
                 if(code==0)
                     code = 5;
@@ -357,15 +364,39 @@ public class Setting extends JPanel
 
             if(e.getSource().equals(next1))
             {
+                Music music = new Music();
+                music.execute();
                 code++;
                 if(code==6)
                     code = 1;
-                System.out.println(code);
                 pictureJLabel1.changeImage("Images/Tanks/"+ code +".png");
+            }
+
+
+            if(e.getSource().equals(rank))
+            {
+                rank.setBackground(new Color(78,35,78));
+                userInfo.setBackground(new Color(163,73,164));
+                tank.setBackground(new Color(163,73,164));
+                defaults.setBackground(new Color(163,73,164));
+                server.setBackground(new Color(163,73,164));
+                Music music = new Music();
+                music.execute();
+                getPanel().remove(pictureJLabel);
+                getPanel().remove(defaultsPanel);
+                getPanel().remove(userInfoPanel);
+                getPanel().remove(tankPanel);
+                getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next 2 lines
+                //getPanel().remove(your panel);
+                //getPanel().add(your panel , BorderLayout.CENTER);
+                getPanel().setVisible(false);
+                getPanel().setVisible(true);
             }
 
             if(e.getSource().equals(tank))
             {
+                rank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(163,73,164));
                 tank.setBackground(new Color(78,35,78));
                 defaults.setBackground(new Color(163,73,164));
@@ -377,12 +408,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(tankPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(userInfo))
             {
+                rank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(163,73,164));
@@ -394,12 +428,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(userInfoPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(defaults))
             {
+                rank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 userInfo.setBackground(new Color(163,73,164));
@@ -411,12 +448,15 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(defaultsPanel,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
             }
             if(e.getSource().equals(server))
             {
+                rank.setBackground(new Color(163,73,164));
                 server.setBackground(new Color(78,35,78));
                 tank.setBackground(new Color(163,73,164));
                 defaults.setBackground(new Color(163,73,164));
@@ -428,6 +468,8 @@ public class Setting extends JPanel
                 getPanel().remove(userInfoPanel);
                 getPanel().remove(tankPanel);
                 getPanel ().remove (serversListPanelInSetting);
+                //Todo uncomment next line
+                //getPanel().remove(your panel);
                 getPanel().add(serversListPanelInSetting,BorderLayout.CENTER);
                 getPanel().setVisible(false);
                 getPanel().setVisible(true);
@@ -499,91 +541,81 @@ public class Setting extends JPanel
         @Override
         public void mouseEntered(MouseEvent e)
         {
-//            if(e.getSource().equals(userInfo) || e.getSource().equals(server) || e.getSource().equals(defaults))
-//            {
-//                if(e.getSource().equals(userInfo))
-//                    temp = userInfo;
-//                if(e.getSource().equals(server))
-//                    temp = server;
-//                if(e.getSource().equals(defaults))
-//                    temp = defaults;
-//                Thread a = new Thread(new Runnable()
-//                {
-//                    @Override
-//                    public void run()
-//                    {
-//                        for(int i=0;i<4;i++)
-//                        {
-//
-//                            switch (i)
-//                            {
-//                                case 0 : temp.setBackground(new Color(141,63,141));
-//                                    break;
-//                                case 1 : temp.setBackground(new Color(118,52,118));
-//                                    break;
-//                                case 2 : temp.setBackground(new Color(78,35,78));
-//                                    break;
-//                                case 3 : temp.setBackground(new Color(63,29,63));
-//                                    break;
-//                            }
-//                            try
-//                            {
-//                                Thread.sleep(50);
-//                            }
-//                            catch (InterruptedException ex)
-//                            {
-//                                ex.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                });
-//                a.start();
-//            }
+            if(e.getSource().equals(s))
+            {
+                temp = s;
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for(int i=0;i<4;i++)
+                        {
+
+                            switch (i)
+                            {
+                                case 0 : temp.setBackground(new Color(141,63,141));
+                                    break;
+                                case 1 : temp.setBackground(new Color(118,52,118));
+                                    break;
+                                case 2 : temp.setBackground(new Color(78,35,78));
+                                    break;
+                                case 3 : temp.setBackground(new Color(63,29,63));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent e)
         {
-//            if(e.getSource().equals(userInfo) || e.getSource().equals(server) || e.getSource().equals(defaults))
-//            {
-//                if(e.getSource().equals(userInfo))
-//                    temp = userInfo;
-//                if(e.getSource().equals(server))
-//                    temp = server;
-//                if(e.getSource().equals(defaults))
-//                    temp = defaults;
-//                Thread a = new Thread(new Runnable()
-//                {
-//                    @Override
-//                    public void run()
-//                    {
-//                        for(int i=0;i<4;i++)
-//                        {
-//
-//                            switch (i)
-//                            {
-//                                case 0 : temp.setBackground(new Color(78,35,78));
-//                                    break;
-//                                case 1 : temp.setBackground(new Color(118,52,118));
-//                                    break;
-//                                case 2 : temp.setBackground(new Color(141,63,141));
-//                                    break;
-//                                case 3 : temp.setBackground(new Color(163,73,164));
-//                                    break;
-//                            }
-//                            try
-//                            {
-//                                Thread.sleep(50);
-//                            }
-//                            catch (InterruptedException ex)
-//                            {
-//                                ex.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                });
-//                a.start();
-//            }
+            if(e.getSource().equals(s))
+            {
+                temp = s;
+                Thread a = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for(int i=0;i<4;i++)
+                        {
+
+                            switch (i)
+                            {
+                                case 0 : temp.setBackground(new Color(78,35,78));
+                                    break;
+                                case 1 : temp.setBackground(new Color(118,52,118));
+                                    break;
+                                case 2 : temp.setBackground(new Color(141,63,141));
+                                    break;
+                                case 3 : temp.setBackground(new Color(163,73,164));
+                                    break;
+                            }
+                            try
+                            {
+                                Thread.sleep(50);
+                            }
+                            catch (InterruptedException ex)
+                            {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                a.start();
+            }
         }
     }
 
