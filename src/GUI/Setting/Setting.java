@@ -537,7 +537,18 @@ public class Setting extends JPanel
                                     ans.toCharArray ()))
                             {
                                 serverListPanel2.removeServer (serverButtonPanel);
-                                connect ();
+                                new Thread (new Runnable () {
+                                    @Override
+                                    public void run () {
+                                        try {
+                                            Thread.sleep (2000);
+                                            connect ();
+                                        } catch (InterruptedException ex)
+                                        {
+                                            ex.printStackTrace ();
+                                        }
+                                    }
+                                }).start ();
                                 return;
                             }
                         }
