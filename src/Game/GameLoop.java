@@ -1,6 +1,7 @@
 package Game;
 
 import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -144,6 +145,7 @@ public class GameLoop implements Runnable
 			{
 				try
 				{
+					connect ();
 					Thread.sleep(3000);
 					canvas.setVisible(false);
 					menuFrame.setVisible(true);
@@ -156,6 +158,15 @@ public class GameLoop implements Runnable
 		}).start();
 
 
+	}
+
+	/**
+	 * connect to save server
+	 */
+	private void connect ()
+	{
+		LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+		new Thread (logConnector).start ();
 	}
 }
 

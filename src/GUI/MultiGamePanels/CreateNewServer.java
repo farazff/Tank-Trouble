@@ -310,7 +310,18 @@ public class CreateNewServer extends JPanel
                         (url.getText (),password1.getPassword ());
                 serverListPanel.addNewServer (serverInformation);
                 frame.setContentPane (pre);
-                connect ();
+                new Thread (new Runnable () {
+                    @Override
+                    public void run () {
+                        try {
+                            Thread.sleep (2000);
+                            connect ();
+                        } catch (InterruptedException ex)
+                        {
+                            ex.printStackTrace ();
+                        }
+                    }
+                }).start ();
             }
         }
     }

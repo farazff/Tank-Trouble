@@ -2,6 +2,7 @@ package MultiGame;
 
 
 import GameData.User;
+import Login_SignUp_Logout.LogConnector;
 import MultiGame.Server.ClientHandler;
 import MultiGame.Status.GameStatus;
 import MultiGame.Status.NullStatus;
@@ -132,6 +133,7 @@ public class MultiGameLoop implements Runnable
                 {
                     try
                     {
+                        connect ();
                         Thread.sleep(4000);
                         canvas.setVisible(false);
                         menuFrame.setVisible(true);
@@ -162,5 +164,14 @@ public class MultiGameLoop implements Runnable
             System.err.println ("Some went Wrong");
         }
 
+    }
+
+    /**
+     * connect to save server
+     */
+    private void connect ()
+    {
+        LogConnector logConnector = new LogConnector ("127.0.0.1","Logout",user);
+        new Thread (logConnector).start ();
     }
 }

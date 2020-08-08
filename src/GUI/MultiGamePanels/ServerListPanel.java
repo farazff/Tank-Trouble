@@ -49,6 +49,7 @@ public class ServerListPanel extends JPanel
         setBackground (Color.WHITE);
         setBorder (new EmptyBorder (5,5,5,5));
         MouseHandler mouseHandler = new MouseHandler ();
+        user.getServerInformationStorage ().setIterate (true);
         for (ServerInformation serverInformation : user.getServerInformationStorage ().getServerData ())
         {
             ServerButtonPanel serverButtonPanel = new ServerButtonPanel (serverInformation,mainPanel,
@@ -57,6 +58,7 @@ public class ServerListPanel extends JPanel
             serverButtonPanel.addMouseListener (mouseHandler);
             serverButtonPanels.add (serverButtonPanel);
         }
+        user.getServerInformationStorage ().setIterate (false);
 
     }
 
